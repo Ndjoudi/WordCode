@@ -1,0 +1,120 @@
+import { SessionHeader } from "../components/molecules/session-header.js";
+import { StatRow } from "../components/molecules/stat-row.js";
+import { ProgressBar } from "../components/atoms/progress-bar.js";
+import { Chip } from "../components/atoms/chip.js";
+import { Button } from "../components/atoms/button.js";
+import { Divider } from "../components/atoms/divider.js";
+import { repartitionParBoite, fileDeRevision, BOITE_MAX, DELAIS } from "../services/leitner.js";
+
+/**
+ * Progress — statistiques, paliers, répartition par boîte (README §11).
+ * @param {{state:object, contenu:object, aller:Function}} contexte
+ * @returns {HTMLElement}
+ */
+export function Progress({ state, contenu, aller }) {
+  const el = document.createElement("main");
+  el.className = "ecran progress";
+
+  el.append(SessionHeader({ title: "Progression", onHome: () => aller("/") }));
+
+  const corps = document.createElement("div");
+  corps.className = "ecran__body";
+
+  const fiches = state.words ?? {};
+  const total = Object.keys(fiches).length;
+
+  if (total === 0) {
+    const vide = document.createElement("div");
+    vide.className = "ecran__empty";
+
+    const message = document.createElement("p");
+    message.className = "ecran__empty-text";
+    message.textContent = "Aucun mot travaillé pour l'instant. Une session suffit pour remplir cette page.";
+    vide.append(message);
+
+    vide.append(Button({ label: "Commencer une session", fullWidth: true,
+                         onClick: () => aller("/session") }));
+    corps.append(vide);
+    el.append(corps);
+    return el;
+  }
+
+  const dus = fileDeRevision(state).filter((e) => e.type === "word").length;
+  const repartition = repartitionParBoite(fiches);
+  const acquis = repartition[BOITE_MAX - 1];
+
+  const stats = document.createElement("div");
+  stats.className = "progress__stats";
+  stats.append(
+    StatRow({ label: "Série en cours", value: `${state.progression.streak ?? 0} j`, icon: "flame" }),
+    StatRow({ label: "Mots rencontrés", value: total, icon: "book" }),
+    StatRow({ label: "Mots acquis", value: acquis, icon: "check" }),
+    StatRow({ label: "À réviser aujourd'hui", value: dus, icon: "chart" }),
+    StatRow({ label: "Objectif quotidien", value: state.progression.objectif_quotidien ?? 5, icon: "settings" }),
+  );
+  corps.append(stats);
+  corps.append(Divider({ spacing: 5 }));
+
+  const titreBoites = document.createElement("h2");
+  titreBoites.className = "progress__title";
+  titreBoites.textContent = "Répartition par boîte";
+  corps.append(titreBoites);
+
+  const boites = document.createElement("div");
+  boites.className = "progress__boxes";
+  repartition.forEach((compte, rang) => {
+    const ligne = document.createElement("div");
+    ligne.className = "progress__box";
+
+    const etiquette = document.createElement("div");
+    etiquette.className = "progress__box-head";
+    etiquette.append(Chip({ label: `Boîte ${rang + 1}`, variant: "palier" }));
+
+    const delai = document.createElement("span");
+    delai.className = "progress__box-delay";
+    delai.textContent = `${DELAIS[rang]} j — ${compte} mot${compte > 1 ? "s" : ""}`;
+    etiquette.append(delai);
+    ligne.append(etiquette);
+
+    ligne.append(ProgressBar({
+      value: compte, max: total,
+      variant: rang + 1 === BOITE_MAX ? "success" : "primary",
+    }));
+    boites.append(ligne);
+  });
+  corps.append(boites);
+  corps.append(Divider({ spacing: 5 }));
+
+  const titrePaliers = document.createElement("h2");
+  titrePaliers.className = "progress__title";
+  titrePaliers.textContent = "Paliers";
+  corps.append(titrePaliers);
+
+  const paliers = document.createElement("div");
+  paliers.className = "progress__paliers";
+  for (const palier of contenu.paliers) {
+    const motsDuPalier = [...contenu.mots.values()]
+      .filter((m) => Number(m.palier) === Number(palier.id));
+    const vus = motsDuPalier.filter((m) => fiches[m.id]).length;
+
+    const ligne = document.createElement("div");
+    ligne.className = "progress__palier";
+
+    const nom = document.createElement("p");
+    nom.className = "progress__palier-name";
+    nom.textContent = `Palier ${palier.id} — ${palier.titre}`;
+    ligne.append(nom);
+
+    ligne.append(ProgressBar({ value: vus, max: motsDuPalier.length || 1 }));
+
+    const detail = document.createElement("p");
+    detail.className = "progress__palier-detail";
+    detail.textContent = `${vus} / ${motsDuPalier.length}`;
+    ligne.append(detail);
+    paliers.append(ligne);
+  }
+  corps.append(paliers);
+
+  el.append(corps);
+  return el;
+}

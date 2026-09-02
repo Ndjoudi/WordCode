@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WordCode — tests des services</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <style>
+    /* Page de test, hors application : styles locaux, tokens uniquement. */
+    .t        { max-width: 720px; margin: 0 auto; padding: var(--sp-5) var(--sp-4) var(--sp-7); }
+    .t h1     { font-size: var(--fs-xl); margin-bottom: var(--sp-2); }
+    .t__sum   { display: flex; gap: var(--sp-4); align-items: baseline;
+                margin-bottom: var(--sp-5); font-size: var(--fs-lg); font-weight: var(--fw-bold); }
+    .t__ok    { color: var(--c-success); }
+    .t__ko    { color: var(--c-error); }
+    .t h2     { font-size: var(--fs-xs); font-weight: var(--fw-bold); letter-spacing: .08em;
+                text-transform: uppercase; color: var(--c-text-muted);
+                margin: var(--sp-5) 0 var(--sp-2); }
+    .t__line  { display: flex; gap: var(--sp-3); align-items: baseline;
+                padding: var(--sp-2) var(--sp-3); border-radius: var(--r-sm);
+                background: var(--c-surface); margin-bottom: var(--sp-1); font-size: var(--fs-sm); }
+    .t__line--ko { background: var(--c-tile-filled); }
+    .t__mark  { font-weight: var(--fw-bold); }
+    .t__name  { flex: 1 1 auto; }
+    .t__got   { color: var(--c-text-muted); font-size: var(--fs-xs); }
+  </style>
+</head>
+<body>
+  <main class="t" id="t">
+    <h1>Tests des services</h1>
+    <div class="t__sum" id="sum"></div>
+  </main>
+
+  <script type="module">
+    import * as L from "./services/leitner.js";
+    import * as S from "./services/store.js";
+    import { normaliser, estCorrect, variantes } from "./services/normalize.js";
+    import * as C from "./services/content-loader.js";
+    import * as B from "./services/session-builder.js";
+    import * as A from "./services/api.js";
+
+    const racine = document.getElementById("t");
+    let ok = 0, ko = 0;
+
+    const section = (titre) => {
+      const h = document.createElement("h2");
+      h.textContent = titre;
+      racine.append(h);
+    };
+
+    /** Assertion : compare une valeur obtenue à une valeur attendue. */
+    const eq = (nom, obtenu, attendu) => {
+      const a = JSON.stringify(obtenu);
+      const b = JSON.stringify(attendu);
+      const passe = a === b;
+      passe ? ok++ : ko++;
+
+      const ligne = document.createElement("div");
+      ligne.className = `t__line${passe ? "" : " t__line--ko"}`;
+
+      const marque = document.createElement("span");
+      marque.className = `t__mark ${passe ? "t__ok" : "t__ko"}`;
+      marque.textContent = passe ? "PASS" : "FAIL";
+      ligne.append(marque);
+
+      const texte = document.createElement("span");
+      texte.className = "t__name";
+      texte.textContent = nom;
+      ligne.append(texte);
+
+      if (!passe) {
+        const detail = document.createElement("span");
+        detail.className = "t__got";
+        detail.textContent = `obtenu ${a} — attendu ${b}`;
+        ligne.append(detail);
+      }
+      racine.append(ligne);
+    };
+
+    const vrai = (nom, valeur) => eq(nom, Boolean(valeur), true);
+    const faux = (nom, valeur) => eq(nom, Boolean(valeur), false);
+
+    /** Stockage jetable : les tests ne touchent jamais la vraie progression. */
+    const memoire = () => {
+      const m = new Map();
+      return {
+        getItem: (k) => (m.has(k) ? m.get(k) : null),
+        setItem: (k, v) => m.set(k, String(v)),
+        removeItem: (k) => m.delete(k),
+      };
+    };
+
+    /* =================================================== normalize.js ===== */
+    section("normalize.js — tolérance de saisie (§17.4)");
+
+    eq("normaliser enlève la casse", normaliser("RÉTICENT"), "reticent");
+    eq("normaliser enlève les accents", normaliser("réticent"), "reticent");
+    eq("normaliser enlève la ponctuation", normaliser("l'eau !"), "leau");
+    eq("normaliser réduit les espaces", normaliser("  a   b  "), "a b");
+    eq("normaliser ne laisse pas d'espace après la ponctuation", normaliser("eau !"), "eau");
+    vrai("« How is it going ? » à la française vaut la formule",
+         estCorrect("How is it going ?", "how is it going"));
+    vrai("« Réticent » vaut « réticent »", estCorrect("Réticent", "réticent"));
+    vrai("« reticent » vaut « réticent »", estCorrect("reticent", "réticent"));
+    vrai("« RÉTICENT » vaut « réticent »", estCorrect("RÉTICENT", "réticent"));
+    vrai("«  réticent  » vaut « réticent »", estCorrect("  réticent  ", "réticent"));
+    faux("« l'eau » ne vaut pas « eau »", estCorrect("l'eau", "eau"));
+    faux("une saisie vide est fausse", estCorrect("   ", "eau"));
+    vrai("variante « droite|correct » — droite", estCorrect("droite", "droite|correct"));
+    vrai("variante « droite|correct » — correct", estCorrect("correct", "droite|correct"));
+    faux("variante « droite|correct » — gauche", estCorrect("gauche", "droite|correct"));
+    eq("variantes() normalise chaque branche", variantes("Droite | Correct"), ["droite", "correct"]);
+
+    /* ===================================================== leitner.js ===== */
+    section("leitner.js — dates (§4, §15.8)");
+
+    eq("délais des 5 boîtes", L.DELAIS, [1, 3, 7, 21, 365]);
+    eq("aujourdhui() est au format ISO", /^\d{4}-\d{2}-\d{2}$/.test(L.aujourdhui()), true);
+    eq("ajouterJours simple", L.ajouterJours("2026-09-02", 7), "2026-09-09");
+    eq("ajouterJours franchit le mois", L.ajouterJours("2026-08-30", 3), "2026-09-02");
+    eq("ajouterJours franchit l'année", L.ajouterJours("2026-12-30", 3), "2027-01-02");
+    eq("ajouterJours sur année bissextile", L.ajouterJours("2028-02-28", 1), "2028-02-29");
+    eq("boîte 5 = 365 jours", L.prochaineRevision(5, "2026-09-02"), "2027-09-02");
+    eq("delaiPourBoite borne au-delà de 5", L.delaiPourBoite(9), 365);
+
+    section("leitner.js — montée et descente de boîte (§4)");
+
+    const neuve = L.ficheInitiale("2026-09-02");
+    eq("fiche neuve", neuve, { b: 1, r: "2026-09-02", s: 0, e: 0, d: null, st: "nouveau" });
+
+    let f = L.appliquerResultat(neuve, { succes: true, date: "2026-09-02" });
+    eq("succès en boîte 1 → boîte 2", f.b, 2);
+    eq("succès en boîte 1 → +3 jours", f.r, "2026-09-05");
+    eq("succès incrémente s", f.s, 1);
+    eq("succès passe le statut à actif", f.st, "actif");
+
+    f = L.appliquerResultat(f, { succes: true, date: "2026-09-05" });
+    eq("succès en boîte 2 → boîte 3", f.b, 3);
+    eq("succès en boîte 2 → +7 jours", f.r, "2026-09-12");
+
+    const haute = L.appliquerResultat({ b: 5, r: "x", s: 9, e: 0, d: null, st: "actif" },
+                                      { succes: true, date: "2026-09-02" });
+    eq("la boîte 5 ne déborde pas", haute.b, 5);
+    eq("boîte 5 → révision dans un an", haute.r, "2027-09-02");
+
+    const rate = L.appliquerResultat(f, { succes: false, date: "2026-09-12" });
+    eq("échec → retour boîte 1", rate.b, 1);
+    eq("échec → révision demain", rate.r, "2026-09-13");
+    eq("échec incrémente e", rate.e, 1);
+    eq("échec ne touche pas s", rate.s, f.s);
+
+    section("leitner.js — signal de maîtrise (§4)");
+
+    const aide = L.appliquerResultat({ b: 2, r: "x", s: 1, e: 0, d: null, st: "actif" },
+                                     { succes: true, traductionConsultee: true, date: "2026-09-02" });
+    eq("traduction consultée → la boîte ne monte pas", aide.b, 2);
+    eq("traduction consultée → délai de la boîte courante", aide.r, "2026-09-05");
+    eq("traduction consultée → la réussite compte quand même", aide.s, 2);
+
+    section("leitner.js — pureté");
+
+    const avant = { b: 2, r: "2026-09-02", s: 1, e: 0, d: null, st: "actif" };
+    const copie = JSON.parse(JSON.stringify(avant));
+    L.appliquerResultat(avant, { succes: true, date: "2026-09-02" });
+    eq("appliquerResultat ne modifie pas la fiche reçue", avant, copie);
+
+    section("leitner.js — file de révision (§4)");
+
+    eq("file vide sur un état vierge", L.fileDeRevision(S.etatInitial(), "2026-09-02"), []);
+    eq("file vide sur un état sans rien", L.fileDeRevision({}, "2026-09-02"), []);
+
+    const etat = S.etatInitial();
+    etat.words = {
+      w_tard:    { b: 2, r: "2026-09-20", s: 0, e: 0, d: null, st: "actif" },
+      w_due:     { b: 1, r: "2026-09-02", s: 0, e: 0, d: null, st: "actif" },
+      w_ancien:  { b: 1, r: "2026-08-28", s: 0, e: 0, d: null, st: "actif" },
+      w_nouveau: { b: 1, r: "2026-09-01", s: 0, e: 0, d: null, st: "nouveau" },
+      w_suspend: { b: 1, r: "2026-09-01", s: 0, e: 0, d: null, st: "suspendu" },
+      w_acquis:  { b: 5, r: "2026-09-01", s: 9, e: 0, d: null, st: "acquis" },
+    };
+    etat.verbes = {
+      v_go: {
+        preterit:  { b: 2, r: "2026-08-31", s: 1, e: 0 },
+        participe: { b: 1, r: "2026-09-02", s: 0, e: 2 },
+      },
+      v_cut: {
+        preterit:  { b: 3, r: "2026-10-01", s: 3, e: 0 },
+        participe: { b: 3, r: "2026-10-01", s: 3, e: 0 },
+      },
+    };
+
+    const file = L.fileDeRevision(etat, "2026-09-02");
+    eq("seules les fiches dues et actives entrent",
+       file.map((e) => e.forme ? `${e.id}:${e.forme}` : e.id),
+       ["w_ancien", "v_go:preterit", "w_due", "v_go:participe"]);
+    eq("la file est triée par date de révision",
+       file.map((e) => e.fiche.r),
+       ["2026-08-28", "2026-08-31", "2026-09-02", "2026-09-02"]);
+    faux("un mot « nouveau » n'est pas dans la file", file.some((e) => e.id === "w_nouveau"));
+    faux("un mot « suspendu » n'est pas dans la file", file.some((e) => e.id === "w_suspend"));
+    eq("un verbe peut apparaître deux fois",
+       file.filter((e) => e.id === "v_go").length, 2);
+    faux("un verbe non dû n'apparaît pas", file.some((e) => e.id === "v_cut"));
+
+    vrai("verbe acquis : les deux formes en boîte 5",
+         L.verbeAcquis({ preterit: { b: 5 }, participe: { b: 5 } }));
+    faux("verbe non acquis : une seule forme en boîte 5",
+         L.verbeAcquis({ preterit: { b: 5 }, participe: { b: 3 } }));
+
+    eq("répartition par boîte",
+       L.repartitionParBoite({ a: { b: 1 }, b: { b: 1 }, c: { b: 3 }, d: { b: 5 } }),
+       [2, 0, 1, 0, 1]);
+
+    /* ======================================================= store.js ===== */
+    section("store.js — état et persistance (§5.4, §6)");
+
+    const vierge = S.etatInitial();
+    eq("l'état initial porte la version courante", vierge.v, S.VERSION);
+    eq("l'état initial démarre au palier 1", vierge.progression.palier_actuel, 1);
+    eq("l'état initial n'a aucun mot", Object.keys(vierge.words).length, 0);
+
+    const mem = memoire();
+    const plein = S.etatInitial();
+    plein.words.w_00147 = { b: 3, r: "2026-09-09", s: 4, e: 1, d: "2026-09-02", st: "actif" };
+    plein.verbes.v_0012 = { preterit: { b: 2, r: "2026-09-04", s: 3, e: 0 },
+                            participe: { b: 1, r: "2026-09-03", s: 1, e: 2 } };
+    plein.perso = [{ id: "p_1", en: "thirsty", fr: "assoiffé", source: "organique" }];
+    plein.progression.streak = 7;
+
+    vrai("sauvegarder() renvoie true", S.sauvegarder(plein, { storage: mem }));
+    vrai("la clé wordcode_state est écrite", mem.getItem(S.CLE_STATE) !== null);
+    vrai("la clé wordcode_perso est écrite", mem.getItem(S.CLE_PERSO) !== null);
+    faux("perso n'est pas dupliqué dans wordcode_state",
+         mem.getItem(S.CLE_STATE).includes("thirsty"));
+
+    const relu = S.charger({ storage: mem });
+    eq("aller-retour : le mot", relu.words.w_00147, plein.words.w_00147);
+    eq("aller-retour : les deux formes du verbe", relu.verbes.v_0012, plein.verbes.v_0012);
+    eq("aller-retour : perso", relu.perso, plein.perso);
+    eq("aller-retour : la progression", relu.progression.streak, 7);
+
+    S.effacer({ storage: mem });
+    eq("effacer() ramène à l'état vierge",
+       Object.keys(S.charger({ storage: mem }).words).length, 0);
+
+    const casse = memoire();
+    casse.setItem(S.CLE_STATE, "{ ceci n'est pas du JSON");
+    eq("un stockage corrompu ne casse pas l'app",
+       Object.keys(S.charger({ storage: casse }).words).length, 0);
+
+    section("store.js — migration (champ v)");
+
+    eq("un état sans v est migré vers la version courante", S.migrer({}).v, S.VERSION);
+    eq("un état partiel est complété",
+       S.migrer({ words: { a: { b: 1 } } }).progression.objectif_quotidien, 5);
+    eq("la migration préserve les données", S.migrer({ words: { a: { b: 4 } } }).words.a.b, 4);
+
+    section("store.js — export / import (§6)");
+
+    eq("nom de fichier imposé", S.nomFichierSauvegarde("2026-09-02"), "backup-2026-09-02.json");
+
+    const sauvegarde = S.exporter(plein, "2026-09-02");
+    eq("l'export horodate la sauvegarde",
+       sauvegarde.progression.derniere_sauvegarde, "2026-09-02");
+    eq("l'export porte la version", sauvegarde.v, S.VERSION);
+
+    const retour = S.importer(JSON.stringify(sauvegarde));
+    vrai("import d'un export : ok", retour.ok);
+    eq("aller-retour export/import : les mots", retour.state.words, plein.words);
+    eq("aller-retour export/import : les verbes", retour.state.verbes, plein.verbes);
+    eq("aller-retour export/import : perso", retour.state.perso, plein.perso);
+    eq("aller-retour export/import : le streak", retour.state.progression.streak, 7);
+
+    faux("import d'un JSON illisible", S.importer("{{{").ok);
+    faux("import d'un tableau", S.importer("[]").ok);
+    faux("import sans champ v", S.importer('{"words":{}}').ok);
+    faux("import d'une version future", S.importer(`{"v":${S.VERSION + 1}}`).ok);
+    vrai("import : le message d'erreur cite le champ v",
+         S.importer('{"words":{}}').erreur.includes("v"));
+
+    section("store.js — rappel de sauvegarde (§6, 30 jours)");
+
+    faux("aucun rappel sur un état vierge",
+         S.sauvegardeARappeler(S.etatInitial(), "2026-09-02"));
+    vrai("rappel si on n'a jamais sauvegardé et qu'il y a des données",
+         S.sauvegardeARappeler(plein, "2026-09-02"));
+
+    const recent = S.exporter(plein, "2026-09-01");
+    faux("pas de rappel le lendemain d'une sauvegarde",
+         S.sauvegardeARappeler(recent, "2026-09-02"));
+    faux("pas de rappel à 29 jours",
+         S.sauvegardeARappeler(recent, "2026-09-29"));
+    vrai("rappel à 30 jours",
+         S.sauvegardeARappeler(recent, "2026-10-01"));
+
+    /* ============================================== content-loader.js ===== */
+    section("content-loader.js — contenu réel du palier 1 (§7)");
+
+    const contenu = await C.chargerContenu({ state: S.etatInitial() });
+
+    eq("le manifeste est lu", contenu.manifeste?.version, 1);
+    eq("un seul palier débloqué au départ", contenu.paliers.length, 1);
+    eq("les 50 mots du palier 1 sont chargés", contenu.mots.size, 50);
+    eq("les 10 parties passent la validation", contenu.parties.length, 10);
+    eq("aucune anomalie sur le contenu livré", contenu.erreurs, []);
+    eq("un mot est bien indexé par son id", contenu.mots.get("w_00001").en, "water");
+    eq("les filières déclarées mais non livrées sont marquées absentes",
+       contenu.filieres, { verbes: false, phrasal: false, expressions: false });
+
+    vrai("toutes les parties servies sont vérifiées",
+         contenu.parties.every((p) => p.verifie === true));
+    vrai("toutes les parties ont 5 mots",
+         contenu.parties.every((p) => p.mots.length === 5));
+    vrai("tous les mots de toutes les parties sont au catalogue",
+         contenu.parties.every((p) => p.mots.every((id) => contenu.mots.has(id))));
+    vrai("chaque mot de chaque partie a son indice",
+         contenu.parties.every((p) => p.mots.every((id) => Boolean(p.indices[id]))));
+
+    section("content-loader.js — chargement paresseux (§6)");
+
+    const auPalier1 = S.etatInitial();
+    eq("palier 1 seul au départ",
+       C.paliersDebloques(contenu.manifeste, auPalier1).map((e) => e.id), [1]);
+
+    const manifesteLarge = { version: 1, paliers: [
+      { id: 1, fichier: "a", titre: "A" }, { id: 2, fichier: "b", titre: "B" },
+      { id: 3, fichier: "c", titre: "C" }, { id: 4, fichier: "d", titre: "D" },
+    ] };
+    const auPalier3 = S.etatInitial();
+    auPalier3.progression.palier_actuel = 3;
+    eq("au palier 3, on ne charge pas le palier 4",
+       C.paliersDebloques(manifesteLarge, auPalier3).map((e) => e.id), [1, 2, 3]);
+
+    const compteur = { appels: 0 };
+    const espion = async (chemin) => {
+      compteur.appels += 1;
+      return new Response(JSON.stringify(chemin.endsWith("manifest.json")
+        ? contenu.manifeste : { palier: 1, mots: [] }), { status: 200 });
+    };
+    await C.chargerContenu({ state: auPalier1, recuperer: espion });
+    eq("au palier 1 : manifeste + 3 sondages de filière + palier + parties",
+       compteur.appels, 6);
+
+    section("content-loader.js — un fichier invalide ne casse rien (§7)");
+
+    /** Faux serveur : sert les fichiers d'un dictionnaire, 404 sinon. */
+    const serveur = (fichiers) => async (chemin) => {
+      const nom = chemin.replace(/^.*content\//, "");
+      if (!(nom in fichiers)) return new Response("", { status: 404 });
+      const contenuFichier = fichiers[nom];
+      return new Response(typeof contenuFichier === "string"
+        ? contenuFichier : JSON.stringify(contenuFichier), { status: 200 });
+    };
+
+    const manifesteMini = { version: 1, paliers: [
+      { id: 1, fichier: "paliers/p1.json", parties: "parties/g1.json", titre: "T", nb_mots: 2 },
+    ] };
+    const motsMini = { palier: 1, titre: "T", version: 1, mots: [
+      { id: "w_1", en: "water", fr: "eau", eligible_grille: true },
+      { id: "w_2", en: "table", fr: "table", eligible_grille: true },
+      { id: "w_3", en: "night", fr: "nuit", eligible_grille: true },
+      { id: "w_4", en: "green", fr: "vert", eligible_grille: true },
+      { id: "w_5", en: "bread", fr: "pain", eligible_grille: true },
+    ] };
+    const partieOK = {
+      id: "p_ok", type: "A", palier_min: 1, phrase_en: "AB",
+      mots: ["w_1", "w_2", "w_3", "w_4", "w_5"], mot_amorce: "w_1",
+      lettres_offertes: ["W", "A", "T", "E", "R"],
+      alphabet: { 1: "A", 2: "B", 3: "W", 4: "T", 5: "E", 6: "R",
+                  7: "L", 8: "N", 9: "I", 10: "G", 11: "H", 12: "D" },
+      indices: Object.fromEntries(["w_1", "w_2", "w_3", "w_4", "w_5"]
+        .map((id) => [id, { en: "x", fr: "x", segments: [] }])),
+      verifie: true,
+    };
+    const avec = (modif) => ({ ...structuredClone(partieOK), ...modif });
+
+    const cas = async (nom, partie, attenduServies) => {
+      const r = await C.chargerContenu({ state: S.etatInitial(), recuperer: serveur({
+        "manifest.json": manifesteMini,
+        "paliers/p1.json": motsMini,
+        "parties/g1.json": { palier: 1, version: 1, parties: [partie] },
+      }) });
+      eq(nom, r.parties.length, attenduServies);
+      return r;
+    };
+
+    await cas("une partie conforme est servie", partieOK, 1);
+    await cas("verifie: false → partie écartée", avec({ verifie: false }), 0);
+    await cas("verifie absent → partie écartée", avec({ verifie: undefined }), 0);
+    await cas("mot inconnu → partie écartée",
+              avec({ mots: ["w_1", "w_2", "w_3", "w_4", "w_999"] }), 0);
+    await cas("4 mots au lieu de 5 → partie écartée",
+              avec({ mots: ["w_1", "w_2", "w_3", "w_4"] }), 0);
+    await cas("mot_amorce hors des mots → partie écartée",
+              avec({ mot_amorce: "w_999" }), 0);
+    await cas("phrase_en contient une lettre hors alphabet → écartée",
+              avec({ phrase_en: "AB ZZZ" }), 0);
+    await cas("un mot contient une lettre hors alphabet → écartée",
+              avec({ alphabet: { 1: "A", 2: "B", 3: "W", 4: "T", 5: "E" } }), 0);
+    await cas("deux numéros pour la même lettre → écartée",
+              avec({ alphabet: { ...partieOK.alphabet, 13: "A" } }), 0);
+    await cas("indice manquant → partie écartée",
+              avec({ indices: { w_1: { en: "x", segments: [] } } }), 0);
+    await cas("champ obligatoire absent → partie écartée",
+              avec({ alphabet: undefined }), 0);
+
+    const messages = await cas("une partie écartée est expliquée", avec({ verifie: false }), 0);
+    vrai("le message cite l'identifiant de la partie",
+         messages.erreurs.some((e) => e.message.includes("p_ok")));
+    vrai("le message cite le fichier fautif",
+         messages.erreurs.some((e) => e.fichier === "parties/g1.json"));
+
+    section("content-loader.js — signalements non bloquants");
+
+    const tolere = await cas("lettres_offertes incohérentes : partie servie quand même",
+                             avec({ lettres_offertes: ["Z"] }), 1);
+    vrai("mais l'incohérence est signalée",
+         tolere.erreurs.some((e) => !e.bloquant && e.message.includes("lettres_offertes")));
+
+    const refCassee = await cas("un segment pointant dans le vide : partie servie",
+      avec({ indices: { ...structuredClone(partieOK.indices),
+        w_1: { en: "x", fr: "x", segments: [{ txt: "sea", trad: "mer", ref: "w_404" }] } } }), 1);
+    vrai("mais la référence morte est signalée",
+         refCassee.erreurs.some((e) => !e.bloquant && e.message.includes("w_404")));
+
+    const eligible = await C.chargerContenu({ state: S.etatInitial(), recuperer: serveur({
+      "manifest.json": manifesteMini,
+      "paliers/p1.json": { ...motsMini, mots: [{ id: "w_1", en: "understand", fr: "comprendre", eligible_grille: true }] },
+      "parties/g1.json": { palier: 1, version: 1, parties: [] },
+    }) });
+    eq("un mot au eligible_grille faux est conservé", eligible.mots.size, 1);
+    vrai("mais l'écart à la formule §5.1 est signalé",
+         eligible.erreurs.some((e) => !e.bloquant && e.message.includes("eligible_grille")));
+
+    section("content-loader.js — filières optionnelles (§7)");
+
+    const avecVerbes = await C.chargerContenu({ state: S.etatInitial(), recuperer: serveur({
+      "manifest.json": { ...manifesteMini, verbes: "verbes.json" },
+      "paliers/p1.json": motsMini,
+      "parties/g1.json": { palier: 1, version: 1, parties: [] },
+      "verbes.json": { verbes: [] },
+    }) });
+    eq("filière livrée : marquée disponible", avecVerbes.filieres.verbes, true);
+    eq("filière déclarée mais absente : marquée indisponible",
+       avecVerbes.filieres.phrasal, false);
+    eq("une filière absente n'est pas une erreur", avecVerbes.erreurs, []);
+
+    section("content-loader.js — fichiers absents ou illisibles");
+
+    const sansManifeste = await C.chargerContenu({ state: S.etatInitial(), recuperer: serveur({}) });
+    eq("manifeste absent : aucune partie", sansManifeste.parties.length, 0);
+    vrai("manifeste absent : signalé", sansManifeste.erreurs.length > 0);
+
+    const casse2 = await C.chargerContenu({ state: S.etatInitial(), recuperer: serveur({
+      "manifest.json": "{ pas du JSON",
+    }) });
+    vrai("manifeste illisible : signalé, pas d'exception",
+         casse2.erreurs.some((e) => e.message.includes("JSON")));
+
+    const palierAbsent = await C.chargerContenu({ state: S.etatInitial(), recuperer: serveur({
+      "manifest.json": manifesteMini,
+    }) });
+    eq("palier introuvable : aucun mot", palierAbsent.mots.size, 0);
+    vrai("palier introuvable : signalé",
+         palierAbsent.erreurs.some((e) => e.message.includes("introuvable")));
+
+    const partiesAbsentes = await C.chargerContenu({ state: S.etatInitial(), recuperer: serveur({
+      "manifest.json": manifesteMini,
+      "paliers/p1.json": motsMini,
+    }) });
+    eq("parties introuvables : les mots restent chargés", partiesAbsentes.mots.size, 5);
+    eq("parties introuvables : aucune partie servie", partiesAbsentes.parties.length, 0);
+
+    /* ================================================ filière verbes ====== */
+    section("verbes — validation du contenu (§2.2, §5.1)");
+
+    const VERBES = [
+      { id: "v_go",   en: "go",   fr: "aller",   preterit: "went",  participe: "gone",  groupe_verbe: 4 },
+      { id: "v_see",  en: "see",  fr: "voir",    preterit: "saw",   participe: "seen",  groupe_verbe: 4 },
+      { id: "v_cut",  en: "cut",  fr: "couper",  preterit: "cut",   participe: "cut",   groupe_verbe: 1 },
+      { id: "v_put",  en: "put",  fr: "poser",   preterit: "put",   participe: "put",   groupe_verbe: 1 },
+      { id: "v_buy",  en: "buy",  fr: "acheter", preterit: "bought", participe: "bought", groupe_verbe: 2 },
+    ];
+
+    const errV = [];
+    eq("un fichier { verbes: [...] } est accepté",
+       C.validerVerbes({ verbes: VERBES }, "verbes.json", errV).length, 5);
+    eq("un tableau nu est accepté aussi",
+       C.validerVerbes(VERBES, "verbes.json", []).length, 5);
+    eq("contenu conforme : aucune anomalie", errV, []);
+
+    const errV2 = [];
+    eq("un verbe sans participe est écarté",
+       C.validerVerbes({ verbes: [{ id: "v_x", en: "x", fr: "x", preterit: "y" }] },
+                       "verbes.json", errV2).length, 0);
+    vrai("et l'absence est nommée", errV2[0].message.includes("participe"));
+
+    const errV3 = [];
+    eq("un groupe_verbe hors de 1-4 est écarté",
+       C.validerVerbes({ verbes: [{ ...VERBES[0], groupe_verbe: 9 }] },
+                       "verbes.json", errV3).length, 0);
+    vrai("et la raison est donnée", errV3[0].message.includes("groupe_verbe"));
+
+    const errV4 = [];
+    C.validerVerbes({ verbes: [VERBES[0], VERBES[0]] }, "verbes.json", errV4);
+    vrai("un identifiant en double est signalé",
+         errV4.some((e) => e.message.includes("double")));
+
+    section("verbes — filière absente (§7)");
+
+    const sansFiliere = await C.chargerVerbes({ manifeste: { paliers: [] },
+                                                recuperer: serveur({}) });
+    eq("manifeste sans verbes : filière absente", sansFiliere.absente, true);
+    eq("filière absente : aucune erreur", sansFiliere.erreurs, []);
+
+    const declaree404 = await C.chargerVerbes({
+      manifeste: { verbes: "verbes.json" }, recuperer: serveur({}) });
+    eq("déclarée mais non livrée : absente", declaree404.absente, true);
+    eq("déclarée mais non livrée : aucune erreur", declaree404.erreurs, []);
+
+    const livree = await C.chargerVerbes({
+      manifeste: { verbes: "verbes.json" },
+      recuperer: serveur({ "verbes.json": { verbes: VERBES } }) });
+    eq("filière livrée : 5 verbes", livree.verbes.length, 5);
+    eq("filière livrée : pas absente", livree.absente, false);
+
+    section("verbes — composition par groupe de patterns (§2.2)");
+
+    const etatV = S.etatInitial();
+    eq("on démarre au groupe 1", etatV.progression.groupe_verbe_actuel, 1);
+
+    const s1 = B.composerSessionVerbes({ state: etatV, verbes: VERBES, today: "2026-09-02" });
+    eq("seuls les verbes du groupe courant sont servis",
+       s1.duGroupe.map((v) => v.en), ["cut", "put"]);
+    eq("tous nouveaux au départ", s1.nouveaux.length, 2);
+    eq("aucun dû au départ", s1.dus.length, 0);
+    faux("la file n'est pas vide", s1.vide);
+
+    const auG4 = S.etatInitial();
+    auG4.progression.groupe_verbe_actuel = 4;
+    eq("au groupe 4, on sert les A-B-C",
+       B.composerSessionVerbes({ state: auG4, verbes: VERBES }).duGroupe.map((v) => v.en),
+       ["go", "see"]);
+
+    eq("les quatre groupes sont nommés",
+       Object.values(B.GROUPES_VERBE).map((g) => g.code), ["G1", "G2", "G3", "G4"]);
+
+    section("verbes — Leitner sur deux formes indépendantes (§4)");
+
+    let etatL = S.etatInitial();
+    etatL = B.appliquerVerbe(etatL, "v_go",
+      { preteritCorrect: true, participeCorrect: false, date: "2026-09-02" });
+
+    eq("prétérit réussi → boîte 2", etatL.verbes.v_go.preterit.b, 2);
+    eq("prétérit réussi → +3 jours", etatL.verbes.v_go.preterit.r, "2026-09-05");
+    eq("participe raté → boîte 1", etatL.verbes.v_go.participe.b, 1);
+    eq("participe raté → +1 jour", etatL.verbes.v_go.participe.r, "2026-09-03");
+    eq("les compteurs suivent chaque forme",
+       [etatL.verbes.v_go.preterit.s, etatL.verbes.v_go.participe.e], [1, 1]);
+    eq("la fiche d'une forme n'a ni statut ni date",
+       Object.keys(etatL.verbes.v_go.preterit).sort(), ["b", "e", "r", "s"]);
+
+    faux("le verbe n'est pas acquis", L.verbeAcquis(etatL.verbes.v_go));
+    vrai("il l'est quand les deux formes sont en boîte 5",
+         L.verbeAcquis({ preterit: { b: 5 }, participe: { b: 5 } }));
+
+    const fileMixte = L.fileDeRevision(etatL, "2026-09-05");
+    eq("les deux formes reviennent dans la file, triées",
+       fileMixte.map((e) => e.forme), ["participe", "preterit"]);
+
+    section("verbes — avancement et passage de groupe");
+
+    const etatG = S.etatInitial();
+    etatG.verbes = {
+      v_cut: { preterit: { b: 3, r: "x", s: 2, e: 0 }, participe: { b: 4, r: "x", s: 3, e: 0 } },
+      v_put: { preterit: { b: 1, r: "x", s: 0, e: 1 }, participe: { b: 3, r: "x", s: 2, e: 0 } },
+    };
+    const av = B.avancementGroupe(etatG, VERBES.filter((v) => v.groupe_verbe === 1));
+    eq("4 formes dans le groupe", av.formes, 4);
+    eq("3 formes en boîte 3+", av.acquises, 3);
+    faux("75 % ne suffit pas pour clore le groupe", av.termine);
+
+    etatG.verbes.v_put.preterit.b = 3;
+    vrai("100 % clôt le groupe",
+         B.avancementGroupe(etatG, VERBES.filter((v) => v.groupe_verbe === 1)).termine);
+
+    const vide = B.avancementGroupe(S.etatInitial(), []);
+    eq("un groupe sans verbe n'est pas « terminé »", vide.termine, false);
+    vrai("mais on peut le dépasser, sinon la progression se bloque", vide.depasse);
+
+    eq("avancerGroupe passe de 1 à 2",
+       B.avancerGroupe(etatG).progression.groupe_verbe_actuel, 2);
+    const auDernier = S.etatInitial();
+    auDernier.progression.groupe_verbe_actuel = 4;
+    eq("avancerGroupe ne dépasse pas le groupe 4",
+       B.avancerGroupe(auDernier).progression.groupe_verbe_actuel, 4);
+
+    const dejaVu = S.etatInitial();
+    dejaVu.verbes = { v_cut: { preterit: { b: 1, r: "2026-09-02", s: 0, e: 0 },
+                               participe: { b: 2, r: "2026-10-01", s: 1, e: 0 } } };
+    const s2 = B.composerSessionVerbes({ state: dejaVu, verbes: VERBES, today: "2026-09-02" });
+    eq("un verbe dont une forme est due revient", s2.dus.map((v) => v.en), ["cut"]);
+    eq("il n'apparaît qu'une fois dans la file",
+       s2.file.filter((v) => v.en === "cut").length, 1);
+    eq("les verbes jamais vus suivent", s2.nouveaux.map((v) => v.en), ["put"]);
+
+    /* ========================================== api.js + capture ========== */
+    section("api.js — garde-fous avant l'appel (§14)");
+
+    eq("saisie vide : aucun appel réseau", (await A.traduire("   ")).cause, A.CAUSES.VIDE);
+    eq("au-delà de 400 caractères : refusé avant l'appel",
+       (await A.traduire("x".repeat(401))).cause, A.CAUSES.TROP_LONG);
+    eq("hors ligne : refusé avant l'appel",
+       (await A.traduire("hello", { enLigne: false })).cause, A.CAUSES.HORS_LIGNE);
+
+    let appels = 0;
+    await A.traduire("", { recuperer: async () => { appels += 1; return new Response("{}"); } });
+    await A.traduire("hello", { enLigne: false,
+                                recuperer: async () => { appels += 1; return new Response("{}"); } });
+    eq("aucun de ces cas ne touche le réseau", appels, 0);
+
+    section("api.js — réponses du service (§14)");
+
+    /** Réponse conforme à ce que renvoie réellement api/translate.js. */
+    const REPONSE = {
+      phrase_en: "She was reluctant to give up her seat.",
+      phrase_fr: "Elle était réticente à céder sa place.",
+      mots: [
+        { en: "reluctant", fr: "réticent", type: "adj", phonetique: "/rɪˈlʌk.tənt/",
+          def_en: "not willing to do something", rang_freq: 2847,
+          phrasal: false, ambigu: false, confiance: 0.96 },
+        { en: "give up", fr: "céder", type: "phrasal", phonetique: null,
+          def_en: "to stop keeping something", rang_freq: 900,
+          phrasal: true, ambigu: true, confiance: 0.74 },
+      ],
+    };
+    const repond = (corps, status = 200) => async () =>
+      new Response(typeof corps === "string" ? corps : JSON.stringify(corps), { status });
+
+    const bon = await A.traduire("She was reluctant.", { recuperer: repond(REPONSE) });
+    vrai("réponse conforme : ok", bon.ok);
+    eq("la phrase française revient", bon.donnees.phrase_fr, REPONSE.phrase_fr);
+    eq("les mots reviennent", bon.donnees.mots.length, 2);
+
+    eq("502 → service indisponible",
+       (await A.traduire("x", { recuperer: repond({ error: "traduction indisponible" }, 502) })).cause,
+       A.CAUSES.INDISPONIBLE);
+    eq("400 → réponse inattendue",
+       (await A.traduire("x", { recuperer: repond({ error: "texte manquant" }, 400) })).cause,
+       A.CAUSES.REPONSE);
+    eq("corps illisible → réponse inattendue",
+       (await A.traduire("x", { recuperer: repond("pas du json") })).cause, A.CAUSES.REPONSE);
+    eq("réponse sans « mots » → réponse inattendue",
+       (await A.traduire("x", { recuperer: repond({ phrase_fr: "x" }) })).cause, A.CAUSES.REPONSE);
+
+    const coupure = await A.traduire("x", {
+      recuperer: async () => { throw new TypeError("Failed to fetch"); } });
+    eq("réseau coupé en cours d'appel", coupure.cause, A.CAUSES.RESEAU);
+
+    const tropLent = await A.traduire("x", {
+      timeout: 20,
+      recuperer: (url, options) => new Promise((_, rejette) => {
+        options.signal.addEventListener("abort", () => {
+          const e = new Error("aborted"); e.name = "AbortError"; rejette(e);
+        });
+      }),
+    });
+    eq("dépassement de délai", tropLent.cause, A.CAUSES.TIMEOUT);
+    const echecsApi = await Promise.all([
+      A.traduire(""),
+      A.traduire("x", { enLigne: false }),
+      A.traduire("x".repeat(401)),
+      A.traduire("x", { recuperer: repond({}, 502) }),
+    ]);
+    vrai("chaque échec porte un message lisible",
+         echecsApi.every((r) => typeof r.erreur === "string" && r.erreur.length > 15));
+    faux("aucun échec ne renvoie de données",
+         echecsApi.some((r) => r.donnees !== null));
+
+    eq("le message du hors-ligne mentionne le réseau",
+       (await A.traduire("x", { enLigne: false })).erreur.includes("réseau"), true);
+
+    section("capture manuelle — palier de fréquence (§2.1, §14)");
+
+    eq("rang 1 → palier 1", B.palierPourRang(1), 1);
+    eq("rang 50 → palier 1", B.palierPourRang(50), 1);
+    eq("rang 51 → palier 2", B.palierPourRang(51), 2);
+    eq("rang 251 → palier 6", B.palierPourRang(251), 6);
+    eq("au-delà de la NGSL, on plafonne à 56", B.palierPourRang(99999), 56);
+    eq("rang inconnu → pas de palier", B.palierPourRang(null), null);
+
+    section("capture manuelle — doublons et polysémie (§5.2)");
+
+    const catalogueTest = new Map([
+      ["w_r", { id: "w_r", en: "right", fr: "droite", famille: "right", sens_index: 1 }],
+    ]);
+    const persoTest = [{ id: "p_00001", en: "thirsty", fr: "assoiffé", famille: "thirsty", sens_index: 1 }];
+
+    eq("un mot du catalogue est retrouvé",
+       B.trouverExistant("Right", { catalogue: catalogueTest, perso: persoTest })?.id, "w_r");
+    eq("un mot perso est retrouvé",
+       B.trouverExistant("THIRSTY", { catalogue: catalogueTest, perso: persoTest })?.id, "p_00001");
+    eq("un mot inconnu ne l'est pas",
+       B.trouverExistant("butter", { catalogue: catalogueTest, perso: persoTest }), null);
+
+    const secondSens = B.motDepuisTraduction({
+      mot: { en: "right", fr: "correct", type: "adj", rang_freq: 120 },
+      phrase_en: "That is right.", phrase_fr: "C'est correct.",
+      existant: catalogueTest.get("w_r"), id: "p_00002", date: "2026-09-02",
+    });
+    eq("le second sens garde la famille", secondSens.famille, "right");
+    eq("et incrémente sens_index", secondSens.sens_index, 2);
+    eq("la source est « perso »", secondSens.source, "perso");
+    eq("la phrase est conservée pour l'exercice à trous",
+       [secondSens.phrase_en, secondSens.phrase_fr],
+       ["That is right.", "C'est correct."]);
+    eq("la date de capture est posée", secondSens.date_capture, "2026-09-02");
+
+    const premier = B.motDepuisTraduction({
+      mot: { en: "butter", fr: "beurre" }, id: "p_00003", date: "2026-09-02" });
+    eq("un mot neuf est sa propre famille", premier.famille, "butter");
+    eq("et démarre au sens 1", premier.sens_index, 1);
+    eq("eligible_grille est calculé (§5.1)", premier.eligible_grille, true);
+    eq("un groupe de deux mots n'est pas éligible",
+       B.motDepuisTraduction({ mot: { en: "give up", fr: "céder" }, id: "p_x" }).eligible_grille,
+       false);
+
+    eq("identifiant perso : préfixe p_", B.prochainIdPerso([]), "p_00001");
+    eq("identifiant perso : suit le plus grand",
+       B.prochainIdPerso([{ id: "p_00003" }, { id: "p_00001" }]), "p_00004");
+
+    section("capture manuelle — entrée en file de découverte (§3.1)");
+
+    const avantAjout = S.etatInitial();
+    const apresAjout = B.ajouterMotsPerso(avantAjout, [premier, secondSens]);
+    eq("les mots entrent dans perso", apresAjout.perso.length, 2);
+    eq("et dans la file de découverte",
+       apresAjout.progression.file_decouverte, ["p_00003", "p_00002"]);
+    eq("l'état d'origine n'est pas modifié", avantAjout.perso.length, 0);
+    eq("ajouter zéro mot ne change rien", B.ajouterMotsPerso(avantAjout, []), avantAjout);
+
+    const catalogueVide = new Map();
+    const fileApres = B.fileDecouverte(apresAjout, catalogueVide);
+    eq("les mots perso sont en tête de la file de découverte",
+       fileApres.map((m) => m.id), ["p_00003", "p_00002"]);
+
+    /* ================================================ grille (phase 3) ==== */
+    section("grille — sélection de la partie (§3.3, §17.8)");
+
+    const catGrille = new Map([
+      ["a", { id: "a", en: "water", fr: "eau",    palier: 1, rang_freq: 1 }],
+      ["b", { id: "b", en: "table", fr: "table",  palier: 1, rang_freq: 2 }],
+      ["c", { id: "c", en: "night", fr: "nuit",   palier: 1, rang_freq: 3 }],
+      ["d", { id: "d", en: "green", fr: "vert",   palier: 1, rang_freq: 4 }],
+      ["e", { id: "e", en: "bread", fr: "pain",   palier: 1, rang_freq: 5 }],
+      ["f", { id: "f", en: "house", fr: "maison", palier: 1, rang_freq: 6 }],
+    ]);
+    const cinq = ["a", "b", "c", "d", "e"];
+    const P1 = { id: "p_001", verifie: true, mots: cinq, phrase_en: "AB", alphabet: {}, indices: {} };
+    const P2 = { id: "p_002", verifie: true, mots: cinq, phrase_en: "AB", alphabet: {}, indices: {} };
+
+    const neuf = S.etatInitial();
+    eq("la première partie jamais jouée est choisie",
+       B.choisirPartie(neuf, [P1, P2], catGrille)?.id, "p_001");
+
+    const apres1 = B.marquerPartieJouee(neuf, "p_001");
+    eq("la partie jouée est mémorisée", apres1.progression.parties_jouees, ["p_001"]);
+    eq("la session suivante prend la partie d'après",
+       B.choisirPartie(apres1, [P1, P2], catGrille)?.id, "p_002");
+    eq("marquer deux fois ne duplique pas",
+       B.marquerPartieJouee(apres1, "p_001").progression.parties_jouees, ["p_001"]);
+
+    eq("une partie non vérifiée n'est jamais servie",
+       B.choisirPartie(neuf, [{ ...P1, verifie: false }], catGrille), null);
+    eq("une partie dont un mot manque au catalogue est écartée",
+       B.choisirPartie(neuf, [{ ...P1, mots: ["a", "b", "c", "d", "zzz"] }], catGrille), null);
+    eq("plus aucune partie disponible → null",
+       B.choisirPartie(B.marquerPartieJouee(apres1, "p_002"), [P1, P2], catGrille), null);
+
+    section("grille — composition pilotée par la partie");
+
+    const avecPartie = B.composerSession({ state: neuf, catalogue: catGrille, parties: [P1] });
+    eq("la partie fixe les cinq mots", avecPartie.mots.map((m) => m.en),
+       ["water", "table", "night", "green", "bread"]);
+    eq("au palier 1, les cinq sont nouveaux (§17.8)", avecPartie.nouveaux.length, 5);
+    eq("et rien n'est en révision", avecPartie.revision.length, 0);
+    eq("la partie est transmise à l'écran", avecPartie.partie.id, "p_001");
+
+    const dejaConnus = S.etatInitial();
+    dejaConnus.words = {
+      a: { b: 2, r: "2026-09-05", s: 1, e: 0, d: null, st: "actif" },
+      b: { b: 2, r: "2026-09-05", s: 1, e: 0, d: null, st: "actif" },
+      c: { b: 3, r: "2026-09-09", s: 2, e: 0, d: null, st: "actif" },
+    };
+    const mixte = B.composerSession({ state: dejaConnus, catalogue: catGrille, parties: [P1] });
+    eq("2 nouveaux / 3 acquis découle de la partie (§3.3)",
+       [mixte.nouveaux.length, mixte.revision.length], [2, 3]);
+    eq("les nouveaux sont ceux jamais rencontrés",
+       mixte.nouveaux.map((m) => m.en), ["green", "bread"]);
+
+    const sansPartie = B.composerSession({ state: neuf, catalogue: catGrille, parties: [] });
+    eq("sans partie, pas de grille", sansPartie.partie, null);
+    eq("le repli compose par file de découverte, dans l'ordre de fréquence",
+       sansPartie.mots.map((m) => m.en), ["water", "table", "night", "green", "bread"]);
+
+    const toutJoue = B.marquerPartieJouee(B.marquerPartieJouee(neuf, "p_001"), "p_002");
+    eq("toutes les parties jouées → repli sans grille",
+       B.composerSession({ state: toutJoue, catalogue: catGrille, parties: [P1, P2] }).partie,
+       null);
+
+    section("grille — capture organique (§3.5)");
+
+    const organique = B.motDepuisSegment({
+      segment: { txt: "Very", trad: "très" }, id: "p_00001",
+      origine_partie: "p_001", date: "2026-09-02" });
+    eq("la source est « organique »", organique.source, "organique");
+    eq("la partie d'origine est tracée", organique.origine_partie, "p_001");
+    eq("la casse de phrase est retirée", organique.en, "very");
+    eq("la date de capture est posée", organique.date_capture, "2026-09-02");
+    eq("le plafond par partie vaut 3 (§3.5)", B.AJOUTS_MAX_PAR_PARTIE, 3);
+
+    const avecOrganiques = B.ajouterMotsPerso(S.etatInitial(), [organique]);
+    eq("le mot organique entre en file de découverte",
+       avecOrganiques.progression.file_decouverte, ["p_00001"]);
+    eq("et il est en tête de la file (§3.1)",
+       B.fileDecouverte(avecOrganiques, new Map()).map((m) => m.en), ["very"]);
+
+    /* ==================================================== conclusion ====== */
+    const sum = document.getElementById("sum");
+    const bilan = document.createElement("span");
+    bilan.className = ko === 0 ? "t__ok" : "t__ko";
+    bilan.textContent = ko === 0 ? `${ok} tests, tous verts` : `${ko} échecs sur ${ok + ko}`;
+    sum.append(bilan);
+    document.title = `${ko === 0 ? "OK" : "ÉCHEC"} — ${ok + ko} tests WordCode`;
+  </script>
+</body>
+</html>
