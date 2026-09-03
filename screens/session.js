@@ -10,7 +10,7 @@ import { CodewordBoard } from "../components/organisms/codeword-board.js";
 import { composerSession, construireQCM, construireRappel,
          cloturerSession, retirerDeLaFile, marquerPartieJouee,
          motDepuisSegment, prochainIdPerso, ajouterMotsPerso,
-         AJOUTS_MAX_PAR_PARTIE } from "../services/session-builder.js";
+         AJOUTS_MAX_PAR_PARTIE, debloquerPaliers } from "../services/session-builder.js";
 import { appliquerResultat, ficheInitiale, aujourdhui } from "../services/leitner.js";
 import { taire } from "../services/audio.js";
 
@@ -119,6 +119,7 @@ export function Session({ state, contenu, aller, enregistrer }) {
     let suivant = { ...state, words: { ...state.words } };
 
     if (session.partie) suivant = marquerPartieJouee(suivant, session.partie.id);
+    suivant = debloquerPaliers(suivant, contenu.mots, contenu.manifeste);
     if (ajoutes.length) {
       suivant = ajouterMotsPerso(suivant, ajoutes);
       suivant = {

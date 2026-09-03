@@ -4,14 +4,16 @@ import { ProgressBar } from "../components/atoms/progress-bar.js";
 import { Chip } from "../components/atoms/chip.js";
 import { Button } from "../components/atoms/button.js";
 import { Divider } from "../components/atoms/divider.js";
-import { repartitionParBoite, fileDeRevision, BOITE_MAX, DELAIS } from "../services/leitner.js";
+import { PalierList } from "../components/organisms/palier-list.js";
+import { repartitionParBoite, fileDeRevisionMots, BOITE_MAX, DELAIS } from "../services/leitner.js";
+import { entreesPaliers, choisirPalier } from "../services/session-builder.js";
 
 /**
  * Progress — statistiques, paliers, répartition par boîte (README §11).
  * @param {{state:object, contenu:object, aller:Function}} contexte
  * @returns {HTMLElement}
  */
-export function Progress({ state, contenu, aller }) {
+export function Progress({ state, contenu, aller, enregistrer }) {
   const el = document.createElement("main");
   el.className = "ecran progress";
 
@@ -35,11 +37,14 @@ export function Progress({ state, contenu, aller }) {
     vide.append(Button({ label: "Commencer une session", fullWidth: true,
                          onClick: () => aller("/session") }));
     corps.append(vide);
+    corps.append(Divider({ spacing: 5 }));
+    corps.append(titrePaliers());
+    corps.append(listePaliers());
     el.append(corps);
     return el;
   }
 
-  const dus = fileDeRevision(state).filter((e) => e.type === "word").length;
+  const dus = fileDeRevisionMots(state).length;
   const repartition = repartitionParBoite(fiches);
   const acquis = repartition[BOITE_MAX - 1];
 
@@ -85,36 +90,30 @@ export function Progress({ state, contenu, aller }) {
   corps.append(boites);
   corps.append(Divider({ spacing: 5 }));
 
-  const titrePaliers = document.createElement("h2");
-  titrePaliers.className = "progress__title";
-  titrePaliers.textContent = "Paliers";
-  corps.append(titrePaliers);
+  corps.append(titrePaliers());
 
-  const paliers = document.createElement("div");
-  paliers.className = "progress__paliers";
-  for (const palier of contenu.paliers) {
-    const motsDuPalier = [...contenu.mots.values()]
-      .filter((m) => Number(m.palier) === Number(palier.id));
-    const vus = motsDuPalier.filter((m) => fiches[m.id]).length;
-
-    const ligne = document.createElement("div");
-    ligne.className = "progress__palier";
-
-    const nom = document.createElement("p");
-    nom.className = "progress__palier-name";
-    nom.textContent = `Palier ${palier.id} — ${palier.titre}`;
-    ligne.append(nom);
-
-    ligne.append(ProgressBar({ value: vus, max: motsDuPalier.length || 1 }));
-
-    const detail = document.createElement("p");
-    detail.className = "progress__palier-detail";
-    detail.textContent = `${vus} / ${motsDuPalier.length}`;
-    ligne.append(detail);
-    paliers.append(ligne);
-  }
+  const paliers = listePaliers();
   corps.append(paliers);
 
   el.append(corps);
   return el;
+
+  function titrePaliers() {
+    const h = document.createElement("h2");
+    h.className = "progress__title";
+    h.textContent = "Paliers";
+    return h;
+  }
+
+  /**
+   * Tous les paliers du manifeste, y compris ceux qui ne sont pas chargés :
+   * l'utilisateur doit voir où il va (chargement paresseux, §6).
+   */
+  function listePaliers() {
+    return PalierList({
+      paliers: entreesPaliers(state, contenu.mots, contenu.manifeste),
+      current: state.progression?.palier_actuel,
+      onSelect: (id) => enregistrer(choisirPalier(state, id)),
+    });
+  }
 }

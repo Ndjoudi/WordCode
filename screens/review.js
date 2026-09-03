@@ -2,7 +2,7 @@ import { SessionHeader } from "../components/molecules/session-header.js";
 import { Button } from "../components/atoms/button.js";
 import { RecallDeck } from "../components/organisms/recall-deck.js";
 import { construireRappel } from "../services/session-builder.js";
-import { fileDeRevision, appliquerResultat, aujourdhui } from "../services/leitner.js";
+import { fileDeRevisionMots, appliquerResultat, aujourdhui } from "../services/leitner.js";
 
 /**
  * Review — révision Leitner seule, hors session (README §11).
@@ -15,8 +15,7 @@ export function Review({ state, contenu, aller, enregistrer }) {
 
   const today = aujourdhui();
   const perso = new Map((state.perso ?? []).map((m) => [m.id, m]));
-  const mots = fileDeRevision(state, today)
-    .filter((entree) => entree.type === "word")
+  const mots = fileDeRevisionMots(state, today)
     .map((entree) => contenu.mots.get(entree.id) ?? perso.get(entree.id))
     .filter(Boolean);
 

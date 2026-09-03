@@ -5,7 +5,7 @@
  * ces fonctions et de passer le résultat aux organisms.
  */
 
-import { aujourdhui, fileDeRevision, estDue, FORMES_VERBE,
+import { aujourdhui, fileDeRevisionMots, estDue, FORMES_VERBE,
          appliquerResultatVerbe } from "./leitner.js";
 import { normaliser } from "./normalize.js";
 
@@ -89,6 +89,11 @@ export function objectifComposition(palier) {
  * Première partie jouable : jamais jouée, vérifiée, et dont les cinq mots sont
  * tous au catalogue chargé.
  *
+ * Les parties du palier COURANT passent d'abord — sans quoi choisir le palier
+ * 2 continuerait à servir les parties du palier 1, restées non jouées. Quand
+ * le palier courant est épuisé, on retombe sur les autres : une partie
+ * antérieure reste un bon support de révision.
+ *
  * @param {object} state
  * @param {object[]} parties
  * @param {Map<string,object>} catalogue
@@ -96,10 +101,16 @@ export function objectifComposition(palier) {
  */
 export function choisirPartie(state, parties = [], catalogue) {
   const jouees = new Set(state?.progression?.parties_jouees ?? []);
-  return parties.find((partie) =>
+  const courant = Number(state?.progression?.palier_actuel ?? 1);
+
+  const jouable = (partie) =>
     !jouees.has(partie.id)
     && partie.verifie === true
-    && partie.mots.every((id) => catalogue?.has(id))) ?? null;
+    && partie.mots.every((id) => catalogue?.has(id));
+
+  return parties.find((partie) => jouable(partie) && Number(partie.palier_min) === courant)
+    ?? parties.find(jouable)
+    ?? null;
 }
 
 /**
@@ -167,7 +178,7 @@ function composerSessionSansGrille({ state, catalogue, today = aujourdhui() } = 
 
   // La requête unique de la §4, restreinte aux mots : les verbes ont leur
   // propre écran et ne se mélangent pas aux sessions de vocabulaire.
-  const dus = fileDeRevision(state, today).filter((entree) => entree.type === "word");
+  const dus = fileDeRevisionMots(state, today);
   const perso = new Map((state?.perso ?? []).map((mot) => [mot.id, mot]));
 
   const revision = dus
@@ -397,6 +408,132 @@ export function avancerGroupe(state) {
   return {
     ...state,
     progression: { ...state.progression, groupe_verbe_actuel: suivant },
+  };
+}
+
+/* -------------------------------------------------------------------------- */
+/* Paliers (README §2.1)                                                       */
+/* -------------------------------------------------------------------------- */
+
+/** Boîte à partir de laquelle un mot compte comme acquis pour un palier (§2.1). */
+export const BOITE_ACQUISE = 3;
+
+/** « Déblocage de palier : 80 % des mots en boîte 3+, pas la complétion » (§2.1). */
+export const SEUIL_PALIER = 0.8;
+
+/**
+ * Avancement d'un palier, en DEUX chiffres calculés d'un seul tenant.
+ *
+ *   `vus`    — mots déjà rencontrés. C'est ce qui bouge à chaque session, donc
+ *              ce que l'utilisateur doit voir avancer.
+ *   `acquis` — mots en boîte 3 ou plus. C'est le seuil de déblocage (§2.1),
+ *              mais il ne peut pas bouger avant deux jours : une boîte 3
+ *              demande deux réussites à des dates différentes. L'afficher seul
+ *              donne une barre figée à zéro après une session parfaite.
+ *
+ * Ne peut se calculer que pour un palier CHARGÉ : les mots d'un palier
+ * verrouillé ne sont pas en mémoire (chargement paresseux, §6).
+ *
+ * @param {object} state
+ * @param {Map<string,object>} catalogue
+ * @param {number} palierId
+ * @returns {{mots:number, vus:number, acquis:number, seuil:number,
+ *            part:number, partVus:number, atteint:boolean, charge:boolean}}
+ */
+export function avancementPalier(state, catalogue, palierId) {
+  const mots = [...(catalogue?.values() ?? [])]
+    .filter((mot) => Number(mot.palier) === Number(palierId));
+
+  if (!mots.length) {
+    return { mots: 0, vus: 0, acquis: 0, seuil: 0,
+             part: 0, partVus: 0, atteint: false, charge: false };
+  }
+
+  const fiches = state?.words ?? {};
+  const vus = mots.filter((mot) => Boolean(fiches[mot.id])).length;
+  const acquis = mots.filter(
+    (mot) => Number(fiches[mot.id]?.b ?? 0) >= BOITE_ACQUISE).length;
+  const part = acquis / mots.length;
+
+  return {
+    mots: mots.length,
+    vus,
+    acquis,
+    seuil: Math.ceil(mots.length * SEUIL_PALIER),
+    part,
+    partVus: vus / mots.length,
+    atteint: part >= SEUIL_PALIER,
+    charge: true,
+  };
+}
+
+/**
+ * Applique la règle de déblocage de la §2.1 : quand 80 % des mots du palier
+ * courant sont en boîte 3+, le palier est validé et le suivant s'ouvre.
+ *
+ * @param {object} state
+ * @param {Map<string,object>} catalogue
+ * @param {object} manifeste
+ * @returns {object} nouvel état
+ */
+export function debloquerPaliers(state, catalogue, manifeste) {
+  const courant = Number(state?.progression?.palier_actuel ?? 1);
+  if (!avancementPalier(state, catalogue, courant).atteint) return state;
+
+  const ids = (manifeste?.paliers ?? []).map((p) => Number(p.id)).sort((a, b) => a - b);
+  const suivant = ids.find((id) => id > courant);
+
+  const valides = state.progression?.paliers_valides ?? [];
+  const nouveauxValides = valides.includes(courant) ? valides : [...valides, courant];
+
+  return {
+    ...state,
+    progression: {
+      ...state.progression,
+      paliers_valides: nouveauxValides,
+      palier_actuel: suivant ?? courant,
+    },
+  };
+}
+
+/**
+ * Entrées de palier prêtes à afficher, pour TOUS les écrans.
+ *
+ * Source unique : sans elle, chaque écran recalculait l'avancement à sa façon
+ * et affichait un chiffre différent pour la même chose.
+ *
+ * @param {object} state
+ * @param {Map<string,object>} catalogue
+ * @param {object} manifeste
+ * @returns {object[]} entrées du manifeste enrichies de `valide` et `avancement`
+ */
+export function entreesPaliers(state, catalogue, manifeste) {
+  const valides = new Set(state?.progression?.paliers_valides ?? []);
+  return (manifeste?.paliers ?? []).map((palier) => ({
+    ...palier,
+    valide: valides.has(Number(palier.id)),
+    avancement: avancementPalier(state, catalogue, palier.id),
+  }));
+}
+
+/**
+ * Choix explicite d'un palier par l'utilisateur.
+ *
+ * La §2.1 décrit le déblocage AUTOMATIQUE ; elle n'interdit pas de choisir
+ * soi-même. Les paliers déjà validés restent validés : revenir en arrière ne
+ * dévalide rien.
+ *
+ * @param {object} state
+ * @param {number} palierId
+ * @returns {object} nouvel état
+ */
+export function choisirPalier(state, palierId) {
+  const id = Number(palierId);
+  if (!Number.isInteger(id) || id < 1) return state;
+  if (Number(state?.progression?.palier_actuel) === id) return state;
+  return {
+    ...state,
+    progression: { ...state.progression, palier_actuel: id },
   };
 }
 

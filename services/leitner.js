@@ -197,6 +197,20 @@ export function fileDeRevision(state = {}, today = aujourdhui()) {
 }
 
 /**
+ * File de révision restreinte au vocabulaire.
+ *
+ * Les verbes ont leur propre écran et ne se mélangent pas aux sessions de
+ * vocabulaire : quatre appelants avaient besoin de ce filtre, il vit ici.
+ *
+ * @param {object} state
+ * @param {string} today
+ * @returns {Array<{type:string, id:string, forme:?string, fiche:object}>}
+ */
+export function fileDeRevisionMots(state = {}, today = aujourdhui()) {
+  return fileDeRevision(state, today).filter((entree) => entree.type === "word");
+}
+
+/**
  * Un verbe est acquis quand ses DEUX formes sont en boîte 5 (README §4).
  * @param {object} formes  { preterit, participe }
  * @returns {boolean}

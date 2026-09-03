@@ -1,10 +1,10 @@
 import { Button } from "../components/atoms/button.js";
 import { IconButton } from "../components/atoms/icon-button.js";
 import { Counter } from "../components/atoms/counter.js";
-import { ProgressBar } from "../components/atoms/progress-bar.js";
 import { Divider } from "../components/atoms/divider.js";
-import { composerSession } from "../services/session-builder.js";
-import { fileDeRevision } from "../services/leitner.js";
+import { PalierList } from "../components/organisms/palier-list.js";
+import { composerSession, entreesPaliers } from "../services/session-builder.js";
+import { fileDeRevisionMots } from "../services/leitner.js";
 
 /**
  * Home — série, mots à réviser, départ de session (README §11).
@@ -35,7 +35,7 @@ export function Home({ state, contenu, aller }) {
   barre.append(actions);
   el.append(barre);
 
-  const dus = fileDeRevision(state).filter((e) => e.type === "word");
+  const dus = fileDeRevisionMots(state);
   const session = composerSession({ state, catalogue: contenu.mots });
 
   const compteurs = document.createElement("div");
@@ -46,27 +46,13 @@ export function Home({ state, contenu, aller }) {
   );
   el.append(compteurs);
 
-  const palier = contenu.paliers.find(
-    (p) => Number(p.id) === Number(state.progression.palier_actuel));
-  if (palier) {
-    const bloc = document.createElement("div");
-    bloc.className = "home__palier";
-
-    const nom = document.createElement("p");
-    nom.className = "home__palier-name";
-    nom.textContent = `Palier ${palier.id} — ${palier.titre}`;
-    bloc.append(nom);
-
-    const total = [...contenu.mots.values()]
-      .filter((m) => Number(m.palier) === Number(palier.id)).length;
-    const vus = Object.keys(state.words).length;
-    bloc.append(ProgressBar({ value: vus, max: total || 1 }));
-
-    const detail = document.createElement("p");
-    detail.className = "home__palier-detail";
-    detail.textContent = `${vus} mot${vus > 1 ? "s" : ""} sur ${total} rencontré${vus > 1 ? "s" : ""}`;
-    bloc.append(detail);
-    el.append(bloc);
+  // Le palier courant est affiché par le MÊME composant que dans Progression,
+  // alimenté par la MÊME fonction de calcul. Sans bouton : le choix de palier
+  // se fait dans l'écran Progression.
+  const courant = entreesPaliers(state, contenu.mots, contenu.manifeste)
+    .filter((p) => Number(p.id) === Number(state.progression.palier_actuel));
+  if (courant.length) {
+    el.append(PalierList({ paliers: courant, current: state.progression.palier_actuel }));
   }
 
   el.append(Divider({ spacing: 5 }));

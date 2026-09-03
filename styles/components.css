@@ -715,6 +715,19 @@
 
 .deck__continue { margin-top: var(--sp-2); }
 
+/* Phase 4 : le clavier virtuel est ancré au bas de la fenêtre, comme en
+   phase 3 (README §17.6). L'écran réserve la place sous le contenu. */
+.deck__keyboard {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.ecran:has(.deck__keyboard) { padding-bottom: calc(var(--sp-7) * 5); }
+
 /* --- EndCard -------------------------------------------------------------- */
 .end-card {
   display: flex;
@@ -813,6 +826,53 @@
   font-size: var(--fs-xs);
 }
 /* --- PalierList ----------------------------------------------------------- */
+.palier-list { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.palier-list__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  box-shadow: var(--sh-sm);
+}
+
+.palier-list__item--current { background: var(--c-tile-filled); }
+
+.palier-list__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.palier-list__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: var(--sp-6);
+  height: var(--sp-6);
+  border-radius: var(--r-full);
+  background: var(--c-surface-alt);
+  font-weight: var(--fw-bold);
+}
+
+.palier-list__item--current .palier-list__number {
+  background: var(--c-primary);
+  color: var(--c-surface);
+}
+
+.palier-list__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: var(--fw-medium);
+}
+
+.palier-list__detail { color: var(--c-text-muted); font-size: var(--fs-sm); }
+
+.palier-list__threshold { color: var(--c-text-muted); font-size: var(--fs-xs); }
+
 
 
 /* ==========================================================================
@@ -866,18 +926,7 @@
   box-shadow: var(--sh-sm);
 }
 
-.home__palier {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-  padding: var(--sp-4);
-  border-radius: var(--r-lg);
-  background: var(--c-surface);
-  box-shadow: var(--sh-sm);
-}
 
-.home__palier-name { font-weight: var(--fw-medium); }
-.home__palier-detail { color: var(--c-text-muted); font-size: var(--fs-sm); }
 
 .home__summary { color: var(--c-text-muted); text-align: center; }
 
