@@ -40,7 +40,9 @@ function attendre() {
  * @param {{silencieux?:boolean}} options  ne pas re-rendre
  */
 function enregistrer(suivant, { silencieux = false } = {}) {
+  const palierAvant = state?.progression?.palier_actuel;
   state = suivant;
+
   if (!sauvegarder(state)) {
     racine.append(Toast({
       message: "Impossible d'écrire la progression : stockage indisponible.",
@@ -48,7 +50,27 @@ function enregistrer(suivant, { silencieux = false } = {}) {
       duration: 6000,
     }));
   }
+
+  // Le chargement est paresseux (§6) : changer de palier ouvre des fichiers
+  // qui n'étaient pas en mémoire. Il faut les lire avant de re-rendre.
+  if (state?.progression?.palier_actuel !== palierAvant) {
+    rechargerContenu().then(() => routeur?.rafraichir());
+    return;
+  }
+
   if (!silencieux) routeur?.rafraichir();
+}
+
+/** Relit le contenu pour l'état courant, filières comprises. */
+async function rechargerContenu() {
+  contenu = await chargerContenu({ state });
+  if (contenu.filieres?.verbes) {
+    const filiere = await chargerVerbes({ manifeste: contenu.manifeste });
+    contenu.verbes = filiere.verbes;
+    contenu.erreurs.push(...filiere.erreurs);
+  } else {
+    contenu.verbes = [];
+  }
 }
 
 /** Contexte passé à chaque écran. */
@@ -63,17 +85,7 @@ async function demarrer() {
   attendre();
 
   state = demarrerJournee(charger());
-  contenu = await chargerContenu({ state });
-
-  // La filière verbes n'est lue que si le manifeste la déclare ET que le
-  // fichier existe : le sondage du chargeur a déjà tranché (§7).
-  if (contenu.filieres?.verbes) {
-    const filiere = await chargerVerbes({ manifeste: contenu.manifeste });
-    contenu.verbes = filiere.verbes;
-    contenu.erreurs.push(...filiere.erreurs);
-  } else {
-    contenu.verbes = [];
-  }
+  await rechargerContenu();
 
   routeur = creerRouteur({
     defaut: "/",

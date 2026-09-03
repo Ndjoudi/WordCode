@@ -2,6 +2,7 @@ import { InputAnswer } from "../molecules/input-answer.js";
 import { ClozeInput } from "../molecules/cloze-input.js";
 import { Button } from "../atoms/button.js";
 import { ProgressDots } from "../atoms/progress-dots.js";
+import { Keyboard } from "../molecules/keyboard.js";
 
 /**
  * RecallDeck — phase 4, rappel actif (README §10.3, §3.4).
@@ -9,6 +10,10 @@ import { ProgressDots } from "../atoms/progress-dots.js";
  * Les items sont préparés par `session-builder.construireRappel` : traduction
  * isolée pour les mots de palier, phrase source à trous pour `perso` et
  * `organique`.
+ *
+ * La saisie passe par le clavier virtuel, pas par celui du téléphone : ce
+ * dernier apporte autocorrection et suggestions, alors que la §3.4 veut un
+ * rappel « sans aide ». Le champ est donc en `inputmode="none"` (README §17.6).
  *
  * @param {Array<object>} items
  * @param {Function} onComplete  reçoit [{ id, correct }]
@@ -28,6 +33,23 @@ export function RecallDeck({ items = [], onComplete } = {}) {
       return;
     }
     rendre();
+  };
+
+  /** Champ de l'exercice affiché, piloté par le clavier virtuel. */
+  let champ = null;
+
+  const clavier = Keyboard({
+    disabledKeys: [],
+    onKey: (lettre) => ecrire(lettre.toLowerCase()),
+    onBackspace: () => ecrire(null),
+  });
+  clavier.classList.add("deck__keyboard");
+
+  /** Écrit ou efface une lettre dans le champ courant. */
+  const ecrire = (lettre) => {
+    if (!champ || champ.readOnly) return;
+    champ.value = lettre === null ? champ.value.slice(0, -1) : champ.value + lettre;
+    champ.focus({ preventScroll: true });
   };
 
   const rendre = () => {
@@ -70,7 +92,16 @@ export function RecallDeck({ items = [], onComplete } = {}) {
           onSubmit: repondu,
         }));
 
+    // Le clavier natif ne doit jamais s'ouvrir ici : c'est le clavier virtuel
+    // qui écrit. Le champ reste focalisable pour garder le curseur visible.
+    champ = zone.querySelector("input");
+    if (champ) {
+      champ.inputMode = "none";
+      champ.readOnly = false;
+    }
+
     el.append(zone);
+    el.append(clavier);
   };
 
   rendre();

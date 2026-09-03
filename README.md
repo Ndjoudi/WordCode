@@ -740,7 +740,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `ClozeInput` | `molecules/cloze-input.js` | `sentence, blankIndex, expected, translation, onSubmit` | Phrase à trous |
 | `VerbTriad` | `molecules/verb-triad.js` | `verb, showBase, onSubmit` | Saisie prétérit + participe |
 | `WordOrder` | `molecules/word-order.js` | `tokens[], expected, onSubmit` | Remise en ordre (phrasal verbs) |
-| `Keyboard` | `molecules/keyboard.js` | `layout(qwerty), disabledKeys[], onKey, onBackspace` | Clavier virtuel unique de l'app |
+| `Keyboard` | `molecules/keyboard.js` | `layout(azerty\|qwerty), disabledKeys[], onKey, onBackspace` | Clavier virtuel unique de l'app |
 | `SessionHeader` | `molecules/session-header.js` | `title, onHome, onMenu, progress` | En-tête de toute session |
 | `StatRow` | `molecules/stat-row.js` | `label, value, icon` | Écran de progression |
 | `WordListItem` | `molecules/word-list-item.js` | `word, showBox, actions[]` | Ligne de mot dans toute liste |
@@ -1106,13 +1106,20 @@ héritée du parent — aucune couleur en dur dans les SVG.
 
 ### 17.6 Clavier
 
-- Disposition **QWERTY**, 3 rangées, 26 touches + retour arrière.
+- Disposition **AZERTY** par défaut — l'utilisateur est francophone et tape sur
+  un clavier français. `qwerty` reste disponible via la prop `layout`.
+- 3 rangées, 26 touches + retour arrière.
 - Aucune touche espace, aucune touche entrée (la validation est automatique).
 - Hauteur fixe, ancré en bas, `z-index: var(--z-keyboard)`.
 - Le clavier natif du téléphone n'est **jamais** invoqué en phase 3 : les cases
   ne sont pas des `<input>`.
-- En phase 4 et en saisie manuelle, c'est l'inverse : `<input>` natif standard,
-  pas de clavier virtuel.
+- **Le clavier virtuel sert aussi en phase 4.** Le clavier natif du téléphone
+  apporte autocorrection et suggestions, ce qui contredit la §3.4 : le rappel
+  actif doit se faire « sans aide ». Les champs de `RecallDeck` sont donc en
+  `inputmode="none"` et alimentés par le clavier virtuel.
+- **La saisie manuelle garde le clavier natif** : on y tape des phrases
+  entières, avec espaces et ponctuation — un clavier de 26 touches sans espace
+  ne conviendrait pas.
 
 ### 17.7 Retours visuels
 
@@ -1141,5 +1148,10 @@ palier 2.
 ## 18. Points ouverts
 
 - Volume cible : ~560 parties pour couvrir 2800 mots à 5 mots/partie
-- Statistiques de progression : quel niveau de détail dans `Progress` ?
+- ~~Statistiques de progression : quel niveau de détail dans `Progress` ?~~
+  **Tranché.** `PalierList` montre deux chiffres, issus d'un seul calcul
+  (`avancementPalier`) : la barre suit les **mots rencontrés**, parce que c'est
+  ce qui avance à chaque session ; le **seuil de déblocage** (§2.1) est écrit
+  en dessous. N'afficher que la boîte 3+ laissait la barre à zéro après une
+  session parfaite — une boîte 3 demande deux réussites à des jours différents.
 - Thème sombre : prévu par les tokens, à activer plus tard

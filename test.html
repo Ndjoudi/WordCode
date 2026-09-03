@@ -39,6 +39,7 @@
     import * as C from "./services/content-loader.js";
     import * as B from "./services/session-builder.js";
     import * as A from "./services/api.js";
+    import * as K from "./components/molecules/keyboard.js";
 
     const racine = document.getElementById("t");
     let ok = 0, ko = 0;
@@ -825,6 +826,170 @@
        avecOrganiques.progression.file_decouverte, ["p_00001"]);
     eq("et il est en tête de la file (§3.1)",
        B.fileDecouverte(avecOrganiques, new Map()).map((m) => m.en), ["very"]);
+
+    /* ====================================================== paliers ======= */
+    section("paliers — déblocage automatique (§2.1)");
+
+    const catPalier = new Map();
+    for (let i = 1; i <= 10; i += 1) {
+      catPalier.set(`w${i}`, { id: `w${i}`, en: `mot${i}`, fr: `m${i}`, palier: 1, rang_freq: i });
+    }
+    const manifDeux = { paliers: [{ id: 1 }, { id: 2 }] };
+
+    const p70 = S.etatInitial();
+    for (let i = 1; i <= 7; i += 1) p70.words[`w${i}`] = { b: 3, r: "x", s: 1, e: 0, d: null, st: "actif" };
+    const av70 = B.avancementPalier(p70, catPalier, 1);
+    eq("7 mots sur 10 en boîte 3+", [av70.acquis, av70.mots], [7, 10]);
+    eq("et 7 mots rencontrés", av70.vus, 7);
+    eq("le seuil de déblocage est chiffré", av70.seuil, 8);
+    faux("70 % ne débloque pas", av70.atteint);
+    eq("et le palier ne bouge pas",
+       B.debloquerPaliers(p70, catPalier, manifDeux).progression.palier_actuel, 1);
+
+    const p80 = S.etatInitial();
+    for (let i = 1; i <= 8; i += 1) p80.words[`w${i}`] = { b: 3, r: "x", s: 1, e: 0, d: null, st: "actif" };
+    vrai("80 % débloque (§2.1)", B.avancementPalier(p80, catPalier, 1).atteint);
+    const debloque = B.debloquerPaliers(p80, catPalier, manifDeux);
+    eq("le palier courant passe au suivant", debloque.progression.palier_actuel, 2);
+    eq("et le précédent est validé", debloque.progression.paliers_valides, [1]);
+
+    faux("la boîte 2 ne compte pas comme acquise",
+         B.avancementPalier(
+           { words: Object.fromEntries([...Array(10)].map((_, i) => [`w${i + 1}`, { b: 2 }])) },
+           catPalier, 1).atteint);
+
+    const dernier = B.debloquerPaliers(debloque, catPalier, { paliers: [{ id: 1 }, { id: 2 }] });
+    eq("sans palier suivant au manifeste, on reste en place",
+       dernier.progression.palier_actuel, 2);
+
+    eq("un palier non chargé n'a pas d'avancement calculable",
+       B.avancementPalier(S.etatInitial(), catPalier, 9).charge, false);
+
+    section("paliers — source unique d'avancement");
+
+    const catDeuxPaliers = new Map();
+    for (let i = 1; i <= 10; i += 1) {
+      catDeuxPaliers.set(`a${i}`, { id: `a${i}`, en: `a${i}`, fr: `a${i}`, palier: 1, rang_freq: i });
+      catDeuxPaliers.set(`b${i}`, { id: `b${i}`, en: `b${i}`, fr: `b${i}`, palier: 2, rang_freq: i });
+    }
+    const melange = S.etatInitial();
+    for (let i = 1; i <= 8; i += 1) melange.words[`a${i}`] = { b: 3, r: "x", s: 1, e: 0, d: null, st: "actif" };
+    for (let i = 1; i <= 4; i += 1) melange.words[`b${i}`] = { b: 1, r: "x", s: 0, e: 1, d: null, st: "actif" };
+
+    // Le défaut historique : compter TOUS les mots de l'état au lieu des seuls
+    // mots du palier. 12 fiches en mémoire, mais 8 seulement au palier 1.
+    eq("l'avancement d'un palier ne compte que SES mots",
+       B.avancementPalier(melange, catDeuxPaliers, 1).acquis, 8);
+    eq("les mots d'un autre palier n'y entrent pas",
+       B.avancementPalier(melange, catDeuxPaliers, 2).acquis, 0);
+    eq("le total est celui du palier, pas de l'état",
+       B.avancementPalier(melange, catDeuxPaliers, 1).mots, 10);
+
+    const entrees = B.entreesPaliers(melange, catDeuxPaliers,
+                                     { paliers: [{ id: 1, titre: "A" }, { id: 2, titre: "B" }] });
+    eq("entreesPaliers rend une entrée par palier du manifeste", entrees.length, 2);
+    eq("chaque entrée porte son avancement",
+       entrees.map((e) => e.avancement.acquis), [8, 0]);
+    eq("et son statut de validation", entrees.map((e) => e.valide), [false, false]);
+    eq("l'accueil et la progression lisent le MÊME calcul",
+       entrees[0].avancement, B.avancementPalier(melange, catDeuxPaliers, 1));
+
+    section("paliers — la barre doit avancer dès la première session");
+
+    // Après UNE session parfaite, les mots sont en boîte 2 : une boîte 3
+    // demande deux réussites à des dates différentes. Un indicateur fondé sur
+    // la seule boîte 3+ resterait figé à zéro, ce qui n'informe de rien.
+    const cat50 = new Map();
+    for (let i = 1; i <= 50; i += 1) cat50.set(`m${i}`, { id: `m${i}`, en: `m${i}`, palier: 1 });
+
+    const uneSession = S.etatInitial();
+    for (let i = 1; i <= 5; i += 1) {
+      uneSession.words[`m${i}`] = { b: 2, r: "2026-09-05", s: 1, e: 0, d: null, st: "actif" };
+    }
+    const avancement1Session = B.avancementPalier(uneSession, cat50, 1);
+    eq("5 mots rencontrés après une session", avancement1Session.vus, 5);
+    eq("aucun en boîte 3+ — c'est normal", avancement1Session.acquis, 0);
+    vrai("mais la barre a bougé", avancement1Session.partVus > 0);
+    eq("le seuil de déblocage vaut 80 % de 50", avancement1Session.seuil, 40);
+
+    const deuxJours = S.etatInitial();
+    for (let i = 1; i <= 5; i += 1) {
+      deuxJours.words[`m${i}`] = { b: 3, r: "x", s: 2, e: 0, d: null, st: "actif" };
+    }
+    for (let i = 6; i <= 10; i += 1) {
+      deuxJours.words[`m${i}`] = { b: 2, r: "x", s: 1, e: 0, d: null, st: "actif" };
+    }
+    const avancement2Jours = B.avancementPalier(deuxJours, cat50, 1);
+    eq("au 2e jour : 10 vus", avancement2Jours.vus, 10);
+    eq("dont 5 en boîte 3+", avancement2Jours.acquis, 5);
+    faux("le palier n'est pas encore acquis", avancement2Jours.atteint);
+
+    section("paliers — choix explicite par l'utilisateur");
+
+    const choisi = B.choisirPalier(S.etatInitial(), 2);
+    eq("choisir le palier 2", choisi.progression.palier_actuel, 2);
+    eq("revenir au palier 1 est permis",
+       B.choisirPalier(choisi, 1).progression.palier_actuel, 1);
+    eq("revenir en arrière ne dévalide rien",
+       B.choisirPalier(debloque, 1).progression.paliers_valides, [1]);
+    eq("choisir le palier déjà courant ne change rien",
+       B.choisirPalier(choisi, 2), choisi);
+    eq("un identifiant invalide est ignoré",
+       B.choisirPalier(choisi, 0).progression.palier_actuel, 2);
+
+    section("paliers — la partie servie suit le palier courant");
+
+    const catMixte = new Map([...catPalier]);
+    for (let i = 11; i <= 20; i += 1) {
+      catMixte.set(`w${i}`, { id: `w${i}`, en: `mot${i}`, fr: `m${i}`, palier: 2, rang_freq: i });
+    }
+    const partiesMixtes = [
+      { id: "p_001", verifie: true, palier_min: 1, mots: ["w1", "w2", "w3", "w4", "w5"],
+        phrase_en: "AB", alphabet: {}, indices: {} },
+      { id: "p_011", verifie: true, palier_min: 2, mots: ["w11", "w12", "w13", "w14", "w15"],
+        phrase_en: "AB", alphabet: {}, indices: {} },
+    ];
+
+    const auP1 = S.etatInitial();
+    eq("au palier 1, on sert une partie du palier 1",
+       B.choisirPartie(auP1, partiesMixtes, catMixte).id, "p_001");
+
+    const auP2 = B.choisirPalier(S.etatInitial(), 2);
+    eq("au palier 2, on sert une partie du palier 2 même si celles du 1 restent libres",
+       B.choisirPartie(auP2, partiesMixtes, catMixte).id, "p_011");
+
+    const p2Epuise = B.marquerPartieJouee(auP2, "p_011");
+    eq("palier courant épuisé → repli sur une partie antérieure",
+       B.choisirPartie(p2Epuise, partiesMixtes, catMixte).id, "p_001");
+
+    /* ====================================================== clavier ======= */
+    section("clavier — disposition AZERTY (§17.6)");
+
+    const clavier = K.Keyboard({ onKey: () => {}, onBackspace: () => {} });
+    const rangees = [...clavier.querySelectorAll(".keyboard__row")]
+      .map((r) => [...r.querySelectorAll(".btn")].map((b) => b.textContent).join(""));
+
+    eq("la disposition par défaut est AZERTY", K.DISPOSITION_DEFAUT, "azerty");
+    eq("rangée 1", rangees[0], "AZERTYUIOP");
+    eq("rangée 2", rangees[1], "QSDFGHJKLM");
+    eq("rangée 3", rangees[2], "WXCVBN");
+    eq("26 touches en tout", rangees.join("").length, 26);
+    eq("les 26 lettres, sans doublon", new Set(rangees.join("")).size, 26);
+    eq("un seul retour arrière", clavier.querySelectorAll(".icon-btn").length, 1);
+    faux("aucune touche espace", rangees.join("").includes(" "));
+
+    const qwerty = K.Keyboard({ layout: "qwerty", onKey: () => {} });
+    eq("QWERTY reste disponible",
+       [...qwerty.querySelectorAll(".keyboard__row")][0].textContent, "QWERTYUIOP");
+
+    const inconnu = K.Keyboard({ layout: "dvorak", onKey: () => {} });
+    eq("une disposition inconnue retombe sur AZERTY",
+       [...inconnu.querySelectorAll(".keyboard__row")][0].textContent, "AZERTYUIOP");
+
+    const grisees = K.Keyboard({ disabledKeys: ["A", "z"], onKey: () => {} });
+    eq("disabledKeys grise les touches, casse indifférente",
+       [...grisees.querySelectorAll(".btn")].filter((b) => b.disabled)
+         .map((b) => b.textContent).sort(), ["A", "Z"]);
 
     /* ==================================================== conclusion ====== */
     const sum = document.getElementById("sum");

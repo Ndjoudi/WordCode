@@ -1,10 +1,14 @@
 import { Button } from "../atoms/button.js";
 import { IconButton } from "../atoms/icon-button.js";
 
-/** Disposition QWERTY, 3 rangées, 26 touches (README §17.6). */
+/** Dispositions à 3 rangées, 26 touches (README §17.6). */
 const DISPOSITIONS = {
+  azerty: ["AZERTYUIOP", "QSDFGHJKLM", "WXCVBN"],
   qwerty: ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"],
 };
+
+/** Disposition par défaut : l'utilisateur est francophone. */
+export const DISPOSITION_DEFAUT = "azerty";
 
 /**
  * Keyboard — clavier virtuel UNIQUE de l'application (README §10.2, §10.4).
@@ -14,15 +18,15 @@ const DISPOSITIONS = {
  * dès qu'un mot est complet (README §17.6). Le clavier natif du téléphone
  * n'est jamais invoqué en phase 3, les cases ne sont pas des <input>.
  *
- * @param {string}   layout        "qwerty"
+ * @param {string}   layout        "azerty" ou "qwerty"
  * @param {string[]} disabledKeys  lettres grisées
  * @param {Function} onKey         reçoit la lettre majuscule
  * @param {Function} onBackspace
  * @returns {HTMLDivElement}
  */
-export function Keyboard({ layout = "qwerty", disabledKeys = [],
+export function Keyboard({ layout = DISPOSITION_DEFAUT, disabledKeys = [],
                            onKey, onBackspace } = {}) {
-  const rangees = DISPOSITIONS[layout] ?? DISPOSITIONS.qwerty;
+  const rangees = DISPOSITIONS[layout] ?? DISPOSITIONS[DISPOSITION_DEFAUT];
   const grisees = new Set(disabledKeys.map((k) => String(k).toUpperCase()));
 
   const el = document.createElement("div");
