@@ -1,0 +1,2159 @@
+{
+  "palier": 6,
+  "version": 1,
+  "parties": [
+    {
+      "id": "p_051",
+      "type": "A",
+      "palier_min": 6,
+      "phrase_en": "YOU ARE WHAT YOU EAT",
+      "phrase_fr": "On est ce que l'on mange",
+      "contexte_fr": "Traduction d'une formule du gastronome français Brillat-Savarin (1826), reprise en anglais dans les années 1920 : l'alimentation façonne la santé.",
+      "mots": [
+        "w_00287",
+        "w_00251",
+        "w_00004",
+        "w_00027",
+        "w_00077"
+      ],
+      "mot_amorce": "w_00004",
+      "lettres_offertes": [
+        "A",
+        "B",
+        "D",
+        "E",
+        "R"
+      ],
+      "alphabet": {
+        "1": "Y",
+        "2": "O",
+        "3": "U",
+        "4": "A",
+        "5": "R",
+        "6": "E",
+        "7": "W",
+        "8": "H",
+        "9": "T",
+        "10": "F",
+        "11": "D",
+        "12": "B",
+        "13": "C",
+        "14": "L",
+        "15": "N",
+        "16": "S",
+        "17": "G"
+      },
+      "indices": {
+        "w_00287": {
+          "en": "To put food in your mouth",
+          "fr": "manger",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "put",
+              "trad": "mettre",
+              "ref": null
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "your",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "mouth",
+              "trad": "bouche",
+              "ref": "w_00155"
+            }
+          ]
+        },
+        "w_00251": {
+          "en": "What you eat when you are hungry",
+          "fr": "nourriture",
+          "segments": [
+            {
+              "txt": "What",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "eat",
+              "trad": "manger",
+              "ref": "w_00287"
+            },
+            {
+              "txt": "when",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "are",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "hungry",
+              "trad": "affamé",
+              "ref": "w_00299"
+            }
+          ]
+        },
+        "w_00004": {
+          "en": "You eat it with butter",
+          "fr": "pain",
+          "segments": [
+            {
+              "txt": "You",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "eat",
+              "trad": "manger",
+              "ref": "w_00287"
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "butter",
+              "trad": "beurre",
+              "ref": "w_00265"
+            }
+          ]
+        },
+        "w_00027": {
+          "en": "Without dirt",
+          "fr": "propre",
+          "segments": [
+            {
+              "txt": "Without",
+              "trad": "sans",
+              "ref": null
+            },
+            {
+              "txt": "dirt",
+              "trad": "saleté",
+              "ref": null
+            }
+          ]
+        },
+        "w_00077": {
+          "en": "Able to carry heavy things",
+          "fr": "fort",
+          "segments": [
+            {
+              "txt": "Able",
+              "trad": "capable",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "carry",
+              "trad": "porter",
+              "ref": "w_00088"
+            },
+            {
+              "txt": "heavy",
+              "trad": "lourd",
+              "ref": "w_00025"
+            },
+            {
+              "txt": "things",
+              "trad": "choses",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_052",
+      "type": "A",
+      "palier_min": 6,
+      "phrase_en": "TOO MANY COOKS SPOIL THE BROTH",
+      "phrase_fr": "Trop de cuisiniers gâtent la sauce",
+      "contexte_fr": "Proverbe attesté au XVIe siècle. Quand trop de personnes dirigent la même tâche, le résultat est mauvais.",
+      "mots": [
+        "w_00286",
+        "w_00270",
+        "w_00039",
+        "w_00040",
+        "w_00125"
+      ],
+      "mot_amorce": "w_00125",
+      "lettres_offertes": [
+        "G",
+        "O",
+        "P",
+        "R",
+        "U"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "O",
+        "3": "M",
+        "4": "A",
+        "5": "N",
+        "6": "Y",
+        "7": "C",
+        "8": "K",
+        "9": "S",
+        "10": "P",
+        "11": "I",
+        "12": "L",
+        "13": "H",
+        "14": "E",
+        "15": "B",
+        "16": "R",
+        "17": "U",
+        "18": "W",
+        "19": "G"
+      },
+      "indices": {
+        "w_00286": {
+          "en": "To make food hot and ready to eat",
+          "fr": "cuisiner",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "make",
+              "trad": "faire",
+              "ref": null
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "hot",
+              "trad": "chaud",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "ready",
+              "trad": "prêt",
+              "ref": "w_00145"
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "eat",
+              "trad": "manger",
+              "ref": "w_00287"
+            }
+          ]
+        },
+        "w_00270": {
+          "en": "A hot liquid meal you eat with a spoon",
+          "fr": "soupe",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "hot",
+              "trad": "chaud",
+              "ref": null
+            },
+            {
+              "txt": "liquid",
+              "trad": "liquide",
+              "ref": null
+            },
+            {
+              "txt": "meal",
+              "trad": "repas",
+              "ref": "w_00252"
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "eat",
+              "trad": "manger",
+              "ref": "w_00287"
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "spoon",
+              "trad": "cuillère",
+              "ref": "w_00280"
+            }
+          ]
+        },
+        "w_00039": {
+          "en": "To have a job in an office",
+          "fr": "travailler",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "have",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "job",
+              "trad": "travail",
+              "ref": null
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "an",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "office",
+              "trad": "bureau",
+              "ref": "w_00101"
+            }
+          ]
+        },
+        "w_00040": {
+          "en": "To give a hand to someone",
+          "fr": "aider",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "give",
+              "trad": "donner",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "hand",
+              "trad": "main",
+              "ref": "w_00056"
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "someone",
+              "trad": "quelqu'un",
+              "ref": null
+            }
+          ]
+        },
+        "w_00125": {
+          "en": "Several people or things together",
+          "fr": "groupe",
+          "segments": [
+            {
+              "txt": "Several",
+              "trad": "plusieurs",
+              "ref": null
+            },
+            {
+              "txt": "people",
+              "trad": "les gens",
+              "ref": null
+            },
+            {
+              "txt": "or",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "things",
+              "trad": "choses",
+              "ref": null
+            },
+            {
+              "txt": "together",
+              "trad": "ensemble",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_053",
+      "type": "A",
+      "palier_min": 6,
+      "phrase_en": "HUNGER IS THE BEST SAUCE",
+      "phrase_fr": "La faim est le meilleur assaisonnement",
+      "contexte_fr": "Proverbe repris de Cicéron. Quand on a vraiment faim, le plat le plus simple paraît excellent.",
+      "mots": [
+        "w_00299",
+        "w_00298",
+        "w_00004",
+        "w_00287",
+        "w_00252"
+      ],
+      "mot_amorce": "w_00252",
+      "lettres_offertes": [
+        "A",
+        "E",
+        "L",
+        "M"
+      ],
+      "alphabet": {
+        "1": "H",
+        "2": "U",
+        "3": "N",
+        "4": "G",
+        "5": "E",
+        "6": "R",
+        "7": "I",
+        "8": "S",
+        "9": "T",
+        "10": "B",
+        "11": "A",
+        "12": "C",
+        "13": "Y",
+        "14": "D",
+        "15": "M",
+        "16": "L"
+      },
+      "indices": {
+        "w_00299": {
+          "en": "Wanting to eat something",
+          "fr": "affamé",
+          "segments": [
+            {
+              "txt": "Wanting",
+              "trad": "voulant",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "eat",
+              "trad": "manger",
+              "ref": "w_00287"
+            },
+            {
+              "txt": "something",
+              "trad": "quelque chose",
+              "ref": null
+            }
+          ]
+        },
+        "w_00298": {
+          "en": "With a very good taste",
+          "fr": "savoureux",
+          "segments": [
+            {
+              "txt": "With",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "good",
+              "trad": "bon",
+              "ref": null
+            },
+            {
+              "txt": "taste",
+              "trad": "goût",
+              "ref": "w_00167"
+            }
+          ]
+        },
+        "w_00004": {
+          "en": "You eat it with butter",
+          "fr": "pain",
+          "segments": [
+            {
+              "txt": "You",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "eat",
+              "trad": "manger",
+              "ref": "w_00287"
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "butter",
+              "trad": "beurre",
+              "ref": "w_00265"
+            }
+          ]
+        },
+        "w_00287": {
+          "en": "To put food in your mouth",
+          "fr": "manger",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "put",
+              "trad": "mettre",
+              "ref": null
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "your",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "mouth",
+              "trad": "bouche",
+              "ref": "w_00155"
+            }
+          ]
+        },
+        "w_00252": {
+          "en": "The food you eat at one time",
+          "fr": "repas",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "eat",
+              "trad": "manger",
+              "ref": "w_00287"
+            },
+            {
+              "txt": "at",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "one",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "time",
+              "trad": "temps",
+              "ref": "w_00051"
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_054",
+      "type": "A",
+      "palier_min": 6,
+      "phrase_en": "A PIECE OF CAKE",
+      "phrase_fr": "Les doigts dans le nez",
+      "contexte_fr": "Expression américaine des années 1930 : une chose très facile à faire. On dit aussi « as easy as pie ».",
+      "mots": [
+        "w_00271",
+        "w_00296",
+        "w_00024",
+        "w_00147",
+        "w_00287"
+      ],
+      "mot_amorce": "w_00287",
+      "lettres_offertes": [
+        "A",
+        "E",
+        "T"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "P",
+        "3": "I",
+        "4": "E",
+        "5": "C",
+        "6": "O",
+        "7": "F",
+        "8": "K",
+        "9": "S",
+        "10": "W",
+        "11": "T",
+        "12": "Q",
+        "13": "U",
+        "14": "M",
+        "15": "L"
+      },
+      "indices": {
+        "w_00271": {
+          "en": "A sweet food you bake for a party",
+          "fr": "gâteau",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "sweet",
+              "trad": "sucré",
+              "ref": "w_00296"
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "bake",
+              "trad": "cuire",
+              "ref": "w_00288"
+            },
+            {
+              "txt": "for",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "party",
+              "trad": "fête",
+              "ref": null
+            }
+          ]
+        },
+        "w_00296": {
+          "en": "With the taste of sugar",
+          "fr": "sucré",
+          "segments": [
+            {
+              "txt": "With",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "taste",
+              "trad": "goût",
+              "ref": "w_00167"
+            },
+            {
+              "txt": "of",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "sugar",
+              "trad": "sucre",
+              "ref": "w_00266"
+            }
+          ]
+        },
+        "w_00024": {
+          "en": "Very fast",
+          "fr": "rapide",
+          "segments": [
+            {
+              "txt": "Very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "fast",
+              "trad": "vite",
+              "ref": "w_00245"
+            }
+          ]
+        },
+        "w_00147": {
+          "en": "Very easy to understand",
+          "fr": "simple",
+          "segments": [
+            {
+              "txt": "Very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "easy",
+              "trad": "facile",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "understand",
+              "trad": "comprendre",
+              "ref": null
+            }
+          ]
+        },
+        "w_00287": {
+          "en": "To put food in your mouth",
+          "fr": "manger",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "put",
+              "trad": "mettre",
+              "ref": null
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "your",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "mouth",
+              "trad": "bouche",
+              "ref": "w_00155"
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_055",
+      "type": "A",
+      "palier_min": 6,
+      "phrase_en": "BREAD AND BUTTER",
+      "phrase_fr": "Le gagne-pain",
+      "contexte_fr": "Désigne ce qui assure le revenu de base d'une personne, l'essentiel avant le superflu.",
+      "mots": [
+        "w_00265",
+        "w_00252",
+        "w_00004",
+        "w_00009",
+        "w_00039"
+      ],
+      "mot_amorce": "w_00004",
+      "lettres_offertes": [
+        "A",
+        "B",
+        "D",
+        "E",
+        "R"
+      ],
+      "alphabet": {
+        "1": "B",
+        "2": "R",
+        "3": "E",
+        "4": "A",
+        "5": "D",
+        "6": "N",
+        "7": "U",
+        "8": "T",
+        "9": "M",
+        "10": "L",
+        "11": "O",
+        "12": "Y",
+        "13": "W",
+        "14": "K"
+      },
+      "indices": {
+        "w_00265": {
+          "en": "A soft yellow food you put on bread",
+          "fr": "beurre",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "soft",
+              "trad": "doux",
+              "ref": "w_00083"
+            },
+            {
+              "txt": "yellow",
+              "trad": "jaune",
+              "ref": null
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "put",
+              "trad": "mettre",
+              "ref": null
+            },
+            {
+              "txt": "on",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "bread",
+              "trad": "pain",
+              "ref": "w_00004"
+            }
+          ]
+        },
+        "w_00252": {
+          "en": "The food you eat at one time",
+          "fr": "repas",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "eat",
+              "trad": "manger",
+              "ref": "w_00287"
+            },
+            {
+              "txt": "at",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "one",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "time",
+              "trad": "temps",
+              "ref": "w_00051"
+            }
+          ]
+        },
+        "w_00004": {
+          "en": "You eat it with butter",
+          "fr": "pain",
+          "segments": [
+            {
+              "txt": "You",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "eat",
+              "trad": "manger",
+              "ref": "w_00287"
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "butter",
+              "trad": "beurre",
+              "ref": "w_00265"
+            }
+          ]
+        },
+        "w_00009": {
+          "en": "You pay for things with it",
+          "fr": "argent",
+          "segments": [
+            {
+              "txt": "You",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "pay",
+              "trad": "payer",
+              "ref": null
+            },
+            {
+              "txt": "for",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "things",
+              "trad": "choses",
+              "ref": null
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00039": {
+          "en": "To have a job in an office",
+          "fr": "travailler",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "have",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "job",
+              "trad": "travail",
+              "ref": null
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "an",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "office",
+              "trad": "bureau",
+              "ref": "w_00101"
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_056",
+      "type": "A",
+      "palier_min": 6,
+      "phrase_en": "HALF A LOAF IS BETTER THAN NONE",
+      "phrase_fr": "Faute de grives, on mange des merles",
+      "contexte_fr": "Proverbe anglais du XVIe siècle. Il vaut mieux obtenir une partie de ce que l'on voulait que rien du tout.",
+      "mots": [
+        "w_00297",
+        "w_00295",
+        "w_00004",
+        "w_00022",
+        "w_00040"
+      ],
+      "mot_amorce": "w_00022",
+      "lettres_offertes": [
+        "A",
+        "L",
+        "M",
+        "S"
+      ],
+      "alphabet": {
+        "1": "H",
+        "2": "A",
+        "3": "L",
+        "4": "F",
+        "5": "O",
+        "6": "I",
+        "7": "S",
+        "8": "B",
+        "9": "E",
+        "10": "T",
+        "11": "R",
+        "12": "N",
+        "13": "D",
+        "14": "M",
+        "15": "P"
+      },
+      "indices": {
+        "w_00297": {
+          "en": "New, not old, just made today",
+          "fr": "frais",
+          "segments": [
+            {
+              "txt": "New",
+              "trad": "nouveau",
+              "ref": null
+            },
+            {
+              "txt": "not",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "old",
+              "trad": "vieux",
+              "ref": null
+            },
+            {
+              "txt": "just",
+              "trad": "juste",
+              "ref": null
+            },
+            {
+              "txt": "made",
+              "trad": "fait",
+              "ref": null
+            },
+            {
+              "txt": "today",
+              "trad": "aujourd'hui",
+              "ref": null
+            }
+          ]
+        },
+        "w_00295": {
+          "en": "To make it full",
+          "fr": "remplir",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "make",
+              "trad": "faire",
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "full",
+              "trad": "plein",
+              "ref": null
+            }
+          ]
+        },
+        "w_00004": {
+          "en": "You eat it with butter",
+          "fr": "pain",
+          "segments": [
+            {
+              "txt": "You",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "eat",
+              "trad": "manger",
+              "ref": "w_00287"
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "butter",
+              "trad": "beurre",
+              "ref": "w_00265"
+            }
+          ]
+        },
+        "w_00022": {
+          "en": "The size of a mouse",
+          "fr": "petit",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "size",
+              "trad": "taille",
+              "ref": null
+            },
+            {
+              "txt": "of",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "mouse",
+              "trad": "souris",
+              "ref": null
+            }
+          ]
+        },
+        "w_00040": {
+          "en": "To give a hand to someone",
+          "fr": "aider",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "give",
+              "trad": "donner",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "hand",
+              "trad": "main",
+              "ref": "w_00056"
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "someone",
+              "trad": "quelqu'un",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_057",
+      "type": "A",
+      "palier_min": 6,
+      "phrase_en": "DO NOT BITE OFF MORE THAN YOU CAN CHEW",
+      "phrase_fr": "Qui trop embrasse mal étreint",
+      "contexte_fr": "Image alimentaire américaine du XIXe siècle : ne pas prendre une bouchée plus grosse que la bouche, donc ne pas se charger au-delà de ses forces.",
+      "mots": [
+        "w_00287",
+        "w_00258",
+        "w_00023",
+        "w_00039",
+        "w_00024"
+      ],
+      "mot_amorce": "w_00023",
+      "lettres_offertes": [
+        "A",
+        "E",
+        "G",
+        "L",
+        "R"
+      ],
+      "alphabet": {
+        "1": "D",
+        "2": "O",
+        "3": "N",
+        "4": "T",
+        "5": "B",
+        "6": "I",
+        "7": "E",
+        "8": "F",
+        "9": "M",
+        "10": "R",
+        "11": "H",
+        "12": "A",
+        "13": "Y",
+        "14": "U",
+        "15": "C",
+        "16": "W",
+        "17": "L",
+        "18": "G",
+        "19": "K",
+        "20": "Q"
+      },
+      "indices": {
+        "w_00287": {
+          "en": "To put food in your mouth",
+          "fr": "manger",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "put",
+              "trad": "mettre",
+              "ref": null
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "your",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "mouth",
+              "trad": "bouche",
+              "ref": "w_00155"
+            }
+          ]
+        },
+        "w_00258": {
+          "en": "Food that comes from an animal",
+          "fr": "viande",
+          "segments": [
+            {
+              "txt": "Food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "that",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "comes",
+              "trad": "vient",
+              "ref": null
+            },
+            {
+              "txt": "from",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "an",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "animal",
+              "trad": "animal",
+              "ref": "w_00069"
+            }
+          ]
+        },
+        "w_00023": {
+          "en": "The size of an elephant",
+          "fr": "grand",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "size",
+              "trad": "taille",
+              "ref": null
+            },
+            {
+              "txt": "of",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "an",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "elephant",
+              "trad": "éléphant",
+              "ref": null
+            }
+          ]
+        },
+        "w_00039": {
+          "en": "To have a job in an office",
+          "fr": "travailler",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "have",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "job",
+              "trad": "travail",
+              "ref": null
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "an",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "office",
+              "trad": "bureau",
+              "ref": "w_00101"
+            }
+          ]
+        },
+        "w_00024": {
+          "en": "Very fast",
+          "fr": "rapide",
+          "segments": [
+            {
+              "txt": "Very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "fast",
+              "trad": "vite",
+              "ref": "w_00245"
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_058",
+      "type": "A",
+      "palier_min": 6,
+      "phrase_en": "THE ICING ON THE CAKE",
+      "phrase_fr": "La cerise sur le gâteau",
+      "contexte_fr": "Le glaçage arrive en dernier sur le gâteau : ce qui rend une bonne chose encore meilleure.",
+      "mots": [
+        "w_00271",
+        "w_00266",
+        "w_00296",
+        "w_00021",
+        "w_00022"
+      ],
+      "mot_amorce": "w_00296",
+      "lettres_offertes": [
+        "E",
+        "S",
+        "T",
+        "W"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "I",
+        "5": "C",
+        "6": "N",
+        "7": "G",
+        "8": "O",
+        "9": "A",
+        "10": "K",
+        "11": "S",
+        "12": "U",
+        "13": "R",
+        "14": "W",
+        "15": "P",
+        "16": "Y",
+        "17": "M",
+        "18": "L"
+      },
+      "indices": {
+        "w_00271": {
+          "en": "A sweet food you bake for a party",
+          "fr": "gâteau",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "sweet",
+              "trad": "sucré",
+              "ref": "w_00296"
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "bake",
+              "trad": "cuire",
+              "ref": "w_00288"
+            },
+            {
+              "txt": "for",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "party",
+              "trad": "fête",
+              "ref": null
+            }
+          ]
+        },
+        "w_00266": {
+          "en": "White grains that make food sweet",
+          "fr": "sucre",
+          "segments": [
+            {
+              "txt": "White",
+              "trad": "blanc",
+              "ref": "w_00029"
+            },
+            {
+              "txt": "grains",
+              "trad": "grains",
+              "ref": null
+            },
+            {
+              "txt": "that",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "make",
+              "trad": "faire",
+              "ref": null
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "sweet",
+              "trad": "sucré",
+              "ref": "w_00296"
+            }
+          ]
+        },
+        "w_00296": {
+          "en": "With the taste of sugar",
+          "fr": "sucré",
+          "segments": [
+            {
+              "txt": "With",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "taste",
+              "trad": "goût",
+              "ref": "w_00167"
+            },
+            {
+              "txt": "of",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "sugar",
+              "trad": "sucre",
+              "ref": "w_00266"
+            }
+          ]
+        },
+        "w_00021": {
+          "en": "The feeling when you smile",
+          "fr": "heureux",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "feeling",
+              "trad": "sentiment",
+              "ref": "w_00370"
+            },
+            {
+              "txt": "when",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "smile",
+              "trad": "sourire",
+              "ref": "w_00191"
+            }
+          ]
+        },
+        "w_00022": {
+          "en": "The size of a mouse",
+          "fr": "petit",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "size",
+              "trad": "taille",
+              "ref": null
+            },
+            {
+              "txt": "of",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "mouse",
+              "trad": "souris",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_059",
+      "type": "A",
+      "palier_min": 6,
+      "phrase_en": "SALT OF THE EARTH",
+      "phrase_fr": "Le sel de la terre",
+      "contexte_fr": "Expression tirée de l'Évangile selon Matthieu. Elle désigne des gens simples, honnêtes et solides.",
+      "mots": [
+        "w_00267",
+        "w_00252",
+        "w_00027",
+        "w_00039",
+        "w_00017"
+      ],
+      "mot_amorce": "w_00017",
+      "lettres_offertes": [
+        "D",
+        "E",
+        "F",
+        "I",
+        "L"
+      ],
+      "alphabet": {
+        "1": "S",
+        "2": "A",
+        "3": "L",
+        "4": "T",
+        "5": "O",
+        "6": "F",
+        "7": "H",
+        "8": "E",
+        "9": "R",
+        "10": "M",
+        "11": "C",
+        "12": "N",
+        "13": "W",
+        "14": "K",
+        "15": "I",
+        "16": "D"
+      },
+      "indices": {
+        "w_00267": {
+          "en": "White grains from the sea, for the soup",
+          "fr": "sel",
+          "segments": [
+            {
+              "txt": "White",
+              "trad": "blanc",
+              "ref": "w_00029"
+            },
+            {
+              "txt": "grains",
+              "trad": "grains",
+              "ref": null
+            },
+            {
+              "txt": "from",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "sea",
+              "trad": "mer",
+              "ref": "w_00225"
+            },
+            {
+              "txt": "for",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "soup",
+              "trad": "soupe",
+              "ref": "w_00270"
+            }
+          ]
+        },
+        "w_00252": {
+          "en": "The food you eat at one time",
+          "fr": "repas",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "eat",
+              "trad": "manger",
+              "ref": "w_00287"
+            },
+            {
+              "txt": "at",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "one",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "time",
+              "trad": "temps",
+              "ref": "w_00051"
+            }
+          ]
+        },
+        "w_00027": {
+          "en": "Without dirt",
+          "fr": "propre",
+          "segments": [
+            {
+              "txt": "Without",
+              "trad": "sans",
+              "ref": null
+            },
+            {
+              "txt": "dirt",
+              "trad": "saleté",
+              "ref": null
+            }
+          ]
+        },
+        "w_00039": {
+          "en": "To have a job in an office",
+          "fr": "travailler",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "have",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "job",
+              "trad": "travail",
+              "ref": null
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "an",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "office",
+              "trad": "bureau",
+              "ref": "w_00101"
+            }
+          ]
+        },
+        "w_00017": {
+          "en": "Open land where a farmer grows wheat",
+          "fr": "champ",
+          "segments": [
+            {
+              "txt": "Open",
+              "trad": "ouvrir",
+              "ref": "w_00041"
+            },
+            {
+              "txt": "land",
+              "trad": "terre",
+              "ref": null
+            },
+            {
+              "txt": "where",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "farmer",
+              "trad": "agriculteur",
+              "ref": null
+            },
+            {
+              "txt": "grows",
+              "trad": "pousse",
+              "ref": null
+            },
+            {
+              "txt": "wheat",
+              "trad": "blé",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_060",
+      "type": "A",
+      "palier_min": 6,
+      "phrase_en": "EAT LIKE A BIRD",
+      "phrase_fr": "Manger comme un moineau",
+      "contexte_fr": "Se dit d'une personne qui mange très peu. L'image est trompeuse : les oiseaux mangent beaucoup pour leur poids.",
+      "mots": [
+        "w_00287",
+        "w_00252",
+        "w_00070",
+        "w_00022",
+        "w_00024"
+      ],
+      "mot_amorce": "w_00070",
+      "lettres_offertes": [
+        "B",
+        "D",
+        "I",
+        "R"
+      ],
+      "alphabet": {
+        "1": "E",
+        "2": "A",
+        "3": "T",
+        "4": "L",
+        "5": "I",
+        "6": "K",
+        "7": "B",
+        "8": "R",
+        "9": "D",
+        "10": "M",
+        "11": "S",
+        "12": "Q",
+        "13": "U",
+        "14": "C"
+      },
+      "indices": {
+        "w_00287": {
+          "en": "To put food in your mouth",
+          "fr": "manger",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "put",
+              "trad": "mettre",
+              "ref": null
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "your",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "mouth",
+              "trad": "bouche",
+              "ref": "w_00155"
+            }
+          ]
+        },
+        "w_00252": {
+          "en": "The food you eat at one time",
+          "fr": "repas",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "food",
+              "trad": "nourriture",
+              "ref": "w_00251"
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "eat",
+              "trad": "manger",
+              "ref": "w_00287"
+            },
+            {
+              "txt": "at",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "one",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "time",
+              "trad": "temps",
+              "ref": "w_00051"
+            }
+          ]
+        },
+        "w_00070": {
+          "en": "It has wings and can fly",
+          "fr": "oiseau",
+          "segments": [
+            {
+              "txt": "It",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "has",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "wings",
+              "trad": "ailes",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "can",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "fly",
+              "trad": "voler",
+              "ref": "w_00231"
+            }
+          ]
+        },
+        "w_00022": {
+          "en": "The size of a mouse",
+          "fr": "petit",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "size",
+              "trad": "taille",
+              "ref": null
+            },
+            {
+              "txt": "of",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "mouse",
+              "trad": "souris",
+              "ref": null
+            }
+          ]
+        },
+        "w_00024": {
+          "en": "Very fast",
+          "fr": "rapide",
+          "segments": [
+            {
+              "txt": "Very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "fast",
+              "trad": "vite",
+              "ref": "w_00245"
+            }
+          ]
+        }
+      },
+      "verifie": true
+    }
+  ]
+}

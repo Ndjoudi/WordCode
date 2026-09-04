@@ -892,7 +892,17 @@ La clé n'est **jamais** dans le code client.
 
 ### Contrat
 
-Endpoint : `POST /api/translate`, même origine que l'application.
+Endpoint : `POST /api/translate`.
+
+**Hébergement scindé.** L'application est servie par GitHub Pages, qui ne sait
+qu'envoyer des fichiers et n'exécute jamais `api/translate.js` — il le renvoie
+en texte brut. La fonction vit donc sur Vercel, et `services/api.js` l'appelle
+par une **URL absolue**. La fonction renvoie `Access-Control-Allow-Origin: *`
+et répond aux requêtes `OPTIONS` : le CORS est couvert.
+
+Une seule ligne porte cette adresse, la constante `ENDPOINT` de
+`services/api.js`. Tant qu'elle contient l'hôte témoin, l'application le dit
+franchement au lieu de laisser croire à une panne.
 
 ```json
 // requête

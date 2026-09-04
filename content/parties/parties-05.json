@@ -1,0 +1,2183 @@
+{
+  "palier": 5,
+  "version": 1,
+  "parties": [
+    {
+      "id": "p_041",
+      "type": "A",
+      "palier_min": 5,
+      "phrase_en": "ALL ROADS LEAD TO ROME",
+      "phrase_fr": "Tous les chemins mènent à Rome",
+      "contexte_fr": "Proverbe né du réseau routier de l'Empire romain, dont toutes les voies convergeaient vers la capitale. Plusieurs méthodes peuvent mener au même résultat.",
+      "mots": [
+        "w_00205",
+        "w_00242",
+        "w_00031",
+        "w_00050",
+        "w_00011"
+      ],
+      "mot_amorce": "w_00050",
+      "lettres_offertes": [
+        "C",
+        "I",
+        "T",
+        "Y"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "L",
+        "3": "R",
+        "4": "O",
+        "5": "D",
+        "6": "S",
+        "7": "E",
+        "8": "T",
+        "9": "M",
+        "10": "C",
+        "11": "H",
+        "12": "W",
+        "13": "K",
+        "14": "I",
+        "15": "Y",
+        "16": "P"
+      },
+      "indices": {
+        "w_00205": {
+          "en": "Cars drive on it between cities",
+          "fr": "route",
+          "segments": [
+            {
+              "txt": "Cars",
+              "trad": "voitures",
+              "ref": null
+            },
+            {
+              "txt": "drive",
+              "trad": "conduire",
+              "ref": "w_00230"
+            },
+            {
+              "txt": "on",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "between",
+              "trad": "entre",
+              "ref": null
+            },
+            {
+              "txt": "cities",
+              "trad": "villes",
+              "ref": null
+            }
+          ]
+        },
+        "w_00242": {
+          "en": "To arrive at the place you wanted",
+          "fr": "atteindre",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "arrive",
+              "trad": "arriver",
+              "ref": "w_00227"
+            },
+            {
+              "txt": "at",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "place",
+              "trad": "endroit",
+              "ref": "w_00011"
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "wanted",
+              "trad": "voulais",
+              "ref": null
+            }
+          ]
+        },
+        "w_00031": {
+          "en": "To move with your feet",
+          "fr": "marcher",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "move",
+              "trad": "bouger",
+              "ref": "w_00179"
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "your",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "feet",
+              "trad": "pieds",
+              "ref": null
+            }
+          ]
+        },
+        "w_00050": {
+          "en": "A large place with many buildings and people",
+          "fr": "ville",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "large",
+              "trad": "grand",
+              "ref": "w_00023"
+            },
+            {
+              "txt": "place",
+              "trad": "endroit",
+              "ref": "w_00011"
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "many",
+              "trad": "beaucoup de",
+              "ref": null
+            },
+            {
+              "txt": "buildings",
+              "trad": "bâtiments",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "people",
+              "trad": "les gens",
+              "ref": null
+            }
+          ]
+        },
+        "w_00011": {
+          "en": "A city or a house is one",
+          "fr": "endroit",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "city",
+              "trad": "ville",
+              "ref": "w_00050"
+            },
+            {
+              "txt": "or",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "house",
+              "trad": "maison",
+              "ref": "w_00002"
+            },
+            {
+              "txt": "is",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "one",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_042",
+      "type": "A",
+      "palier_min": 5,
+      "phrase_en": "EAST OR WEST HOME IS BEST",
+      "phrase_fr": "Rien ne vaut son chez-soi",
+      "contexte_fr": "Proverbe très répandu en anglais. Quel que soit le voyage, on est mieux chez soi qu'ailleurs.",
+      "mots": [
+        "w_00213",
+        "w_00214",
+        "w_00002",
+        "w_00011",
+        "w_00021"
+      ],
+      "mot_amorce": "w_00002",
+      "lettres_offertes": [
+        "E",
+        "H",
+        "O",
+        "S",
+        "U"
+      ],
+      "alphabet": {
+        "1": "E",
+        "2": "A",
+        "3": "S",
+        "4": "T",
+        "5": "O",
+        "6": "R",
+        "7": "W",
+        "8": "H",
+        "9": "M",
+        "10": "I",
+        "11": "B",
+        "12": "U",
+        "13": "P",
+        "14": "L",
+        "15": "C",
+        "16": "Y"
+      },
+      "indices": {
+        "w_00213": {
+          "en": "The direction where the sun rises",
+          "fr": "est",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "direction",
+              "trad": "direction",
+              "ref": null
+            },
+            {
+              "txt": "where",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "sun",
+              "trad": "soleil",
+              "ref": null
+            },
+            {
+              "txt": "rises",
+              "trad": "se lève",
+              "ref": null
+            }
+          ]
+        },
+        "w_00214": {
+          "en": "The direction where the sun goes down",
+          "fr": "ouest",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "direction",
+              "trad": "direction",
+              "ref": null
+            },
+            {
+              "txt": "where",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "sun",
+              "trad": "soleil",
+              "ref": null
+            },
+            {
+              "txt": "goes",
+              "trad": "va",
+              "ref": null
+            },
+            {
+              "txt": "down",
+              "trad": "vers le bas",
+              "ref": null
+            }
+          ]
+        },
+        "w_00002": {
+          "en": "You live and sleep in it",
+          "fr": "maison",
+          "segments": [
+            {
+              "txt": "You",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "live",
+              "trad": "vivre",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "sleep",
+              "trad": "dormir",
+              "ref": "w_00037"
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00011": {
+          "en": "A city or a house is one",
+          "fr": "endroit",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "city",
+              "trad": "ville",
+              "ref": "w_00050"
+            },
+            {
+              "txt": "or",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "house",
+              "trad": "maison",
+              "ref": "w_00002"
+            },
+            {
+              "txt": "is",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "one",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00021": {
+          "en": "The feeling when you smile",
+          "fr": "heureux",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "feeling",
+              "trad": "sentiment",
+              "ref": null
+            },
+            {
+              "txt": "when",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "smile",
+              "trad": "sourire",
+              "ref": "w_00191"
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_043",
+      "type": "A",
+      "palier_min": 5,
+      "phrase_en": "WHEN IN ROME DO AS THE ROMANS DO",
+      "phrase_fr": "À Rome, fais comme les Romains",
+      "contexte_fr": "Conseil attribué à saint Ambroise au IVe siècle : il faut s'adapter aux usages du lieu où l'on se trouve.",
+      "mots": [
+        "w_00096",
+        "w_00219",
+        "w_00050",
+        "w_00035",
+        "w_00036"
+      ],
+      "mot_amorce": "w_00050",
+      "lettres_offertes": [
+        "C",
+        "I",
+        "T",
+        "Y"
+      ],
+      "alphabet": {
+        "1": "W",
+        "2": "H",
+        "3": "E",
+        "4": "N",
+        "5": "I",
+        "6": "R",
+        "7": "O",
+        "8": "M",
+        "9": "D",
+        "10": "A",
+        "11": "S",
+        "12": "T",
+        "13": "V",
+        "14": "L",
+        "15": "C",
+        "16": "U",
+        "17": "Y"
+      },
+      "indices": {
+        "w_00096": {
+          "en": "To go to another country",
+          "fr": "voyager",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "go",
+              "trad": "aller",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "another",
+              "trad": "un autre",
+              "ref": null
+            },
+            {
+              "txt": "country",
+              "trad": "pays",
+              "ref": "w_00219"
+            }
+          ]
+        },
+        "w_00219": {
+          "en": "France or Japan, for example",
+          "fr": "pays",
+          "segments": [
+            {
+              "txt": "France",
+              "trad": "France",
+              "ref": null
+            },
+            {
+              "txt": "or",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "Japan",
+              "trad": "Japon",
+              "ref": null
+            },
+            {
+              "txt": "for",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "example",
+              "trad": "exemple",
+              "ref": null
+            }
+          ]
+        },
+        "w_00050": {
+          "en": "A large place with many buildings and people",
+          "fr": "ville",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "large",
+              "trad": "grand",
+              "ref": "w_00023"
+            },
+            {
+              "txt": "place",
+              "trad": "endroit",
+              "ref": "w_00011"
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "many",
+              "trad": "beaucoup de",
+              "ref": null
+            },
+            {
+              "txt": "buildings",
+              "trad": "bâtiments",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "people",
+              "trad": "les gens",
+              "ref": null
+            }
+          ]
+        },
+        "w_00035": {
+          "en": "To study and have new knowledge",
+          "fr": "apprendre",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "study",
+              "trad": "étudier",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "have",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "new",
+              "trad": "nouveau",
+              "ref": null
+            },
+            {
+              "txt": "knowledge",
+              "trad": "connaissance",
+              "ref": null
+            }
+          ]
+        },
+        "w_00036": {
+          "en": "To look at a film",
+          "fr": "regarder",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "look",
+              "trad": "regarder",
+              "ref": "w_00177"
+            },
+            {
+              "txt": "at",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "film",
+              "trad": "film",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_044",
+      "type": "A",
+      "palier_min": 5,
+      "phrase_en": "DO NOT BURN YOUR BRIDGES",
+      "phrase_fr": "Ne coupe pas les ponts",
+      "contexte_fr": "Image militaire : brûler un pont derrière soi rend tout retour impossible. Conseil de ne pas rompre définitivement une relation.",
+      "mots": [
+        "w_00206",
+        "w_00233",
+        "w_00016",
+        "w_00046",
+        "w_00026"
+      ],
+      "mot_amorce": "w_00016",
+      "lettres_offertes": [
+        "E",
+        "I",
+        "R",
+        "V"
+      ],
+      "alphabet": {
+        "1": "D",
+        "2": "O",
+        "3": "N",
+        "4": "T",
+        "5": "B",
+        "6": "U",
+        "7": "R",
+        "8": "Y",
+        "9": "I",
+        "10": "G",
+        "11": "E",
+        "12": "S",
+        "13": "C",
+        "14": "V",
+        "15": "F",
+        "16": "L"
+      },
+      "indices": {
+        "w_00206": {
+          "en": "It goes over a river",
+          "fr": "pont",
+          "segments": [
+            {
+              "txt": "It",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "goes",
+              "trad": "va",
+              "ref": null
+            },
+            {
+              "txt": "over",
+              "trad": "au-dessus de",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "river",
+              "trad": "rivière",
+              "ref": "w_00016"
+            }
+          ]
+        },
+        "w_00233": {
+          "en": "To go from one side to the other",
+          "fr": "traverser",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "go",
+              "trad": "aller",
+              "ref": null
+            },
+            {
+              "txt": "from",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "one",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "side",
+              "trad": "côté",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "other",
+              "trad": "autre",
+              "ref": null
+            }
+          ]
+        },
+        "w_00016": {
+          "en": "Long water that flows to the sea",
+          "fr": "rivière",
+          "segments": [
+            {
+              "txt": "Long",
+              "trad": "long",
+              "ref": "w_00247"
+            },
+            {
+              "txt": "water",
+              "trad": "eau",
+              "ref": "w_00001"
+            },
+            {
+              "txt": "that",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "flows",
+              "trad": "coule",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "sea",
+              "trad": "mer",
+              "ref": "w_00225"
+            }
+          ]
+        },
+        "w_00046": {
+          "en": "A person you like and you talk to",
+          "fr": "ami",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "person",
+              "trad": "personne",
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "like",
+              "trad": "comme",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "talk",
+              "trad": "parler",
+              "ref": "w_00032"
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00026": {
+          "en": "To shut a door",
+          "fr": "fermer",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "shut",
+              "trad": "fermé",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "door",
+              "trad": "porte",
+              "ref": "w_00059"
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_045",
+      "type": "A",
+      "palier_min": 5,
+      "phrase_en": "THE GRASS IS ALWAYS GREENER",
+      "phrase_fr": "L'herbe est toujours plus verte ailleurs",
+      "contexte_fr": "Forme courte de « the grass is always greener on the other side ». On croit toujours la situation des autres meilleure que la sienne.",
+      "mots": [
+        "w_00244",
+        "w_00243",
+        "w_00005",
+        "w_00017",
+        "w_00011"
+      ],
+      "mot_amorce": "w_00017",
+      "lettres_offertes": [
+        "D",
+        "E",
+        "F",
+        "I",
+        "L"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "G",
+        "5": "R",
+        "6": "A",
+        "7": "S",
+        "8": "I",
+        "9": "L",
+        "10": "W",
+        "11": "Y",
+        "12": "N",
+        "13": "F",
+        "14": "D",
+        "15": "P",
+        "16": "C"
+      },
+      "indices": {
+        "w_00244": {
+          "en": "A long way from here",
+          "fr": "loin",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "long",
+              "trad": "long",
+              "ref": "w_00247"
+            },
+            {
+              "txt": "way",
+              "trad": "chemin",
+              "ref": null
+            },
+            {
+              "txt": "from",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "here",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00243": {
+          "en": "Not far, very close to you",
+          "fr": "proche",
+          "segments": [
+            {
+              "txt": "Not",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "far",
+              "trad": "loin",
+              "ref": "w_00244"
+            },
+            {
+              "txt": "very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "close",
+              "trad": "fermer",
+              "ref": "w_00026"
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00005": {
+          "en": "The colour of grass and leaves",
+          "fr": "vert",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "colour",
+              "trad": "couleur",
+              "ref": null
+            },
+            {
+              "txt": "of",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "grass",
+              "trad": "herbe",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "leaves",
+              "trad": "feuilles",
+              "ref": null
+            }
+          ]
+        },
+        "w_00017": {
+          "en": "Open land where a farmer grows wheat",
+          "fr": "champ",
+          "segments": [
+            {
+              "txt": "Open",
+              "trad": "ouvrir",
+              "ref": "w_00041"
+            },
+            {
+              "txt": "land",
+              "trad": "terre",
+              "ref": null
+            },
+            {
+              "txt": "where",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "farmer",
+              "trad": "agriculteur",
+              "ref": null
+            },
+            {
+              "txt": "grows",
+              "trad": "pousse",
+              "ref": null
+            },
+            {
+              "txt": "wheat",
+              "trad": "blé",
+              "ref": null
+            }
+          ]
+        },
+        "w_00011": {
+          "en": "A city or a house is one",
+          "fr": "endroit",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "city",
+              "trad": "ville",
+              "ref": "w_00050"
+            },
+            {
+              "txt": "or",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "house",
+              "trad": "maison",
+              "ref": "w_00002"
+            },
+            {
+              "txt": "is",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "one",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_046",
+      "type": "A",
+      "palier_min": 5,
+      "phrase_en": "TRAVEL BROADENS THE MIND",
+      "phrase_fr": "Les voyages forment la jeunesse",
+      "contexte_fr": "Idée développée par Francis Bacon dans son essai « Of Travel » (1625) : le déplacement élargit la façon de penser.",
+      "mots": [
+        "w_00096",
+        "w_00219",
+        "w_00035",
+        "w_00010",
+        "w_00076"
+      ],
+      "mot_amorce": "w_00010",
+      "lettres_offertes": [
+        "D",
+        "L",
+        "O",
+        "R",
+        "W"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "R",
+        "3": "A",
+        "4": "V",
+        "5": "E",
+        "6": "L",
+        "7": "B",
+        "8": "O",
+        "9": "D",
+        "10": "N",
+        "11": "S",
+        "12": "H",
+        "13": "M",
+        "14": "I",
+        "15": "C",
+        "16": "U",
+        "17": "Y",
+        "18": "W",
+        "19": "G"
+      },
+      "indices": {
+        "w_00096": {
+          "en": "To go to another country",
+          "fr": "voyager",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "go",
+              "trad": "aller",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "another",
+              "trad": "un autre",
+              "ref": null
+            },
+            {
+              "txt": "country",
+              "trad": "pays",
+              "ref": "w_00219"
+            }
+          ]
+        },
+        "w_00219": {
+          "en": "France or Japan, for example",
+          "fr": "pays",
+          "segments": [
+            {
+              "txt": "France",
+              "trad": "France",
+              "ref": null
+            },
+            {
+              "txt": "or",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "Japan",
+              "trad": "Japon",
+              "ref": null
+            },
+            {
+              "txt": "for",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "example",
+              "trad": "exemple",
+              "ref": null
+            }
+          ]
+        },
+        "w_00035": {
+          "en": "To study and have new knowledge",
+          "fr": "apprendre",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "study",
+              "trad": "étudier",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "have",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "new",
+              "trad": "nouveau",
+              "ref": null
+            },
+            {
+              "txt": "knowledge",
+              "trad": "connaissance",
+              "ref": null
+            }
+          ]
+        },
+        "w_00010": {
+          "en": "The planet where everyone lives",
+          "fr": "monde",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "planet",
+              "trad": "planète",
+              "ref": null
+            },
+            {
+              "txt": "where",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "everyone",
+              "trad": "tout le monde",
+              "ref": null
+            },
+            {
+              "txt": "lives",
+              "trad": "vit",
+              "ref": null
+            }
+          ]
+        },
+        "w_00076": {
+          "en": "Not old",
+          "fr": "jeune",
+          "segments": [
+            {
+              "txt": "Not",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "old",
+              "trad": "vieux",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_047",
+      "type": "A",
+      "palier_min": 5,
+      "phrase_en": "MISS THE BOAT",
+      "phrase_fr": "Rater le coche",
+      "contexte_fr": "Expression maritime du début du XXe siècle. Manquer le bateau, c'est laisser passer une occasion qui ne reviendra pas.",
+      "mots": [
+        "w_00201",
+        "w_00227",
+        "w_00024",
+        "w_00042",
+        "w_00036"
+      ],
+      "mot_amorce": "w_00036",
+      "lettres_offertes": [
+        "A",
+        "C",
+        "H",
+        "T",
+        "W"
+      ],
+      "alphabet": {
+        "1": "M",
+        "2": "I",
+        "3": "S",
+        "4": "T",
+        "5": "H",
+        "6": "E",
+        "7": "B",
+        "8": "O",
+        "9": "A",
+        "10": "R",
+        "11": "N",
+        "12": "V",
+        "13": "Q",
+        "14": "U",
+        "15": "C",
+        "16": "K",
+        "17": "W"
+      },
+      "indices": {
+        "w_00201": {
+          "en": "It runs on rails between two cities",
+          "fr": "train",
+          "segments": [
+            {
+              "txt": "It",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "runs",
+              "trad": "roule",
+              "ref": null
+            },
+            {
+              "txt": "on",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "rails",
+              "trad": "rails",
+              "ref": null
+            },
+            {
+              "txt": "between",
+              "trad": "entre",
+              "ref": null
+            },
+            {
+              "txt": "two",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "cities",
+              "trad": "villes",
+              "ref": null
+            }
+          ]
+        },
+        "w_00227": {
+          "en": "To come to the end of the road",
+          "fr": "arriver",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "come",
+              "trad": "venir",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "end",
+              "trad": "fin",
+              "ref": null
+            },
+            {
+              "txt": "of",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "road",
+              "trad": "route",
+              "ref": "w_00205"
+            }
+          ]
+        },
+        "w_00024": {
+          "en": "Very fast",
+          "fr": "rapide",
+          "segments": [
+            {
+              "txt": "Very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "fast",
+              "trad": "vite",
+              "ref": "w_00245"
+            }
+          ]
+        },
+        "w_00042": {
+          "en": "To begin a new thing",
+          "fr": "commencer",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "begin",
+              "trad": "commencer",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "new",
+              "trad": "nouveau",
+              "ref": null
+            },
+            {
+              "txt": "thing",
+              "trad": "chose",
+              "ref": "w_00012"
+            }
+          ]
+        },
+        "w_00036": {
+          "en": "To look at a film",
+          "fr": "regarder",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "look",
+              "trad": "regarder",
+              "ref": "w_00177"
+            },
+            {
+              "txt": "at",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "film",
+              "trad": "film",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_048",
+      "type": "A",
+      "palier_min": 5,
+      "phrase_en": "HIT THE ROAD",
+      "phrase_fr": "Prendre la route",
+      "contexte_fr": "Expression américaine popularisée par la chanson « Hit the Road Jack » de Percy Mayfield, enregistrée par Ray Charles en 1961.",
+      "mots": [
+        "w_00205",
+        "w_00230",
+        "w_00042",
+        "w_00024",
+        "w_00011"
+      ],
+      "mot_amorce": "w_00042",
+      "lettres_offertes": [
+        "A",
+        "R",
+        "S",
+        "T"
+      ],
+      "alphabet": {
+        "1": "H",
+        "2": "I",
+        "3": "T",
+        "4": "E",
+        "5": "R",
+        "6": "O",
+        "7": "A",
+        "8": "D",
+        "9": "V",
+        "10": "S",
+        "11": "Q",
+        "12": "U",
+        "13": "C",
+        "14": "K",
+        "15": "P",
+        "16": "L"
+      },
+      "indices": {
+        "w_00205": {
+          "en": "Cars drive on it between cities",
+          "fr": "route",
+          "segments": [
+            {
+              "txt": "Cars",
+              "trad": "voitures",
+              "ref": null
+            },
+            {
+              "txt": "drive",
+              "trad": "conduire",
+              "ref": "w_00230"
+            },
+            {
+              "txt": "on",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "between",
+              "trad": "entre",
+              "ref": null
+            },
+            {
+              "txt": "cities",
+              "trad": "villes",
+              "ref": null
+            }
+          ]
+        },
+        "w_00230": {
+          "en": "To make a car go on the road",
+          "fr": "conduire",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "make",
+              "trad": "faire",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "car",
+              "trad": "voiture",
+              "ref": "w_00203"
+            },
+            {
+              "txt": "go",
+              "trad": "aller",
+              "ref": null
+            },
+            {
+              "txt": "on",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "road",
+              "trad": "route",
+              "ref": "w_00205"
+            }
+          ]
+        },
+        "w_00042": {
+          "en": "To begin a new thing",
+          "fr": "commencer",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "begin",
+              "trad": "commencer",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "new",
+              "trad": "nouveau",
+              "ref": null
+            },
+            {
+              "txt": "thing",
+              "trad": "chose",
+              "ref": "w_00012"
+            }
+          ]
+        },
+        "w_00024": {
+          "en": "Very fast",
+          "fr": "rapide",
+          "segments": [
+            {
+              "txt": "Very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "fast",
+              "trad": "vite",
+              "ref": "w_00245"
+            }
+          ]
+        },
+        "w_00011": {
+          "en": "A city or a house is one",
+          "fr": "endroit",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "city",
+              "trad": "ville",
+              "ref": "w_00050"
+            },
+            {
+              "txt": "or",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "house",
+              "trad": "maison",
+              "ref": "w_00002"
+            },
+            {
+              "txt": "is",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "one",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_049",
+      "type": "A",
+      "palier_min": 5,
+      "phrase_en": "THE WORLD IS A SMALL PLACE",
+      "phrase_fr": "Le monde est petit",
+      "contexte_fr": "Se dit quand on rencontre par hasard une connaissance très loin de chez soi.",
+      "mots": [
+        "w_00202",
+        "w_00231",
+        "w_00010",
+        "w_00022",
+        "w_00011"
+      ],
+      "mot_amorce": "w_00022",
+      "lettres_offertes": [
+        "A",
+        "L",
+        "M",
+        "S"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "W",
+        "5": "O",
+        "6": "R",
+        "7": "L",
+        "8": "D",
+        "9": "I",
+        "10": "S",
+        "11": "A",
+        "12": "M",
+        "13": "P",
+        "14": "C",
+        "15": "N",
+        "16": "F",
+        "17": "Y"
+      },
+      "indices": {
+        "w_00202": {
+          "en": "It flies with people inside",
+          "fr": "avion",
+          "segments": [
+            {
+              "txt": "It",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "flies",
+              "trad": "vole",
+              "ref": null
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "people",
+              "trad": "les gens",
+              "ref": null
+            },
+            {
+              "txt": "inside",
+              "trad": "à l'intérieur",
+              "ref": null
+            }
+          ]
+        },
+        "w_00231": {
+          "en": "To move in the air, like a bird",
+          "fr": "voler",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "move",
+              "trad": "bouger",
+              "ref": "w_00179"
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "air",
+              "trad": "air",
+              "ref": null
+            },
+            {
+              "txt": "like",
+              "trad": "comme",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "bird",
+              "trad": "oiseau",
+              "ref": "w_00070"
+            }
+          ]
+        },
+        "w_00010": {
+          "en": "The planet where everyone lives",
+          "fr": "monde",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "planet",
+              "trad": "planète",
+              "ref": null
+            },
+            {
+              "txt": "where",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "everyone",
+              "trad": "tout le monde",
+              "ref": null
+            },
+            {
+              "txt": "lives",
+              "trad": "vit",
+              "ref": null
+            }
+          ]
+        },
+        "w_00022": {
+          "en": "The size of a mouse",
+          "fr": "petit",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "size",
+              "trad": "taille",
+              "ref": null
+            },
+            {
+              "txt": "of",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "mouse",
+              "trad": "souris",
+              "ref": null
+            }
+          ]
+        },
+        "w_00011": {
+          "en": "A city or a house is one",
+          "fr": "endroit",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "city",
+              "trad": "ville",
+              "ref": "w_00050"
+            },
+            {
+              "txt": "or",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "house",
+              "trad": "maison",
+              "ref": "w_00002"
+            },
+            {
+              "txt": "is",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "one",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_050",
+      "type": "A",
+      "palier_min": 5,
+      "phrase_en": "A CHANGE OF AIR DOES YOU GOOD",
+      "phrase_fr": "Changer d'air fait du bien",
+      "contexte_fr": "Idée ancienne reprise par la médecine du XIXe siècle, qui envoyait les malades à la mer ou à la montagne.",
+      "mots": [
+        "w_00225",
+        "w_00222",
+        "w_00097",
+        "w_00027",
+        "w_00021"
+      ],
+      "mot_amorce": "w_00021",
+      "lettres_offertes": [
+        "A",
+        "H",
+        "P",
+        "Y"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "C",
+        "3": "H",
+        "4": "N",
+        "5": "G",
+        "6": "E",
+        "7": "O",
+        "8": "F",
+        "9": "I",
+        "10": "R",
+        "11": "D",
+        "12": "S",
+        "13": "Y",
+        "14": "U",
+        "15": "M",
+        "16": "T",
+        "17": "L",
+        "18": "P"
+      },
+      "indices": {
+        "w_00225": {
+          "en": "The very large salt water",
+          "fr": "mer",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "large",
+              "trad": "grand",
+              "ref": "w_00023"
+            },
+            {
+              "txt": "salt",
+              "trad": "salée",
+              "ref": null
+            },
+            {
+              "txt": "water",
+              "trad": "eau",
+              "ref": "w_00001"
+            }
+          ]
+        },
+        "w_00222": {
+          "en": "Very high land with snow on top",
+          "fr": "montagne",
+          "segments": [
+            {
+              "txt": "Very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "high",
+              "trad": "haut",
+              "ref": "w_00249"
+            },
+            {
+              "txt": "land",
+              "trad": "terre",
+              "ref": null
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "snow",
+              "trad": "neige",
+              "ref": null
+            },
+            {
+              "txt": "on",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "top",
+              "trad": "sommet",
+              "ref": null
+            }
+          ]
+        },
+        "w_00097": {
+          "en": "To make something different",
+          "fr": "changer",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "make",
+              "trad": "faire",
+              "ref": null
+            },
+            {
+              "txt": "something",
+              "trad": "quelque chose",
+              "ref": null
+            },
+            {
+              "txt": "different",
+              "trad": "différent",
+              "ref": null
+            }
+          ]
+        },
+        "w_00027": {
+          "en": "Without dirt",
+          "fr": "propre",
+          "segments": [
+            {
+              "txt": "Without",
+              "trad": "sans",
+              "ref": null
+            },
+            {
+              "txt": "dirt",
+              "trad": "saleté",
+              "ref": null
+            }
+          ]
+        },
+        "w_00021": {
+          "en": "The feeling when you smile",
+          "fr": "heureux",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "feeling",
+              "trad": "sentiment",
+              "ref": null
+            },
+            {
+              "txt": "when",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "smile",
+              "trad": "sourire",
+              "ref": "w_00191"
+            }
+          ]
+        }
+      },
+      "verifie": true
+    }
+  ]
+}

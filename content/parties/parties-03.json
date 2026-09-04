@@ -1,0 +1,2197 @@
+{
+  "palier": 3,
+  "version": 1,
+  "parties": [
+    {
+      "id": "p_021",
+      "type": "A",
+      "palier_min": 3,
+      "phrase_en": "NO NEWS IS GOOD NEWS",
+      "phrase_fr": "Pas de nouvelles, bonnes nouvelles",
+      "contexte_fr": "Proverbe attesté dès le XVIIe siècle. Quand on ne reçoit aucune nouvelle, c'est en général que rien de grave n'est arrivé.",
+      "mots": [
+        "w_00119",
+        "w_00126",
+        "w_00015",
+        "w_00046",
+        "w_00044"
+      ],
+      "mot_amorce": "w_00015",
+      "lettres_offertes": [
+        "A",
+        "E",
+        "P",
+        "R"
+      ],
+      "alphabet": {
+        "1": "N",
+        "2": "O",
+        "3": "E",
+        "4": "W",
+        "5": "S",
+        "6": "I",
+        "7": "G",
+        "8": "D",
+        "9": "M",
+        "10": "A",
+        "11": "P",
+        "12": "R",
+        "13": "F"
+      },
+      "indices": {
+        "w_00119": {
+          "en": "Words you send to another person",
+          "fr": "message",
+          "segments": [
+            {
+              "txt": "Words",
+              "trad": "mots",
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "send",
+              "trad": "envoyer",
+              "ref": "w_00126"
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "another",
+              "trad": "un autre",
+              "ref": null
+            },
+            {
+              "txt": "person",
+              "trad": "personne",
+              "ref": null
+            }
+          ]
+        },
+        "w_00126": {
+          "en": "To make a letter go to another place",
+          "fr": "envoyer",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "make",
+              "trad": "faire",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "letter",
+              "trad": "lettre",
+              "ref": "w_00066"
+            },
+            {
+              "txt": "go",
+              "trad": "aller",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "another",
+              "trad": "un autre",
+              "ref": null
+            },
+            {
+              "txt": "place",
+              "trad": "endroit",
+              "ref": "w_00011"
+            }
+          ]
+        },
+        "w_00015": {
+          "en": "A white sheet you write letters on",
+          "fr": "papier",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "white",
+              "trad": "blanc",
+              "ref": "w_00029"
+            },
+            {
+              "txt": "sheet",
+              "trad": "feuille",
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "write",
+              "trad": "écrire",
+              "ref": "w_00034"
+            },
+            {
+              "txt": "letters",
+              "trad": "lettres",
+              "ref": null
+            },
+            {
+              "txt": "on",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00046": {
+          "en": "A person you like and you talk to",
+          "fr": "ami",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "person",
+              "trad": "personne",
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "like",
+              "trad": "comme",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "talk",
+              "trad": "parler",
+              "ref": "w_00032"
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00044": {
+          "en": "To reply to a question",
+          "fr": "répondre",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "reply",
+              "trad": "réponse",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "question",
+              "trad": "question",
+              "ref": "w_00124"
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_022",
+      "type": "A",
+      "palier_min": 3,
+      "phrase_en": "FIRST COME FIRST SERVED",
+      "phrase_fr": "Premier arrivé, premier servi",
+      "contexte_fr": "Règle de priorité très courante dans le commerce et les files d'attente : celui qui arrive le premier passe le premier.",
+      "mots": [
+        "w_00110",
+        "w_00109",
+        "w_00011",
+        "w_00042",
+        "w_00024"
+      ],
+      "mot_amorce": "w_00011",
+      "lettres_offertes": [
+        "A",
+        "C",
+        "E",
+        "L",
+        "P"
+      ],
+      "alphabet": {
+        "1": "F",
+        "2": "I",
+        "3": "R",
+        "4": "S",
+        "5": "T",
+        "6": "C",
+        "7": "O",
+        "8": "M",
+        "9": "E",
+        "10": "V",
+        "11": "D",
+        "12": "L",
+        "13": "N",
+        "14": "P",
+        "15": "A",
+        "16": "Q",
+        "17": "U",
+        "18": "K"
+      },
+      "indices": {
+        "w_00110": {
+          "en": "The person who buys your service",
+          "fr": "client",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "person",
+              "trad": "personne",
+              "ref": null
+            },
+            {
+              "txt": "who",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "buys",
+              "trad": "achète",
+              "ref": null
+            },
+            {
+              "txt": "your",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "service",
+              "trad": "service",
+              "ref": "w_00112"
+            }
+          ]
+        },
+        "w_00109": {
+          "en": "What a client asks you to send",
+          "fr": "commande",
+          "segments": [
+            {
+              "txt": "What",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "client",
+              "trad": "client",
+              "ref": "w_00110"
+            },
+            {
+              "txt": "asks",
+              "trad": "demande",
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "send",
+              "trad": "envoyer",
+              "ref": "w_00126"
+            }
+          ]
+        },
+        "w_00011": {
+          "en": "A city or a house is one",
+          "fr": "endroit",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "city",
+              "trad": "ville",
+              "ref": "w_00050"
+            },
+            {
+              "txt": "or",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "house",
+              "trad": "maison",
+              "ref": "w_00002"
+            },
+            {
+              "txt": "is",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "one",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00042": {
+          "en": "To begin a new thing",
+          "fr": "commencer",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "begin",
+              "trad": "commencer",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "new",
+              "trad": "nouveau",
+              "ref": null
+            },
+            {
+              "txt": "thing",
+              "trad": "chose",
+              "ref": "w_00012"
+            }
+          ]
+        },
+        "w_00024": {
+          "en": "Very fast",
+          "fr": "rapide",
+          "segments": [
+            {
+              "txt": "Very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "fast",
+              "trad": "vite",
+              "ref": "w_00245"
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_023",
+      "type": "A",
+      "palier_min": 3,
+      "phrase_en": "MANY HANDS MAKE LIGHT WORK",
+      "phrase_fr": "À plusieurs, le travail est plus léger",
+      "contexte_fr": "Proverbe qui vante le travail collectif : une tâche lourde devient légère quand beaucoup de personnes s'y mettent.",
+      "mots": [
+        "w_00113",
+        "w_00128",
+        "w_00039",
+        "w_00040",
+        "w_00006"
+      ],
+      "mot_amorce": "w_00040",
+      "lettres_offertes": [
+        "E",
+        "H",
+        "L",
+        "P"
+      ],
+      "alphabet": {
+        "1": "M",
+        "2": "A",
+        "3": "N",
+        "4": "Y",
+        "5": "H",
+        "6": "D",
+        "7": "S",
+        "8": "K",
+        "9": "E",
+        "10": "L",
+        "11": "I",
+        "12": "G",
+        "13": "T",
+        "14": "W",
+        "15": "O",
+        "16": "R",
+        "17": "P"
+      },
+      "indices": {
+        "w_00113": {
+          "en": "A small group who work together",
+          "fr": "équipe",
+          "segments": [
+            {
+              "txt": "A",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "small",
+              "trad": "petit",
+              "ref": "w_00022"
+            },
+            {
+              "txt": "group",
+              "trad": "groupe",
+              "ref": "w_00125"
+            },
+            {
+              "txt": "who",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "work",
+              "trad": "travail",
+              "ref": "w_00039"
+            },
+            {
+              "txt": "together",
+              "trad": "ensemble",
+              "ref": null
+            }
+          ]
+        },
+        "w_00128": {
+          "en": "To give a part of it to another person",
+          "fr": "partager",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "give",
+              "trad": "donner",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "part",
+              "trad": "partie",
+              "ref": null
+            },
+            {
+              "txt": "of",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "another",
+              "trad": "un autre",
+              "ref": null
+            },
+            {
+              "txt": "person",
+              "trad": "personne",
+              "ref": null
+            }
+          ]
+        },
+        "w_00039": {
+          "en": "To have a job in an office",
+          "fr": "travailler",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "have",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "job",
+              "trad": "travail",
+              "ref": null
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "an",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "office",
+              "trad": "bureau",
+              "ref": "w_00101"
+            }
+          ]
+        },
+        "w_00040": {
+          "en": "To give a hand to someone",
+          "fr": "aider",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "give",
+              "trad": "donner",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "hand",
+              "trad": "main",
+              "ref": "w_00056"
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "someone",
+              "trad": "quelqu'un",
+              "ref": null
+            }
+          ]
+        },
+        "w_00006": {
+          "en": "It comes from the sun",
+          "fr": "lumière",
+          "segments": [
+            {
+              "txt": "It",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "comes",
+              "trad": "vient",
+              "ref": null
+            },
+            {
+              "txt": "from",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "sun",
+              "trad": "soleil",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_024",
+      "type": "A",
+      "palier_min": 3,
+      "phrase_en": "HONESTY IS THE BEST POLICY",
+      "phrase_fr": "L'honnêteté est la meilleure des stratégies",
+      "contexte_fr": "Formule attribuée à Benjamin Franklin. Dire la vérité reste, à long terme, le choix le plus avantageux.",
+      "mots": [
+        "w_00133",
+        "w_00148",
+        "w_00032",
+        "w_00044",
+        "w_00013"
+      ],
+      "mot_amorce": "w_00013",
+      "lettres_offertes": [
+        "O",
+        "R",
+        "S",
+        "T",
+        "Y"
+      ],
+      "alphabet": {
+        "1": "H",
+        "2": "O",
+        "3": "N",
+        "4": "E",
+        "5": "S",
+        "6": "T",
+        "7": "Y",
+        "8": "I",
+        "9": "B",
+        "10": "P",
+        "11": "L",
+        "12": "C",
+        "13": "R",
+        "14": "M",
+        "15": "A",
+        "16": "K",
+        "17": "W"
+      },
+      "indices": {
+        "w_00133": {
+          "en": "To say you will really do it",
+          "fr": "promettre",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "say",
+              "trad": "dire",
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "will",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "really",
+              "trad": "vraiment",
+              "ref": null
+            },
+            {
+              "txt": "do",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00148": {
+          "en": "Easy to see or to understand",
+          "fr": "clair",
+          "segments": [
+            {
+              "txt": "Easy",
+              "trad": "facile",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "see",
+              "trad": "voir",
+              "ref": null
+            },
+            {
+              "txt": "or",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "understand",
+              "trad": "comprendre",
+              "ref": null
+            }
+          ]
+        },
+        "w_00032": {
+          "en": "To speak with a friend",
+          "fr": "parler",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "speak",
+              "trad": "parler",
+              "ref": "w_00086"
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "friend",
+              "trad": "ami",
+              "ref": "w_00046"
+            }
+          ]
+        },
+        "w_00044": {
+          "en": "To reply to a question",
+          "fr": "répondre",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "reply",
+              "trad": "réponse",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "question",
+              "trad": "question",
+              "ref": "w_00124"
+            }
+          ]
+        },
+        "w_00013": {
+          "en": "Someone tells it with a beginning and an end",
+          "fr": "histoire",
+          "segments": [
+            {
+              "txt": "Someone",
+              "trad": "quelqu'un",
+              "ref": null
+            },
+            {
+              "txt": "tells",
+              "trad": "raconte",
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "beginning",
+              "trad": "début",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "an",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "end",
+              "trad": "fin",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_025",
+      "type": "A",
+      "palier_min": 3,
+      "phrase_en": "MONEY DOES NOT GROW ON TREES",
+      "phrase_fr": "L'argent ne tombe pas du ciel",
+      "contexte_fr": "Se dit surtout aux enfants pour rappeler que l'argent demande du travail et ne s'obtient pas sans effort.",
+      "mots": [
+        "w_00108",
+        "w_00138",
+        "w_00009",
+        "w_00071",
+        "w_00039"
+      ],
+      "mot_amorce": "w_00071",
+      "lettres_offertes": [
+        "E",
+        "R",
+        "T"
+      ],
+      "alphabet": {
+        "1": "M",
+        "2": "O",
+        "3": "N",
+        "4": "E",
+        "5": "Y",
+        "6": "D",
+        "7": "S",
+        "8": "T",
+        "9": "G",
+        "10": "R",
+        "11": "W",
+        "12": "P",
+        "13": "I",
+        "14": "C",
+        "15": "K"
+      },
+      "indices": {
+        "w_00108": {
+          "en": "The money you pay for a thing",
+          "fr": "prix",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "money",
+              "trad": "argent",
+              "ref": "w_00009"
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "pay",
+              "trad": "payer",
+              "ref": null
+            },
+            {
+              "txt": "for",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "thing",
+              "trad": "chose",
+              "ref": "w_00012"
+            }
+          ]
+        },
+        "w_00138": {
+          "en": "To give your money for something",
+          "fr": "dépenser",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "give",
+              "trad": "donner",
+              "ref": null
+            },
+            {
+              "txt": "your",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "money",
+              "trad": "argent",
+              "ref": "w_00009"
+            },
+            {
+              "txt": "for",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "something",
+              "trad": "quelque chose",
+              "ref": null
+            }
+          ]
+        },
+        "w_00009": {
+          "en": "You pay for things with it",
+          "fr": "argent",
+          "segments": [
+            {
+              "txt": "You",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "pay",
+              "trad": "payer",
+              "ref": null
+            },
+            {
+              "txt": "for",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "things",
+              "trad": "choses",
+              "ref": null
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00071": {
+          "en": "It is tall and has green leaves",
+          "fr": "arbre",
+          "segments": [
+            {
+              "txt": "It",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "is",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "tall",
+              "trad": "grand",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "has",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "green",
+              "trad": "vert",
+              "ref": "w_00005"
+            },
+            {
+              "txt": "leaves",
+              "trad": "feuilles",
+              "ref": null
+            }
+          ]
+        },
+        "w_00039": {
+          "en": "To have a job in an office",
+          "fr": "travailler",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "have",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "job",
+              "trad": "travail",
+              "ref": null
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "an",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "office",
+              "trad": "bureau",
+              "ref": "w_00101"
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_026",
+      "type": "A",
+      "palier_min": 3,
+      "phrase_en": "STRIKE WHILE THE IRON IS HOT",
+      "phrase_fr": "Il faut battre le fer tant qu'il est chaud",
+      "contexte_fr": "Image tirée du forgeron : le métal ne se travaille que chaud. Il faut agir au bon moment, sans attendre.",
+      "mots": [
+        "w_00145",
+        "w_00105",
+        "w_00024",
+        "w_00042",
+        "w_00082"
+      ],
+      "mot_amorce": "w_00082",
+      "lettres_offertes": [
+        "A",
+        "D",
+        "H",
+        "R"
+      ],
+      "alphabet": {
+        "1": "S",
+        "2": "T",
+        "3": "R",
+        "4": "I",
+        "5": "K",
+        "6": "E",
+        "7": "W",
+        "8": "H",
+        "9": "L",
+        "10": "O",
+        "11": "N",
+        "12": "A",
+        "13": "D",
+        "14": "Y",
+        "15": "M",
+        "16": "G",
+        "17": "Q",
+        "18": "U",
+        "19": "C"
+      },
+      "indices": {
+        "w_00145": {
+          "en": "With nothing left to prepare",
+          "fr": "prêt",
+          "segments": [
+            {
+              "txt": "With",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "nothing",
+              "trad": "rien",
+              "ref": null
+            },
+            {
+              "txt": "left",
+              "trad": "restant",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "prepare",
+              "trad": "préparer",
+              "ref": "w_00142"
+            }
+          ]
+        },
+        "w_00105": {
+          "en": "When people sit together to talk about work",
+          "fr": "réunion",
+          "segments": [
+            {
+              "txt": "When",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "people",
+              "trad": "les gens",
+              "ref": null
+            },
+            {
+              "txt": "sit",
+              "trad": "s'asseoir",
+              "ref": null
+            },
+            {
+              "txt": "together",
+              "trad": "ensemble",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "talk",
+              "trad": "parler",
+              "ref": "w_00032"
+            },
+            {
+              "txt": "about",
+              "trad": "au sujet de",
+              "ref": null
+            },
+            {
+              "txt": "work",
+              "trad": "travail",
+              "ref": "w_00039"
+            }
+          ]
+        },
+        "w_00024": {
+          "en": "Very fast",
+          "fr": "rapide",
+          "segments": [
+            {
+              "txt": "Very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "fast",
+              "trad": "vite",
+              "ref": "w_00245"
+            }
+          ]
+        },
+        "w_00042": {
+          "en": "To begin a new thing",
+          "fr": "commencer",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "begin",
+              "trad": "commencer",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "new",
+              "trad": "nouveau",
+              "ref": null
+            },
+            {
+              "txt": "thing",
+              "trad": "chose",
+              "ref": "w_00012"
+            }
+          ]
+        },
+        "w_00082": {
+          "en": "Not soft, or not easy",
+          "fr": "dur",
+          "segments": [
+            {
+              "txt": "Not",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "soft",
+              "trad": "doux",
+              "ref": "w_00083"
+            },
+            {
+              "txt": "or",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "not",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "easy",
+              "trad": "facile",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_027",
+      "type": "A",
+      "palier_min": 3,
+      "phrase_en": "THE CUSTOMER IS ALWAYS RIGHT",
+      "phrase_fr": "Le client a toujours raison",
+      "contexte_fr": "Slogan lancé vers 1909 par Harry Gordon Selfridge, fondateur du grand magasin londonien Selfridges.",
+      "mots": [
+        "w_00110",
+        "w_00112",
+        "w_00009",
+        "w_00044",
+        "w_00040"
+      ],
+      "mot_amorce": "w_00040",
+      "lettres_offertes": [
+        "E",
+        "H",
+        "L",
+        "P"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "C",
+        "5": "U",
+        "6": "S",
+        "7": "O",
+        "8": "M",
+        "9": "R",
+        "10": "I",
+        "11": "A",
+        "12": "L",
+        "13": "W",
+        "14": "Y",
+        "15": "G",
+        "16": "N",
+        "17": "V",
+        "18": "P"
+      },
+      "indices": {
+        "w_00110": {
+          "en": "The person who buys your service",
+          "fr": "client",
+          "segments": [
+            {
+              "txt": "The",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "person",
+              "trad": "personne",
+              "ref": null
+            },
+            {
+              "txt": "who",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "buys",
+              "trad": "achète",
+              "ref": null
+            },
+            {
+              "txt": "your",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "service",
+              "trad": "service",
+              "ref": "w_00112"
+            }
+          ]
+        },
+        "w_00112": {
+          "en": "Work you do for another person",
+          "fr": "service",
+          "segments": [
+            {
+              "txt": "Work",
+              "trad": "travail",
+              "ref": "w_00039"
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "do",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "for",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "another",
+              "trad": "un autre",
+              "ref": null
+            },
+            {
+              "txt": "person",
+              "trad": "personne",
+              "ref": null
+            }
+          ]
+        },
+        "w_00009": {
+          "en": "You pay for things with it",
+          "fr": "argent",
+          "segments": [
+            {
+              "txt": "You",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "pay",
+              "trad": "payer",
+              "ref": null
+            },
+            {
+              "txt": "for",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "things",
+              "trad": "choses",
+              "ref": null
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00044": {
+          "en": "To reply to a question",
+          "fr": "répondre",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "reply",
+              "trad": "réponse",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "question",
+              "trad": "question",
+              "ref": "w_00124"
+            }
+          ]
+        },
+        "w_00040": {
+          "en": "To give a hand to someone",
+          "fr": "aider",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "give",
+              "trad": "donner",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "hand",
+              "trad": "main",
+              "ref": "w_00056"
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "someone",
+              "trad": "quelqu'un",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_028",
+      "type": "A",
+      "palier_min": 3,
+      "phrase_en": "PRACTICE WHAT YOU PREACH",
+      "phrase_fr": "Prêcher par l'exemple",
+      "contexte_fr": "Il faut appliquer soi-même les règles que l'on donne aux autres, sinon le discours perd toute valeur.",
+      "mots": [
+        "w_00132",
+        "w_00147",
+        "w_00032",
+        "w_00039",
+        "w_00035"
+      ],
+      "mot_amorce": "w_00035",
+      "lettres_offertes": [
+        "A",
+        "E",
+        "L",
+        "N",
+        "R"
+      ],
+      "alphabet": {
+        "1": "P",
+        "2": "R",
+        "3": "A",
+        "4": "C",
+        "5": "T",
+        "6": "I",
+        "7": "E",
+        "8": "W",
+        "9": "H",
+        "10": "Y",
+        "11": "O",
+        "12": "U",
+        "13": "S",
+        "14": "M",
+        "15": "L",
+        "16": "K",
+        "17": "N"
+      },
+      "indices": {
+        "w_00132": {
+          "en": "To say the same words again",
+          "fr": "répéter",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "say",
+              "trad": "dire",
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "same",
+              "trad": "même",
+              "ref": null
+            },
+            {
+              "txt": "words",
+              "trad": "mots",
+              "ref": null
+            },
+            {
+              "txt": "again",
+              "trad": "encore",
+              "ref": null
+            }
+          ]
+        },
+        "w_00147": {
+          "en": "Very easy to understand",
+          "fr": "simple",
+          "segments": [
+            {
+              "txt": "Very",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "easy",
+              "trad": "facile",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "understand",
+              "trad": "comprendre",
+              "ref": null
+            }
+          ]
+        },
+        "w_00032": {
+          "en": "To speak with a friend",
+          "fr": "parler",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "speak",
+              "trad": "parler",
+              "ref": "w_00086"
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "friend",
+              "trad": "ami",
+              "ref": "w_00046"
+            }
+          ]
+        },
+        "w_00039": {
+          "en": "To have a job in an office",
+          "fr": "travailler",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "have",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "job",
+              "trad": "travail",
+              "ref": null
+            },
+            {
+              "txt": "in",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "an",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "office",
+              "trad": "bureau",
+              "ref": "w_00101"
+            }
+          ]
+        },
+        "w_00035": {
+          "en": "To study and have new knowledge",
+          "fr": "apprendre",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "study",
+              "trad": "étudier",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "have",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "new",
+              "trad": "nouveau",
+              "ref": null
+            },
+            {
+              "txt": "knowledge",
+              "trad": "connaissance",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_029",
+      "type": "A",
+      "palier_min": 3,
+      "phrase_en": "A DEAL IS A DEAL",
+      "phrase_fr": "Un marché est un marché",
+      "contexte_fr": "Formule qui rappelle qu'un accord conclu doit être respecté, même s'il devient désavantageux.",
+      "mots": [
+        "w_00129",
+        "w_00131",
+        "w_00009",
+        "w_00044",
+        "w_00027"
+      ],
+      "mot_amorce": "w_00027",
+      "lettres_offertes": [
+        "A",
+        "C",
+        "E",
+        "L",
+        "N"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "D",
+        "3": "E",
+        "4": "L",
+        "5": "I",
+        "6": "S",
+        "7": "G",
+        "8": "R",
+        "9": "C",
+        "10": "P",
+        "11": "T",
+        "12": "M",
+        "13": "O",
+        "14": "N",
+        "15": "Y",
+        "16": "W"
+      },
+      "indices": {
+        "w_00129": {
+          "en": "To say yes, you think the same",
+          "fr": "être d'accord",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "say",
+              "trad": "dire",
+              "ref": null
+            },
+            {
+              "txt": "yes",
+              "trad": "oui",
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "think",
+              "trad": "penser",
+              "ref": null
+            },
+            {
+              "txt": "the",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "same",
+              "trad": "même",
+              "ref": null
+            }
+          ]
+        },
+        "w_00131": {
+          "en": "To say yes and take it",
+          "fr": "accepter",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "say",
+              "trad": "dire",
+              "ref": null
+            },
+            {
+              "txt": "yes",
+              "trad": "oui",
+              "ref": null
+            },
+            {
+              "txt": "and",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "take",
+              "trad": "prendre",
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00009": {
+          "en": "You pay for things with it",
+          "fr": "argent",
+          "segments": [
+            {
+              "txt": "You",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "pay",
+              "trad": "payer",
+              "ref": null
+            },
+            {
+              "txt": "for",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "things",
+              "trad": "choses",
+              "ref": null
+            },
+            {
+              "txt": "with",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            }
+          ]
+        },
+        "w_00044": {
+          "en": "To reply to a question",
+          "fr": "répondre",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "reply",
+              "trad": "réponse",
+              "ref": null
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "question",
+              "trad": "question",
+              "ref": "w_00124"
+            }
+          ]
+        },
+        "w_00027": {
+          "en": "Without dirt",
+          "fr": "propre",
+          "segments": [
+            {
+              "txt": "Without",
+              "trad": "sans",
+              "ref": null
+            },
+            {
+              "txt": "dirt",
+              "trad": "saleté",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_030",
+      "type": "A",
+      "palier_min": 3,
+      "phrase_en": "BETTER SAFE THAN SORRY",
+      "phrase_fr": "Mieux vaut prévenir que guérir",
+      "contexte_fr": "Proverbe qui recommande la prudence : il vaut mieux prendre une précaution inutile que le regretter ensuite.",
+      "mots": [
+        "w_00150",
+        "w_00140",
+        "w_00036",
+        "w_00040",
+        "w_00027"
+      ],
+      "mot_amorce": "w_00036",
+      "lettres_offertes": [
+        "A",
+        "C",
+        "H",
+        "T",
+        "W"
+      ],
+      "alphabet": {
+        "1": "B",
+        "2": "E",
+        "3": "T",
+        "4": "R",
+        "5": "S",
+        "6": "A",
+        "7": "F",
+        "8": "H",
+        "9": "N",
+        "10": "O",
+        "11": "Y",
+        "12": "C",
+        "13": "U",
+        "14": "L",
+        "15": "K",
+        "16": "W",
+        "17": "P"
+      },
+      "indices": {
+        "w_00150": {
+          "en": "Thinking before you act",
+          "fr": "prudent",
+          "segments": [
+            {
+              "txt": "Thinking",
+              "trad": "réfléchir",
+              "ref": null
+            },
+            {
+              "txt": "before",
+              "trad": "avant",
+              "ref": null
+            },
+            {
+              "txt": "you",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "act",
+              "trad": "agir",
+              "ref": null
+            }
+          ]
+        },
+        "w_00140": {
+          "en": "To look if it is right",
+          "fr": "vérifier",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "look",
+              "trad": "regarder",
+              "ref": "w_00177"
+            },
+            {
+              "txt": "if",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "it",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "is",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "right",
+              "trad": "juste",
+              "ref": null
+            }
+          ]
+        },
+        "w_00036": {
+          "en": "To look at a film",
+          "fr": "regarder",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "look",
+              "trad": "regarder",
+              "ref": "w_00177"
+            },
+            {
+              "txt": "at",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "film",
+              "trad": "film",
+              "ref": null
+            }
+          ]
+        },
+        "w_00040": {
+          "en": "To give a hand to someone",
+          "fr": "aider",
+          "segments": [
+            {
+              "txt": "To",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "give",
+              "trad": "donner",
+              "ref": null
+            },
+            {
+              "txt": "a",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "hand",
+              "trad": "main",
+              "ref": "w_00056"
+            },
+            {
+              "txt": "to",
+              "trad": null,
+              "ref": null
+            },
+            {
+              "txt": "someone",
+              "trad": "quelqu'un",
+              "ref": null
+            }
+          ]
+        },
+        "w_00027": {
+          "en": "Without dirt",
+          "fr": "propre",
+          "segments": [
+            {
+              "txt": "Without",
+              "trad": "sans",
+              "ref": null
+            },
+            {
+              "txt": "dirt",
+              "trad": "saleté",
+              "ref": null
+            }
+          ]
+        }
+      },
+      "verifie": true
+    }
+  ]
+}

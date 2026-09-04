@@ -4,6 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>WordCode</title>
+
+  <!-- Application installable. `theme_color` et `background_color` du manifeste
+       reprennent --c-bg : un manifeste JSON ne peut pas lire une variable CSS,
+       c'est la seule duplication acceptée (cf. README §9). -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#f4f7fb">
+
+  <!-- iOS ne lit pas encore tout le manifeste : ces balises restent nécessaires
+       pour un lancement plein écran depuis l'écran d'accueil. -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="WordCode">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+
   <link rel="stylesheet" href="styles/tokens.css">
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/components.css">

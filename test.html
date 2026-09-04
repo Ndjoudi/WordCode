@@ -621,6 +621,26 @@
                                 recuperer: async () => { appels += 1; return new Response("{}"); } });
     eq("aucun de ces cas ne touche le réseau", appels, 0);
 
+    section("api.js — adresse de la fonction (§14)");
+
+    // L'app est servie par GitHub Pages, qui n'exécute pas de fonction :
+    // l'appel doit partir en absolu vers Vercel.
+    vrai("l'endpoint est une URL absolue", /^https:\/\//.test(A.ENDPOINT));
+    vrai("il vise bien /api/translate", A.ENDPOINT.endsWith("/api/translate"));
+
+    eq("tant que l'hôte témoin est là, on le dit franchement",
+       (await A.traduire("hello")).cause, A.CAUSES.NON_CONFIGURE);
+    vrai("le message nomme le fichier à modifier",
+         (await A.traduire("hello")).erreur.includes("services/api.js"));
+
+    let touche = 0;
+    await A.traduire("hello", { recuperer: async () => { touche += 1; return new Response("{}"); } });
+    eq("et aucun appel réseau n'est tenté", touche, 0);
+
+    faux("estConfigure() est faux sur l'hôte témoin", A.estConfigure());
+    vrai("et vrai sur un vrai déploiement",
+         A.estConfigure("https://mon-projet.vercel.app/api/translate"));
+
     section("api.js — réponses du service (§14)");
 
     /** Réponse conforme à ce que renvoie réellement api/translate.js. */
@@ -636,30 +656,34 @@
           phrasal: true, ambigu: true, confiance: 0.74 },
       ],
     };
+    /** Adresse d'un déploiement réel, pour ne pas buter sur le garde-fou. */
+    const VRAI = "https://exemple.vercel.app/api/translate";
+
     const repond = (corps, status = 200) => async () =>
       new Response(typeof corps === "string" ? corps : JSON.stringify(corps), { status });
 
-    const bon = await A.traduire("She was reluctant.", { recuperer: repond(REPONSE) });
+    const bon = await A.traduire("She was reluctant.", { endpoint: VRAI, recuperer: repond(REPONSE) });
     vrai("réponse conforme : ok", bon.ok);
     eq("la phrase française revient", bon.donnees.phrase_fr, REPONSE.phrase_fr);
     eq("les mots reviennent", bon.donnees.mots.length, 2);
 
     eq("502 → service indisponible",
-       (await A.traduire("x", { recuperer: repond({ error: "traduction indisponible" }, 502) })).cause,
+       (await A.traduire("x", { endpoint: VRAI, recuperer: repond({ error: "traduction indisponible" }, 502) })).cause,
        A.CAUSES.INDISPONIBLE);
     eq("400 → réponse inattendue",
-       (await A.traduire("x", { recuperer: repond({ error: "texte manquant" }, 400) })).cause,
+       (await A.traduire("x", { endpoint: VRAI, recuperer: repond({ error: "texte manquant" }, 400) })).cause,
        A.CAUSES.REPONSE);
     eq("corps illisible → réponse inattendue",
-       (await A.traduire("x", { recuperer: repond("pas du json") })).cause, A.CAUSES.REPONSE);
+       (await A.traduire("x", { endpoint: VRAI, recuperer: repond("pas du json") })).cause, A.CAUSES.REPONSE);
     eq("réponse sans « mots » → réponse inattendue",
-       (await A.traduire("x", { recuperer: repond({ phrase_fr: "x" }) })).cause, A.CAUSES.REPONSE);
+       (await A.traduire("x", { endpoint: VRAI, recuperer: repond({ phrase_fr: "x" }) })).cause, A.CAUSES.REPONSE);
 
-    const coupure = await A.traduire("x", {
+    const coupure = await A.traduire("x", { endpoint: VRAI,
       recuperer: async () => { throw new TypeError("Failed to fetch"); } });
     eq("réseau coupé en cours d'appel", coupure.cause, A.CAUSES.RESEAU);
 
     const tropLent = await A.traduire("x", {
+      endpoint: VRAI,
       timeout: 20,
       recuperer: (url, options) => new Promise((_, rejette) => {
         options.signal.addEventListener("abort", () => {
@@ -672,7 +696,7 @@
       A.traduire(""),
       A.traduire("x", { enLigne: false }),
       A.traduire("x".repeat(401)),
-      A.traduire("x", { recuperer: repond({}, 502) }),
+      A.traduire("x", { endpoint: VRAI, recuperer: repond({}, 502) }),
     ]);
     vrai("chaque échec porte un message lisible",
          echecsApi.every((r) => typeof r.erreur === "string" && r.erreur.length > 15));
