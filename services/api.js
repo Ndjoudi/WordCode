@@ -5,8 +5,26 @@
  * variables d'environnement Vercel, derrière `api/translate.js`.
  */
 
-/** Chemin de la fonction serverless, même origine que l'application. */
-export const ENDPOINT = "/api/translate";
+/**
+ * Adresse de la fonction serverless.
+ *
+ * L'application est servie par GitHub Pages, qui ne sait qu'envoyer des
+ * fichiers : elle n'exécute jamais `api/translate.js`. L'appel part donc vers
+ * Vercel, en ABSOLU. La fonction renvoie `Access-Control-Allow-Origin: *` et
+ * répond aux requêtes OPTIONS, le CORS est donc déjà couvert.
+ *
+ * ►► SEULE LIGNE À CHANGER après le déploiement Vercel : remplace l'hôte par
+ *    celui que Vercel t'attribue.
+ */
+export const ENDPOINT = "https://word-code.vercel.app/api/translate";
+
+/** Hôte témoin : tant qu'il est là, le déploiement n'a pas été fait. */
+const HOTE_PAR_DEFAUT = "wordcode-api.vercel.app";
+
+/** Le point d'appel a-t-il été configuré pour un vrai déploiement ? */
+export function estConfigure(endpoint = ENDPOINT) {
+  return !String(endpoint).includes(HOTE_PAR_DEFAUT);
+}
 
 /** Au-delà, on n'appelle pas : la fonction répond 400 (cf. api/translate.js). */
 export const LONGUEUR_MAX = 400;
@@ -26,6 +44,7 @@ export const CAUSES = {
   INDISPONIBLE: "indisponible",
   RESEAU: "reseau",
   REPONSE: "reponse",
+  NON_CONFIGURE: "non-configure",
 };
 
 const MESSAGES = {
@@ -36,6 +55,8 @@ const MESSAGES = {
   [CAUSES.INDISPONIBLE]: "Le service de traduction est momentanément indisponible.",
   [CAUSES.RESEAU]: "Impossible de joindre le service de traduction.",
   [CAUSES.REPONSE]: "Réponse inattendue du service de traduction.",
+  [CAUSES.NON_CONFIGURE]:
+    "Le service de traduction n'est pas encore déployé. Renseigne ENDPOINT dans services/api.js.",
 };
 
 const echec = (cause) => ({ ok: false, donnees: null, cause, erreur: MESSAGES[cause] });
@@ -61,6 +82,10 @@ export async function traduire(texte, { endpoint = ENDPOINT, timeout = TIMEOUT_M
   if (!propre) return echec(CAUSES.VIDE);
   if (propre.length > LONGUEUR_MAX) return echec(CAUSES.TROP_LONG);
   if (!enLigne) return echec(CAUSES.HORS_LIGNE);
+
+  // Message franc plutôt qu'un « réponse inattendue » incompréhensible tant
+  // que l'adresse de la fonction n'a pas été renseignée.
+  if (!estConfigure(endpoint)) return echec(CAUSES.NON_CONFIGURE);
 
   const arret = new AbortController();
   const minuteur = setTimeout(() => arret.abort(), timeout);

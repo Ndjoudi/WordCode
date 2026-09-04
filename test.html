@@ -627,19 +627,28 @@
     // l'appel doit partir en absolu vers Vercel.
     vrai("l'endpoint est une URL absolue", /^https:\/\//.test(A.ENDPOINT));
     vrai("il vise bien /api/translate", A.ENDPOINT.endsWith("/api/translate"));
+    vrai("l'adresse livrée est configurée", A.estConfigure(A.ENDPOINT));
 
-    eq("tant que l'hôte témoin est là, on le dit franchement",
-       (await A.traduire("hello")).cause, A.CAUSES.NON_CONFIGURE);
+    // Le garde-fou se teste sur une adresse explicite, jamais sur la constante
+    // du module : sinon le test se casse dès qu'on renseigne le déploiement,
+    // et l'un d'eux partait réellement sur le réseau.
+    const TEMOIN = "https://wordcode-api.vercel.app/api/translate";
+
+    faux("estConfigure() rejette l'hôte témoin", A.estConfigure(TEMOIN));
+    vrai("et accepte un déploiement réel",
+         A.estConfigure("https://mon-projet.vercel.app/api/translate"));
+
+    eq("un endpoint non configuré est annoncé franchement",
+       (await A.traduire("hello", { endpoint: TEMOIN })).cause, A.CAUSES.NON_CONFIGURE);
     vrai("le message nomme le fichier à modifier",
-         (await A.traduire("hello")).erreur.includes("services/api.js"));
+         (await A.traduire("hello", { endpoint: TEMOIN })).erreur.includes("services/api.js"));
 
     let touche = 0;
-    await A.traduire("hello", { recuperer: async () => { touche += 1; return new Response("{}"); } });
+    await A.traduire("hello", {
+      endpoint: TEMOIN,
+      recuperer: async () => { touche += 1; return new Response("{}"); },
+    });
     eq("et aucun appel réseau n'est tenté", touche, 0);
-
-    faux("estConfigure() est faux sur l'hôte témoin", A.estConfigure());
-    vrai("et vrai sur un vrai déploiement",
-         A.estConfigure("https://mon-projet.vercel.app/api/translate"));
 
     section("api.js — réponses du service (§14)");
 

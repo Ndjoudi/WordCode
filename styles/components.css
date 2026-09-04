@@ -545,7 +545,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--sp-2);
-  padding: var(--sp-2) var(--sp-1) var(--sp-4);
+  padding: var(--sp-2) var(--sp-1) calc(var(--sp-4) + env(safe-area-inset-bottom));
   background: var(--c-surface-alt);
 }
 
@@ -726,7 +726,9 @@
   margin: 0 auto;
 }
 
-.ecran:has(.deck__keyboard) { padding-bottom: calc(var(--sp-7) * 5); }
+.ecran:has(.deck__keyboard) {
+  padding-bottom: calc(var(--sp-7) * 5 + env(safe-area-inset-bottom));
+}
 
 /* --- EndCard -------------------------------------------------------------- */
 .end-card {
@@ -879,6 +881,9 @@
    ÉCRANS  (README §11)
    ========================================================================== */
 
+/* `env(safe-area-inset-*)` vaut 0 dans un navigateur classique : ces règles
+   ne servent qu'en mode application, où il n'y a plus de barre de navigateur
+   pour écarter le contenu de l'encoche et de la barre d'accueil. */
 .ecran {
   display: flex;
   flex-direction: column;
@@ -886,7 +891,11 @@
   min-height: 100%;
   max-width: 520px;
   margin: 0 auto;
-  padding: var(--sp-4) var(--sp-4) var(--sp-7);
+  padding:
+    calc(var(--sp-4) + env(safe-area-inset-top))
+    calc(var(--sp-4) + env(safe-area-inset-right))
+    calc(var(--sp-7) + env(safe-area-inset-bottom))
+    calc(var(--sp-4) + env(safe-area-inset-left));
 }
 
 .ecran--loading { align-items: center; justify-content: center; }
@@ -944,6 +953,9 @@
   max-width: 520px;
   gap: 0;
   padding: 0;
+  /* Après `padding: 0`, sinon la déclaration courte l'écraserait et l'en-tête
+     passerait sous l'encoche en mode application. */
+  padding-top: env(safe-area-inset-top);
   overflow: hidden;
 }
 

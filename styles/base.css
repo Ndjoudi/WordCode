@@ -27,6 +27,16 @@ body {
   overscroll-behavior-y: none;
 }
 
+/* Lancée depuis l'écran d'accueil, l'application n'a plus la barre du
+   navigateur : elle doit se comporter comme une application native. */
+button, .tile, .clue-text__word {
+  -webkit-touch-callout: none;   /* pas de menu contextuel au appui long */
+  user-select: none;
+}
+
+/* La saisie, elle, reste sélectionnable. */
+input, textarea { user-select: text; }
+
 h1, h2, h3, h4, h5, h6, p, figure, blockquote { margin: 0; }
 h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: var(--fw-bold); }
 

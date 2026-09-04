@@ -2,7 +2,7 @@
 // Unique point d'appel réseau de WordCode.
 // Variable d'environnement requise : GEMINI_API_KEY
 
-const MODEL = "gemini-2.0-flash";
+const MODEL = "gemini-3.5-flash";
 const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
 
 const SYSTEM_PROMPT = `Tu es un lexicographe anglais-français. Tu analyses une phrase ou un mot anglais fourni par un apprenant francophone.
