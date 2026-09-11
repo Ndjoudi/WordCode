@@ -1,0 +1,870 @@
+{
+  "palier": 2,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_0201",
+      "palier": 2,
+      "ordre": 1,
+      "jeu": "croises",
+      "phrase_id": "ph_008",
+      "phrase_en": "SEE EYE TO EYE",
+      "phrase_fr": "Voir les choses de la même façon",
+      "contexte_fr": "Être en parfait accord.",
+      "mots": [
+        "w_02038",
+        "w_02045",
+        "w_02009",
+        "w_02007",
+        "w_02011"
+      ],
+      "alphabet": {
+        "1": "S",
+        "2": "E",
+        "3": "Y",
+        "4": "T",
+        "5": "O",
+        "6": "D",
+        "7": "A",
+        "8": "U",
+        "9": "G",
+        "10": "H",
+        "11": "R",
+        "12": "P",
+        "13": "B",
+        "14": "L",
+        "15": "M",
+        "16": "C",
+        "17": "N",
+        "18": "W",
+        "19": "F",
+        "20": "I"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_02045",
+            null
+          ],
+          [
+            null,
+            "w_02007",
+            "w_02007",
+            "w_02007",
+            "w_02007",
+            "w_02007",
+            "w_02007",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_02045",
+            null
+          ],
+          [
+            null,
+            null,
+            "w_02009",
+            null,
+            null,
+            null,
+            "w_02045",
+            null
+          ],
+          [
+            null,
+            null,
+            "w_02009",
+            null,
+            null,
+            null,
+            "w_02045",
+            null
+          ],
+          [
+            "w_02038",
+            "w_02038",
+            "w_02009",
+            "w_02038",
+            "w_02038",
+            "w_02038",
+            "w_02045",
+            "w_02038"
+          ],
+          [
+            null,
+            null,
+            "w_02009",
+            null,
+            null,
+            null,
+            "w_02045",
+            null
+          ],
+          [
+            null,
+            null,
+            "w_02009",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "w_02011",
+            "w_02011",
+            "w_02011",
+            "w_02011",
+            "w_02011",
+            "w_02011",
+            null
+          ],
+          [
+            null,
+            null,
+            "w_02009",
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "w_02038",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "w_02045",
+            "x": 6,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "w_02009",
+            "x": 2,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "w_02007",
+            "x": 1,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "w_02011",
+            "x": 1,
+            "y": 8,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 10
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_0202",
+      "palier": 2,
+      "ordre": 2,
+      "jeu": "grille",
+      "phrase_id": "ph_010",
+      "phrase_en": "ALL SET",
+      "phrase_fr": "Fin prêt",
+      "contexte_fr": "Se dit quand tout est en place.",
+      "mots": [
+        "w_02027",
+        "w_02017",
+        "w_02035",
+        "w_02023",
+        "w_02044"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "L",
+        "3": "S",
+        "4": "E",
+        "5": "T",
+        "6": "P",
+        "7": "I",
+        "8": "C",
+        "9": "U",
+        "10": "R",
+        "11": "O",
+        "12": "N",
+        "13": "D",
+        "14": "B",
+        "15": "K",
+        "16": "G",
+        "17": "H",
+        "18": "M",
+        "19": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            "w_02035",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_02035",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_02035",
+            null,
+            null,
+            null,
+            "w_02017",
+            null,
+            null,
+            null
+          ],
+          [
+            "w_02027",
+            "w_02027",
+            "w_02035",
+            "w_02027",
+            "w_02027",
+            "w_02027",
+            "w_02017",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_02035",
+            null,
+            null,
+            null,
+            "w_02017",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_02044",
+            "w_02044",
+            "w_02044",
+            "w_02023",
+            "w_02044"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_02017",
+            null,
+            "w_02023",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_02017",
+            null,
+            "w_02023",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_02023",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_02023",
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "w_02027",
+            "x": 0,
+            "y": 3,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "w_02017",
+            "x": 6,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_02035",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "w_02044",
+            "x": 5,
+            "y": 5,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "w_02023",
+            "x": 8,
+            "y": 5,
+            "dir": "V",
+            "num": 5
+          }
+        ],
+        "largeur": 10,
+        "hauteur": 10
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_0203",
+      "palier": 2,
+      "ordre": 3,
+      "jeu": "croises",
+      "phrase_id": "ph_011",
+      "phrase_en": "NOT AT ALL",
+      "phrase_fr": "Pas du tout",
+      "contexte_fr": "Réponse de dénégation, ou de politesse après un merci.",
+      "mots": [
+        "w_02003",
+        "w_02037",
+        "w_02015",
+        "w_02032",
+        "w_02050"
+      ],
+      "alphabet": {
+        "1": "N",
+        "2": "O",
+        "3": "T",
+        "4": "A",
+        "5": "L",
+        "6": "S",
+        "7": "U",
+        "8": "D",
+        "9": "E",
+        "10": "C",
+        "11": "I",
+        "12": "M",
+        "13": "P",
+        "14": "R",
+        "15": "B",
+        "16": "H",
+        "17": "G"
+      },
+      "croises": {
+        "grille": [
+          [
+            "w_02015",
+            null,
+            null,
+            null,
+            "w_02037",
+            null,
+            null
+          ],
+          [
+            "w_02015",
+            null,
+            "w_02050",
+            "w_02050",
+            "w_02050",
+            "w_02050",
+            "w_02050"
+          ],
+          [
+            "w_02015",
+            null,
+            null,
+            null,
+            "w_02037",
+            null,
+            null
+          ],
+          [
+            "w_02015",
+            "w_02003",
+            "w_02003",
+            "w_02003",
+            "w_02037",
+            "w_02003",
+            "w_02032"
+          ],
+          [
+            "w_02015",
+            null,
+            null,
+            null,
+            "w_02037",
+            null,
+            "w_02032"
+          ],
+          [
+            "w_02015",
+            null,
+            null,
+            null,
+            "w_02037",
+            null,
+            "w_02032"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_02032"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_02032"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "w_02003",
+            "x": 0,
+            "y": 3,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "w_02037",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_02015",
+            "x": 0,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "w_02032",
+            "x": 6,
+            "y": 3,
+            "dir": "V",
+            "num": 5
+          },
+          {
+            "mot": "w_02050",
+            "x": 2,
+            "y": 1,
+            "dir": "H",
+            "num": 3
+          }
+        ],
+        "largeur": 7,
+        "hauteur": 8
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_0204",
+      "palier": 2,
+      "ordre": 4,
+      "jeu": "grille",
+      "phrase_id": "ph_014",
+      "phrase_en": "NEAR AND DEAR",
+      "phrase_fr": "Cher à mon cœur",
+      "contexte_fr": "Se dit de ce qui compte vraiment pour soi.",
+      "mots": [
+        "w_02008",
+        "w_02025",
+        "w_02004",
+        "w_02012",
+        "w_02016"
+      ],
+      "alphabet": {
+        "1": "N",
+        "2": "E",
+        "3": "A",
+        "4": "R",
+        "5": "D",
+        "6": "C",
+        "7": "L",
+        "8": "I",
+        "9": "S",
+        "10": "T",
+        "11": "O",
+        "12": "P",
+        "13": "J",
+        "14": "B",
+        "15": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_02008",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_02008",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "w_02025",
+            "w_02025",
+            "w_02004",
+            "w_02025",
+            "w_02025",
+            "w_02008",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_02004",
+            null,
+            null,
+            "w_02008",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "w_02012",
+            "w_02012",
+            "w_02012",
+            null,
+            "w_02016",
+            "w_02016",
+            "w_02016",
+            "w_02016",
+            "w_02016"
+          ],
+          [
+            null,
+            null,
+            "w_02004",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "w_02025",
+            "x": 0,
+            "y": 2,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "w_02008",
+            "x": 5,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "w_02016",
+            "x": 5,
+            "y": 4,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "w_02004",
+            "x": 2,
+            "y": 2,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "w_02012",
+            "x": 1,
+            "y": 4,
+            "dir": "H",
+            "num": 4
+          }
+        ],
+        "largeur": 10,
+        "hauteur": 6
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_0205",
+      "palier": 2,
+      "ordre": 5,
+      "jeu": "grille",
+      "phrase_id": "ph_013",
+      "phrase_en": "LET ME SEE",
+      "phrase_fr": "Voyons voir",
+      "contexte_fr": "On le dit en prenant un instant de réflexion.",
+      "mots": [
+        "w_02010",
+        "w_02033",
+        "w_02029",
+        "w_02013",
+        "w_02022"
+      ],
+      "alphabet": {
+        "1": "L",
+        "2": "E",
+        "3": "T",
+        "4": "M",
+        "5": "S",
+        "6": "D",
+        "7": "A",
+        "8": "N",
+        "9": "C",
+        "10": "W",
+        "11": "R",
+        "12": "I",
+        "13": "H",
+        "14": "O",
+        "15": "P",
+        "16": "F"
+      },
+      "croises": null,
+      "verifie": true
+    },
+    {
+      "id": "p_0206",
+      "palier": 2,
+      "ordre": 6,
+      "jeu": "grille",
+      "phrase_id": "ph_012",
+      "phrase_en": "TAKE A SEAT",
+      "phrase_fr": "Assieds-toi",
+      "contexte_fr": "Invitation polie à s'asseoir.",
+      "mots": [
+        "w_02020",
+        "w_02006",
+        "w_02014",
+        "w_02024",
+        "w_02028"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "A",
+        "3": "K",
+        "4": "E",
+        "5": "S",
+        "6": "C",
+        "7": "L",
+        "8": "O",
+        "9": "W",
+        "10": "N",
+        "11": "P",
+        "12": "R",
+        "13": "H",
+        "14": "D",
+        "15": "I",
+        "16": "V"
+      },
+      "croises": null,
+      "verifie": true
+    },
+    {
+      "id": "p_0207",
+      "palier": 2,
+      "ordre": 7,
+      "jeu": "grille",
+      "phrase_id": "ph_016",
+      "phrase_en": "NO ONE ELSE",
+      "phrase_fr": "Personne d'autre",
+      "contexte_fr": "Marque l'exclusivité.",
+      "mots": [
+        "w_02021",
+        "w_02030",
+        "w_02002",
+        "w_02005",
+        "w_02019"
+      ],
+      "alphabet": {
+        "1": "N",
+        "2": "O",
+        "3": "E",
+        "4": "L",
+        "5": "S",
+        "6": "C",
+        "7": "A",
+        "8": "H",
+        "9": "I",
+        "10": "P",
+        "11": "R",
+        "12": "D",
+        "13": "T",
+        "14": "W",
+        "15": "B"
+      },
+      "croises": null,
+      "verifie": true
+    },
+    {
+      "id": "p_0208",
+      "palier": 2,
+      "ordre": 8,
+      "jeu": "grille",
+      "phrase_id": "ph_018",
+      "phrase_en": "SO CLOSE",
+      "phrase_fr": "Si près",
+      "contexte_fr": "Se dit quand on a échoué de peu.",
+      "mots": [
+        "w_02036",
+        "w_02043",
+        "w_02026",
+        "w_02031",
+        "w_02046"
+      ],
+      "alphabet": {
+        "1": "S",
+        "2": "O",
+        "3": "C",
+        "4": "L",
+        "5": "E",
+        "6": "H",
+        "7": "A",
+        "8": "N",
+        "9": "D",
+        "10": "W",
+        "11": "I",
+        "12": "T",
+        "13": "P",
+        "14": "Y"
+      },
+      "croises": null,
+      "verifie": true
+    },
+    {
+      "id": "p_0209",
+      "palier": 2,
+      "ordre": 9,
+      "jeu": "grille",
+      "phrase_id": "ph_020",
+      "phrase_en": "IT IS ON",
+      "phrase_fr": "C'est parti",
+      "contexte_fr": "Marque le début d'une confrontation ou d'un jeu.",
+      "mots": [
+        "w_02041",
+        "w_02018",
+        "w_02034",
+        "w_02001",
+        "w_02039"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "T",
+        "3": "S",
+        "4": "O",
+        "5": "N",
+        "6": "H",
+        "7": "E",
+        "8": "A",
+        "9": "D",
+        "10": "R",
+        "11": "P"
+      },
+      "croises": null,
+      "verifie": true
+    }
+  ]
+}

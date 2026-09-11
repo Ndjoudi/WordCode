@@ -1,0 +1,903 @@
+{
+  "palier": 15,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_1501",
+      "palier": 15,
+      "ordre": 1,
+      "jeu": "croises",
+      "phrase_id": "ph_112",
+      "phrase_en": "A DISTANT LAND",
+      "phrase_fr": "Une terre lointaine",
+      "contexte_fr": "Évoque un ailleurs inaccessible.",
+      "mots": [
+        "w_15038",
+        "w_15023",
+        "w_15046",
+        "w_15021",
+        "w_15008"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "D",
+        "3": "I",
+        "4": "S",
+        "5": "T",
+        "6": "N",
+        "7": "L",
+        "8": "C",
+        "9": "O",
+        "10": "V",
+        "11": "E",
+        "12": "R",
+        "13": "H",
+        "14": "U",
+        "15": "B",
+        "16": "P",
+        "17": "Y",
+        "18": "F",
+        "19": "G",
+        "20": "M"
+      },
+      "croises": {
+        "grille": [
+          [
+            "w_15023",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "w_15023",
+            null,
+            "w_15008",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "w_15023",
+            null,
+            "w_15008",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "w_15023",
+            null,
+            "w_15008",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "w_15023",
+            null,
+            "w_15008",
+            null,
+            null,
+            null,
+            "w_15046",
+            null
+          ],
+          [
+            "w_15023",
+            null,
+            "w_15008",
+            null,
+            "w_15021",
+            null,
+            "w_15046",
+            null
+          ],
+          [
+            "w_15023",
+            "w_15038",
+            "w_15008",
+            "w_15038",
+            "w_15021",
+            "w_15038",
+            "w_15046",
+            "w_15038"
+          ],
+          [
+            null,
+            null,
+            "w_15008",
+            null,
+            "w_15021",
+            null,
+            "w_15046",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_15021",
+            null,
+            "w_15046",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_15021",
+            null,
+            "w_15046",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_15021",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_15021",
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "w_15038",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "w_15023",
+            "x": 0,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "w_15021",
+            "x": 4,
+            "y": 5,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "w_15008",
+            "x": 2,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_15046",
+            "x": 6,
+            "y": 4,
+            "dir": "V",
+            "num": 3
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 12
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_1502",
+      "palier": 15,
+      "ordre": 2,
+      "jeu": "grille",
+      "phrase_id": "ph_113",
+      "phrase_en": "NO ODDS AT ALL",
+      "phrase_fr": "Aucune chance",
+      "contexte_fr": "Marque une impossibilité complète.",
+      "mots": [
+        "w_15001",
+        "w_15045",
+        "w_15012",
+        "w_15014",
+        "w_15043"
+      ],
+      "alphabet": {
+        "1": "N",
+        "2": "O",
+        "3": "D",
+        "4": "S",
+        "5": "A",
+        "6": "T",
+        "7": "L",
+        "8": "U",
+        "9": "B",
+        "10": "E",
+        "11": "P",
+        "12": "R",
+        "13": "F",
+        "14": "I",
+        "15": "C",
+        "16": "W",
+        "17": "H",
+        "18": "M"
+      },
+      "croises": {
+        "grille": [
+          [
+            "w_15012",
+            "w_15012",
+            "w_15012",
+            "w_15012",
+            "w_15012",
+            null,
+            null
+          ],
+          [
+            null,
+            "w_15045",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "w_15045",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "w_15045",
+            null,
+            null,
+            "w_15001",
+            null,
+            null
+          ],
+          [
+            "w_15014",
+            "w_15045",
+            "w_15014",
+            "w_15014",
+            "w_15001",
+            "w_15014",
+            "w_15014"
+          ],
+          [
+            null,
+            "w_15045",
+            null,
+            null,
+            "w_15001",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_15001",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_15001",
+            null,
+            null
+          ],
+          [
+            null,
+            "w_15043",
+            "w_15043",
+            "w_15043",
+            "w_15043",
+            "w_15043",
+            "w_15043"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "w_15014",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "w_15001",
+            "x": 4,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "w_15045",
+            "x": 1,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_15043",
+            "x": 1,
+            "y": 8,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "w_15012",
+            "x": 0,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          }
+        ],
+        "largeur": 7,
+        "hauteur": 9
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_1503",
+      "palier": 15,
+      "ordre": 3,
+      "jeu": "grille",
+      "phrase_id": "ph_116",
+      "phrase_en": "NEAT AND TIDY",
+      "phrase_fr": "Propre et rangé",
+      "contexte_fr": "Se dit d'un lieu en ordre parfait.",
+      "mots": [
+        "w_15002",
+        "w_15015",
+        "w_15030",
+        "w_15034",
+        "w_15018"
+      ],
+      "alphabet": {
+        "1": "N",
+        "2": "E",
+        "3": "A",
+        "4": "T",
+        "5": "D",
+        "6": "I",
+        "7": "Y",
+        "8": "F",
+        "9": "O",
+        "10": "R",
+        "11": "G",
+        "12": "M",
+        "13": "L",
+        "14": "S",
+        "15": "U",
+        "16": "P",
+        "17": "B",
+        "18": "C"
+      },
+      "croises": null,
+      "verifie": true
+    },
+    {
+      "id": "p_1504",
+      "palier": 15,
+      "ordre": 4,
+      "jeu": "grille",
+      "phrase_id": "ph_117",
+      "phrase_en": "ON SOLID LAND",
+      "phrase_fr": "En terrain sûr",
+      "contexte_fr": "Se dit quand le risque est passé.",
+      "mots": [
+        "w_15010",
+        "w_15036",
+        "w_15019",
+        "w_15020",
+        "w_15039"
+      ],
+      "alphabet": {
+        "1": "O",
+        "2": "N",
+        "3": "S",
+        "4": "L",
+        "5": "I",
+        "6": "D",
+        "7": "A",
+        "8": "R",
+        "9": "E",
+        "10": "G",
+        "11": "U",
+        "12": "C",
+        "13": "T",
+        "14": "H",
+        "15": "X",
+        "16": "P",
+        "17": "F",
+        "18": "Y"
+      },
+      "croises": null,
+      "verifie": true
+    },
+    {
+      "id": "p_1505",
+      "palier": 15,
+      "ordre": 5,
+      "jeu": "croises",
+      "phrase_id": "ph_119",
+      "phrase_en": "ALL THE SAME",
+      "phrase_fr": "Malgré tout",
+      "contexte_fr": "Introduit une conclusion qui résiste à l'objection.",
+      "mots": [
+        "w_15013",
+        "w_15033",
+        "w_15025",
+        "w_15037",
+        "w_15017"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "L",
+        "3": "T",
+        "4": "H",
+        "5": "E",
+        "6": "S",
+        "7": "M",
+        "8": "U",
+        "9": "F",
+        "10": "R",
+        "11": "I",
+        "12": "D",
+        "13": "O",
+        "14": "P",
+        "15": "N",
+        "16": "C"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "w_15013",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "w_15013",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_15037",
+            "w_15037",
+            "w_15037",
+            "w_15037",
+            "w_15037"
+          ],
+          [
+            null,
+            null,
+            null,
+            "w_15013",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "w_15013",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "w_15017",
+            "w_15017",
+            "w_15013",
+            "w_15017",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_15033",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_15033",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_15033",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "w_15025",
+            "w_15025",
+            "w_15033",
+            "w_15025",
+            "w_15025",
+            "w_15025",
+            "w_15025"
+          ],
+          [
+            null,
+            null,
+            "w_15033",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "w_15025",
+            "x": 0,
+            "y": 9,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "w_15033",
+            "x": 2,
+            "y": 5,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "w_15017",
+            "x": 1,
+            "y": 5,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "w_15013",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "w_15037",
+            "x": 2,
+            "y": 2,
+            "dir": "H",
+            "num": 2
+          }
+        ],
+        "largeur": 7,
+        "hauteur": 11
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_1506",
+      "palier": 15,
+      "ordre": 6,
+      "jeu": "croises",
+      "phrase_id": "ph_127",
+      "phrase_en": "CUT TO THE CHASE",
+      "phrase_fr": "Aller droit au but",
+      "contexte_fr": "Vient du cinéma muet : passer à la scène de poursuite.",
+      "mots": [
+        "w_15035",
+        "w_15040",
+        "w_15007",
+        "w_15041",
+        "w_15047"
+      ],
+      "alphabet": {
+        "1": "C",
+        "2": "U",
+        "3": "T",
+        "4": "O",
+        "5": "H",
+        "6": "E",
+        "7": "A",
+        "8": "S",
+        "9": "I",
+        "10": "R",
+        "11": "L",
+        "12": "G",
+        "13": "M",
+        "14": "N",
+        "15": "D"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            "w_15041",
+            "w_15041",
+            "w_15041",
+            "w_15041",
+            "w_15041"
+          ],
+          [
+            null,
+            null,
+            null,
+            "w_15047",
+            null,
+            null
+          ],
+          [
+            null,
+            "w_15007",
+            null,
+            "w_15047",
+            null,
+            "w_15040"
+          ],
+          [
+            null,
+            "w_15007",
+            null,
+            "w_15047",
+            null,
+            "w_15040"
+          ],
+          [
+            "w_15035",
+            "w_15007",
+            "w_15035",
+            "w_15047",
+            "w_15035",
+            "w_15040"
+          ],
+          [
+            null,
+            "w_15007",
+            null,
+            "w_15047",
+            null,
+            "w_15040"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_15040"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "w_15035",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "w_15047",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_15040",
+            "x": 5,
+            "y": 2,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "w_15041",
+            "x": 1,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          },
+          {
+            "mot": "w_15007",
+            "x": 1,
+            "y": 2,
+            "dir": "V",
+            "num": 3
+          }
+        ],
+        "largeur": 6,
+        "hauteur": 7
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_1507",
+      "palier": 15,
+      "ordre": 7,
+      "jeu": "croises",
+      "phrase_id": "ph_140",
+      "phrase_en": "SLEEP ON IT",
+      "phrase_fr": "La nuit porte conseil",
+      "contexte_fr": "Attendre le lendemain avant de décider.",
+      "mots": [
+        "w_15048",
+        "w_15003",
+        "w_15009",
+        "w_15050",
+        "w_15029"
+      ],
+      "alphabet": {
+        "1": "S",
+        "2": "L",
+        "3": "E",
+        "4": "P",
+        "5": "O",
+        "6": "N",
+        "7": "I",
+        "8": "T",
+        "9": "H",
+        "10": "A",
+        "11": "R",
+        "12": "G",
+        "13": "U"
+      },
+      "croises": {
+        "grille": [
+          [
+            "w_15029",
+            "w_15029",
+            "w_15029",
+            "w_15029",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_15003",
+            null,
+            "w_15050",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "w_15009",
+            "w_15003",
+            "w_15009",
+            "w_15009",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_15003",
+            null,
+            "w_15050",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_15050",
+            "w_15048",
+            "w_15048",
+            "w_15048",
+            "w_15048"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_15050",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "w_15048",
+            "x": 4,
+            "y": 4,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "w_15050",
+            "x": 4,
+            "y": 1,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "w_15009",
+            "x": 1,
+            "y": 2,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "w_15003",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_15029",
+            "x": 0,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 6
+      },
+      "verifie": true
+    }
+  ]
+}
