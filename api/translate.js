@@ -54,6 +54,28 @@ RÈGLES ABSOLUES
 Format :
 {"corrige":"<le texte corrigé>","remarques":[{"ecrit":"<extrait fautif>","correct":"<la forme juste>","pourquoi":"<explication en français, une phrase>"}],"reussi":"<une phrase en français>"}`;
 
+/**
+ * Décrit la clé reçue par CE déploiement, sans jamais en révéler la valeur.
+ *
+ * Une clé absente, entourée de guillemets ou d'espaces, ou qui n'est pas une
+ * clé Gemini donne chez Google exactement la même erreur (400 API_KEY_INVALID).
+ * Seule la fonction voit ce qu'elle a reçu : c'est à elle de le dire.
+ * Rien d'autre que la longueur et le préfixe public « AIza » n'est exposé.
+ *
+ * @param {string|undefined} cle
+ * @returns {string}
+ */
+function etatCle(cle = process.env.GEMINI_API_KEY) {
+  if (cle === undefined) return "absente : aucune variable GEMINI_API_KEY dans ce déploiement";
+  if (!cle.trim()) return "présente mais vide";
+  const defauts = [];
+  if (cle !== cle.trim()) defauts.push("espaces autour");
+  const nue = cle.trim();
+  if (/^["']|["']$/.test(nue)) defauts.push("guillemets autour");
+  if (!nue.replace(/^["']|["']$/g, "").startsWith("AIza")) defauts.push("ne commence pas par AIza");
+  return `présente, ${cle.length} caractères${defauts.length ? ` — ${defauts.join(", ")}` : ", format correct"}`;
+}
+
 async function gemini(system, user, { temperature = 0.1, maxOutputTokens = 2048 } = {}) {
   const res = await fetch(`${ENDPOINT}?key=${process.env.GEMINI_API_KEY}`, {
     method: "POST",
@@ -68,7 +90,17 @@ async function gemini(system, user, { temperature = 0.1, maxOutputTokens = 2048 
       },
     }),
   });
-  if (!res.ok) throw new Error(`Gemini ${res.status}`);
+  if (!res.ok) {
+    // Google explique toujours son refus (API_KEY_INVALID, PERMISSION_DENIED,
+    // RESOURCE_EXHAUSTED…). Le jeter revenait à ne garder que « 400 ».
+    let raison = "";
+    try {
+      const corps = await res.json();
+      raison = corps?.error?.details?.find((d) => d?.reason)?.reason
+        ?? corps?.error?.status ?? "";
+    } catch { /* corps illisible : le code HTTP suffira */ }
+    throw new Error(`Gemini ${res.status}${raison ? ` ${raison}` : ""}`);
+  }
   const data = await res.json();
   const txt = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
   return JSON.parse(txt.replace(/```json|```/g, "").trim());
@@ -99,7 +131,10 @@ export default async function handler(req, res) {
 
     return res.status(200).json(out);
   } catch (e) {
-    return res.status(502).json({ error: "traduction indisponible" });
+    // Le client ne lit que le statut 502 ; `cause` et `cle` servent au
+    // diagnostic, sans rien révéler de la clé elle-même.
+    return res.status(502).json({ error: "traduction indisponible",
+                                  cause: String(e?.message ?? e), cle: etatCle() });
   }
 }
 
