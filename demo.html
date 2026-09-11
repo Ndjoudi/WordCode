@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>WordCode — catalogue de composants</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <style>
+    /* Mise en page de CETTE page de vérification uniquement.
+       demo.html ne fait pas partie de l'application : ces règles n'ont donc
+       pas leur place dans components.css. Elles n'utilisent que des tokens. */
+    .demo        { max-width: 420px; margin: 0 auto; padding: var(--sp-5) var(--sp-4) var(--sp-7); }
+    .demo h1     { font-size: var(--fs-2xl); margin-bottom: var(--sp-2); }
+    .demo__intro { color: var(--c-text-muted); font-size: var(--fs-sm); margin-bottom: var(--sp-6); }
+    .demo h2     { font-size: var(--fs-xs); font-weight: var(--fw-bold); letter-spacing: .08em;
+                   text-transform: uppercase; color: var(--c-text-muted); margin: var(--sp-6) 0 var(--sp-4); }
+    .demo__card  { background: var(--c-surface); border-radius: var(--r-lg); padding: var(--sp-4);
+                   margin-bottom: var(--sp-4); box-shadow: var(--sh-sm); }
+    .demo__name  { font-size: var(--fs-md); font-weight: var(--fw-bold); margin-bottom: var(--sp-1); }
+    .demo__props { font-size: var(--fs-xs); color: var(--c-text-muted); margin-bottom: var(--sp-4); }
+    .demo__case  { margin-top: var(--sp-4); }
+    .demo__case:first-of-type { margin-top: 0; }
+    .demo__legend{ font-size: var(--fs-xs); color: var(--c-text-muted); margin-bottom: var(--sp-2); }
+    .demo__row   { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); }
+    .demo__stack { display: flex; flex-direction: column; align-items: stretch; gap: var(--sp-3); }
+    /* Les molecules de type bloc occupent la largeur, comme dans l'app. */
+    .demo__row > .word-card, .demo__row > .mcq, .demo__row > .input-answer,
+    .demo__row > .cloze-input, .demo__row > .verb-triad, .demo__row > .word-order,
+    .demo__row > .translation-popover, .demo__row > .clue-row,
+    .demo__row > .clue-text, .demo__row > .session-header { flex: 1 1 100%; }
+    /* Le clavier est ancré en pleine largeur dans l'app : la carte s'efface. */
+    .demo__bleed .demo__case > .demo__row { display: block; }
+    .demo__bleed { padding-left: 0; padding-right: 0; }
+    .demo__bleed .demo__name, .demo__bleed .demo__props,
+    .demo__bleed .demo__legend { padding-left: var(--sp-4); padding-right: var(--sp-4); }
+    .demo__stack > .progress-dots, .demo__stack > .counter { align-self: flex-start; }
+    .demo__grid  { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: var(--sp-3); }
+    .demo__icon  { display: flex; flex-direction: column; align-items: center; gap: var(--sp-1);
+                   font-size: var(--fs-xs); color: var(--c-text-muted); }
+    .demo__icon svg { width: var(--sp-5); height: var(--sp-5); color: var(--c-text); }
+    .demo__dark  { background: var(--c-text); border-radius: var(--r-md); padding: var(--sp-3); }
+  </style>
+</head>
+<body>
+  <main class="demo" id="demo">
+    <h1>Catalogue</h1>
+    <p class="demo__intro">
+      Vérification visuelle des atoms et des molecules — README §10.1 et
+      §10.2. Cette page ne fait pas partie de l'application.
+    </p>
+  </main>
+
+  <script type="module">
+    import { ICONS }        from "./components/atoms/icons.js";
+    import { Button }       from "./components/atoms/button.js";
+    import { IconButton }   from "./components/atoms/icon-button.js";
+    import { Tile }         from "./components/atoms/tile.js";
+    import { Chip }         from "./components/atoms/chip.js";
+    import { ProgressDots } from "./components/atoms/progress-dots.js";
+    import { ProgressBar }  from "./components/atoms/progress-bar.js";
+    import { Counter }      from "./components/atoms/counter.js";
+    import { Spinner }      from "./components/atoms/spinner.js";
+    import { Toast }        from "./components/atoms/toast.js";
+    import { Divider }      from "./components/atoms/divider.js";
+
+    import { TileGroup }           from "./components/molecules/tile-group.js";
+    import { ClueText }            from "./components/molecules/clue-text.js";
+    import { ClueRow }             from "./components/molecules/clue-row.js";
+    import { TranslationPopover }  from "./components/molecules/translation-popover.js";
+    import { WordCard }            from "./components/molecules/word-card.js";
+    import { MCQ }                 from "./components/molecules/mcq.js";
+    import { InputAnswer }         from "./components/molecules/input-answer.js";
+    import { ClozeInput }          from "./components/molecules/cloze-input.js";
+    import { VerbTriad }           from "./components/molecules/verb-triad.js";
+    import { WordOrder }           from "./components/molecules/word-order.js";
+    import { Keyboard }            from "./components/molecules/keyboard.js";
+    import { SessionHeader }       from "./components/molecules/session-header.js";
+    import { StatRow }             from "./components/molecules/stat-row.js";
+    import { WordListItem }        from "./components/molecules/word-list-item.js";
+    import { ProgressDots as PD }  from "./components/atoms/progress-dots.js";
+
+    const racine = document.getElementById("demo");
+
+    const titre = (texte) => {
+      const h = document.createElement("h2");
+      h.textContent = texte;
+      racine.append(h);
+    };
+
+    /** Une carte par composant : nom, props, puis un cas par état. */
+    const carte = (nom, props, cas, classeCarte = "") => {
+      const bloc = document.createElement("section");
+      bloc.className = `demo__card ${classeCarte}`.trim();
+
+      const n = document.createElement("p");
+      n.className = "demo__name";
+      n.textContent = nom;
+      bloc.append(n);
+
+      const p = document.createElement("p");
+      p.className = "demo__props";
+      p.textContent = props;
+      bloc.append(p);
+
+      for (const [legende, contenu, classe = "demo__row"] of cas) {
+        const zone = document.createElement("div");
+        zone.className = "demo__case";
+
+        const l = document.createElement("p");
+        l.className = "demo__legend";
+        l.textContent = legende;
+        zone.append(l);
+
+        const rangee = document.createElement("div");
+        rangee.className = classe;
+        rangee.append(...[].concat(contenu));
+        zone.append(rangee);
+
+        bloc.append(zone);
+      }
+
+      racine.append(bloc);
+    };
+
+    /* ---------------------------------------------------------------- ICONS */
+    titre("icons.js — 14 icônes");
+    const grilleIcones = Object.keys(ICONS).map((cle) => {
+      const c = document.createElement("div");
+      c.className = "demo__icon";
+      c.innerHTML = ICONS[cle];
+      const nom = document.createElement("span");
+      nom.textContent = cle;
+      c.append(nom);
+      return c;
+    });
+    carte("ICONS", "objet de clés → SVG inline, viewBox 0 0 24 24",
+      [["les 14 clés disponibles", grilleIcones, "demo__grid"]]);
+
+    /* --------------------------------------------------------------- ATOMS */
+    titre("Atoms — README §10.1");
+
+    carte("Button", "label, variant, icon, disabled, fullWidth, onClick", [
+      ["variant", ["primary", "secondary", "ghost", "danger"]
+        .map((v) => Button({ label: v, variant: v, onClick: () => {} }))],
+      ["icon", [
+        Button({ label: "Écouter", icon: "audio", onClick: () => {} }),
+        Button({ label: "Ajouter", icon: "plus", variant: "secondary", onClick: () => {} }),
+      ]],
+      ["disabled", ["primary", "secondary", "ghost", "danger"]
+        .map((v) => Button({ label: v, variant: v, disabled: true }))],
+      ["fullWidth", Button({ label: "Commencer la session", fullWidth: true, onClick: () => {} })],
+    ]);
+
+    carte("IconButton", "icon, label (a11y), variant, badge, onClick", [
+      ["variant", ["primary", "secondary", "ghost", "danger"].map((v, i) =>
+        IconButton({ icon: ["home", "settings", "audio", "close"][i], label: v, variant: v, onClick: () => {} }))],
+      ["badge", [
+        IconButton({ icon: "book", label: "Paliers", variant: "secondary", badge: 3, onClick: () => {} }),
+        IconButton({ icon: "chart", label: "Progression", variant: "secondary", badge: 12, onClick: () => {} }),
+      ]],
+    ]);
+
+    carte("Tile", "letter, number, state, onClick", [
+      ["les 6 états", [
+        ["empty", "", 4], ["filled", "W", 1], ["active", "A", 3],
+        ["offered", "T", 5], ["error", "X", 9], ["revealed", "R", 2],
+      ].map(([state, letter, number]) => Tile({ letter, number, state, onClick: () => {} }))],
+      ["un mot : WATER (offered + filled + active + empty)", [
+        Tile({ letter: "W", number: 1, state: "offered" }),
+        Tile({ letter: "A", number: 2, state: "filled", onClick: () => {} }),
+        Tile({ letter: "T", number: 3, state: "active", onClick: () => {} }),
+        Tile({ letter: "", number: 4, state: "empty", onClick: () => {} }),
+        Tile({ letter: "", number: 2, state: "empty", onClick: () => {} }),
+      ]],
+    ]);
+
+    carte("Chip", "label, variant", [
+      ["variant", [
+        Chip({ label: "nature", variant: "theme" }),
+        Chip({ label: "Palier 1", variant: "palier" }),
+        Chip({ label: "organique", variant: "source" }),
+      ]],
+    ]);
+
+    carte("ProgressDots", "total, current", [
+      ["current = 1, 3 puis 5 sur 5", [
+        ProgressDots({ total: 5, current: 1 }),
+        ProgressDots({ total: 5, current: 3 }),
+        ProgressDots({ total: 5, current: 5 }),
+      ], "demo__stack"],
+    ]);
+
+    carte("ProgressBar", "value, max, variant", [
+      ["variant primary — 0, 40 et 100 %", [
+        ProgressBar({ value: 0, max: 100 }),
+        ProgressBar({ value: 40, max: 100 }),
+        ProgressBar({ value: 100, max: 100 }),
+      ], "demo__stack"],
+      ["variant success et accent", [
+        ProgressBar({ value: 40, max: 50, variant: "success" }),
+        ProgressBar({ value: 12, max: 50, variant: "accent" }),
+      ], "demo__stack"],
+    ]);
+
+    carte("Counter", "value, icon, label", [
+      ["avec icône et libellé", [
+        Counter({ value: 7, icon: "flame", label: "jours" }),
+        Counter({ value: 12, icon: "book", label: "à réviser" }),
+      ]],
+      ["sans icône, sans libellé", Counter({ value: 3 })],
+    ]);
+
+    carte("Spinner", "size", [
+      ["sm, md, lg", ["sm", "md", "lg"].map((size) => Spinner({ size }))],
+    ]);
+
+    carte("Toast", "message, variant, duration", [
+      ["variant — duration 0 pour rester affichés ici", [
+        Toast({ message: "Mot ajouté à la file de découverte", variant: "info", duration: 0 }),
+        Toast({ message: "Palier 1 débloqué", variant: "success", duration: 0 }),
+        Toast({ message: "Traduction indisponible hors ligne", variant: "error", duration: 0 }),
+      ], "demo__stack"],
+      ["duration 2000 — disparaît tout seul", [
+        Toast({ message: "Je disparais dans 2 secondes", duration: 2000 }),
+      ], "demo__stack"],
+    ]);
+
+    carte("Divider", "spacing", [
+      ["spacing 2 puis 6, entre deux lignes de texte", (() => {
+        const bloc = document.createElement("div");
+        const avant = document.createElement("p");
+        avant.textContent = "Texte au-dessus";
+        const milieu = document.createElement("p");
+        milieu.textContent = "Entre les deux";
+        const apres = document.createElement("p");
+        apres.textContent = "Texte en dessous";
+        bloc.append(avant, Divider({ spacing: 2 }), milieu, Divider({ spacing: 6 }), apres);
+        return bloc;
+      })(), "demo__case"],
+    ]);
+
+    /* ----------------------------------------------------------- MOLECULES */
+    titre("Molecules — README §10.2");
+
+    /* Données réelles, tirées de content/parties/parties-01.json (p_005). */
+    const SEGMENTS = [
+      { txt: "You",     trad: null,        ref: null },
+      { txt: "drink",   trad: "boire",     ref: "w_00038" },
+      { txt: "it",      trad: null,        ref: null },
+      { txt: "when",    trad: "quand",     ref: null },
+      { txt: "you",     trad: null,        ref: null },
+      { txt: "are",     trad: null,        ref: null },
+      { txt: "thirsty", trad: "assoiffé",  ref: null },
+    ];
+    const MOT_WATER = [
+      { letter: "W", number: 7, state: "offered" },
+      { letter: "A", number: 10, state: "filled" },
+      { letter: "T", number: 9, state: "filled" },
+      { letter: "",  number: 4, state: "empty" },
+      { letter: "",  number: 8, state: "empty" },
+    ];
+
+    carte("TileGroup", "tiles[], activeIndex, onTileClick", [
+      ["WATER — activeIndex 3", TileGroup({ tiles: MOT_WATER, activeIndex: 3, onTileClick: () => {} })],
+      ["mot entièrement révélé", TileGroup({
+        tiles: "WATER".split("").map((letter, i) => ({ letter, number: [7,10,9,4,8][i], state: "revealed" })),
+      })],
+    ]);
+
+    carte("ClueText", "segments[], onWordTap", [
+      ["mots-outils en gris, segments tappables en relief — tape pour voir",
+        ClueText({ segments: SEGMENTS, onWordTap: (seg) => alert(`${seg.txt} → ${seg.trad}`) })],
+    ]);
+
+    carte("ClueRow", "clue (ClueText), tiles (TileGroup), solved", [
+      ["solved: false", ClueRow({
+        clue: ClueText({ segments: SEGMENTS, onWordTap: () => {} }),
+        tiles: TileGroup({ tiles: MOT_WATER, activeIndex: 3 }),
+      })],
+      ["solved: true", ClueRow({
+        clue: ClueText({ segments: SEGMENTS }),
+        tiles: TileGroup({ tiles: "WATER".split("").map((letter, i) => ({ letter, number: [7,10,9,4,8][i], state: "revealed" })) }),
+        solved: true,
+      })],
+    ]);
+
+    carte("TranslationPopover", "word, translation, alreadyKnown, canAdd, onAdd, onClose", [
+      ["canAdd: true", TranslationPopover({
+        word: "thirsty", translation: "assoiffé", onAdd: () => {}, onClose: () => {} })],
+      ["alreadyKnown: true", TranslationPopover({
+        word: "drink", translation: "boire", alreadyKnown: true, onClose: () => {} })],
+      ["canAdd: false — plafond de 3 atteint", TranslationPopover({
+        word: "butter", translation: "beurre", canAdd: false, onClose: () => {} })],
+    ]);
+
+    carte("WordCard", "word, showAudio, otherSense, onAudio, onNext", [
+      ["mot du palier 1", WordCard({
+        word: {
+          en: "water", fr: "eau", phonetique: "/ˈwɔː.tər/", themes: ["nature", "nourriture"],
+          exemple_en: "I drink water every day.", exemple_fr: "Je bois de l'eau tous les jours.",
+        },
+        onAudio: () => {}, onNext: () => {},
+      })],
+      ["otherSense, sans audio", WordCard({
+        word: { en: "right", fr: "correct", phonetique: "/raɪt/" },
+        showAudio: false, otherSense: "droite", onNext: () => {},
+      })],
+    ]);
+
+    carte("MCQ", "question, options[], correctId, onAnswer", [
+      ["ancrage — distracteurs proches graphiquement", MCQ({
+        question: "menu",
+        options: [{ id: "a", label: "MENU" }, { id: "b", label: "MEAL" },
+                  { id: "c", label: "MEET" }, { id: "d", label: "MELT" }],
+        correctId: "a", onAnswer: () => {},
+      })],
+      ["discrimination de particule (§3.6)", MCQ({
+        question: "Il s'est remis de sa maladie. — He got _____ his illness.",
+        options: [{ id: "over", label: "over" }, { id: "up", label: "up" },
+                  { id: "through", label: "through" }, { id: "out", label: "out" }],
+        correctId: "over", onAnswer: () => {},
+      })],
+    ]);
+
+    carte("InputAnswer", "prompt, expected, hint, onSubmit", [
+      ["rappel actif FR → EN — essaie « eau » puis autre chose", InputAnswer({
+        prompt: "eau", expected: "water", hint: "5 lettres", onSubmit: () => {},
+      })],
+    ]);
+
+    carte("ClozeInput", "sentence, blankIndex, expected, translation, onSubmit", [
+      ["phrase à trous", ClozeInput({
+        sentence: "I drink water every day", blankIndex: 2, expected: "water",
+        translation: "Je bois de l'eau tous les jours.", onSubmit: () => {},
+      })],
+    ]);
+
+    carte("VerbTriad", "verb, showBase, onSubmit", [
+      ["les deux formes sont évaluées séparément (§4)", VerbTriad({
+        verb: { en: "go", fr: "aller", preterit: "went", participe: "gone" },
+        onSubmit: () => {},
+      })],
+    ]);
+
+    carte("WordOrder", "tokens[], expected, onSubmit", [
+      ["tape pour poser, retape pour reprendre", WordOrder({
+        tokens: ["up", "give", "don't"], expected: "don't give up", onSubmit: () => {},
+      })],
+    ]);
+
+    carte("Keyboard", "layout, disabledKeys[], onKey, onBackspace", [
+      ["QWERTY, 26 touches + retour — aucune espace, aucune entrée (§17.6)",
+        Keyboard({ onKey: () => {}, onBackspace: () => {} })],
+      ["disabledKeys — lettres déjà attribuées",
+        Keyboard({ disabledKeys: ["A", "E", "I", "O", "U"], onKey: () => {}, onBackspace: () => {} })],
+    ], "demo__bleed");
+
+    carte("SessionHeader", "title, onHome, onMenu, progress", [
+      ["avec ProgressDots", SessionHeader({
+        title: "Découverte", onHome: () => {}, onMenu: () => {},
+        progress: PD({ total: 5, current: 2 }),
+      })],
+      ["sans progression", SessionHeader({ title: "Réglages", onHome: () => {} })],
+    ]);
+
+    carte("StatRow", "label, value, icon", [
+      ["lignes de l'écran de progression", [
+        StatRow({ label: "Série en cours", value: 7, icon: "flame" }),
+        StatRow({ label: "Mots acquis", value: 34, icon: "check" }),
+        StatRow({ label: "Palier", value: "1 / 56", icon: "book" }),
+      ], "demo__stack"],
+    ]);
+
+    carte("WordListItem", "word, showBox, actions[]", [
+      ["avec boîte et actions", (() => {
+        const liste = document.createElement("ul");
+        liste.className = "demo__stack";
+        liste.append(
+          WordListItem({ word: { en: "water", fr: "eau", b: 3 }, showBox: true,
+            actions: [{ icon: "audio", label: "Écouter", onClick: () => {} }] }),
+          WordListItem({ word: { en: "thirsty", fr: "assoiffé", b: 1 }, showBox: true,
+            actions: [{ icon: "audio", label: "Écouter", onClick: () => {} },
+                      { icon: "close", label: "Suspendre", onClick: () => {} }] }),
+          WordListItem({ word: { en: "bread", fr: "pain" } }),
+        );
+        return liste;
+      })(), "demo__case"],
+    ]);
+  </script>
+</body>
+</html>
