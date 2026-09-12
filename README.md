@@ -232,7 +232,8 @@ où le sens doit produire le mot sans aucun support formel.
 
 ### 07 — Histoire du jour
 
-Une histoire par jour, de la longueur d'une page — **250 à 350 mots**.
+Une histoire par jour, de la longueur d'une page — **250 à 350 mots** demandés
+au modèle, acceptés à partir de **220** (§16).
 
 Elle est composée **à partir des mots découverts et appris** : au moins 95% de
 son vocabulaire doit être déjà connu de l'utilisateur. C'est le seuil au-delà
@@ -716,7 +717,7 @@ vide (§04), il n'y a plus rien à offrir.
 |---|---|
 | `arc` | identifiant de série ; `null` pour une histoire isolée |
 | `ordre` | rang dans l'arc, à lire dans l'ordre |
-| `nb_mots` | 250 à 350 |
+| `nb_mots` | 220 à 350 |
 | `lexique` | ids des mots du catalogue employés — sert au calcul de couverture |
 | `hors_lexique` | mots hors catalogue employés dans le texte, avec leur traduction dans `texte_fr` |
 | `suite_de` | id de l'histoire précédente, ou `null` |
@@ -1505,13 +1506,15 @@ Contraintes envoyées au modèle : n'employer que les mots fournis plus les
 mots-outils, rester entre 250 et 350 mots, et lister explicitement tout mot
 sorti du lexique.
 
-**La longueur demandée n'est pas la longueur voulue.** Mesuré en production, le
-modèle rend 248 puis 256 mots pour une cible de 300 — pile sur le plancher de
-250 que le client refuse, si bien qu'une génération réussie sur deux partait à
-la poubelle sous un message d'erreur générique. Le serveur demande donc
-`cible + 40`, plafonnée à 350, pour que le texte **rendu** tombe dans la
-fenêtre documentée. On ne relance pas un second appel : le quota gratuit
-s'épuise dès le troisième (`429 RESOURCE_EXHAUSTED`).
+**La longueur demandée n'est pas la longueur obtenue.** Mesuré en production :
+244, 248, 256 puis 267 mots pour une page demandée — une distribution centrée
+sur ~254, qui chevauche le plancher. Gonfler la cible de 40 mots n'a rien
+décalé (248/256 en demandant 300, puis 244/267 en demandant 340) : le modèle ne
+suit pas cette consigne, inutile de la gonfler. On continue donc à lui demander
+250–350, et c'est le client qui **tolère à partir de 220 mots** — refuser 244
+revenait à jeter une histoire parfaitement lisible derrière un message d'erreur
+générique. Pas de second appel pour rallonger un texte trop court : le quota
+gratuit s'épuise dès le troisième (`429 RESOURCE_EXHAUSTED`).
 
 L'histoire reçue est enregistrée dans le state avec `source: "api"` pour ne pas
 être re-générée. **Elle n'est jamais écrite dans `/content`** : le contenu livré
@@ -1676,7 +1679,7 @@ Décisions prises par défaut lors de la rédaction de la v4, à confirmer.
 | 1 | Boîte d'entrée d'un mot marqué *je connais* | boîte 3, éligible aux jeux immédiatement |
 | 2 | Seuil d'entrée dans les jeux et les histoires | boîte 3 |
 | 3 | Partition grille / mots croisés | par partie (`jeu`), remise à zéro quand un jeu a épuisé son vivier |
-| 4 | Longueur d'une histoire | 250 à 350 mots |
+| 4 | Longueur d'une histoire | 250 à 350 demandés, 220 acceptés |
 | 5 | Couverture minimale d'une histoire | 95% du lexique déjà connu |
 | 6 | Verbes irréguliers et phrasal verbs | conservés, mais sans entrée dans l'écran principal |
 | 7 | Streak | supprimé avec le défi quotidien. Faut-il le rattacher à l'histoire du jour ? |

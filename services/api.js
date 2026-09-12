@@ -39,7 +39,11 @@ export const TIMEOUT_HISTOIRE_MS = 45000;
 export const LONGUEUR_MAX_REDACTION = 3000;
 
 /** Bornes d'une histoire du jour, imposées par la §6.5. */
-export const HISTOIRE_MOTS_MIN = 250;
+// Mesuré en production : le modèle rend 244, 248, 256, 267 mots pour une page
+// demandée, donc une distribution centrée sur ~254. Refuser 244 pour exiger 250
+// jetait des histoires parfaitement lisibles derrière un message d'erreur
+// générique. On demande toujours 250–350 au modèle, on tolère à partir de 220.
+export const HISTOIRE_MOTS_MIN = 220;
 export const HISTOIRE_MOTS_MAX = 350;
 
 /** En dessous, une génération n'a aucune chance de tenir la contrainte §6.5. */
@@ -181,15 +185,23 @@ export async function genererHistoire({ mots = [], arc = null, longueur = 300,
   }
   clearTimeout(minuteur);
 
-  if (reponse.status === 502) return echec(CAUSES.INDISPONIBLE);
-  if (!reponse.ok) return echec(CAUSES.REPONSE);
-
   let donnees;
   try {
     donnees = await reponse.json();
   } catch {
-    return echec(CAUSES.REPONSE);
+    return echec(reponse.status === 502 ? CAUSES.INDISPONIBLE : CAUSES.REPONSE);
   }
+
+  // Un 502 porte le motif exact de la panne. Le masquer derrière « service
+  // indisponible » a déjà coûté une séance de diagnostic à l'aveugle : on lit
+  // le corps AVANT de décider, et on montre ce que le serveur a dit.
+  if (reponse.status === 502) {
+    return donnees?.error
+      ? { ok: false, donnees: null, cause: CAUSES.INDISPONIBLE,
+          erreur: `Génération impossible : ${donnees.error}` }
+      : echec(CAUSES.INDISPONIBLE);
+  }
+  if (!reponse.ok) return echec(CAUSES.REPONSE);
 
   // On ne fait confiance à rien : un texte hors bornes ou vide est refusé ici
   // plutôt que servi tel quel à la lecture.
@@ -244,8 +256,67 @@ export async function corrigerRedaction({ texte, consigne = "", mots = [],
   }
   clearTimeout(minuteur);
 
-  if (reponse.status === 502) return echec(CAUSES.INDISPONIBLE);
+  let donnees;
+  try {
+    donnees = await reponse.json();
+  } catch {
+    return echec(reponse.status === 502 ? CAUSES.INDISPONIBLE : CAUSES.REPONSE);
+  }
+
+  // Un 502 porte le motif exact de la panne. Le masquer derrière « service
+  // indisponible » a déjà coûté une séance de diagnostic à l'aveugle : on lit
+  // le corps AVANT de décider, et on montre ce que le serveur a dit.
+  if (reponse.status === 502) {
+    return donnees?.error
+      ? { ok: false, donnees: null, cause: CAUSES.INDISPONIBLE,
+          erreur: `Génération impossible : ${donnees.error}` }
+      : echec(CAUSES.INDISPONIBLE);
+  }
   if (!reponse.ok) return echec(CAUSES.REPONSE);
+
+  if (!donnees?.corrige || !Array.isArray(donnees.remarques)) return echec(CAUSES.REPONSE);
+  return { ok: true, donnees, cause: null, erreur: null };
+}
+
+/**
+ * Récupère une conférence TED : ses phrases horodatées et son fichier vidéo
+ * (README §16, §10).
+ *
+ * Le passage par le serveur n'est pas un choix d'architecture : ted.com
+ * n'envoie aucun en-tête CORS, le navigateur ne peut pas lire la page
+ * lui-même. Le fichier vidéo, lui, se lit directement — une balise <video>
+ * n'a pas besoin de CORS.
+ *
+ * @param {object} options
+ * @param {string} options.lien  adresse TED, adresse YouTube, ou slug
+ * @returns {Promise<{ok:boolean, donnees:?object, cause:?string, erreur:?string}>}
+ */
+export async function recupererTranscription({ lien,
+                                               endpoint = ENDPOINT,
+                                               timeout = TIMEOUT_HISTOIRE_MS,
+                                               recuperer = globalThis.fetch,
+                                               enLigne = globalThis.navigator?.onLine ?? true } = {}) {
+  const propre = String(lien ?? "").trim();
+  if (!propre) return echec(CAUSES.VIDE);
+  if (!enLigne) return echec(CAUSES.HORS_LIGNE);
+  if (!estConfigure(endpoint)) return echec(CAUSES.NON_CONFIGURE);
+
+  const arret = new AbortController();
+  const minuteur = setTimeout(() => arret.abort(), timeout);
+
+  let reponse;
+  try {
+    reponse = await recuperer(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "transcription", lien: propre }),
+      signal: arret.signal,
+    });
+  } catch (e) {
+    clearTimeout(minuteur);
+    return echec(e?.name === "AbortError" ? CAUSES.TIMEOUT : CAUSES.RESEAU);
+  }
+  clearTimeout(minuteur);
 
   let donnees;
   try {
@@ -254,6 +325,14 @@ export async function corrigerRedaction({ texte, consigne = "", mots = [],
     return echec(CAUSES.REPONSE);
   }
 
-  if (!donnees?.corrige || !Array.isArray(donnees.remarques)) return echec(CAUSES.REPONSE);
+  // Un lien mal formé revient en 400 avec son motif : il est plus utile de le
+  // montrer que de dire « service indisponible ».
+  if (reponse.status === 400 && donnees?.error) {
+    return { ok: false, donnees: null, cause: CAUSES.REPONSE, erreur: donnees.error };
+  }
+  if (reponse.status === 502) return echec(CAUSES.INDISPONIBLE);
+  if (!reponse.ok) return echec(CAUSES.REPONSE);
+
+  if (!Array.isArray(donnees?.phrases) || !donnees.phrases.length) return echec(CAUSES.REPONSE);
   return { ok: true, donnees, cause: null, erreur: null };
 }

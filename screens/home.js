@@ -3,6 +3,8 @@ import { Divider } from "../components/atoms/divider.js";
 import { SectionCard } from "../components/molecules/section-card.js";
 import { PalierList } from "../components/organisms/palier-list.js";
 import { entreesPaliers } from "../services/session-builder.js";
+import { chargerVideos } from "../services/store.js";
+import { avancement } from "../services/video-builder.js";
 import { composerDecouverte } from "../services/discovery-builder.js";
 import { partiesDisponibles } from "../services/game-builder.js";
 import { choisirHistoire } from "../services/story-builder.js";
@@ -11,7 +13,7 @@ import { motsAApprendre, motsAQuizzer, prochaineEcheanceApprentissage,
          motsConnus, aujourdhui } from "../services/leitner.js";
 
 /**
- * Home — tableau de bord des neuf sections (README §1, §13).
+ * Home — tableau de bord des dix sections (README §1, §13).
  *
  * L'écran ne décide rien : chaque compteur vient du service qui possède la
  * section. Il n'y a aucun enchaînement automatique — l'utilisateur choisit où
@@ -50,6 +52,7 @@ export function Home({ state, contenu, aller }) {
     carteHistoire(state, contenu, today, aller),
     carteEcrire(state, contenu, aller),
     carteVerbes(state, contenu, today, aller),
+    carteVideo(state, aller),
   );
   el.append(sections);
 
@@ -79,7 +82,7 @@ function barre(aller) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Les neuf cartes                                                              */
+/* Les dix cartes                                                              */
 /* -------------------------------------------------------------------------- */
 
 function carteTraduire(state, aller) {
@@ -209,6 +212,31 @@ function carteVerbes(state, contenu, today, aller) {
     message: `Groupe ${session.groupe?.code ?? "G1"} terminé pour aujourd'hui.`,
     action: `Groupe ${session.groupe?.code ?? "G1"} — ${session.groupe?.titre ?? ""}`,
     onOpen: () => aller("/verbs"),
+  });
+}
+
+/**
+ * §10 — conférences TED, phrase par phrase.
+ *
+ * Les conférences vivent en localStorage, pas dans /content : ce sont des
+ * données tierces récupérées pour un usage personnel (§16).
+ */
+function carteVideo(state, aller) {
+  const videos = chargerVideos();
+  const restantes = videos.reduce((somme, v) => {
+    const suivi = avancement(v, state);
+    return somme + (suivi.total - suivi.faites.length);
+  }, 0);
+
+  return SectionCard({
+    numero: 10,
+    titre: "Vidéo",
+    compteur: videos.length ? restantes : null,
+    uniteCompteur: "phrases à faire",
+    icone: "audio",
+    etat: "ouvert",
+    action: videos.length ? "Continuer" : "Ajouter une conférence",
+    onOpen: () => aller("/video"),
   });
 }
 

@@ -49,6 +49,7 @@
     import * as QZ from "./services/quiz-builder.js";
     import * as ECR from "./services/writing-builder.js";
     import * as VOX from "./services/speech.js";
+    import * as VID from "./services/video-builder.js";
 
     const racine = document.getElementById("t");
     let ok = 0, ko = 0;
@@ -1696,6 +1697,182 @@
          [1, 2, 3, 4].every((g) => filiereVerbes.verbes.some((v) => v.groupe_verbe === g)));
     vrai("aucun verbe n'est éligible aux grilles (§3.2)",
          filiereVerbes.verbes.every((v) => !v.eligible_grille && !v.eligible_croises));
+
+    /* ======================= un 502 ne masque plus son motif ============== */
+    section("api.js — un 502 remonte le motif du serveur (§16)");
+
+    const lexique45 = Array.from({ length: 45 }, (_, i) => `mot${i}`);
+    const serveur502 = (charge) => async () => ({
+      ok: false, status: 502, json: async () => charge,
+    });
+
+    const panneParlante = await A.genererHistoire({
+      mots: lexique45, enLigne: true,
+      recuperer: serveur502({ error: "réponse illisible — finishReason STOP" }),
+    });
+    faux("une panne reste un échec", panneParlante.ok);
+    eq("la cause reste « indisponible »", panneParlante.cause, A.CAUSES.INDISPONIBLE);
+    vrai("mais le motif du serveur est montré",
+         panneParlante.erreur.includes("finishReason STOP"));
+
+    const panneMuette = await A.genererHistoire({
+      mots: lexique45, enLigne: true, recuperer: serveur502({}),
+    });
+    eq("sans motif, on retombe sur le message générique",
+       panneMuette.cause, A.CAUSES.INDISPONIBLE);
+    vrai("et ce message ne parle pas de motif",
+         !panneMuette.erreur.includes("Génération impossible"));
+
+    const corpsIllisible = await A.genererHistoire({
+      mots: lexique45, enLigne: true,
+      recuperer: async () => ({ ok: false, status: 502,
+                                json: async () => { throw new Error("pas du JSON"); } }),
+    });
+    eq("un corps de 502 illisible reste une indisponibilité",
+       corpsIllisible.cause, A.CAUSES.INDISPONIBLE);
+
+    /* ===================== les bornes de longueur d'une histoire ========== */
+    section("api.js — bornes de longueur d'une histoire (§16)");
+
+    // Un serveur qui rend exactement n mots : c'est la longueur qu'on teste,
+    // pas le contenu.
+    const histoireDe = (n) => async () => ({
+      ok: true, status: 200,
+      json: async () => ({
+        titre_en: "T", titre_fr: "T", hors_lexique: [],
+        texte_en: Array.from({ length: n }, (_, i) => `w${i}`).join(" "),
+        texte_fr: "traduction",
+      }),
+    });
+    const longueurRendue = async (n) =>
+      A.genererHistoire({ mots: lexique45, enLigne: true, recuperer: histoireDe(n) });
+
+    eq("le plancher documenté vaut 220", A.HISTOIRE_MOTS_MIN, 220);
+    eq("219 mots : trop court, refusé", (await longueurRendue(219)).cause, A.CAUSES.REPONSE);
+    vrai("220 mots : accepté", (await longueurRendue(220)).ok);
+
+    // 244 est la valeur qui a motivé la décision : le modèle la rend
+    // régulièrement, et l'ancien plancher de 250 la jetait.
+    vrai("244 mots, mesuré en production : accepté", (await longueurRendue(244)).ok);
+    vrai("254 mots, la valeur typique : accepté", (await longueurRendue(254)).ok);
+    vrai("350 mots : accepté", (await longueurRendue(350)).ok);
+    eq("351 mots : trop long, refusé", (await longueurRendue(351)).cause, A.CAUSES.REPONSE);
+
+    /* ================================ §10 Vidéo =========================== */
+    section("videoBuilder — découpage et progression (§10)");
+
+    const reponseTed = {
+      slug: "un_talk", titre: "Un talk", video: "https://exemple/film.mp4",
+      duree: 30, licence: "CC BY-NC-ND 4.0 — TED",
+      phrases: [
+        { i: 0, debut: 0.8, fin: 5.0, texte: "I have a confession to make." },
+        { i: 1, debut: 5.0, fin: 9.0, texte: "But first, I want you to listen." },
+        { i: 2, debut: 9.0, fin: 12.0, texte: "Anyone here?" },
+      ],
+    };
+
+    const clip = VID.normaliserVideo(reponseTed);
+    eq("une conférence bien formée est acceptée", clip.phrases.length, 3);
+    eq("le fichier vidéo est conservé", clip.video, "https://exemple/film.mp4");
+    eq("sans fichier vidéo, elle est rejetée",
+       VID.normaliserVideo({ ...reponseTed, video: null }), null);
+    eq("sans phrase, elle est rejetée",
+       VID.normaliserVideo({ ...reponseTed, phrases: [] }), null);
+
+    section("videoBuilder — les deux jeux");
+
+    const alEnvers = (l) => [...l].reverse();
+    const neufVid = S.etatInitial();
+    const enOrdre = VID.composerPhrase({ video: clip, state: neufVid, mode: "ordre",
+                                         melanger: alEnvers });
+    eq("on commence à la première phrase", enOrdre.exercice.rang, 0);
+    eq("la réponse attendue est la phrase", enOrdre.exercice.attendu,
+       "I have a confession to make.");
+    eq("les jetons sont mélangés, pas dans l'ordre",
+       enOrdre.exercice.tokens.join(" "), "make. to confession a have I");
+    eq("le segment porte une marge de fin (§10)",
+       Math.round((enOrdre.exercice.fin - 5.0) * 100) / 100, VID.MARGE_FIN_S);
+
+    const enEcriture = VID.composerPhrase({ video: clip, state: neufVid, mode: "ecriture" });
+    eq("en écriture, aucun jeton n'est fourni", enEcriture.exercice.tokens.length, 0);
+    eq("sans conférence, la section est verrouillée",
+       VID.composerPhrase({ video: null, state: neufVid }).verrouille, true);
+
+    let essais = 0;
+    const melangeurPaesseux = (l) => { essais += 1; return [...l]; };
+    eq("un mélangeur qui ne mélange rien ne fait pas boucler le service",
+       VID.jetonsMelanges("one two three four", melangeurPaesseux).join(" "),
+       "one two three four");
+    vrai("mais il a bien été rejoué avant d'abandonner", essais > 1);
+
+    let tour = 0;
+    // Rend l'ordre d'origine au premier appel, un ordre différent au second.
+    const melangeurTardif = (l) => (tour++ === 0 ? [...l] : alEnvers(l));
+    eq("un mélange qui retombe sur l'original est rejoué",
+       VID.jetonsMelanges("one two three four", melangeurTardif).join(" "),
+       "four three two one");
+    eq("une phrase de deux mots n'est pas mélangée",
+       VID.jetonsMelanges("Anyone here?", alEnvers).length, 2);
+
+    section("videoBuilder — progression");
+
+    let etatVid = VID.appliquerPhrase({ state: neufVid, slug: "un_talk", rang: 0,
+                                        correct: false, today: "2026-09-12" });
+    eq("un échec ne marque pas la phrase", VID.phrasesFaites(etatVid, "un_talk"), []);
+    eq("et elle reste la phrase courante", VID.phraseCourante(clip, etatVid), 0);
+
+    etatVid = VID.appliquerPhrase({ state: etatVid, slug: "un_talk", rang: 0,
+                                    correct: true, today: "2026-09-12" });
+    eq("une réussite marque la phrase", VID.phrasesFaites(etatVid, "un_talk"), [0]);
+    eq("on passe à la suivante", VID.phraseCourante(clip, etatVid), 1);
+    eq("marquer deux fois ne duplique pas",
+       VID.phrasesFaites(VID.appliquerPhrase({ state: etatVid, slug: "un_talk", rang: 0,
+                                               correct: true }), "un_talk"), [0]);
+
+    const suiviVid = VID.avancement(clip, etatVid);
+    eq("l'avancement se compte sur le total", suiviVid.total, 3);
+    eq("une phrase sur trois est faite", suiviVid.faites.length, 1);
+    faux("la conférence n'est pas terminée", suiviVid.termine);
+
+    section("store — conférences récupérées (§10)");
+
+    const memVid = (() => { const m = new Map(); return {
+      getItem: (k) => m.get(k) ?? null, setItem: (k, v) => m.set(k, v),
+      removeItem: (k) => m.delete(k) }; })();
+    eq("stock vide au départ", S.chargerVideos({ storage: memVid }), []);
+    S.ajouterVideo(clip, { storage: memVid });
+    S.ajouterVideo({ ...clip, titre: "Version fraîche" }, { storage: memVid });
+    const stockVid = S.chargerVideos({ storage: memVid });
+    eq("un même slug n'est pas dupliqué", stockVid.length, 1);
+    eq("il est remplacé par la version la plus fraîche", stockVid[0].titre, "Version fraîche");
+    eq("une conférence sans slug est ignorée",
+       S.ajouterVideo({ titre: "x" }, { storage: memVid }).length, 1);
+
+    section("api.js — récupération d'une transcription (§16)");
+
+    const serveurTed = (charge, statut = 200) => async () => ({
+      ok: statut >= 200 && statut < 300, status: statut, json: async () => charge,
+    });
+
+    eq("lien vide → pas d'appel",
+       (await A.recupererTranscription({ lien: "  " })).cause, A.CAUSES.VIDE);
+    eq("hors ligne → refus net",
+       (await A.recupererTranscription({ lien: "https://ted.com/talks/x", enLigne: false })).cause,
+       A.CAUSES.HORS_LIGNE);
+
+    const recue = await A.recupererTranscription({
+      lien: "https://www.ted.com/talks/x", enLigne: true, recuperer: serveurTed(reponseTed) });
+    vrai("une conférence bien formée est acceptée", recue.ok);
+    eq("les phrases reviennent", recue.donnees.phrases.length, 3);
+
+    eq("une réponse sans phrase est refusée",
+       (await A.recupererTranscription({ lien: "https://www.ted.com/talks/x", enLigne: true,
+                                         recuperer: serveurTed({ phrases: [] }) })).cause,
+       A.CAUSES.REPONSE);
+    eq("un lien mal formé remonte le motif du serveur",
+       (await A.recupererTranscription({ lien: "nawak", enLigne: true,
+          recuperer: serveurTed({ error: "lien non reconnu" }, 400) })).erreur,
+       "lien non reconnu");
 
     /* ==================================================== conclusion ====== */
     const sum = document.getElementById("sum");

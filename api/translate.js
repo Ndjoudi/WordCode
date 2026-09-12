@@ -207,15 +207,11 @@ async function histoire(req, res) {
   if (mots.length < 40) return res.status(400).json({ error: "lexique trop maigre" });
   if (mots.length > 1500) return res.status(400).json({ error: "lexique trop large" });
 
-  // Le client demande 300 mots. Mesuré en production sur ce build : le modèle
-  // en rend 248 puis 256, soit PILE sur le plancher de 250 que le client
-  // refuse — la moitié des générations réussies étaient jetées.
-  //
-  // On demande donc plus que la cible pour que le texte RENDU tombe dans la
-  // fenêtre documentée (250–350, §16), plutôt que de relancer un second appel :
-  // le quota gratuit s'épuise dès le troisième (429 RESOURCE_EXHAUSTED).
-  const cible = Math.min(Math.max(Number(req.body?.longueur) || 300, 250), 350);
-  const longueur = Math.min(cible + 40, 350);
+  // On demande la longueur voulue, sans compensation : gonfler la cible de 40
+  // mots n'a produit aucun décalage mesurable (248/256 en demandant 300, puis
+  // 244/267 en demandant 340). Le modèle ne suit pas cette consigne ; c'est le
+  // client qui tolère à partir de 220 mots (§16).
+  const longueur = Math.min(Math.max(Number(req.body?.longueur) || 300, 250), 350);
   const arc = req.body?.arc ?? null;
 
   const demande = JSON.stringify({

@@ -20,6 +20,7 @@ import { Codeword } from "./screens/codeword.js";
 import { Crossword } from "./screens/crossword.js";
 import { Story } from "./screens/story.js";
 import { Writing } from "./screens/writing.js";
+import { Video } from "./screens/video.js";
 import { Progress } from "./screens/progress.js";
 import { Settings } from "./screens/settings.js";
 import { Verbs } from "./screens/verbs.js";
@@ -132,6 +133,7 @@ async function demarrer() {
       "/crossword": () => Crossword(contexte()),
       "/story": () => Story(contexte()),
       "/writing": () => Writing(contexte()),
+      "/video": () => Video(contexte()),
       // Hors sections.
       "/progress": () => Progress(contexte()),
       "/settings": () => Settings(contexte()),

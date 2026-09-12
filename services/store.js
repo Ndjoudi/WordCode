@@ -20,6 +20,7 @@ export const CLE_PERSO = "wordcode_perso";
  * n'entrent JAMAIS dans `/content`, qui reste figé et vérifié hors ligne.
  */
 export const CLE_HISTOIRES = "wordcode_histoires";
+export const CLE_VIDEOS = "wordcode_videos";
 
 /** Version du schéma. Toute évolution incrémente ce nombre et ajoute une étape. */
 export const VERSION = 4;
@@ -51,6 +52,8 @@ export function etatInitial() {
       derniere_histoire: null,
       // §08 : phrases de dictée et de traduction déjà servies.
       dictees_faites: [],
+      // §10 : phrases réussies, par conférence — { slug: [rangs] }.
+      phrases_video: {},
       ajouts_aujourdhui: 0,
       derniere_session: null,
       derniere_sauvegarde: null,
@@ -97,6 +100,8 @@ function completerProgression(base, lue = {}) {
     },
     histoires_lues: Array.isArray(lue?.histoires_lues) ? lue.histoires_lues : [],
     dictees_faites: Array.isArray(lue?.dictees_faites) ? lue.dictees_faites : [],
+    phrases_video: (lue?.phrases_video && typeof lue.phrases_video === "object")
+      ? lue.phrases_video : {},
   };
 }
 
@@ -359,6 +364,48 @@ export function ajouterHistoireGeneree(histoire, { storage = localStorage } = {}
     storage.setItem(CLE_HISTOIRES, JSON.stringify(suivant));
   } catch {
     // Quota plein : l'histoire reste lisible pour la session en cours.
+  }
+  return suivant;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Conférences récupérées (README §10)                                         */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Relit les conférences déjà récupérées.
+ *
+ * Elles vivent en localStorage, jamais dans /content : ce sont des données
+ * tierces sous licence CC BY-NC-ND, récupérées pour un usage personnel. Le
+ * contenu livré avec l'application reste figé et vérifié.
+ *
+ * @param {{storage?:Storage}} options
+ * @returns {object[]}
+ */
+export function chargerVideos({ storage = localStorage } = {}) {
+  const lu = lireJSON(storage, CLE_VIDEOS);
+  return Array.isArray(lu) ? lu : [];
+}
+
+/**
+ * Ajoute une conférence au stock local, ou remplace celle du même slug.
+ *
+ * Remplacer plutôt qu'ignorer : une transcription re-récupérée est la plus
+ * fraîche, et l'URL du fichier vidéo de TED peut changer.
+ *
+ * @param {object} video
+ * @param {{storage?:Storage}} options
+ * @returns {object[]} le stock complet après ajout
+ */
+export function ajouterVideo(video, { storage = localStorage } = {}) {
+  const stock = chargerVideos({ storage });
+  if (!video?.slug) return stock;
+
+  const suivant = [...stock.filter((v) => v.slug !== video.slug), video];
+  try {
+    storage.setItem(CLE_VIDEOS, JSON.stringify(suivant));
+  } catch {
+    // Quota plein : la conférence reste utilisable pour la session en cours.
   }
   return suivant;
 }
