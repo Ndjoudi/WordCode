@@ -1026,6 +1026,87 @@
 .correction__juste    { color: var(--c-success); font-weight: var(--fw-medium); }
 .correction__pourquoi { margin: var(--sp-1) 0 0; color: var(--c-text-muted); font-size: var(--fs-sm); }
 
+/* --- Vidéo : conférence phrase par phrase (§10) ---------------------------- */
+.video-screen__form { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.video-screen__field {
+  width: 100%;
+  padding: var(--sp-3);
+  border: 1px solid var(--c-surface-alt);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  color: var(--c-text);
+  font: inherit;
+}
+
+.video-screen__vide { margin: 0; color: var(--c-text-muted); font-size: var(--fs-sm); }
+
+.video-screen__liste { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.video-screen__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border: 0;
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  box-shadow: var(--sh-sm);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.video-screen__item-titre { flex: 1 1 auto; min-width: 0; font-weight: var(--fw-medium); }
+.video-screen__item-etat  { flex: 0 0 auto; color: var(--c-text-muted); font-size: var(--fs-sm); }
+
+.lecteur { display: block; }
+
+.lecteur__video {
+  width: 100%;
+  max-height: 45vh;
+  border-radius: var(--r-md);
+  background: #000;
+}
+
+/* Une case par phrase : le chapitrage de la conférence, d'un coup d'œil. */
+.video-screen__barre {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: var(--sp-3);
+}
+
+.video-screen__segment {
+  flex: 1 1 6px;
+  min-width: 4px;
+  height: 4px;
+  border-radius: var(--r-full);
+  background: var(--c-surface-alt);
+}
+
+.video-screen__segment--faite    { background: var(--c-success); }
+.video-screen__segment--courante { background: var(--c-primary); height: 7px; }
+
+.video-screen__compte {
+  flex: 1 0 100%;
+  margin: var(--sp-2) 0 0;
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.video-screen__jeu    { display: flex; flex-direction: column; gap: var(--sp-3); }
+.video-screen__outils { display: flex; gap: var(--sp-2); }
+
+.video-screen__credit {
+  margin: var(--sp-5) 0 0;
+  color: var(--c-text-muted);
+  font-size: var(--fs-xs);
+  text-align: center;
+}
+
 /* --- WordList (§01, §04) --------------------------------------------------- */
 .word-list { display: flex; flex-direction: column; gap: var(--sp-3); }
 
