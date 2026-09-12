@@ -310,6 +310,26 @@ async function lirePage(url) {
   }
 }
 
+/**
+ * Le fichier répond-il vraiment ?
+ *
+ * TED publie des adresses mp4 qui rendent 403 (AccessDenied) : le fichier
+ * existe dans la page mais n'est pas servi. Une requête HEAD tranche en une
+ * fraction de seconde, et évite d'enregistrer une conférence injouable.
+ */
+async function lisible(url) {
+  const arret = new AbortController();
+  const minuteur = setTimeout(() => arret.abort(), 6000);
+  try {
+    const res = await fetch(url, { method: "HEAD", signal: arret.signal });
+    return res.ok;
+  } catch {
+    return false;
+  } finally {
+    clearTimeout(minuteur);
+  }
+}
+
 /** Données Next.js embarquées dans une page TED. */
 function donneesNext(html) {
   const m = html.match(/id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
@@ -446,7 +466,16 @@ async function transcription(req, res) {
 
     if (!cues.length) return res.status(404).json({ error: "cette conférence n'a pas de transcription" });
 
-    const video = (brut.match(/https:\/\/[^"\\]+\.mp4[^"\\]*/) ?? [])[0] ?? null;
+    // Les adresses vivent à des chemins connus du JSON. Prendre le premier
+    // ".mp4" du blob était fragile, et surtout muet sur l'existence du flux HLS.
+    const vd = donnees?.props?.pageProps?.videoData ?? {};
+    const mp4 = vd?.videoPlayerData?.resources?.h264?.[0]?.file ?? null;
+    const hls = vd?.hlsUrl ?? vd?.videoPlayerData?.resources?.hls?.stream ?? null;
+
+    // Environ une conférence sur trois a son mp4 verrouillé chez TED (403
+    // AccessDenied) alors que le HLS reste ouvert. Mieux vaut le constater ici
+    // que laisser le navigateur échouer une fois la conférence enregistrée.
+    const video = mp4 && (await lisible(mp4)) ? mp4 : null;
     const titre = (brut.match(/"title"\s*:\s*"([^"]{4,200})"/) ?? [])[1] ?? slug;
     const phrases = enPhrases(cues);
 
@@ -454,6 +483,7 @@ async function transcription(req, res) {
       slug,
       titre,
       video,
+      hls,
       // La durée du fichier fait foi : TED publie aussi celle de la version
       // YouTube, plus longue de son habillage, qui décalerait tout.
       duree: phrases.length ? phrases[phrases.length - 1].fin : null,
