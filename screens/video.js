@@ -44,7 +44,7 @@ export function Video({ state, contenu, aller, enregistrer }) {
   /* ------------------------------------------------------- Choix / import */
 
   const choisir = () => {
-    commandes?.arreter();
+    commandes?.detruire?.();
     commandes = null;
     choisie = null;
     el.replaceChildren();
@@ -143,6 +143,7 @@ export function Video({ state, contenu, aller, enregistrer }) {
     // rechargerait la vidéo entière.
     corps.append(VideoPlayer({
       source: choisie.video,
+      hls: choisie.hls,
       titre: choisie.titre,
       onPret: (c) => { commandes = c; },
       onErreur: (m) => signaler(m),

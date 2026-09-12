@@ -314,6 +314,34 @@ phrase, au choix à tout moment :
 
 **Pas de micro ici.** L'utilisateur reconstruit, il ne parle pas.
 
+### Deux sources vidéo, et la seule dépendance du projet
+
+Environ **une conférence sur trois** a son mp4 verrouillé chez TED : le fichier
+est bien listé dans la page, mais le CDN répond `403 AccessDenied`. Ce n'est pas
+une protection anti-hotlink — un `Referer` de ted.com n'y change rien — et
+aucune autre piste mp4 n'est proposée. Le **flux HLS**, lui, répond `200` avec
+`access-control-allow-origin: *` pour toutes les conférences mesurées.
+
+Le serveur renvoie donc les deux : `video` (le mp4, **seulement s'il répond**,
+vérifié par une requête `HEAD`) et `hls`. Le lecteur prend le mp4 quand il
+existe, le flux sinon.
+
+Lire du HLS impose **hls.js**, seule bibliothèque externe du projet — dérogation
+à la règle « pas de framework, pas de npm », acceptée en connaissance de cause
+parce qu'il n'existe aucune autre façon de lire ces conférences hors de Safari.
+Trois précautions la rendent supportable :
+
+- **Chargée à la demande**, jamais au démarrage : seules les conférences sans
+  mp4 la déclenchent.
+- **Build `light` minifié, 345 Ko** — ni sous-titres, ni pistes audio
+  alternatives, ni DRM, dont on n'a aucun usage. Le build ES module non minifié
+  pèse 845 Ko, d'où le choix d'une injection de `<script>`.
+- **Jamais téléchargée sur iPhone** : le lecteur tente d'abord la lecture
+  native, que Safari et iOS assurent seuls. `canPlayType` ne peut pas servir à
+  ce test — mesuré, Chromium répond « maybe » pour le HLS puis échoue avec
+  `MEDIA_ERR_SRC_NOT_SUPPORTED` — donc on essaie vraiment de charger, et on
+  bascule sur l'échec.
+
 Une barre segmentée montre le chapitrage : une case par phrase, verte quand
 elle est réussie. Une phrase n'est marquée **que** si elle est juste — un échec
 la laisse à refaire, sans pénalité.
@@ -971,7 +999,9 @@ et que les placements de mots croisés se recoupent correctement.
 
 ### Stack
 
-- **HTML / CSS / JS vanilla**, modules ES natifs — pas de build step
+- **HTML / CSS / JS vanilla**, modules ES natifs — pas de build step.
+  Une seule exception, motivée et bornée : **hls.js**, chargé à la demande
+  pour les conférences TED sans mp4 (§10). Rien d'autre n'entre.
 - **GitHub Pages** comme hébergement
 - **Vercel serverless** pour l'unique appel Gemini (clé jamais exposée)
 - **Web Speech API** (`SpeechSynthesis`) pour l'audio
@@ -1142,7 +1172,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `PalierList` | `organisms/palier-list.js` | `paliers[], current, onSelect` | Choix de palier |
 | `StoryReader` | `organisms/story-reader.js` | `histoire, onWordTap, onFinish` | Texte de l'histoire du jour, chaque mot tappable (§07) |
 | `WordList` | `organisms/word-list.js` | `groupes[], showBox, actions` | Liste groupée : ajouts (§01), suivi d'apprentissage (§04) |
-| `VideoPlayer` | `organisms/video-player.js` | `source, titre, onPret, onFin, onErreur` | Lecteur `<video>` piloté phrase par phrase (§10) |
+| `VideoPlayer` | `organisms/video-player.js` | `source, hls, titre, onPret, onFin, onErreur` | Lecteur `<video>` piloté phrase par phrase (§10) |
 | `CompositionForm` | `organisms/composition-form.js` | `consigne, mots[], onCheck, onCorriger, onTerminer` | Rédaction libre : mots imposés suivis en direct, correction API (§08) |
 
 ### 12.4 Composants explicitement uniques
@@ -1538,6 +1568,7 @@ donc même si la clé est en panne.
   "slug": "kelly_mcgonigal_how_to_make_stress_your_friend",
   "titre": "How to make stress your friend",
   "video": "https://py.tedcdn.com/…/…-1200k.mp4",
+  "hls": "https://hls.ted.com/project_masters/8688/manifest.m3u8",
   "duree": 848,
   "phrases": [{ "i": 0, "debut": 0.8, "fin": 5.0,
                 "texte": "I have a confession to make." }],
@@ -1619,6 +1650,7 @@ L'application v3 est fonctionnelle. Cette roadmap décrit le passage à v4.
 | 23 | **Saisie vocale** | `speech.js`, micro dans §04 et §08 | ✅ |
 | 24 | **Zoom au double-tap** | `touch-action: manipulation` | ✅ |
 | 25 | **§10 Vidéo** | contrat `transcription`, `VideoPlayer`, deux jeux | ✅ |
+| 26 | **Repli HLS** | mp4 vérifié côté serveur, hls.js à la demande | ✅ |
 
 ### Où en est le contenu
 

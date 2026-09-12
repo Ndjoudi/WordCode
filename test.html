@@ -1774,8 +1774,19 @@
     const clip = VID.normaliserVideo(reponseTed);
     eq("une conférence bien formée est acceptée", clip.phrases.length, 3);
     eq("le fichier vidéo est conservé", clip.video, "https://exemple/film.mp4");
-    eq("sans fichier vidéo, elle est rejetée",
+    eq("sans mp4 ni flux HLS, elle est rejetée",
        VID.normaliserVideo({ ...reponseTed, video: null }), null);
+    eq("sans aucune source, elle est rejetée",
+       VID.normaliserVideo({ ...reponseTed, video: null, hls: null }), null);
+
+    // Environ une conférence TED sur trois a son mp4 verrouillé (403) et n'est
+    // jouable qu'en HLS : elle doit rester utilisable.
+    const sansMp4 = VID.normaliserVideo({
+      ...reponseTed, video: null, hls: "https://hls.ted.com/pm/manifest.m3u8" });
+    vrai("sans mp4 mais avec un flux HLS, elle est acceptée", Boolean(sansMp4));
+    eq("et le flux est conservé", sansMp4.hls, "https://hls.ted.com/pm/manifest.m3u8");
+    eq("le mp4 vaut alors null", sansMp4.video, null);
+    eq("quand TED sert le mp4, il est préféré", clip.video, "https://exemple/film.mp4");
     eq("sans phrase, elle est rejetée",
        VID.normaliserVideo({ ...reponseTed, phrases: [] }), null);
 

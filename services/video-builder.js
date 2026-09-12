@@ -36,12 +36,17 @@ export const MARGE_FIN_S = 0.35;
  */
 export function normaliserVideo(reponse) {
   const phrases = (reponse?.phrases ?? []).filter((p) => p?.texte?.trim());
-  if (!reponse?.slug || !reponse?.video || !phrases.length) return null;
+  // Une conférence est jouable si elle a AU MOINS une source : le mp4 quand
+  // TED le sert, le flux HLS sinon (environ une conférence sur trois n'a que
+  // celui-là, son mp4 rendant 403).
+  const source = reponse?.video ?? reponse?.hls ?? null;
+  if (!reponse?.slug || !source || !phrases.length) return null;
 
   return {
     slug: reponse.slug,
     titre: reponse.titre ?? reponse.slug,
-    video: reponse.video,
+    video: reponse.video ?? null,
+    hls: reponse.hls ?? null,
     duree: Number(reponse.duree) || null,
     source: reponse.source ?? null,
     licence: reponse.licence ?? null,
