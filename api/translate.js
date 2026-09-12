@@ -311,6 +311,33 @@ async function lirePage(url) {
 }
 
 /**
+ * Retire le générique TED du flux HLS.
+ *
+ * `hlsUrl` porte `?intro_master_id=…`, qui préfixe 3,5 s de générique au flux
+ * (mesuré : kelly 855,18 s avec contre 851,68 s sans ; yat_siu 647,40 contre
+ * 643,89 — un segment de plus dans les deux cas).
+ *
+ * Or les horodatages du transcript sont écrits SANS ce générique : la première
+ * phrase commence à 0,84 s, ce qui serait impossible si le flux débutait par
+ * 3,5 s d'habillage. Jouer la version « avec » faisait donc courir la vidéo
+ * 3,5 s en retard sur la phrase affichée.
+ *
+ * Ne pas se fier à l'égalité des durées pour juger de l'alignement : le mp4
+ * fait 855,2 s comme le flux AVEC générique, et c'est exactement ce qui m'avait
+ * fait conclure, à tort, que tout était aligné.
+ */
+function sansGenerique(url) {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    u.searchParams.delete("intro_master_id");
+    return u.toString().replace(/\?$/, "");
+  } catch {
+    return url;
+  }
+}
+
+/**
  * Le fichier répond-il vraiment ?
  *
  * TED publie des adresses mp4 qui rendent 403 (AccessDenied) : le fichier
@@ -470,7 +497,7 @@ async function transcription(req, res) {
     // ".mp4" du blob était fragile, et surtout muet sur l'existence du flux HLS.
     const vd = donnees?.props?.pageProps?.videoData ?? {};
     const mp4 = vd?.videoPlayerData?.resources?.h264?.[0]?.file ?? null;
-    const hls = vd?.hlsUrl ?? vd?.videoPlayerData?.resources?.hls?.stream ?? null;
+    const hls = sansGenerique(vd?.hlsUrl ?? vd?.videoPlayerData?.resources?.hls?.stream);
 
     // Environ une conférence sur trois a son mp4 verrouillé chez TED (403
     // AccessDenied) alors que le HLS reste ouvert. Mieux vaut le constater ici

@@ -323,8 +323,21 @@ aucune autre piste mp4 n'est proposée. Le **flux HLS**, lui, répond `200` avec
 `access-control-allow-origin: *` pour toutes les conférences mesurées.
 
 Le serveur renvoie donc les deux : `video` (le mp4, **seulement s'il répond**,
-vérifié par une requête `HEAD`) et `hls`. Le lecteur prend le mp4 quand il
-existe, le flux sinon.
+vérifié par une requête `HEAD`) et `hls`, **débarrassé de son générique**. Le
+lecteur prend le mp4 quand il existe, le flux sinon.
+
+**Le générique décalait tout.** `hlsUrl` porte `?intro_master_id=…`, qui ajoute
+3,5 s d'habillage TED en tête de flux (mesuré : kelly 855,18 s avec contre
+851,68 sans ; yat_siu 647,40 contre 643,89). Les horodatages du transcript, eux,
+sont écrits **sans** ce générique — la première phrase commence à 0,84 s, ce qui
+serait impossible si le flux débutait par 3,5 s d'habillage. La vidéo courait
+donc 3,5 s en retard sur la phrase affichée. On retire le paramètre.
+
+> **Piège à ne pas refaire.** J'avais d'abord conclu que tout était aligné parce
+> que le mp4 (855,2 s) et le flux faisaient la même durée. Deux durées égales ne
+> disent rien de l'endroit où tombent les mots : le mp4 contient lui aussi le
+> générique. Pour juger d'un alignement, comparer le **début des premières
+> phrases**, jamais les durées totales.
 
 Deux filets de sécurité, parce qu'un mp4 vivant aujourd'hui peut être verrouillé
 demain :
@@ -332,10 +345,13 @@ demain :
 - **Le lecteur bascule seul.** Si le mp4 échoue à l'ouverture alors qu'un flux
   existe, il passe au HLS au lieu d'afficher une erreur. L'utilisateur ne voit
   rien.
-- **Les conférences enregistrées se réparent.** Celles d'avant ce correctif
-  n'ont aucun champ `hls` : à la première ouverture, l'écran les recharge
-  depuis leur lien TED d'origine et remplace l'entrée. Personne n'a à savoir
-  qu'il faut recoller le lien.
+- **Les conférences enregistrées se réparent.** Une entrée est périmée si elle
+  n'a aucun champ `hls` (elle date d'avant le repli) **ou** si son flux porte
+  encore `intro_master_id` (elle date d'avant le retrait du générique). Dans les
+  deux cas, à la première ouverture, l'écran la recharge depuis son lien TED
+  d'origine et remplace l'entrée. Personne n'a à savoir qu'il faut recoller le
+  lien — et sans cette règle, un correctif serveur resterait invisible pour qui
+  a déjà ouvert la conférence.
 
 Lire du HLS impose **hls.js**, seule bibliothèque externe du projet — dérogation
 à la règle « pas de framework, pas de npm », acceptée en connaissance de cause

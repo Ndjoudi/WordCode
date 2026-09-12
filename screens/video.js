@@ -134,10 +134,15 @@ export function Video({ state, contenu, aller, enregistrer }) {
   /* --------------------------------------------------------------- Le jeu */
 
   const jouer = async () => {
-    // Une conférence enregistrée avant le repli HLS n'a pas de champ `hls` : son
-    // mp4 peut être verrouillé depuis, et rien ne la répare toute seule. On la
-    // recharge une fois, silencieusement, à partir de son lien TED d'origine.
-    if (choisie.hls === undefined && choisie.source) {
+    // Une conférence enregistrée peut être périmée de deux façons : soit elle
+    // date d'avant le repli HLS et n'a aucun champ `hls`, soit son flux porte
+    // encore `intro_master_id`, le générique qui décalait la vidéo de 3,5 s sur
+    // la phrase affichée. Dans les deux cas on la recharge une fois,
+    // silencieusement, depuis son lien TED d'origine — sans quoi le correctif
+    // resterait invisible pour qui a déjà ouvert la conférence.
+    const perimee = choisie.hls === undefined
+      || (typeof choisie.hls === "string" && choisie.hls.includes("intro_master_id"));
+    if (perimee && choisie.source) {
       const reponse = await recupererTranscription({ lien: choisie.source });
       const frais = reponse.ok ? normaliserVideo(reponse.donnees) : null;
       if (frais) { videos = ajouterVideo(frais); choisie = frais; }
