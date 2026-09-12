@@ -34,7 +34,7 @@
 
 Application web d'apprentissage du vocabulaire anglais pour un francophone.
 
-L'écran principal est un **tableau de bord découpé en neuf sections**. Il n'y a
+L'écran principal est un **tableau de bord découpé en dix sections**. Il n'y a
 plus de session guidée : l'utilisateur entre où il veut, quand il veut. Chaque
 section fait **une seule chose**.
 
@@ -49,6 +49,7 @@ section fait **une seule chose**.
 | 07 | **Histoire du jour** | lecture d'une page en vocabulaire connu |
 | 08 | **Écrire** | dictée, traduction, rédaction libre |
 | 09 | **Verbes irréguliers** | morphologie, par famille de patterns |
+| 10 | **Vidéo** | une conférence TED, phrase par phrase |
 
 **Les jeux ne sont pas le cours, ils sont l'examen.** Un codeword ne transmet
 aucun sens : il fait *retrouver* un mot déjà connu. Les sections 05, 06 et 07
@@ -83,7 +84,7 @@ reconnaître sans support.
 
 ---
 
-## 2. Les neuf sections
+## 2. Les dix sections
 
 ### 01 — Traduire / Ajouter un mot
 
@@ -297,6 +298,58 @@ Une dictée ou une traduction réussie fait monter d'une boîte les mots **connu
 que la phrase contient : les avoir écrits sans modèle prouve plus que de les
 avoir reconnus. Un échec ne fait rien redescendre — en dictée, se tromper vient
 souvent de l'oreille, pas du vocabulaire.
+
+---
+
+### 10 — Vidéo
+
+Une conférence TED se joue **une phrase, puis s'arrête**. Deux jeux sur cette
+phrase, au choix à tout moment :
+
+| Jeu | Composant | Ce qu'il travaille |
+|---|---|---|
+| **Remettre dans l'ordre** | `WordOrder` | la structure de la phrase |
+| **Écrire la phrase** | `InputAnswer` | l'orthographe et l'oreille |
+
+**Pas de micro ici.** L'utilisateur reconstruit, il ne parle pas.
+
+Une barre segmentée montre le chapitrage : une case par phrase, verte quand
+elle est réussie. Une phrase n'est marquée **que** si elle est juste — un échec
+la laisse à refaire, sans pénalité.
+
+**Rien n'entre dans le Leitner.** Le vocabulaire d'une conférence TED sort
+largement des 1000 mots du catalogue ; compter ces phrases fausserait les
+boîtes. Cette section est un entraînement, pas une évaluation.
+
+### D'où viennent la vidéo et les phrases
+
+L'utilisateur colle un lien TED, ou le lien YouTube d'une conférence TED — le
+pont passe par le titre, et la recherche TED rend la bonne conférence en
+premier résultat.
+
+Trois choses, mesurées avant d'être retenues :
+
+- **La transcription vient de TED, jamais de YouTube.** YouTube ne livre aucun
+  sous-titre : son point d'entrée non officiel renvoie zéro octet, et l'API
+  officielle exige d'être propriétaire de la vidéo. TED, lui, publie le texte
+  **déjà découpé en phrases et horodaté à la milliseconde**.
+- **La vidéo est lue depuis le fichier de TED, pas depuis YouTube.** Une balise
+  `<video>` native saute à la seconde exacte, ne charge aucun script externe,
+  et n'a pas besoin de CORS. Le lecteur embarqué de TED, lui, n'expose aucune
+  API : on ne pourrait pas le commander.
+- **Les horodatages collent au fichier TED.** Le MP4 et le flux HLS font tous
+  deux 855,2 s, quand TED annonce 869 s pour la version YouTube : c'est cette
+  dernière qui ajoute ~14 s d'habillage. Passer par TED supprime le décalage au
+  lieu d'avoir à le compenser.
+
+Un seul appel serveur est nécessaire, pour la transcription : `ted.com`
+n'envoie aucun en-tête CORS (§16).
+
+**Licence.** Les conférences TED sont en **CC BY-NC-ND 4.0**. Le crédit est
+affiché à l'écran, et l'usage reste **personnel et non commercial** — décision
+prise en connaissance de cause, la clause ND interdisant de transformer l'œuvre.
+Les transcriptions récupérées vivent en `localStorage`, **jamais** dans
+`/content`.
 
 ---
 
@@ -1088,6 +1141,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `PalierList` | `organisms/palier-list.js` | `paliers[], current, onSelect` | Choix de palier |
 | `StoryReader` | `organisms/story-reader.js` | `histoire, onWordTap, onFinish` | Texte de l'histoire du jour, chaque mot tappable (§07) |
 | `WordList` | `organisms/word-list.js` | `groupes[], showBox, actions` | Liste groupée : ajouts (§01), suivi d'apprentissage (§04) |
+| `VideoPlayer` | `organisms/video-player.js` | `source, titre, onPret, onFin, onErreur` | Lecteur `<video>` piloté phrase par phrase (§10) |
 | `CompositionForm` | `organisms/composition-form.js` | `consigne, mots[], onCheck, onCorriger, onTerminer` | Rédaction libre : mots imposés suivis en direct, correction API (§08) |
 
 ### 12.4 Composants explicitement uniques
@@ -1117,6 +1171,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `Story` | `screens/story.js` | §07 — histoire du jour |
 | `Writing` | `screens/writing.js` | §08 — dictée, traduction, rédaction |
 | `Verbs` | `screens/verbs.js` | §09 — verbes irréguliers |
+| `Video` | `screens/video.js` | §10 — conférence phrase par phrase |
 | `Phrasal` | `screens/phrasal.js` | phrasal verbs — **pas d'entrée dans l'écran principal** |
 | `Progress` | `screens/progress.js` | statistiques, paliers, répartition par boîte |
 | `Settings` | `screens/settings.js` | export/import, objectif, erreurs de contenu |
@@ -1146,6 +1201,7 @@ Chaque section est une carte, avec son compteur et son état.
 | 07 Histoire | couverture du texte du jour | *« L'histoire arrive quand tu connaîtras assez de mots. »* |
 | 08 Écrire | phrases restantes | *« Aucune phrase enregistrée n'est livrée pour ton palier. »* |
 | 09 Verbes | formes à travailler | *« Groupe Gn terminé pour aujourd'hui. »* |
+| 10 Vidéo | phrases restantes | *« Colle le lien d'une conférence TED. »* |
 
 ### États obligatoires
 
@@ -1170,7 +1226,8 @@ Home  (six cartes)
  ├─ 06 → Crossword     CrosswordBoard (grille vide) → EndCard  → Home
  ├─ 07 → Story         StoryReader → EndCard                   → Home
  ├─ 08 → Writing       InputAnswer (audio, micro) | CompositionForm → Home
- └─ 09 → Verbs         VerbTriad par groupe de pattern         → Home
+ ├─ 09 → Verbs         VerbTriad par groupe de pattern         → Home
+ └─ 10 → Video         VideoPlayer + WordOrder | InputAnswer   → Home
 ```
 
 Chaque section revient à Home. Il n'y a **aucun enchaînement automatique** entre
@@ -1191,6 +1248,7 @@ sections : c'est l'utilisateur qui choisit.
 | `gameBuilder` | `services/game-builder.js` | Tire les parties de §04 et §05, applique la partition |
 | `storyBuilder` | `services/story-builder.js` | Choisit l'histoire du jour, calcule la couverture |
 | `writingBuilder` | `services/writing-builder.js` | Compose dictée, traduction et rédaction (§08) |
+| `videoBuilder` | `services/video-builder.js` | Découpe, mélange et suit l'avancement d'une conférence (§10) |
 | `normalize` | `services/normalize.js` | Normalisation unique des réponses (§15.5) |
 | `audio` | `services/audio.js` | Synthèse vocale — l'application parle |
 | `speech` | `services/speech.js` | Reconnaissance vocale — l'application écoute (§15.8) |
@@ -1447,12 +1505,52 @@ Contraintes envoyées au modèle : n'employer que les mots fournis plus les
 mots-outils, rester entre 250 et 350 mots, et lister explicitement tout mot
 sorti du lexique.
 
+**La longueur demandée n'est pas la longueur voulue.** Mesuré en production, le
+modèle rend 248 puis 256 mots pour une cible de 300 — pile sur le plancher de
+250 que le client refuse, si bien qu'une génération réussie sur deux partait à
+la poubelle sous un message d'erreur générique. Le serveur demande donc
+`cible + 40`, plafonnée à 350, pour que le texte **rendu** tombe dans la
+fenêtre documentée. On ne relance pas un second appel : le quota gratuit
+s'épuise dès le troisième (`429 RESOURCE_EXHAUSTED`).
+
 L'histoire reçue est enregistrée dans le state avec `source: "api"` pour ne pas
 être re-générée. **Elle n'est jamais écrite dans `/content`** : le contenu livré
 reste figé et vérifié hors ligne.
 
 Si l'appel échoue, `storyBuilder` sert la meilleure histoire du stock en
 affichant sa couverture réelle. L'application ne reste jamais sans histoire.
+
+### Transcription d'une conférence
+
+Troisième contrat, **sans Gemini** : c'est une lecture de page. Il fonctionne
+donc même si la clé est en panne.
+
+```json
+// requête
+{ "type": "transcription",
+  "lien": "https://www.ted.com/talks/… ou https://youtu.be/…" }
+
+// réponse
+{
+  "slug": "kelly_mcgonigal_how_to_make_stress_your_friend",
+  "titre": "How to make stress your friend",
+  "video": "https://py.tedcdn.com/…/…-1200k.mp4",
+  "duree": 848,
+  "phrases": [{ "i": 0, "debut": 0.8, "fin": 5.0,
+                "texte": "I have a confession to make." }],
+  "source": "https://www.ted.com/talks/…",
+  "licence": "CC BY-NC-ND 4.0 — TED"
+}
+```
+
+Les blocs de sous-titres de TED sont des **lignes d'affichage**, pas des
+phrases : « In the past year, » et « I want you to just raise your hand »
+arrivent séparément. Le serveur les recompose jusqu'à une ponctuation finale,
+**entre 3 et 16 mots** — au-delà la remise en ordre devient infaisable, en
+dessous il n'y a rien à remettre dans l'ordre.
+
+Un lien mal formé rend **400** avec son motif, pas 502 : c'est une erreur de
+saisie, pas une panne de passerelle.
 
 ### Contenu pré-généré
 
@@ -1517,6 +1615,7 @@ L'application v3 est fonctionnelle. Cette roadmap décrit le passage à v4.
 | 22 | **§09 Verbes irréguliers** | `content/verbes.json` livré, carte sur l'accueil | ✅ |
 | 23 | **Saisie vocale** | `speech.js`, micro dans §04 et §08 | ✅ |
 | 24 | **Zoom au double-tap** | `touch-action: manipulation` | ✅ |
+| 25 | **§10 Vidéo** | contrat `transcription`, `VideoPlayer`, deux jeux | ✅ |
 
 ### Où en est le contenu
 
