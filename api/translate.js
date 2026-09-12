@@ -152,8 +152,13 @@ async function gemini(system, user, { temperature = 0.1, maxOutputTokens = 2048,
     const u = data?.usageMetadata ?? {};
     const fin = candidat?.finishReason ?? "inconnu";
     const reflexion = u.thoughtsTokenCount ? `, dont ${u.thoughtsTokenCount} de réflexion` : "";
+    // Sans un morceau du texte reçu, « illisible » ne se diagnostique pas :
+    // on ne sait pas si le modèle a renvoyé du JSON malformé, un refus, ou
+    // rien du tout. L'extrait est du texte d'histoire, il n'expose aucun secret.
+    const extrait = txt.slice(0, 220).replace(/\s+/g, " ").trim() || "(réponse vide)";
     throw new Error(`réponse illisible — finishReason ${fin}, `
-      + `${u.candidatesTokenCount ?? "?"} jetons produits${reflexion} sur ${maxOutputTokens} autorisés`);
+      + `${u.candidatesTokenCount ?? "?"} jetons produits${reflexion} sur ${maxOutputTokens} autorisés `
+      + `— reçu : ${extrait}`);
   }
 }
 
