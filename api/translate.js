@@ -127,8 +127,23 @@ async function gemini(system, user, { temperature = 0.1, maxOutputTokens = 2048 
     throw new Error(`Gemini ${res.status}${raison ? ` ${raison}` : ""}`);
   }
   const data = await res.json();
-  const txt = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
-  return JSON.parse(txt.replace(/```json|```/g, "").trim());
+  const candidat = data?.candidates?.[0];
+  // Les modèles récents peuvent renvoyer plusieurs parts (réflexion puis
+  // réponse) : ne lire que la première tronquait le JSON.
+  const txt = (candidat?.content?.parts ?? []).map((p) => p?.text ?? "").join("");
+
+  try {
+    return JSON.parse(txt.replace(/```json|```/g, "").trim());
+  } catch {
+    // « Unterminated string » ne dit rien d'exploitable. Ce qui compte, c'est
+    // POURQUOI le texte est incomplet : budget de sortie épuisé, filtre de
+    // sécurité, ou réponse vide.
+    const u = data?.usageMetadata ?? {};
+    const fin = candidat?.finishReason ?? "inconnu";
+    const reflexion = u.thoughtsTokenCount ? `, dont ${u.thoughtsTokenCount} de réflexion` : "";
+    throw new Error(`réponse illisible — finishReason ${fin}, `
+      + `${u.candidatesTokenCount ?? "?"} jetons produits${reflexion} sur ${maxOutputTokens} autorisés`);
+  }
 }
 
 
@@ -188,8 +203,11 @@ async function histoire(req, res) {
   try {
     // Une histoire demande de l'invention : température plus haute que pour
     // une traduction, et de la place pour deux versions du texte.
+    // Deux textes de 300 mots, plus la réflexion éventuelle du modèle :
+    // 4096 jetons ne suffisaient pas, la réponse revenait coupée en plein
+    // milieu d'une chaîne JSON.
     const out = await gemini(HISTOIRE_PROMPT, demande,
-                             { temperature: 0.9, maxOutputTokens: 4096 });
+                             { temperature: 0.9, maxOutputTokens: 8192 });
 
     if (!out?.texte_en) return res.status(502).json({ error: "réponse sans texte" });
     return res.status(200).json(out);
