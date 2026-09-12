@@ -344,9 +344,16 @@ Trois précautions la rendent supportable :
 
 - **Chargée à la demande**, jamais au démarrage : seules les conférences sans
   mp4 la déclenchent.
-- **Build `light` minifié, 345 Ko** — ni sous-titres, ni pistes audio
-  alternatives, ni DRM, dont on n'a aucun usage. Le build ES module non minifié
-  pèse 845 Ko, d'où le choix d'une injection de `<script>`.
+- **Build complet minifié, 529 Ko**, injecté par une balise `<script>` — le
+  build ES module n'existe pas en version minifiée (845 Ko).
+
+  Le build `light`, 184 Ko plus léger, a d'abord été choisi : il retire les
+  sous-titres, le DRM… et **les pistes audio alternatives**. Or TED livre
+  précisément l'audio comme piste séparée — chaque rendition porte
+  `AUDIO="audio0"`, pointant vers un `EXT-X-MEDIA:TYPE=AUDIO`. Résultat mesuré
+  sur la même conférence : `light` → 0 piste audio, seul `video` mis en tampon ;
+  complet → 3 pistes, `audio` en tampon. Le light donnait l'image sans le son.
+  **Ne pas y revenir pour gagner 184 Ko.**
 - **Jamais téléchargée sur iPhone** : le lecteur tente d'abord la lecture
   native, que Safari et iOS assurent seuls. `canPlayType` ne peut pas servir à
   ce test — mesuré, Chromium répond « maybe » pour le HLS puis échoue avec

@@ -13,7 +13,7 @@
  *
  * **Pourquoi essayer le natif avant de charger hls.js.** Safari et iOS lisent
  * le HLS sans aucune bibliothèque : sur l'iPhone, la tentative native réussit
- * et les 345 Ko de hls.js ne sont jamais téléchargés. Ailleurs elle échoue en
+ * et les 529 Ko de hls.js ne sont jamais téléchargés. Ailleurs elle échoue en
  * une fraction de seconde et on bascule. `canPlayType` ne peut pas servir à
  * trancher : mesuré, Chromium répond « maybe » pour le HLS puis échoue avec
  * MEDIA_ERR_SRC_NOT_SUPPORTED.
@@ -35,8 +35,17 @@
  * @returns {HTMLElement}
  */
 
-/** Build « light » : ni sous-titres, ni pistes audio alternatives, ni DRM. */
-const HLS_CDN = "https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.6.15/hls.light.min.js";
+/**
+ * Build COMPLET, et non le « light ».
+ *
+ * TED livre l'audio en piste alternative : chaque rendition du manifeste porte
+ * `AUDIO="audio0"`, renvoyant à un `EXT-X-MEDIA:TYPE=AUDIO` séparé. Or le build
+ * light retire justement la gestion des pistes audio alternatives. Mesuré sur
+ * la même conférence : light → 0 piste audio et seul `video` mis en tampon ;
+ * complet → 3 pistes et `audio` en tampon. Le light donnait donc l'image sans
+ * le son. Les 184 Ko économisés coûtaient l'audio.
+ */
+const HLS_CDN = "https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.6.15/hls.min.js";
 
 /** Délai au-delà duquel la lecture native est considérée comme refusée. */
 const DELAI_SONDAGE_MS = 4000;
