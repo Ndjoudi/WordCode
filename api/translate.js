@@ -101,7 +101,8 @@ function etatCle(cle = process.env.GEMINI_API_KEY) {
   return `présente, ${cle.length} caractères${defauts.length ? ` — ${defauts.join(", ")}` : ", format correct"}`;
 }
 
-async function gemini(system, user, { temperature = 0.1, maxOutputTokens = 2048 } = {}) {
+async function gemini(system, user, { temperature = 0.1, maxOutputTokens = 2048,
+                                      thinkingLevel = null } = {}) {
   const res = await fetch(`${ENDPOINT}?key=${process.env.GEMINI_API_KEY}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -112,6 +113,16 @@ async function gemini(system, user, { temperature = 0.1, maxOutputTokens = 2048 
         temperature,
         maxOutputTokens,
         responseMimeType: "application/json",
+        // Le modèle consomme le budget de sortie pour « réfléchir » AVANT
+        // d'écrire : mesuré en production, 7860 jetons de réflexion sur 8192
+        // ne laissaient que 316 jetons pour le texte, d'où un JSON coupé net.
+        //
+        // On borne donc la réflexion par `thinkingLevel`, et non par
+        // `thinkingBudget` : la référence de l'API réserve le second aux
+        // modèles antérieurs et recommande le premier à partir de Gemini 3,
+        // ce qu'est gemini-3.5-flash. Valeurs admises : MINIMAL, LOW, MEDIUM,
+        // HIGH — « MINIMAL » signifie « little to no thinking ».
+        ...(thinkingLevel ? { thinkingConfig: { thinkingLevel } } : {}),
       },
     }),
   });
@@ -207,7 +218,8 @@ async function histoire(req, res) {
     // 4096 jetons ne suffisaient pas, la réponse revenait coupée en plein
     // milieu d'une chaîne JSON.
     const out = await gemini(HISTOIRE_PROMPT, demande,
-                             { temperature: 0.9, maxOutputTokens: 8192 });
+                             { temperature: 0.9, maxOutputTokens: 8192,
+                               thinkingLevel: "MINIMAL" });
 
     if (!out?.texte_en) return res.status(502).json({ error: "réponse sans texte" });
     return res.status(200).json(out);
