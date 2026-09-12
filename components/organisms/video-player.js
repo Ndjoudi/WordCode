@@ -83,9 +83,15 @@ export function VideoPlayer({ source = null, hls = null, titre = null,
   let moteur = null;
   /** Pendant le sondage natif, une erreur est une réponse, pas une panne. */
   let sondage = false;
+  /** Un seul repli du mp4 vers le flux, sinon on boucle sur l'erreur. */
+  let bascule = false;
 
   media.addEventListener("error", () => {
     if (sondage) return;
+    // Le mp4 s'est dérobé — TED en verrouille certains après coup, et une
+    // conférence enregistrée avant ce repli n'a que cette adresse-là. Tant
+    // qu'un flux existe, on bascule au lieu d'afficher une erreur.
+    if (hls && !bascule) { bascule = true; brancherHls(); return; }
     onErreur?.("La vidéo n'a pas pu être chargée. TED a peut-être changé son adresse.");
   });
 

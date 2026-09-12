@@ -133,7 +133,16 @@ export function Video({ state, contenu, aller, enregistrer }) {
 
   /* --------------------------------------------------------------- Le jeu */
 
-  const jouer = () => {
+  const jouer = async () => {
+    // Une conférence enregistrée avant le repli HLS n'a pas de champ `hls` : son
+    // mp4 peut être verrouillé depuis, et rien ne la répare toute seule. On la
+    // recharge une fois, silencieusement, à partir de son lien TED d'origine.
+    if (choisie.hls === undefined && choisie.source) {
+      const reponse = await recupererTranscription({ lien: choisie.source });
+      const frais = reponse.ok ? normaliserVideo(reponse.donnees) : null;
+      if (frais) { videos = ajouterVideo(frais); choisie = frais; }
+    }
+
     el.replaceChildren();
     el.append(SessionHeader({ title: choisie.titre, onHome: choisir }));
     corps.replaceChildren();

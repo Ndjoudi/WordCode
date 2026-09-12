@@ -326,6 +326,17 @@ Le serveur renvoie donc les deux : `video` (le mp4, **seulement s'il répond**,
 vérifié par une requête `HEAD`) et `hls`. Le lecteur prend le mp4 quand il
 existe, le flux sinon.
 
+Deux filets de sécurité, parce qu'un mp4 vivant aujourd'hui peut être verrouillé
+demain :
+
+- **Le lecteur bascule seul.** Si le mp4 échoue à l'ouverture alors qu'un flux
+  existe, il passe au HLS au lieu d'afficher une erreur. L'utilisateur ne voit
+  rien.
+- **Les conférences enregistrées se réparent.** Celles d'avant ce correctif
+  n'ont aucun champ `hls` : à la première ouverture, l'écran les recharge
+  depuis leur lien TED d'origine et remplace l'entrée. Personne n'a à savoir
+  qu'il faut recoller le lien.
+
 Lire du HLS impose **hls.js**, seule bibliothèque externe du projet — dérogation
 à la règle « pas de framework, pas de npm », acceptée en connaissance de cause
 parce qu'il n'existe aucune autre façon de lire ces conférences hors de Safari.
