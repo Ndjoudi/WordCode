@@ -1786,7 +1786,9 @@
     vrai("sans mp4 mais avec un flux HLS, elle est acceptée", Boolean(sansMp4));
     eq("et le flux est conservé", sansMp4.hls, "https://hls.ted.com/pm/manifest.m3u8");
     eq("le mp4 vaut alors null", sansMp4.video, null);
-    eq("quand TED sert le mp4, il est préféré", clip.video, "https://exemple/film.mp4");
+    // La préférence entre flux et mp4 appartient au lecteur, pas au service :
+    // ici on vérifie seulement que l'adresse n'est pas perdue.
+    eq("le mp4 est conservé quand TED le sert", clip.video, "https://exemple/film.mp4");
     eq("sans phrase, elle est rejetée",
        VID.normaliserVideo({ ...reponseTed, phrases: [] }), null);
 

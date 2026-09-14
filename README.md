@@ -324,7 +324,7 @@ aucune autre piste mp4 n'est proposée. Le **flux HLS**, lui, répond `200` avec
 
 Le serveur renvoie donc les deux : `video` (le mp4, **seulement s'il répond**,
 vérifié par une requête `HEAD`) et `hls`, **débarrassé de son générique**. Le
-lecteur prend le mp4 quand il existe, le flux sinon.
+lecteur prend **le flux**, et le mp4 seulement à défaut.
 
 **Le générique décalait tout.** `hlsUrl` porte `?intro_master_id=…`, qui ajoute
 3,5 s d'habillage TED en tête de flux (mesuré : kelly 855,18 s avec contre
@@ -333,18 +333,25 @@ sont écrits **sans** ce générique — la première phrase commence à 0,84 s,
 serait impossible si le flux débutait par 3,5 s d'habillage. La vidéo courait
 donc 3,5 s en retard sur la phrase affichée. On retire le paramètre.
 
+**Preuve par l'image.** Les flux HLS sont servis avec CORS ouvert, on peut donc
+lire leurs images (pas celles du mp4). Mesuré sur kelly_mcgonigal : à 0,84 s,
+instant où commence la première phrase, le flux avec générique affiche
+l'écran-titre TED (luminosité moyenne 232) et le flux sans générique déjà la
+scène (43). Et « sans » à *t* correspond à « avec » à *t* + 3,5 s : écart moyen
+de 3 à 6 sur 255, contre 16 à 190 au même instant. Le mp4 ayant la durée du flux
+avec générique (855,2 s) et démarrant sur le même écran-titre, **il est décalé
+lui aussi** : c'est pourquoi le lecteur préfère le flux dès qu'il existe.
+
 > **Piège à ne pas refaire.** J'avais d'abord conclu que tout était aligné parce
-> que le mp4 (855,2 s) et le flux faisaient la même durée. Deux durées égales ne
-> disent rien de l'endroit où tombent les mots : le mp4 contient lui aussi le
-> générique. Pour juger d'un alignement, comparer le **début des premières
-> phrases**, jamais les durées totales.
+> que le mp4 et le flux faisaient la même durée. Deux durées égales ne disent
+> rien de l'endroit où tombent les mots. Pour juger d'un alignement, regarder ce
+> qui est à l'écran à l'instant de la **première phrase**, jamais les durées.
 
 Deux filets de sécurité, parce qu'un mp4 vivant aujourd'hui peut être verrouillé
 demain :
 
-- **Le lecteur bascule seul.** Si le mp4 échoue à l'ouverture alors qu'un flux
-  existe, il passe au HLS au lieu d'afficher une erreur. L'utilisateur ne voit
-  rien.
+- **Le flux passe avant le mp4.** Dès qu'une conférence a un flux, un mp4
+  verrouillé (403) ou décalé (générique) ne peut plus gêner.
 - **Les conférences enregistrées se réparent.** Une entrée est périmée si elle
   n'a aucun champ `hls` (elle date d'avant le repli) **ou** si son flux porte
   encore `intro_master_id` (elle date d'avant le retrait du générique). Dans les
@@ -358,8 +365,8 @@ Lire du HLS impose **hls.js**, seule bibliothèque externe du projet — déroga
 parce qu'il n'existe aucune autre façon de lire ces conférences hors de Safari.
 Trois précautions la rendent supportable :
 
-- **Chargée à la demande**, jamais au démarrage : seules les conférences sans
-  mp4 la déclenchent.
+- **Chargée à la demande**, jamais au démarrage : seule l'ouverture d'une
+  conférence la déclenche.
 - **Build complet minifié, 529 Ko**, injecté par une balise `<script>` — le
   build ES module n'existe pas en version minifiée (845 Ko).
 
@@ -396,14 +403,13 @@ Trois choses, mesurées avant d'être retenues :
   sous-titre : son point d'entrée non officiel renvoie zéro octet, et l'API
   officielle exige d'être propriétaire de la vidéo. TED, lui, publie le texte
   **déjà découpé en phrases et horodaté à la milliseconde**.
-- **La vidéo est lue depuis le fichier de TED, pas depuis YouTube.** Une balise
-  `<video>` native saute à la seconde exacte, ne charge aucun script externe,
-  et n'a pas besoin de CORS. Le lecteur embarqué de TED, lui, n'expose aucune
-  API : on ne pourrait pas le commander.
-- **Les horodatages collent au fichier TED.** Le MP4 et le flux HLS font tous
-  deux 855,2 s, quand TED annonce 869 s pour la version YouTube : c'est cette
-  dernière qui ajoute ~14 s d'habillage. Passer par TED supprime le décalage au
-  lieu d'avoir à le compenser.
+- **La vidéo est lue depuis TED, pas depuis YouTube.** Une balise `<video>`
+  native saute à la seconde exacte et se commande. Le lecteur embarqué de TED,
+  lui, n'expose aucune API : on ne pourrait pas le piloter.
+- **Les horodatages collent au flux TED sans générique — pas au mp4.** Le mp4
+  et le flux `?intro_master_id=…` commencent tous deux par 3,5 s d'écran-titre
+  que le transcript ignore ; seul le flux sans ce paramètre démarre avec la
+  première phrase. Voir « Le générique décalait tout » plus bas.
 
 Un seul appel serveur est nécessaire, pour la transcription : `ted.com`
 n'envoie aucun en-tête CORS (§16).
@@ -1035,7 +1041,7 @@ et que les placements de mots croisés se recoupent correctement.
 
 - **HTML / CSS / JS vanilla**, modules ES natifs — pas de build step.
   Une seule exception, motivée et bornée : **hls.js**, chargé à la demande
-  pour les conférences TED sans mp4 (§10). Rien d'autre n'entre.
+  pour lire les conférences TED hors de Safari (§10). Rien d'autre n'entre.
 - **GitHub Pages** comme hébergement
 - **Vercel serverless** pour l'unique appel Gemini (clé jamais exposée)
 - **Web Speech API** (`SpeechSynthesis`) pour l'audio
@@ -1685,6 +1691,7 @@ L'application v3 est fonctionnelle. Cette roadmap décrit le passage à v4.
 | 24 | **Zoom au double-tap** | `touch-action: manipulation` | ✅ |
 | 25 | **§10 Vidéo** | contrat `transcription`, `VideoPlayer`, deux jeux | ✅ |
 | 26 | **Repli HLS** | mp4 vérifié côté serveur, hls.js à la demande | ✅ |
+| 27 | **Synchro des phrases** | flux sans générique préféré au mp4 (3,5 s de décalage) | ✅ |
 
 ### Où en est le contenu
 
