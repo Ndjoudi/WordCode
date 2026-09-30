@@ -34,6 +34,7 @@
  * @param {?string}  titre
  * @param {Function} onPret     reçoit { jouer, arreter, detruire, enLecture }
  * @param {Function} onFin      appelé quand un segment se termine
+ * @param {Function} onProgres   reçoit { position, duree } pendant la lecture
  * @param {Function} onErreur   reçoit un message lisible
  * @returns {HTMLElement}
  */
@@ -75,7 +76,7 @@ function chargerHls() {
 }
 
 export function VideoPlayer({ source = null, hls = null, titre = null,
-                              onPret, onFin, onErreur } = {}) {
+                              onPret, onFin, onProgres, onErreur } = {}) {
   const el = document.createElement("section");
   el.className = "lecteur";
 
@@ -111,6 +112,8 @@ export function VideoPlayer({ source = null, hls = null, titre = null,
   // On surveille la position plutôt que de poser un minuteur : un minuteur
   // dérive dès que la lecture bégaie ou que l'utilisateur met en pause.
   media.addEventListener("timeupdate", () => {
+    // L'écran s'en sert pour savoir quand la conférence a été vue en entier.
+    onProgres?.({ position: media.currentTime, duree: media.duration });
     if (borne === null || media.currentTime < borne) return;
     borne = null;
     media.pause();

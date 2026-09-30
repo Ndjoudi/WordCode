@@ -34,7 +34,7 @@
 
 Application web d'apprentissage du vocabulaire anglais pour un francophone.
 
-L'écran principal est un **tableau de bord découpé en dix sections**. Il n'y a
+L'écran principal est un **tableau de bord découpé en neuf sections**. Il n'y a
 plus de session guidée : l'utilisateur entre où il veut, quand il veut. Chaque
 section fait **une seule chose**.
 
@@ -48,8 +48,7 @@ section fait **une seule chose**.
 | 06 | **Mots croisés** | même règle, mots différents |
 | 07 | **Histoire du jour** | lecture d'une page en vocabulaire connu |
 | 08 | **Écrire** | dictée, traduction, rédaction libre |
-| 09 | **Verbes irréguliers** | morphologie, par famille de patterns |
-| 10 | **Vidéo** | une conférence TED, phrase par phrase |
+| 09 | **Vidéo** | une conférence TED, phrase par phrase |
 
 **Les jeux ne sont pas le cours, ils sont l'examen.** Un codeword ne transmet
 aucun sens : il fait *retrouver* un mot déjà connu. Les sections 05, 06 et 07
@@ -84,7 +83,7 @@ reconnaître sans support.
 
 ---
 
-## 2. Les dix sections
+## 2. Les neuf sections
 
 ### 01 — Traduire / Ajouter un mot
 
@@ -302,7 +301,7 @@ souvent de l'oreille, pas du vocabulaire.
 
 ---
 
-### 10 — Vidéo
+### 09 — Vidéo
 
 Une conférence TED se joue **une phrase, puis s'arrête**. Deux jeux sur cette
 phrase, au choix à tout moment :
@@ -313,6 +312,33 @@ phrase, au choix à tout moment :
 | **Écrire la phrase** | `InputAnswer` | l'orthographe et l'oreille |
 
 **Pas de micro ici.** L'utilisateur reconstruit, il ne parle pas.
+
+### Le quizz de fin de conférence
+
+Une fois la conférence **regardée en entier**, un quizz de huit questions
+s'ouvre. Il est composé **hors ligne**, à partir de la seule transcription déjà
+en mémoire : aucun appel réseau, aucun jeton Gemini — la génération d'histoires
+montre assez ce que coûte une dépendance au quota.
+
+| Forme | Ce qu'elle demande | Ce qu'elle travaille |
+|---|---|---|
+| **trou** | un mot de contenu est masqué dans une phrase entendue | le vocabulaire en contexte |
+| **suite** | laquelle de ces quatre phrases suit celle-ci ? | le fil du discours |
+
+Les deux formes alternent : huit fois le même exercice lasse. Les mauvaises
+réponses sont **tirées de la conférence elle-même** — un leurre venu d'ailleurs
+se repère sans réfléchir. Les mots-outils (`the`, `with`, `about`…) ne sont
+jamais masqués : les cacher ne teste rien.
+
+**Le déblocage ne dépend pas des exercices.** Les phrases s'arrêtent une à une,
+on ne peut donc pas « voir la conférence » en les enchaînant : un bouton
+*Regarder la conférence en entier* lit le flux sans borne. Le lecteur rapporte
+sa position, et la conférence est notée vue au-delà de **97 %** de sa durée —
+pas 100 %, parce que le générique de fin et les applaudissements ne sont pas du
+contenu. La date est conservée dans `progression.videos_vues`.
+
+Une conférence de moins de 12 phrases n'a pas de quizz : il n'y aurait ni assez
+de leurres, ni assez de matière.
 
 ### Deux sources vidéo, et la seule dépendance du projet
 
@@ -461,14 +487,24 @@ les histoires, jamais par les indices ni les mots croisés.
 
 Déblocage de palier : **80% des mots en boîte 3+**, pas la complétion.
 
-### 3.2 Verbes irréguliers — §09
+### 3.2 Verbes irréguliers — des mots comme les autres
 
-**Morphologie, pas vocabulaire.** Trois formes pour une seule unité de sens : un
-codeword ferait deviner WENT sans jamais le relier à GO. D'où une filière à
-part, avec son propre écran et sa propre progression.
+Sur les 68 irréguliers usuels, **53 figurent déjà dans les 1000 mots**, avec leur
+palier, leur indice et leur éligibilité aux jeux : ils se découvrent, se quizzent
+et se jouent déjà comme n'importe quel mot. Les **15 autres** manquaient
+purement et simplement — dont `be`, `have`, `do` et `go`, absents du catalogue
+sous toutes leurs formes, ce qui est un défaut d'une liste des 1000 mots les
+plus fréquents. `content/verbes.json` les ajoute, mis en forme comme des mots
+ordinaires.
 
-L'apprentissage se fait **par famille de patterns**, jamais par ordre
-alphabétique — c'est le pattern qui se retient, pas le verbe isolé :
+**Ils gardent un espace d'identifiants séparé** (`v_00xx`). Ceux du catalogue
+sont positionnels (`w_<palier><rang>`) : insérer un mot dans un palier
+décalerait tous les suivants, et la progression, indexée par identifiant,
+désignerait alors d'autres mots. Le chargement les fusionne au catalogue palier
+par palier, exactement comme les mots.
+
+`groupe_verbe` reste renseigné — la famille de pattern éclaire le contenu — mais
+plus aucun écran ne l'exploite :
 
 | Groupe | Pattern | Exemples |
 |---|---|---|
@@ -477,11 +513,10 @@ alphabétique — c'est le pattern qui se retient, pas le verbe isolé :
 | G3 | A-B-B | have, say, make, get, keep, leave |
 | G4 | A-B-C | be, go, see, take, give, write |
 
-**Le Leitner suit chaque forme séparément** (§5), sinon GO serait validé alors
-que GONE est raté. Le verbe est acquis quand ses deux formes sont en boîte 5.
-
-La carte n'apparaît que si `content/verbes.json` est livré : une carte morte ne
-dit rien à personne (§8).
+**Le prétérit et le participe ne sont plus travaillés séparément.** La section
+09 et son `VerbTriad` suivaient chaque forme dans une fiche Leitner distincte ;
+elle a été retirée au profit d'un parcours unique. Un verbe est un mot : il
+passe par Découverte, puis par le quizz, puis par les jeux.
 
 ### 3.3 Phrasal verbs
 
@@ -608,9 +643,6 @@ différents. Chaque service pose donc le statut explicitement.
 
 **Signal de maîtrise :** si l'utilisateur a eu besoin de la traduction FR pour
 résoudre un mot, ce mot **ne monte pas d'une boîte**.
-
-**Verbes irréguliers :** le Leitner suit chaque forme séparément, sinon GO est
-validé alors que GONE est raté. Acquis quand les deux formes sont en boîte 5.
 
 ---
 
@@ -828,6 +860,14 @@ Le fichier n'est **pas écrit à la main** : `tools/contenu/construire-dictees.m
 le produit à partir des exports Tatoeba, en ne gardant que les phrases dont
 tout le vocabulaire est déjà connu.
 
+**Un palier lit aussi tous les précédents.** `chargerDictees` cumule les
+fichiers des paliers 1 à N. Puisque le générateur garantit qu'un fichier de
+palier N n'emploie que du vocabulaire de N ou d'avant, tout ce qui précède
+reste dictable — et le stock grandit au lieu d'être remplacé. Sans ce cumul,
+atteindre un palier dont le fichier n'est pas encore livré vidait la section et
+**verrouillait la carte « Écrire »** : un palier absent n'est pas une anomalie,
+la filière est livrée progressivement.
+
 ### 6.6 `state` — données mutables
 
 localStorage. Clés courtes : sur 1000 mots ça divise le poids par trois.
@@ -852,6 +892,8 @@ localStorage. Clés courtes : sur 1000 mots ça divise le poids par trois.
     "histoires_lues": ["h_012","h_013"],
     "derniere_histoire": "2026-09-07",
     "dictees_faites": ["d_01038"],
+    "phrases_video": { "kelly_mcgonigal_how_to_make_stress_your_friend": [0, 1, 2] },
+    "videos_vues": { "kelly_mcgonigal_how_to_make_stress_your_friend": "2026-09-30" },
     "ajouts_aujourdhui": 2,
     "derniere_session": "2026-09-07",
     "derniere_sauvegarde": "2026-09-01",
@@ -1212,7 +1254,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `PalierList` | `organisms/palier-list.js` | `paliers[], current, onSelect` | Choix de palier |
 | `StoryReader` | `organisms/story-reader.js` | `histoire, onWordTap, onFinish` | Texte de l'histoire du jour, chaque mot tappable (§07) |
 | `WordList` | `organisms/word-list.js` | `groupes[], showBox, actions` | Liste groupée : ajouts (§01), suivi d'apprentissage (§04) |
-| `VideoPlayer` | `organisms/video-player.js` | `source, hls, titre, onPret, onFin, onErreur` | Lecteur `<video>` piloté phrase par phrase (§10) |
+| `VideoPlayer` | `organisms/video-player.js` | `source, hls, titre, onPret, onFin, onProgres, onErreur` | Lecteur `<video>` piloté phrase par phrase (§10) |
 | `CompositionForm` | `organisms/composition-form.js` | `consigne, mots[], onCheck, onCorriger, onTerminer` | Rédaction libre : mots imposés suivis en direct, correction API (§08) |
 
 ### 12.4 Composants explicitement uniques
@@ -1241,8 +1283,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `Game` | `screens/game.js` | **orchestrateur partagé** par §05 et §06 |
 | `Story` | `screens/story.js` | §07 — histoire du jour |
 | `Writing` | `screens/writing.js` | §08 — dictée, traduction, rédaction |
-| `Verbs` | `screens/verbs.js` | §09 — verbes irréguliers |
-| `Video` | `screens/video.js` | §10 — conférence phrase par phrase |
+| `Video` | `screens/video.js` | §09 — conférence phrase par phrase |
 | `Phrasal` | `screens/phrasal.js` | phrasal verbs — **pas d'entrée dans l'écran principal** |
 | `Progress` | `screens/progress.js` | statistiques, paliers, répartition par boîte |
 | `Settings` | `screens/settings.js` | export/import, objectif, erreurs de contenu |
@@ -1271,8 +1312,7 @@ Chaque section est une carte, avec son compteur et son état.
 | 06 Mots croisés | parties disponibles | idem |
 | 07 Histoire | couverture du texte du jour | *« L'histoire arrive quand tu connaîtras assez de mots. »* |
 | 08 Écrire | phrases restantes | *« Aucune phrase enregistrée n'est livrée pour ton palier. »* |
-| 09 Verbes | formes à travailler | *« Groupe Gn terminé pour aujourd'hui. »* |
-| 10 Vidéo | phrases restantes | *« Colle le lien d'une conférence TED. »* |
+| 09 Vidéo | phrases restantes | *« Colle le lien d'une conférence TED. »* |
 
 ### États obligatoires
 
@@ -1297,8 +1337,7 @@ Home  (six cartes)
  ├─ 06 → Crossword     CrosswordBoard (grille vide) → EndCard  → Home
  ├─ 07 → Story         StoryReader → EndCard                   → Home
  ├─ 08 → Writing       InputAnswer (audio, micro) | CompositionForm → Home
- ├─ 09 → Verbs         VerbTriad par groupe de pattern         → Home
- └─ 10 → Video         VideoPlayer + WordOrder | InputAnswer   → Home
+ └─ 09 → Video         VideoPlayer + WordOrder | InputAnswer   → Home
 ```
 
 Chaque section revient à Home. Il n'y a **aucun enchaînement automatique** entre
@@ -1319,7 +1358,7 @@ sections : c'est l'utilisateur qui choisit.
 | `gameBuilder` | `services/game-builder.js` | Tire les parties de §04 et §05, applique la partition |
 | `storyBuilder` | `services/story-builder.js` | Choisit l'histoire du jour, calcule la couverture |
 | `writingBuilder` | `services/writing-builder.js` | Compose dictée, traduction et rédaction (§08) |
-| `videoBuilder` | `services/video-builder.js` | Découpe, mélange et suit l'avancement d'une conférence (§10) |
+| `videoBuilder` | `services/video-builder.js` | Découpe, mélange, suit l'avancement et compose le quizz d'une conférence (§10) |
 | `normalize` | `services/normalize.js` | Normalisation unique des réponses (§15.5) |
 | `audio` | `services/audio.js` | Synthèse vocale — l'application parle |
 | `speech` | `services/speech.js` | Reconnaissance vocale — l'application écoute (§15.8) |
@@ -1692,6 +1731,10 @@ L'application v3 est fonctionnelle. Cette roadmap décrit le passage à v4.
 | 25 | **§10 Vidéo** | contrat `transcription`, `VideoPlayer`, deux jeux | ✅ |
 | 26 | **Repli HLS** | mp4 vérifié côté serveur, hls.js à la demande | ✅ |
 | 27 | **Synchro des phrases** | flux sans générique préféré au mp4 (3,5 s de décalage) | ✅ |
+| 28 | **Réessayer / passer** | une phrase ratée ne défile plus toute seule (§10) | ✅ |
+| 29 | **Quizz de conférence** | 8 questions hors ligne, ouvert après visionnage complet (§10) | ✅ |
+| 30 | **Dictées cumulées** | « Écrire » ne se verrouille plus au changement de palier (§6.7) | ✅ |
+| 31 | **Verbes dans Découverte** | §09 supprimée ; les 15 irréguliers absents des 1000 mots rejoignent le catalogue | ✅ |
 
 ### Où en est le contenu
 
@@ -1754,7 +1797,7 @@ Décisions prises par défaut lors de la rédaction de la v4, à confirmer.
 | 3 | Partition grille / mots croisés | par partie (`jeu`), remise à zéro quand un jeu a épuisé son vivier |
 | 4 | Longueur d'une histoire | 250 à 350 demandés, 220 acceptés |
 | 5 | Couverture minimale d'une histoire | 95% du lexique déjà connu |
-| 6 | Verbes irréguliers et phrasal verbs | conservés, mais sans entrée dans l'écran principal |
+| 6 | Verbes irréguliers | fondus dans le catalogue, §09 supprimée. Les phrasal verbs restent sans entrée |
 | 7 | Streak | supprimé avec le défi quotidien. Faut-il le rattacher à l'histoire du jour ? |
 
 Questions restées sans réponse :

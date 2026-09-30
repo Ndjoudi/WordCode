@@ -54,6 +54,9 @@ export function etatInitial() {
       dictees_faites: [],
       // §10 : phrases réussies, par conférence — { slug: [rangs] }.
       phrases_video: {},
+      // §10 : conférences regardées en entier — { slug: "AAAA-MM-JJ" }. C'est
+      // ce qui ouvre le quizz, indépendamment des exercices.
+      videos_vues: {},
       ajouts_aujourdhui: 0,
       derniere_session: null,
       derniere_sauvegarde: null,
@@ -102,6 +105,8 @@ function completerProgression(base, lue = {}) {
     dictees_faites: Array.isArray(lue?.dictees_faites) ? lue.dictees_faites : [],
     phrases_video: (lue?.phrases_video && typeof lue.phrases_video === "object")
       ? lue.phrases_video : {},
+    videos_vues: (lue?.videos_vues && typeof lue.videos_vues === "object")
+      ? lue.videos_vues : {},
   };
 }
 

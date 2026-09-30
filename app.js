@@ -23,7 +23,6 @@ import { Writing } from "./screens/writing.js";
 import { Video } from "./screens/video.js";
 import { Progress } from "./screens/progress.js";
 import { Settings } from "./screens/settings.js";
-import { Verbs } from "./screens/verbs.js";
 import { ManualAdd } from "./screens/manual-add.js";
 import { Phrasal } from "./screens/phrasal.js";
 
@@ -76,6 +75,17 @@ async function rechargerContenu() {
     const filiere = await chargerVerbes({ manifeste: contenu.manifeste });
     contenu.verbes = filiere.verbes;
     contenu.erreurs.push(...filiere.erreurs);
+
+    // Ces verbes sont des mots comme les autres : ils rejoignent le catalogue
+    // pour être découverts, quizzés puis joués (§3.2). Ils gardent leur propre
+    // espace d'identifiants parce que ceux du catalogue sont POSITIONNELS —
+    // les insérer dans un palier décalerait tous les mots suivants, et la
+    // progression, indexée par identifiant, désignerait d'autres mots.
+    // Comme pour les mots, seuls les paliers déjà ouverts entrent.
+    const jusqua = state?.progression?.palier_actuel ?? 1;
+    for (const verbe of filiere.verbes) {
+      if ((verbe.palier ?? 1) <= jusqua) contenu.mots.set(verbe.id, verbe);
+    }
   } else {
     contenu.verbes = [];
   }
@@ -137,7 +147,6 @@ async function demarrer() {
       // Hors sections.
       "/progress": () => Progress(contexte()),
       "/settings": () => Settings(contexte()),
-      "/verbs": () => Verbs(contexte()),
       "/phrasal": () => Phrasal(contexte()),
     },
     monter: (ecran) => {

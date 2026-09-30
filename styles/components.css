@@ -1099,6 +1099,16 @@
 
 .video-screen__jeu    { display: flex; flex-direction: column; gap: var(--sp-3); }
 .video-screen__outils { display: flex; gap: var(--sp-2); }
+/* Choix après une erreur : les deux options sont de même poids visuel,
+   c'est à l'utilisateur de décider s'il refait ou s'il avance. */
+.video-screen__reprise { display: flex; flex-direction: column; gap: var(--sp-2);
+                         margin-top: var(--sp-3); }
+.video-screen__quizz  { display: flex; flex-direction: column; gap: var(--sp-2);
+                        margin-top: var(--sp-4); }
+.video-screen__note   { color: var(--c-text-muted); font-size: var(--fs-sm);
+                        text-align: center; margin: 0; }
+.video-screen__bilan  { font-size: var(--fs-lg); font-weight: 600;
+                        text-align: center; margin: var(--sp-4) 0; }
 
 .video-screen__credit {
   margin: var(--sp-5) 0 0;

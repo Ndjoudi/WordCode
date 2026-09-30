@@ -1515,6 +1515,47 @@
        HIS.histoireDepuisApi({ texte_en: "  " }, { catalogue: catHist, id: "x" }), null);
 
     /* ================================ §08 Écrire ========================== */
+    section("content-loader — dictées cumulées (§08, §6.7)");
+
+    const fichierDictees = (ids) => ({
+      phrases: ids.map((id) => ({ id, en: `Sentence ${id}.`, fr: [`Phrase ${id}.`],
+                                  audio: `${id}.mp3`, lecteur: "un lecteur" })),
+    });
+    // 404 = palier non livré ; la filière arrive palier par palier.
+    const serveurDictees = (parPalier) => async (chemin) => {
+      const n = Number((String(chemin).match(/dictee-(\d+)\.json/) ?? [])[1]);
+      const doc = parPalier[n];
+      return doc
+        ? { ok: true, status: 200, json: async () => doc }
+        : { ok: false, status: 404, json: async () => ({}) };
+    };
+
+    const cumul = await C.chargerDictees({
+      palier: 3, base: "",
+      recuperer: serveurDictees({ 1: fichierDictees(["d_1", "d_2"]),
+                                  3: fichierDictees(["d_5"]) }) });
+    eq("les paliers livrés sont cumulés", cumul.phrases.map((p) => p.id),
+       ["d_1", "d_2", "d_5"]);
+    eq("un palier non livré n'est pas une anomalie", cumul.erreurs.length, 0);
+    faux("et la filière n'est pas dite absente", cumul.absente);
+
+    eq("on ne charge rien au-delà du palier courant",
+       (await C.chargerDictees({ palier: 1, base: "",
+          recuperer: serveurDictees({ 1: fichierDictees(["d_1"]),
+                                      2: fichierDictees(["d_2"]) }) })).phrases.map((p) => p.id),
+       ["d_1"]);
+
+    eq("un même id n'est jamais servi deux fois",
+       (await C.chargerDictees({ palier: 2, base: "",
+          recuperer: serveurDictees({ 1: fichierDictees(["d_1"]),
+                                      2: fichierDictees(["d_1", "d_9"]) }) })).phrases.map((p) => p.id),
+       ["d_1", "d_9"]);
+
+    const aucuneDictee = await C.chargerDictees({ palier: 4, base: "",
+                                                  recuperer: serveurDictees({}) });
+    vrai("aucun fichier livré : la filière est absente", aucuneDictee.absente);
+    eq("et aucune phrase n'est servie", aucuneDictee.phrases.length, 0);
+
     section("writingBuilder — dictée et traduction (§08)");
 
     const phrasesEcr = [
@@ -1688,15 +1729,27 @@
     const filiereVerbes = await C.chargerVerbes({ manifeste: { verbes: "verbes.json" } });
     faux("la filière verbes est bien livrée", filiereVerbes.absente);
     vrai("elle passe la validation sans anomalie", filiereVerbes.erreurs.length === 0);
-    vrai("elle contient de quoi travailler", filiereVerbes.verbes.length >= 40);
+    // Le fichier ne porte QUE les irréguliers absents des 1000 mots : les 53
+    // autres sont déjà au catalogue et suivent le circuit normal.
+    vrai("elle contient les irréguliers absents du catalogue",
+         filiereVerbes.verbes.length >= 10);
     vrai("chaque verbe a ses trois formes",
          filiereVerbes.verbes.every((v) => v.en && v.preterit && v.participe));
     vrai("chaque verbe porte un groupe de pattern valide",
          filiereVerbes.verbes.every((v) => [1, 2, 3, 4].includes(v.groupe_verbe)));
     vrai("les quatre groupes sont représentés",
          [1, 2, 3, 4].every((g) => filiereVerbes.verbes.some((v) => v.groupe_verbe === g)));
-    vrai("aucun verbe n'est éligible aux grilles (§3.2)",
-         filiereVerbes.verbes.every((v) => !v.eligible_grille && !v.eligible_croises));
+    // La section 09 a disparu : un verbe est un mot comme un autre. Il se
+    // découvre, se quizze et se joue, donc il lui faut tout ce qu'exige un mot.
+    vrai("chaque verbe est jouable en grille et en mots croisés",
+         filiereVerbes.verbes.every((v) => v.eligible_grille && v.eligible_croises));
+    vrai("chaque verbe porte une définition, sans quoi le quizz le sauterait",
+         filiereVerbes.verbes.every((v) => v.indice?.en && v.indice.segments?.length));
+    vrai("chaque verbe est rattaché à un palier",
+         filiereVerbes.verbes.every((v) => Number.isInteger(v.palier) && v.palier >= 1));
+    vrai("les plus fréquents arrivent dès le palier 1",
+         ["be", "have", "do", "go"].every((en) =>
+           filiereVerbes.verbes.some((v) => v.en === en && v.palier === 1)));
 
     /* ======================= un 502 ne masque plus son motif ============== */
     section("api.js — un 502 remonte le motif du serveur (§16)");
@@ -1811,6 +1864,19 @@
     eq("sans conférence, la section est verrouillée",
        VID.composerPhrase({ video: null, state: neufVid }).verrouille, true);
 
+    // Une phrase passée pendant la séance cède la place à la suivante, mais
+    // revient si tout le reste a été passé : jamais d'écran vide (§10).
+    eq("une phrase passée cède la place à la suivante",
+       VID.composerPhrase({ video: clip, state: neufVid, ignorer: [0] }).exercice.rang, 1);
+    eq("deux passées : on arrive à la troisième",
+       VID.composerPhrase({ video: clip, state: neufVid, ignorer: [0, 1] }).exercice.rang, 2);
+    eq("tout passé : la première non réussie revient",
+       VID.composerPhrase({ video: clip, state: neufVid, ignorer: [0, 1, 2] }).exercice.rang, 0);
+    eq("phraseCourante tient compte des phrases mises de côté",
+       VID.phraseCourante(clip, neufVid, [0]), 1);
+    eq("sans liste, le comportement ne change pas",
+       VID.phraseCourante(clip, neufVid), 0);
+
     let essais = 0;
     const melangeurPaesseux = (l) => { essais += 1; return [...l]; };
     eq("un mélangeur qui ne mélange rien ne fait pas boucler le service",
@@ -1886,6 +1952,75 @@
        (await A.recupererTranscription({ lien: "nawak", enLigne: true,
           recuperer: serveurTed({ error: "lien non reconnu" }, 400) })).erreur,
        "lien non reconnu");
+
+    /* ========================= §10 quizz de conférence ===================== */
+    section("videoBuilder — quizz de fin de conférence (§10)");
+
+    const motsQuiz = ["digital", "ownership", "market", "creator", "player",
+                      "value", "community", "network", "future", "wallet",
+                      "economy", "culture", "system", "island"];
+    const clipLong = VID.normaliserVideo({
+      slug: "long_talk", titre: "Long", video: "https://exemple/l.mp4", duree: 100,
+      phrases: motsQuiz.map((mot, i) => ({
+        i, debut: i * 5, fin: i * 5 + 5,
+        texte: `People build ${mot} together everywhere.`,
+      })),
+    });
+    const tel = (liste) => [...liste];  // mélangeur neutre : tests déterministes
+
+    const pasVu = S.etatInitial();
+    const quizFerme = VID.composerQuizVideo({ video: clipLong, state: pasVu, melanger: tel });
+    vrai("sans avoir vu la conférence, le quizz est fermé", quizFerme.verrouille);
+    eq("et aucune question n'est composée", quizFerme.questions.length, 0);
+
+    section("videoBuilder — marquer une conférence vue");
+
+    faux("au départ elle n'est pas vue", VID.estVue(pasVu, "long_talk"));
+    eq("à mi-parcours, rien n'est marqué",
+       VID.estVue(VID.marquerVue({ state: pasVu, slug: "long_talk", position: 50,
+                                   duree: 100, today: "2026-09-30" }), "long_talk"), false);
+
+    const vu = VID.marquerVue({ state: pasVu, slug: "long_talk", position: 98,
+                                duree: 100, today: "2026-09-30" });
+    vrai("au-delà du seuil, la conférence est vue", VID.estVue(vu, "long_talk"));
+    eq("la date du visionnage est retenue",
+       vu.progression.videos_vues.long_talk, "2026-09-30");
+    eq("le seuil documenté vaut 0,97", VID.SEUIL_VU, 0.97);
+    eq("une durée nulle ne marque rien",
+       VID.marquerVue({ state: pasVu, slug: "long_talk", position: 10, duree: 0 }), pasVu);
+
+    section("videoBuilder — les questions");
+
+    const quiz = VID.composerQuizVideo({ video: clipLong, state: vu, melanger: tel });
+    faux("une fois vue, le quizz s'ouvre", quiz.verrouille);
+    eq("il compte huit questions", quiz.questions.length, VID.QUESTIONS_QUIZ);
+    vrai("chaque question propose quatre réponses",
+         quiz.questions.every((q) => q.choix.length === 4));
+    vrai("la bonne réponse est toujours parmi les choix",
+         quiz.questions.every((q) => q.choix.includes(q.attendu)));
+    vrai("aucun doublon dans les propositions",
+         quiz.questions.every((q) => new Set(q.choix).size === 4));
+    vrai("les deux formes sont présentes",
+         quiz.questions.some((q) => q.type === "trou")
+         && quiz.questions.some((q) => q.type === "suite"));
+    vrai("un texte à trou masque bien un mot",
+         quiz.questions.filter((q) => q.type === "trou")
+           .every((q) => q.invite.includes("……") && !q.invite.includes(q.attendu)));
+    vrai("une question « suite » attend la phrase suivante",
+         quiz.questions.filter((q) => q.type === "suite")
+           .every((q) => clipLong.phrases.some((p) => p.texte === q.attendu)));
+
+    eq("une conférence trop courte n'a pas de quizz",
+       VID.composerQuizVideo({ video: clip,
+                               state: { progression: { videos_vues: { un_talk: "2026-09-30" } } },
+                               melanger: tel }).verrouille, true);
+
+    section("store — conférences vues (§10)");
+
+    eq("un état neuf porte le champ",
+       typeof S.etatInitial().progression.videos_vues, "object");
+    eq("une progression ancienne le reçoit",
+       S.migrer({ v: 4, progression: {} }).progression.videos_vues, {});
 
     /* ==================================================== conclusion ====== */
     const sum = document.getElementById("sum");

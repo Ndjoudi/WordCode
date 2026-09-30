@@ -2,11 +2,12 @@ import { SessionHeader } from "../components/molecules/session-header.js";
 import { Button } from "../components/atoms/button.js";
 import { Spinner } from "../components/atoms/spinner.js";
 import { Toast } from "../components/atoms/toast.js";
+import { MCQ } from "../components/molecules/mcq.js";
 import { WordOrder } from "../components/molecules/word-order.js";
 import { InputAnswer } from "../components/molecules/input-answer.js";
 import { VideoPlayer } from "../components/organisms/video-player.js";
-import { normaliserVideo, composerPhrase, appliquerPhrase,
-         avancement } from "../services/video-builder.js";
+import { normaliserVideo, composerPhrase, appliquerPhrase, avancement,
+         composerQuizVideo, estVue, marquerVue } from "../services/video-builder.js";
 import { recupererTranscription } from "../services/api.js";
 import { chargerVideos, ajouterVideo } from "../services/store.js";
 import { aujourdhui } from "../services/leitner.js";
@@ -32,6 +33,9 @@ export function Video({ state, contenu, aller, enregistrer }) {
   let videos = chargerVideos();
   let choisie = null;
   let mode = "ordre";
+  /** Phrases passées pendant CETTE séance — jamais enregistrées : une phrase
+   *  ratée doit revenir la prochaine fois. */
+  let sautees = new Set();
   /** Commandes du lecteur, remises par l'organism une fois monté. */
   let commandes = null;
 
@@ -47,6 +51,7 @@ export function Video({ state, contenu, aller, enregistrer }) {
     commandes?.detruire?.();
     commandes = null;
     choisie = null;
+    sautees = new Set();
     el.replaceChildren();
     el.append(SessionHeader({ title: "Vidéo", onHome: () => aller("/") }));
     corps.replaceChildren();
@@ -153,6 +158,9 @@ export function Video({ state, contenu, aller, enregistrer }) {
     corps.replaceChildren();
     el.append(corps);
 
+    const zoneQuizz = document.createElement("div");
+    zoneQuizz.className = "video-screen__quizz";
+
     // Le lecteur est monté UNE fois : le remonter à chaque phrase
     // rechargerait la vidéo entière.
     corps.append(VideoPlayer({
@@ -161,6 +169,13 @@ export function Video({ state, contenu, aller, enregistrer }) {
       titre: choisie.titre,
       onPret: (c) => { commandes = c; },
       onErreur: (m) => signaler(m),
+      onProgres: ({ position, duree }) => {
+        const suivant = marquerVue({ state, slug: choisie.slug, position, duree, today });
+        if (suivant === state) return;   // rien n'a changé : pas de réécriture
+        state = suivant;
+        enregistrer(state, { silencieux: true });
+        rendreAccesQuizz(zoneQuizz);
+      },
     }));
 
     const barre = document.createElement("div");
@@ -170,6 +185,9 @@ export function Video({ state, contenu, aller, enregistrer }) {
     const zoneJeu = document.createElement("div");
     zoneJeu.className = "video-screen__jeu";
     corps.append(zoneJeu);
+
+    corps.append(zoneQuizz);
+    rendreAccesQuizz(zoneQuizz);
 
     corps.append(credit());
     rendrePhrase(barre, zoneJeu);
@@ -198,7 +216,8 @@ export function Video({ state, contenu, aller, enregistrer }) {
   };
 
   const rendrePhrase = (barre, zoneJeu) => {
-    const { verrouille, raison, exercice } = composerPhrase({ video: choisie, state, mode });
+    const { verrouille, raison, exercice } =
+      composerPhrase({ video: choisie, state, mode, ignorer: [...sautees] });
     if (verrouille) { zoneJeu.replaceChildren(); signaler(raison); return; }
 
     rendreBarre(barre, exercice.rang);
@@ -209,7 +228,15 @@ export function Video({ state, contenu, aller, enregistrer }) {
       state = appliquerPhrase({ state, slug: choisie.slug, rang: exercice.rang,
                                 correct, today });
       enregistrer(state, { silencieux: true });
-      setTimeout(() => rendrePhrase(barre, zoneJeu), DUREE_VERDICT);
+
+      // Juste : on enchaîne. Faux : on ne décide pas à sa place — la bonne
+      // phrase est déjà affichée par le composant, reste à choisir si on la
+      // refait ou si on avance.
+      if (correct) {
+        setTimeout(() => rendrePhrase(barre, zoneJeu), DUREE_VERDICT);
+        return;
+      }
+      zoneJeu.append(choixApresErreur(exercice, barre, zoneJeu));
     };
 
     zoneJeu.append(mode === "ordre"
@@ -220,6 +247,27 @@ export function Video({ state, contenu, aller, enregistrer }) {
                       onSubmit: apres }));
 
     commandes?.jouer(exercice.debut, exercice.fin);
+  };
+
+  /** Après une erreur : refaire la phrase, ou passer à la suivante. */
+  const choixApresErreur = (exercice, barre, zoneJeu) => {
+    const zone = document.createElement("div");
+    zone.className = "video-screen__reprise";
+
+    zone.append(Button({
+      label: "Réessayer",
+      fullWidth: true,
+      onClick: () => rendrePhrase(barre, zoneJeu),
+    }));
+
+    zone.append(Button({
+      label: "Passer à la phrase suivante",
+      variant: "secondary",
+      fullWidth: true,
+      onClick: () => { sautees.add(exercice.rang); rendrePhrase(barre, zoneJeu); },
+    }));
+
+    return zone;
   };
 
   /** Réécouter, et basculer d'un jeu à l'autre. */
@@ -242,6 +290,87 @@ export function Video({ state, contenu, aller, enregistrer }) {
     }));
 
     return zone;
+  };
+
+  /* --------------------------------------------------------------- Quizz */
+
+  /**
+   * Accès au quizz.
+   *
+   * La lecture continue est proposée séparément des exercices : ceux-ci
+   * s'arrêtent à chaque phrase, on ne peut donc pas « voir la conférence »
+   * en les enchaînant.
+   */
+  const rendreAccesQuizz = (zone) => {
+    zone.replaceChildren();
+
+    zone.append(Button({
+      label: "Regarder la conférence en entier",
+      variant: "secondary",
+      fullWidth: true,
+      onClick: () => commandes?.jouer(0, null),
+    }));
+
+    if (estVue(state, choisie.slug)) {
+      zone.append(Button({ label: "Quizz de la conférence", fullWidth: true,
+                           onClick: () => quizzer() }));
+      return;
+    }
+
+    const note = document.createElement("p");
+    note.className = "video-screen__note";
+    note.textContent = "Le quizz s'ouvre quand tu as regardé la conférence en entier.";
+    zone.append(note);
+  };
+
+  /** Huit questions tirées de la transcription — aucun réseau. */
+  const quizzer = () => {
+    const { verrouille, raison, questions } = composerQuizVideo({ video: choisie, state });
+    if (verrouille) { signaler(raison); return; }
+
+    commandes?.arreter();
+    el.replaceChildren();
+    el.append(SessionHeader({ title: "Quizz", onHome: jouer }));
+    corps.replaceChildren();
+    el.append(corps);
+
+    let rang = 0;
+    let justes = 0;
+
+    const suite = () => {
+      corps.replaceChildren();
+
+      if (rang >= questions.length) {
+        const bilan = document.createElement("p");
+        bilan.className = "video-screen__bilan";
+        bilan.textContent = `${justes} bonnes réponses sur ${questions.length}.`;
+        corps.append(bilan);
+        corps.append(Button({ label: "Revenir à la conférence", fullWidth: true,
+                              onClick: () => jouer() }));
+        return;
+      }
+
+      const question = questions[rang];
+      const compte = document.createElement("p");
+      compte.className = "video-screen__compte";
+      compte.textContent = `Question ${rang + 1} sur ${questions.length}`;
+      corps.append(compte);
+
+      corps.append(MCQ({
+        question: question.type === "trou"
+          ? `Quel mot manque ? ${question.invite}`
+          : `Quelle phrase suit ? « ${question.invite} »`,
+        options: question.choix.map((texte, i) => ({ id: String(i), label: texte })),
+        correctId: String(question.choix.indexOf(question.attendu)),
+        onAnswer: ({ correct }) => {
+          if (correct) justes += 1;
+          rang += 1;
+          setTimeout(suite, DUREE_VERDICT);
+        },
+      }));
+    };
+
+    suite();
   };
 
   /** Crédit : la licence de TED l'impose (§16). */

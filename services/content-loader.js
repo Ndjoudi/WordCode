@@ -682,22 +682,53 @@ export async function chargerHistoires({ manifeste, base = BASE,
 export async function chargerDictees({ palier = 1, base = BASE,
                                        recuperer = globalThis.fetch } = {}) {
   const erreurs = [];
+
+  // On CUMULE le palier courant et tous les précédents. Le générateur garantit
+  // qu'un fichier de palier N n'emploie que du vocabulaire de N ou d'avant
+  // (§6.7) : ce qui précède reste donc dictable. Sans ce cumul, atteindre un
+  // palier dont le fichier n'est pas encore livré vidait la section — et c'est
+  // exactement ce qui verrouillait « Écrire ».
+  const rangs = Array.from({ length: Math.max(1, Number(palier) || 1) },
+                           (_, i) => i + 1);
+  const lots = await Promise.all(
+    rangs.map((rang) => lireDicteesDUnPalier(rang, base, recuperer, erreurs)));
+
+  const phrases = [];
+  const vus = new Set();
+  for (const lot of lots) {
+    for (const phrase of lot) {
+      if (vus.has(phrase.id)) continue;
+      vus.add(phrase.id);
+      phrases.push(phrase);
+    }
+  }
+
+  // « Absente » ne veut plus dire « fichier manquant » mais « rien à dicter » :
+  // c'est la seule chose que l'écran d'accueil a besoin de savoir.
+  return { phrases, erreurs, absente: phrases.length === 0 };
+}
+
+/**
+ * Les phrases d'UN palier. Rend `[]` si le fichier n'est pas livré — la
+ * filière est optionnelle et arrive palier par palier, ce n'est pas une
+ * anomalie à signaler.
+ */
+async function lireDicteesDUnPalier(palier, base, recuperer, erreurs) {
   const fichier = `dictees/dictee-${String(palier).padStart(2, "0")}.json`;
 
   const lu = await lireJSON(`${base}${fichier}`, recuperer);
   if (!lu.ok) {
-    if (lu.absent) return { phrases: [], erreurs, absente: true };
-    signaler(erreurs, fichier, lu.erreur);
-    return { phrases: [], erreurs, absente: false };
+    if (!lu.absent) signaler(erreurs, fichier, lu.erreur);
+    return [];
   }
 
   const liste = lu.donnees?.phrases;
   if (!Array.isArray(liste)) {
     signaler(erreurs, fichier, "« phrases » absent ou n'est pas un tableau.");
-    return { phrases: [], erreurs, absente: false };
+    return [];
   }
 
-  const phrases = liste.filter((phrase) => {
+  return liste.filter((phrase) => {
     const id = phrase?.id ?? "phrase sans id";
     for (const champ of ["id", "en", "fr", "audio"]) {
       if (phrase?.[champ] === undefined) {
@@ -713,8 +744,6 @@ export async function chargerDictees({ palier = 1, base = BASE,
     }
     return true;
   });
-
-  return { phrases, erreurs, absente: false, meta: lu.donnees };
 }
 
 /* -------------------------------------------------------------------------- */

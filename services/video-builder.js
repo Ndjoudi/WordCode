@@ -81,10 +81,19 @@ export function phrasesFaites(state, slug) {
  * @param {object} state
  * @returns {number}
  */
-export function phraseCourante(video, state) {
+export function phraseCourante(video, state, ignorer = []) {
   const faites = new Set(phrasesFaites(state, video?.slug));
-  const suivante = (video?.phrases ?? []).find((p) => !faites.has(p.i));
-  return suivante ? suivante.i : 0;
+  const mises = new Set(ignorer);
+  const phrases = video?.phrases ?? [];
+
+  // D'abord ce qui reste vraiment à faire.
+  const suivante = phrases.find((p) => !faites.has(p.i) && !mises.has(p.i));
+  if (suivante) return suivante.i;
+
+  // Puis, si tout le reste a été passé dans la séance, on les redonne plutôt
+  // que de bloquer sur un écran vide.
+  const passee = phrases.find((p) => !faites.has(p.i));
+  return passee ? passee.i : 0;
 }
 
 /**
@@ -139,15 +148,16 @@ export function jetonsMelanges(texte, melanger = melangerParDefaut) {
  * @param {object} options.state
  * @param {string} options.mode      "ordre" ou "ecriture"
  * @param {Function} options.melanger
+ * @param {number[]} options.ignorer   phrases passées pendant la séance
  * @returns {{verrouille:boolean, raison:?string, exercice:?object}}
  */
 export function composerPhrase({ video, state, mode = "ordre",
-                                 melanger = melangerParDefaut } = {}) {
+                                 melanger = melangerParDefaut, ignorer = [] } = {}) {
   if (!video?.phrases?.length) {
     return { verrouille: true, raison: "Aucune conférence chargée.", exercice: null };
   }
 
-  const rang = phraseCourante(video, state);
+  const rang = phraseCourante(video, state, ignorer);
   const phrase = video.phrases[rang];
 
   return {
@@ -198,6 +208,133 @@ export function appliquerPhrase({ state, slug, rang, correct,
       derniere_session: today,
     },
   };
+}
+
+/* -------------------------------------------------------------------------- */
+/* Quizz de fin de conférence (§10)                                            */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Part de la conférence à avoir vue pour que le quizz s'ouvre.
+ *
+ * Pas 100 % : le générique de fin et les applaudissements ne sont pas du
+ * contenu, et exiger la dernière milliseconde bloquerait pour rien.
+ */
+export const SEUIL_VU = 0.97;
+
+/** Nombre de questions d'un quizz, et minimum de phrases pour en composer un. */
+export const QUESTIONS_QUIZ = 8;
+export const PHRASES_MIN_QUIZ = 12;
+
+/** Mots trop courts ou trop communs : les masquer n'apprend rien. */
+const MOTS_OUTILS = new Set([
+  "the", "and", "that", "this", "with", "have", "has", "had", "for", "from",
+  "was", "were", "you", "your", "they", "them", "their", "not", "but", "are",
+  "our", "out", "who", "what", "when", "how", "all", "can", "will", "would",
+  "about", "there", "here", "just", "some", "more", "than", "then", "into",
+]);
+
+const motsUtiles = (texte) =>
+  String(texte).split(/\s+/)
+    .map((m) => m.replace(/[^A-Za-z'-]/g, ""))
+    .filter((m) => m.length >= 4 && !MOTS_OUTILS.has(m.toLowerCase()));
+
+/** La conférence a-t-elle été regardée en entier ? */
+export function estVue(state, slug) {
+  return Boolean((state?.progression?.videos_vues ?? {})[slug]);
+}
+
+/**
+ * Enregistre qu'une conférence a été vue jusqu'au bout.
+ *
+ * @param {object} options
+ * @param {object} options.state
+ * @param {string} options.slug
+ * @param {number} options.position  position atteinte, en secondes
+ * @param {number} options.duree
+ * @param {string} options.today
+ * @returns {object} nouvel état — inchangé si le seuil n'est pas atteint
+ */
+export function marquerVue({ state, slug, position, duree, today = aujourdhui() } = {}) {
+  if (!slug || !Number.isFinite(position) || !Number.isFinite(duree) || duree <= 0) return state;
+  if (position / duree < SEUIL_VU) return state;
+  if (estVue(state, slug)) return state;
+
+  return {
+    ...state,
+    progression: {
+      ...state.progression,
+      videos_vues: { ...(state?.progression?.videos_vues ?? {}), [slug]: today },
+    },
+  };
+}
+
+/**
+ * Compose le quizz d'une conférence, **sans réseau** : tout vient de la
+ * transcription déjà en mémoire.
+ *
+ * Deux formes, parce qu'elles testent deux choses différentes :
+ *
+ *   trou   — un mot de contenu est masqué dans une phrase entendue ; c'est du
+ *            vocabulaire en contexte.
+ *   suite  — quelle phrase suit celle-ci ; c'est le fil du discours.
+ *
+ * @param {object} options
+ * @param {object} options.video
+ * @param {object} options.state
+ * @param {Function} options.melanger  injectable pour les tests
+ * @returns {{verrouille:boolean, raison:?string, questions:object[]}}
+ */
+export function composerQuizVideo({ video, state, melanger = melangerParDefaut } = {}) {
+  const phrases = video?.phrases ?? [];
+  if (!estVue(state, video?.slug)) {
+    return { verrouille: true, questions: [],
+             raison: "Regarde la conférence en entier pour ouvrir le quizz." };
+  }
+  if (phrases.length < PHRASES_MIN_QUIZ) {
+    return { verrouille: true, questions: [],
+             raison: "Cette conférence est trop courte pour un quizz." };
+  }
+
+  // Réservoir de mots pris ailleurs dans la conférence : les mauvaises réponses
+  // doivent venir du même univers, sinon la bonne saute aux yeux.
+  const reservoir = [...new Set(phrases.flatMap((p) => motsUtiles(p.texte)))];
+
+  const candidates = phrases.filter((p) => motsUtiles(p.texte).length >= 2);
+  const choisies = melanger(candidates).slice(0, QUESTIONS_QUIZ);
+  const questions = [];
+
+  for (const [rang, phrase] of choisies.entries()) {
+    const suivante = phrases[phrase.i + 1];
+
+    // On alterne pour ne pas enchaîner huit fois le même exercice.
+    if (rang % 2 === 1 && suivante) {
+      const leurres = melanger(phrases.filter((p) => p.i !== phrase.i && p.i !== suivante.i))
+        .slice(0, 3).map((p) => p.texte);
+      if (leurres.length < 3) continue;
+      questions.push({
+        type: "suite",
+        invite: phrase.texte,
+        attendu: suivante.texte,
+        choix: melanger([suivante.texte, ...leurres]),
+      });
+      continue;
+    }
+
+    const mots = motsUtiles(phrase.texte);
+    const cible = melanger(mots)[0];
+    const leurres = melanger(reservoir.filter((m) => m.toLowerCase() !== cible.toLowerCase()))
+      .slice(0, 3);
+    if (leurres.length < 3) continue;
+    questions.push({
+      type: "trou",
+      invite: phrase.texte.replace(new RegExp(`\\b${cible}\\b`), "……"),
+      attendu: cible,
+      choix: melanger([cible, ...leurres]),
+    });
+  }
+
+  return { verrouille: false, raison: null, questions };
 }
 
 function melangerParDefaut(liste) {

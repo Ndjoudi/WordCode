@@ -8,7 +8,6 @@ import { avancement } from "../services/video-builder.js";
 import { composerDecouverte } from "../services/discovery-builder.js";
 import { partiesDisponibles } from "../services/game-builder.js";
 import { choisirHistoire } from "../services/story-builder.js";
-import { composerSessionVerbes } from "../services/session-builder.js";
 import { motsAApprendre, motsAQuizzer, prochaineEcheanceApprentissage,
          motsConnus, aujourdhui } from "../services/leitner.js";
 
@@ -51,7 +50,6 @@ export function Home({ state, contenu, aller }) {
     carteJeu(state, contenu, connus, "croises", 6, "Mots croisés", "/crossword", aller),
     carteHistoire(state, contenu, today, aller),
     carteEcrire(state, contenu, aller),
-    carteVerbes(state, contenu, today, aller),
     carteVideo(state, aller),
   );
   el.append(sections);
@@ -195,25 +193,6 @@ function carteEcrire(state, contenu, aller) {
  * deviner WENT sans jamais le relier à GO (§3.2). Elle n'apparaît que si son
  * contenu est livré — une carte morte ne dit rien à personne (§8).
  */
-function carteVerbes(state, contenu, today, aller) {
-  const verbes = contenu.verbes ?? [];
-  if (!verbes.length) return document.createComment("filière verbes non livrée");
-
-  const session = composerSessionVerbes({ state, verbes, today });
-  const aTravailler = session.dus.length + session.nouveaux.length;
-
-  return SectionCard({
-    numero: 9,
-    titre: "Verbes irréguliers",
-    compteur: aTravailler,
-    uniteCompteur: "à travailler",
-    icone: "book",
-    etat: session.vide ? "vide" : "ouvert",
-    message: `Groupe ${session.groupe?.code ?? "G1"} terminé pour aujourd'hui.`,
-    action: `Groupe ${session.groupe?.code ?? "G1"} — ${session.groupe?.titre ?? ""}`,
-    onOpen: () => aller("/verbs"),
-  });
-}
 
 /**
  * §10 — conférences TED, phrase par phrase.
@@ -229,7 +208,7 @@ function carteVideo(state, aller) {
   }, 0);
 
   return SectionCard({
-    numero: 10,
+    numero: 9,
     titre: "Vidéo",
     compteur: videos.length ? restantes : null,
     uniteCompteur: "phrases à faire",
