@@ -53,18 +53,20 @@ export function DiscoveryDeck({ words = [], onKnown, onUnknown, onComplete } = {
 
     const choix = document.createElement("div");
     choix.className = "deck__choices";
+    // Côte à côte, le refus à gauche : c'est la réponse la plus fréquente sur
+    // un mot nouveau, et le pouce l'atteint sans traverser l'écran.
     choix.append(
-      Button({
-        label: "Je connais",
-        variant: "secondary",
-        fullWidth: true,
-        onClick: () => { if (onKnown) onKnown(mot); suivant(); },
-      }),
       Button({
         label: "Je ne connais pas",
         variant: "primary",
         fullWidth: true,
         onClick: () => { if (onUnknown) onUnknown(mot); suivant(); },
+      }),
+      Button({
+        label: "Je connais",
+        variant: "secondary",
+        fullWidth: true,
+        onClick: () => { if (onKnown) onKnown(mot); suivant(); },
       }),
     );
     el.append(choix);
