@@ -7,6 +7,8 @@ import { Divider } from "../components/atoms/divider.js";
 import { exporter, importer, nomFichierSauvegarde,
          sauvegardeARappeler } from "../services/store.js";
 import { aujourdhui } from "../services/leitner.js";
+import { identifiant, definirIdentifiant, sauvegarderEnLigne,
+         restaurerDepuisLigne } from "../services/sync.js";
 
 /** Objectif quotidien : bornes raisonnables, pas de saisie libre. */
 const OBJECTIF_MIN = 1;
@@ -31,6 +33,62 @@ export function Settings({ state, contenu, aller, enregistrer }) {
   const dire = (message, variant) => messages.append(Toast({ message, variant, duration: 4000 }));
 
   /* --- Sauvegarde ------------------------------------------------------- */
+
+  /* --- Sauvegarde en ligne ---------------------------------------------- */
+
+  const titreLigne = document.createElement("h2");
+  titreLigne.className = "settings__title";
+  titreLigne.textContent = "Sauvegarde en ligne";
+  corps.append(titreLigne);
+
+  const noteLigne = document.createElement("p");
+  noteLigne.className = "settings__note";
+  noteLigne.textContent =
+    "La progression est recopiée sur le serveur à chaque changement. "
+    + "Recopie cet identifiant sur un autre appareil pour y retrouver la même "
+    + "progression — c'est lui, et lui seul, qui donne accès à la sauvegarde.";
+  corps.append(noteLigne);
+
+  const champId = document.createElement("input");
+  champId.type = "text";
+  champId.className = "settings__field";
+  champId.spellcheck = false;
+  champId.value = identifiant();
+  champId.setAttribute("aria-label", "Identifiant de synchronisation");
+  corps.append(champId);
+
+  /** L'identifiant affiché fait foi : on le retient avant d'agir. */
+  const idChoisi = () => definirIdentifiant(champId.value) ?? identifiant();
+
+  corps.append(Button({
+    label: "Sauvegarder en ligne",
+    fullWidth: true,
+    onClick: async () => {
+      const verdict = await sauvegarderEnLigne({ state, id: idChoisi() });
+      dire(verdict.ok ? "Progression sauvegardée en ligne." : verdict.erreur,
+           verdict.ok ? "success" : "error");
+    },
+  }));
+
+  corps.append(Button({
+    label: "Restaurer depuis le serveur",
+    variant: "secondary",
+    fullWidth: true,
+    onClick: async () => {
+      const verdict = await restaurerDepuisLigne({ id: idChoisi() });
+      if (!verdict.ok) { dire(verdict.erreur, "error"); return; }
+      const relu = importer(verdict.donnees);
+      if (!relu.ok) { dire(relu.erreur, "error"); return; }
+      // Silencieux : un enregistrement ordinaire re-rend l'écran, ce qui
+      // emporterait la confirmation qu'on vient d'afficher.
+      enregistrer(relu.state, { silencieux: true });
+      dire("Progression restaurée.", "success");
+    },
+  }));
+
+  corps.append(Divider({ spacing: 5 }));
+
+  /* --- Sauvegarde dans un fichier --------------------------------------- */
 
   const titreSauvegarde = document.createElement("h2");
   titreSauvegarde.className = "settings__title";

@@ -169,7 +169,11 @@ function carteJeu(state, contenu, connus, jeu, numero, titre, route, aller) {
 }
 
 function carteEcrire(state, contenu, aller) {
-  const phrases = (contenu.dictees ?? []).length;
+  // Deux sources derrière la carte : la dictée vient désormais des conférences
+  // (§10), la traduction garde le corpus livré. L'une ou l'autre suffit.
+  const dePhrasesVideo = chargerVideos()
+    .reduce((n, v) => n + (v.phrases?.length ?? 0), 0);
+  const phrases = (contenu.dictees ?? []).length + dePhrasesVideo;
   const faites = new Set(state.progression?.dictees_faites ?? []);
   const restantes = (contenu.dictees ?? []).filter((p) => !faites.has(p.id)).length;
 

@@ -1,3 +1,13 @@
+/* Identifiant de synchronisation : long, à lire et à recopier. */
+.settings__field {
+  width: 100%;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  color: var(--c-text);
+  font-size: var(--fs-sm);
+  box-shadow: var(--sh-sm);
+}
 /* ==========================================================================
    components.css — styles de TOUS les composants de l'inventaire README §10.
    Une section par composant, dans l'ordre de l'inventaire.
@@ -635,6 +645,10 @@
 .word-list-item__fr { color: var(--c-text-muted); font-size: var(--fs-sm); }
 
 .word-list-item__actions { display: flex; gap: var(--sp-1); }
+/* Les deux réponses de la découverte tiennent sur une ligne : elles sont
+   le même geste, pas deux actions de poids différent. */
+.deck__choices { display: flex; gap: var(--sp-2); }
+.deck__choices > * { flex: 1 1 0; min-width: 0; }
 
 
 /* ==========================================================================

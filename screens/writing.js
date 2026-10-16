@@ -6,10 +6,12 @@ import { Divider } from "../components/atoms/divider.js";
 import { InputAnswer } from "../components/molecules/input-answer.js";
 import { SectionCard } from "../components/molecules/section-card.js";
 import { CompositionForm } from "../components/organisms/composition-form.js";
-import { composerEcriture, verifierEcriture, appliquerEcriture,
+import { phrasesDepuisVideos, composerEcriture, verifierEcriture, appliquerEcriture,
          composerRedaction, verifierRedaction } from "../services/writing-builder.js";
 import { corrigerRedaction } from "../services/api.js";
 import { aujourdhui } from "../services/leitner.js";
+import { VideoPlayer } from "../components/organisms/video-player.js";
+import { chargerVideos } from "../services/store.js";
 
 /** Délai d'affichage du verdict avant l'exercice suivant. */
 const DUREE_VERDICT = 1600;
@@ -29,17 +31,38 @@ export function Writing({ state, contenu, aller, enregistrer }) {
   el.className = "ecran writing";
 
   const today = aujourdhui();
-  const phrases = contenu.dictees ?? [];
+  // Deux corpus distincts. La traduction guidée a besoin du français, que les
+  // conférences n'ont pas ; la dictée a besoin d'un son, que Tatoeba n'a jamais
+  // livré (un seul fichier dans content/audio). Chacune prend donc sa source.
+  const phrasesTraduction = contenu.dictees ?? [];
+  const phrasesDictee = phrasesDepuisVideos(chargerVideos());
   let mode = null;
 
-  /** Un seul élément audio dans le DOM : on ne superpose jamais deux voix. */
-  const lecteur = new Audio();
-  lecteur.preload = "auto";
+  /** Le lecteur reste le MÊME élément d'une phrase à l'autre : le remonter
+   *  rechargerait le flux de la conférence. On ne le reconstruit qu'en
+   *  changeant de conférence. */
+  const zoneLecteur = document.createElement("div");
+  zoneLecteur.className = "writing__lecteur";
+  let slugCourant = null;
+  let commandes = null;
+
+  const assurerLecteur = (phrase) => {
+    if (slugCourant === phrase.slug && commandes) return;
+    slugCourant = phrase.slug;
+    commandes = null;
+    zoneLecteur.replaceChildren(VideoPlayer({
+      source: phrase.source,
+      hls: phrase.hls,
+      titre: phrase.titre,
+      onPret: (c) => { commandes = c; },
+      onErreur: (m) => corps.append(Toast({ message: m, variant: "error", duration: 4000 })),
+    }));
+  };
 
   const corps = document.createElement("div");
   corps.className = "session__body";
 
-  const quitter = () => { lecteur.pause(); aller("/"); };
+  const quitter = () => { commandes?.detruire?.(); aller("/"); };
 
   /* ------------------------------------------------------------- Choix du mode */
 
@@ -54,16 +77,16 @@ export function Writing({ state, contenu, aller, enregistrer }) {
     cartes.append(
       SectionCard({
         numero: 1, titre: "Dictée", icone: "audio",
-        compteur: phrases.length, uniteCompteur: "phrases",
-        etat: phrases.length ? "ouvert" : "verrouille",
+        compteur: phrasesDictee.length, uniteCompteur: "phrases",
+        etat: phrasesDictee.length ? "ouvert" : "verrouille",
         message: "Aucune phrase enregistrée n'est encore livrée pour ton palier.",
         action: "Écouter et écrire",
         onOpen: () => { mode = "dictee"; exercice(); },
       }),
       SectionCard({
         numero: 2, titre: "Traduction", icone: "pencil",
-        compteur: phrases.length, uniteCompteur: "phrases",
-        etat: phrases.length ? "ouvert" : "verrouille",
+        compteur: phrasesTraduction.length, uniteCompteur: "phrases",
+        etat: phrasesTraduction.length ? "ouvert" : "verrouille",
         message: "Aucune phrase n'est encore livrée pour ton palier.",
         action: "Traduire en anglais",
         onOpen: () => { mode = "traduction"; exercice(); },
@@ -82,8 +105,11 @@ export function Writing({ state, contenu, aller, enregistrer }) {
   /* ------------------------------------------------- Dictée et traduction */
 
   const exercice = () => {
-    lecteur.pause();
-    const tirage = composerEcriture({ state, phrases, mode });
+    commandes?.arreter?.();
+    const tirage = composerEcriture({
+      state, mode,
+      phrases: mode === "dictee" ? phrasesDictee : phrasesTraduction,
+    });
 
     el.replaceChildren();
     el.append(SessionHeader({
@@ -96,16 +122,9 @@ export function Writing({ state, contenu, aller, enregistrer }) {
     if (tirage.verrouille) { corps.append(vide(tirage.raison, choisirMode)); return; }
 
     const { exercice: ex } = tirage;
-    const jouer = () => {
-      lecteur.src = `content/${ex.phrase.audio}`;
-      lecteur.currentTime = 0;
-      lecteur.play().catch(() => {
-        corps.append(Toast({
-          message: "Impossible de lire l'enregistrement.",
-          variant: "error", duration: 4000,
-        }));
-      });
-    };
+    // On rejoue exactement le segment de la conférence, bornes comprises.
+    const jouer = () => commandes?.jouer(ex.phrase.debut, ex.phrase.fin);
+    if (mode === "dictee") { assurerLecteur(ex.phrase); corps.append(zoneLecteur); }
 
     corps.append(InputAnswer({
       prompt: ex.invite,
@@ -268,9 +287,13 @@ export function Writing({ state, contenu, aller, enregistrer }) {
   const credit = (phrase = null) => {
     const zone = document.createElement("p");
     zone.className = "writing__credit";
-    zone.textContent = phrase?.lecteur
-      ? `Enregistrement : ${phrase.lecteur} — Tatoeba, ${phrase.licence ?? "CC BY-NC-ND 3.0"}.`
-      : "Enregistrements : Tatoeba (tatoeba.org), CC BY-NC-ND 3.0. Usage non commercial.";
+    // Deux sources, deux licences, deux crédits : la dictée vient d'une
+    // conférence TED, la traduction du corpus Tatoeba. Chacune l'impose.
+    zone.textContent = phrase?.titre
+      ? `${phrase.titre} — TED, CC BY-NC-ND 4.0. Usage personnel, non commercial.`
+      : phrase?.lecteur
+        ? `Enregistrement : ${phrase.lecteur} — Tatoeba, ${phrase.licence ?? "CC BY-NC-ND 3.0"}.`
+        : "Phrases : Tatoeba (tatoeba.org), CC BY-NC-ND 3.0. Usage non commercial.";
     return zone;
   };
 

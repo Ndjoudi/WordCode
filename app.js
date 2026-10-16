@@ -25,6 +25,7 @@ import { Progress } from "./screens/progress.js";
 import { Settings } from "./screens/settings.js";
 import { ManualAdd } from "./screens/manual-add.js";
 import { Phrasal } from "./screens/phrasal.js";
+import { identifiant, sauvegarderEnLigne } from "./services/sync.js";
 
 const racine = document.getElementById("app");
 
@@ -46,9 +47,37 @@ function attendre() {
  * @param {object} suivant
  * @param {{silencieux?:boolean}} options  ne pas re-rendre
  */
+/**
+ * Recopie en ligne, différée.
+ *
+ * Une séance enchaîne les enregistrements — un par réponse. Les regrouper
+ * évite une rafale de requêtes pour un seul résultat utile. L'appel est
+ * silencieux : une panne de réseau ne doit jamais interrompre une révision,
+ * la sauvegarde locale reste la source de vérité immédiate.
+ */
+const DELAI_SYNCHRO_MS = 4000;
+let minuteurSynchro = null;
+
+function planifierSynchro() {
+  // JAMAIS écraser la sauvegarde en ligne par un état vide. Sur un appareil
+  // neuf — ou après une purge du navigateur — l'app démarre sans rien : une
+  // recopie automatique détruirait la progression distante avant même qu'on
+  // ait pu la restaurer. Tant qu'il n'y a rien à sauvegarder, on se tait.
+  const rienASauver = !Object.keys(state?.words ?? {}).length
+                   && !(state?.perso ?? []).length;
+  if (rienASauver) return;
+
+  clearTimeout(minuteurSynchro);
+  minuteurSynchro = setTimeout(() => {
+    sauvegarderEnLigne({ state, id: identifiant() });
+  }, DELAI_SYNCHRO_MS);
+}
+
 function enregistrer(suivant, { silencieux = false } = {}) {
   const palierAvant = state?.progression?.palier_actuel;
   state = suivant;
+
+  planifierSynchro();
 
   if (!sauvegarder(state)) {
     racine.append(Toast({
@@ -126,6 +155,10 @@ const contexte = () => ({
 
 async function demarrer() {
   attendre();
+
+  // Safari purge le stockage d'un site peu visité. Une app ajoutée à l'écran
+  // d'accueil peut demander à en être exemptée ; un refus n'empêche rien.
+  navigator.storage?.persist?.().catch(() => {});
 
   state = demarrerJournee(charger());
   await rechargerContenu();

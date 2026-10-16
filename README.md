@@ -831,6 +831,17 @@ signalant le taux de couverture réel.
 
 ### 6.7 `phrase de dictée` — corpus externe
 
+> **La dictée ne vient plus de ce corpus.** Elle se fait désormais sur les
+> **conférences** (§10) : une phrase, son segment, son horodatage. L'audio
+> humain de Tatoeba imposait de télécharger un fichier par phrase, et aucun ne
+> l'a jamais été — `content/audio` n'en contenait qu'un seul, si bien que la
+> dictée était muette. Les conférences apportent le son gratuitement, déjà
+> découpé.
+>
+> Ce corpus reste **la source de la traduction guidée**, qui a besoin du
+> français : une conférence n'est pas traduite. Les champs `audio`, `lecteur`
+> et `licence` ne sont donc plus lus.
+
 ```json
 {
   "id": "d_01038",
@@ -871,6 +882,40 @@ la filière est livrée progressivement.
 ### 6.6 `state` — données mutables
 
 localStorage. Clés courtes : sur 1000 mots ça divise le poids par trois.
+
+**localStorage ne suffit pas.** Sur iPhone, Safari efface le stockage d'un site
+qui n'a pas été ouvert depuis **sept jours** : toute la progression partirait
+avec lui. Trois protections, dans cet ordre :
+
+1. **L'app est installable** (`manifest.webmanifest`). Ajoutée à l'écran
+   d'accueil, elle sort du périmètre de cette purge. C'est la mesure la plus
+   efficace, et elle ne coûte rien.
+2. **`navigator.storage.persist()`** est demandé au démarrage. Un refus
+   n'empêche rien.
+3. **Recopie en ligne** (`services/sync.js`), décrite ci-dessous.
+
+Le rappel de sauvegarde manuelle est réglé sur `RAPPEL_SAUVEGARDE_JOURS = 5`,
+**sous** le seuil des sept jours : à 30 jours, il arrivait trois semaines après
+la perte.
+
+#### Recopie en ligne
+
+L'état complet est écrit dans Supabase sous un **identifiant long et
+aléatoire**, à chaque changement, avec un délai de 4 s pour regrouper la rafale
+d'enregistrements d'une séance.
+
+Cet identifiant n'est **pas un secret** : il est seulement introuvable par
+hasard. C'est assumé — une liste de mots appris n'a rien de confidentiel, le
+risque à écarter était qu'un tiers puisse **écraser** la progression. La table
+n'est donc accessible par aucune requête directe (RLS sans policy, vérifié :
+une lecture renvoie `[]`) ; deux fonctions `security definer` sont les seules
+portes, et elles exigent l'identifiant.
+
+Recopier cet identifiant sur un second appareil y restaure la même progression.
+
+**Un état vide n'écrase jamais la sauvegarde.** Sur un appareil neuf, ou après
+une purge, l'app démarre sans rien : sans ce garde-fou, la recopie automatique
+détruirait la sauvegarde distante avant qu'on ait pu la restaurer.
 
 ```json
 {

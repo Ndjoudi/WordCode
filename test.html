@@ -50,6 +50,7 @@
     import * as ECR from "./services/writing-builder.js";
     import * as VOX from "./services/speech.js";
     import * as VID from "./services/video-builder.js";
+    import * as SYNC from "./services/sync.js";
 
     const racine = document.getElementById("t");
     let ok = 0, ko = 0;
@@ -321,7 +322,7 @@
     vrai("import : le message d'erreur cite le champ v",
          S.importer('{"words":{}}').erreur.includes("v"));
 
-    section("store.js — rappel de sauvegarde (§6, 30 jours)");
+    section("store.js — rappel de sauvegarde (§6)");
 
     faux("aucun rappel sur un état vierge",
          S.sauvegardeARappeler(S.etatInitial(), "2026-09-02"));
@@ -331,10 +332,21 @@
     const recent = S.exporter(plein, "2026-09-01");
     faux("pas de rappel le lendemain d'une sauvegarde",
          S.sauvegardeARappeler(recent, "2026-09-02"));
-    faux("pas de rappel à 29 jours",
-         S.sauvegardeARappeler(recent, "2026-09-29"));
-    vrai("rappel à 30 jours",
-         S.sauvegardeARappeler(recent, "2026-10-01"));
+    // Le seuil doit rester SOUS les sept jours au bout desquels Safari purge le
+    // stockage d'un site peu visité : un rappel plus tardif arriverait après la
+    // perte. Les dates suivent la constante, pour que le test ne se périme pas
+    // si on la règle à nouveau.
+    vrai("le seuil protège de la purge de Safari", S.RAPPEL_SAUVEGARDE_JOURS <= 7);
+
+    const jourApres = (n) => {
+      const d = new Date("2026-09-01T00:00:00Z");
+      d.setUTCDate(d.getUTCDate() + n);
+      return d.toISOString().slice(0, 10);
+    };
+    faux("pas de rappel la veille du seuil",
+         S.sauvegardeARappeler(recent, jourApres(S.RAPPEL_SAUVEGARDE_JOURS - 1)));
+    vrai("rappel une fois le seuil dépassé",
+         S.sauvegardeARappeler(recent, jourApres(S.RAPPEL_SAUVEGARDE_JOURS + 1)));
 
     /* ============================================== content-loader.js ===== */
     section("content-loader.js — contenu réel du palier 1 (§7)");
@@ -1556,6 +1568,28 @@
     vrai("aucun fichier livré : la filière est absente", aucuneDictee.absente);
     eq("et aucune phrase n'est servie", aucuneDictee.phrases.length, 0);
 
+    section("writingBuilder — dictée depuis les conférences (§08, §10)");
+
+    const confsDictee = [
+      { slug: "talk_a", titre: "Talk A", video: "https://x/a.mp4", hls: null,
+        phrases: [{ i: 0, debut: 10, fin: 14, texte: "First sentence." },
+                  { i: 1, debut: 14, fin: 18, texte: "   " }] },
+      { slug: null, phrases: [{ i: 0, debut: 0, fin: 1, texte: "ignorée" }] },
+    ];
+    const depuisVideo = ECR.phrasesDepuisVideos(confsDictee);
+
+    eq("une phrase par segment exploitable", depuisVideo.length, 1);
+    eq("l'identifiant mêle conférence et rang", depuisVideo[0].id, "talk_a#0");
+    eq("le texte devient la réponse attendue", depuisVideo[0].en, "First sentence.");
+    // Sans français, ces phrases ne peuvent pas servir à la traduction guidée :
+    // c'est voulu, la traduction garde son corpus.
+    eq("aucune traduction n'est inventée", depuisVideo[0].fr, []);
+    eq("la borne de fin reprend la marge de l'écran vidéo",
+       Math.round((depuisVideo[0].fin - 14) * 100) / 100, VID.MARGE_FIN_S);
+    eq("une conférence sans slug est ignorée",
+       ECR.phrasesDepuisVideos([{ phrases: [{ i: 0, texte: "x" }] }]).length, 0);
+    eq("sans conférence, aucune phrase", ECR.phrasesDepuisVideos().length, 0);
+
     section("writingBuilder — dictée et traduction (§08)");
 
     const phrasesEcr = [
@@ -2021,6 +2055,59 @@
        typeof S.etatInitial().progression.videos_vues, "object");
     eq("une progression ancienne le reçoit",
        S.migrer({ v: 4, progression: {} }).progression.videos_vues, {});
+
+    /* ========================= sauvegarde en ligne ======================== */
+    section("sync — identifiant d'appareil (§6.6)");
+
+    const memSync = (() => { const m = new Map(); return {
+      getItem: (k) => m.get(k) ?? null, setItem: (k, v) => m.set(k, v),
+      removeItem: (k) => m.delete(k) }; })();
+
+    const idUn = SYNC.identifiant({ storage: memSync, alea: () => "abc123" });
+    eq("un identifiant est créé au premier appel", idUn, "abc123");
+    eq("puis réutilisé, jamais régénéré",
+       SYNC.identifiant({ storage: memSync, alea: () => "autre" }), "abc123");
+    eq("on peut le remplacer pour relier un autre appareil",
+       SYNC.definirIdentifiant("  xyz789  ", { storage: memSync }), "xyz789");
+    eq("et c'est le nouveau qui est relu",
+       SYNC.identifiant({ storage: memSync, alea: () => "non" }), "xyz789");
+    eq("un identifiant vide est refusé",
+       SYNC.definirIdentifiant("   ", { storage: memSync }), null);
+
+    section("sync — sauvegarde et restauration");
+
+    const serveurSync = (statut, charge) => async () => ({
+      ok: statut >= 200 && statut < 300, status: statut,
+      json: async () => charge,
+    });
+
+    eq("sans identifiant, aucun appel",
+       (await SYNC.sauvegarderEnLigne({ state: { v: 4 } })).cause, SYNC.CAUSES.SANS_ID);
+    eq("hors ligne, on n'essaie pas",
+       (await SYNC.sauvegarderEnLigne({ state: { v: 4 }, id: "x", enLigne: false })).cause,
+       SYNC.CAUSES.HORS_LIGNE);
+
+    vrai("une écriture acceptée est un succès",
+         (await SYNC.sauvegarderEnLigne({ state: { v: 4 }, id: "x", enLigne: true,
+                                          recuperer: serveurSync(204, null) })).ok);
+    eq("un refus du serveur est signalé",
+       (await SYNC.sauvegarderEnLigne({ state: { v: 4 }, id: "x", enLigne: true,
+                                        recuperer: serveurSync(401, {}) })).cause,
+       SYNC.CAUSES.REFUS);
+    eq("une panne réseau ne lève pas, elle se raconte",
+       (await SYNC.sauvegarderEnLigne({ state: { v: 4 }, id: "x", enLigne: true,
+          recuperer: async () => { throw new Error("coupé"); } })).cause, SYNC.CAUSES.RESEAU);
+
+    const reluSync = await SYNC.restaurerDepuisLigne({ id: "x", enLigne: true,
+                       recuperer: serveurSync(200, { v: 4, words: { w_1: { b: 2 } } }) });
+    vrai("une sauvegarde existante revient", reluSync.ok);
+    eq("avec son contenu", reluSync.donnees.words.w_1.b, 2);
+
+    // Une ligne jamais écrite rend `null` : ce n'est pas une panne, c'est un
+    // premier démarrage.
+    eq("un identifiant jamais utilisé n'est pas une erreur réseau",
+       (await SYNC.restaurerDepuisLigne({ id: "neuf", enLigne: true,
+          recuperer: serveurSync(200, null) })).cause, SYNC.CAUSES.VIDE);
 
     /* ==================================================== conclusion ====== */
     const sum = document.getElementById("sum");

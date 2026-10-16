@@ -18,6 +18,7 @@
 
 import { aujourdhui, appliquerResultat, motsConnus } from "./leitner.js";
 import { normaliser } from "./normalize.js";
+import { MARGE_FIN_S } from "./video-builder.js";
 
 /** Les trois modes, tels qu'ils apparaissent dans l'état et dans l'écran. */
 export const MODES = ["dictee", "traduction", "redaction"];
@@ -56,6 +57,42 @@ export function phrasesDisponibles(state, phrases = []) {
  * @param {Function} options.tirer   injectable pour les tests
  * @returns {{verrouille:boolean, raison:?string, exercice:?object, reinitialise:boolean}}
  */
+/**
+ * Transforme les conférences enregistrées en phrases de dictée (§08, §10).
+ *
+ * L'audio humain de Tatoeba imposait un fichier par phrase, et aucun n'a
+ * jamais été livré — `content/audio` n'en contient qu'un seul. La dictée était
+ * donc muette. Les conférences, elles, sont déjà là : découpées en phrases,
+ * horodatées, et avec leur son. On dicte sur leur segment.
+ *
+ * Pas de `fr` : une conférence n'est pas traduite. Ces phrases ne servent donc
+ * qu'à la dictée, jamais à la traduction guidée, qui garde son corpus.
+ *
+ * @param {object[]} videos  conférences enregistrées
+ * @returns {object[]} phrases au format attendu par `composerEcriture`
+ */
+export function phrasesDepuisVideos(videos = []) {
+  const phrases = [];
+  for (const video of videos) {
+    if (!video?.slug) continue;
+    for (const phrase of video.phrases ?? []) {
+      if (!phrase?.texte?.trim()) continue;
+      phrases.push({
+        id: `${video.slug}#${phrase.i}`,
+        en: phrase.texte,
+        fr: [],
+        titre: video.titre ?? video.slug,
+        source: video.video ?? null,
+        hls: video.hls ?? null,
+        debut: phrase.debut,
+        // Même marge qu'à l'écran vidéo, sinon la dernière syllabe est coupée.
+        fin: phrase.fin + MARGE_FIN_S,
+      });
+    }
+  }
+  return phrases;
+}
+
 export function composerEcriture({ state, phrases = [], mode = "dictee",
                                    tirer = tirerAuHasard } = {}) {
   if (!phrases.length) {

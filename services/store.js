@@ -26,7 +26,9 @@ export const CLE_VIDEOS = "wordcode_videos";
 export const VERSION = 4;
 
 /** Nombre de jours entre deux rappels de sauvegarde (README §6). */
-export const RAPPEL_SAUVEGARDE_JOURS = 30;
+// Safari efface le stockage d'un site non ouvert depuis 7 jours : un rappel à
+// 30 jours arrivait trois semaines après la perte.
+export const RAPPEL_SAUVEGARDE_JOURS = 5;
 
 /* -------------------------------------------------------------------------- */
 /* État                                                                        */
