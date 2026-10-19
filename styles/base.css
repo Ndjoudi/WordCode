@@ -103,12 +103,12 @@ input, textarea, select {
 }
 
 /* ==========================================================================
-   Double-tap : rappel sur les éléments qu'on tape en rafale.
+   Double-tap : neutralisé sur TOUTE l'application.
    `touch-action` posé sur <html> suffit en théorie ; en pratique certains
-   navigateurs mobiles le réévaluent au niveau de la cible du geste.
+   navigateurs mobiles le réévaluent au niveau de la cible du geste, et la
+   liste d'éléments qu'on maintenait ici en oubliait toujours un. `manipulation`
+   ne retire que le double-tap : le pincement, lui, continue de zoomer.
    ========================================================================== */
-button,
-.tile,
-.keyboard,
-.story__word,
-.clue-text__word { touch-action: manipulation; }
+*,
+*::before,
+*::after { touch-action: manipulation; }

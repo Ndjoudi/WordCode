@@ -401,6 +401,23 @@
 }
 
 .word-card__en   { font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: 1.1; }
+
+/* La phrase ouvre la carte : c'est elle qu'on lit en premier, et le mot se
+   repère dedans plutôt que d'être appris comme une étiquette isolée. */
+.word-card__phrase {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-medium);
+  line-height: 1.35;
+}
+
+.word-card__cible {
+  padding: 0 var(--sp-1);
+  border-radius: var(--r-sm);
+  background: var(--c-tile-filled);
+  color: var(--c-primary-dark);
+  font-weight: var(--fw-bold);
+}
+
 .word-card__phon { margin-top: var(--sp-1); color: var(--c-text-muted); font-size: var(--fs-sm); }
 .word-card__fr   { font-size: var(--fs-lg); font-weight: var(--fw-medium); }
 
@@ -649,6 +666,13 @@
    le même geste, pas deux actions de poids différent. */
 .deck__choices { display: flex; gap: var(--sp-2); }
 .deck__choices > * { flex: 1 1 0; min-width: 0; }
+/* Plus grands que les boutons ordinaires : ce sont les deux seuls gestes de
+   l'écran, et ils s'enchaînent des dizaines de fois par séance. */
+.deck__choices .btn {
+  min-height: var(--sp-7);
+  padding: var(--sp-3);
+  font-size: var(--fs-lg);
+}
 
 
 /* ==========================================================================
