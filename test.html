@@ -2156,6 +2156,15 @@
        B.motsDepuisImport(fichierMots, { perso: [{ id: "p_00001", en: "leverage" }] })
         .mots.length, 1);
 
+    // Sans prononciation importée, la carte de découverte n'en affiche aucune :
+    // c'est le seul champ que l'app ne sait pas deviner.
+    const avecPhon = B.motsDepuisImport([{ en: "errand", fr: "course",
+                                           phonetique: "/ˈer.ənd/" }]);
+    eq("la prononciation est reprise du fichier",
+       avecPhon.mots[0].phonetique, "/ˈer.ənd/");
+    eq("et vaut null quand le fichier n'en donne pas",
+       B.motsDepuisImport([{ en: "pledge", fr: "promesse" }]).mots[0].phonetique, null);
+
     eq("un fichier qui n'est pas du JSON est refusé",
        B.motsDepuisImport("{ceci n'est pas du json").ok, false);
     eq("un fichier sans liste est refusé", B.motsDepuisImport({ version: 1 }).ok, false);

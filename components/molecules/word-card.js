@@ -137,8 +137,26 @@ function trouverCible(phrase, word) {
     const trouve = phrase.match(new RegExp(`\\b${echapper(radical)}\\w*`, "i"));
     if (trouve) return { index: trouve.index, longueur: trouve[0].length };
   }
+
+  // Expression de plusieurs mots : la phrase l'emploie rarement au mot près —
+  // « run errands » devient « run SOME errands ». Plutôt que de renoncer, on
+  // colore son mot porteur, celui qui la rend reconnaissable.
+  if (base.includes(" ")) {
+    const porteur = base.split(/\s+/)
+      .filter((m) => m.length >= 4 && !OUTILS.has(m.toLowerCase()))
+      .sort((a, b) => b.length - a.length)[0];
+    if (porteur) {
+      const souche = porteur.slice(0, Math.max(4, porteur.length - 2));
+      const trouve = phrase.match(new RegExp(`\\b${echapper(souche)}\\w*`, "i"));
+      if (trouve) return { index: trouve.index, longueur: trouve[0].length };
+    }
+  }
   return null;
 }
+
+/** Mots qui ne portent pas le sens d'une expression. */
+const OUTILS = new Set(["to", "the", "a", "an", "some", "any", "of", "for", "with",
+                        "and", "or", "in", "on", "at", "up", "out", "off", "be"]);
 
 /** La phrase, le mot cible entouré d'un `<mark>` — jamais par innerHTML. */
 function phraseAvecCible(phrase, word) {

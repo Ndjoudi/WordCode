@@ -708,9 +708,14 @@ export function motDepuisSegment({ segment, id, origine_partie = null,
  * ```json
  * { "version": 1,
  *   "mots": [{ "en": "to make up for", "fr": "compenser", "type": "expr",
+ *              "phonetique": "/tə meɪk ʌp fɔː(r)/",
  *              "def_en": "To do something good to balance a mistake",
  *              "exemple_en": "I worked late to make up for the delay." }] }
  * ```
+ *
+ * `exemple_en` doit contenir l'entrée **telle quelle** : c'est elle que la
+ * carte de découverte colore dans la phrase. À défaut, le mot porteur de
+ * l'expression est coloré ; sans lui, la phrase s'affiche sans couleur.
  *
  * **`def_en` n'est pas décoratif.** Le quizz (§03) choisit le mot par sa
  * définition : `composerQuizz` ne retient que les fiches dont
@@ -754,7 +759,11 @@ export function motsDepuisImport(donnees, { perso = [], date = aujourdhui() } = 
 
     const definition = String(brut?.def_en ?? "").trim();
     const mot = motDepuisTraduction({
-      mot: { en, fr, type: brut?.type ?? null, def_en: definition || null },
+      mot: { en, fr, type: brut?.type ?? null, def_en: definition || null,
+             // Sans elle, la carte de découverte n'affiche aucune
+             // prononciation : c'est le seul champ que l'app ne sait pas
+             // deviner.
+             phonetique: String(brut?.phonetique ?? "").trim() || null },
       id: prochainIdPerso([...(perso ?? []), ...mots]),
       date,
     });
