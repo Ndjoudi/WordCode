@@ -60,10 +60,11 @@ export function phrasesDisponibles(state, phrases = []) {
 /**
  * Transforme les conférences enregistrées en phrases de dictée (§08, §10).
  *
- * L'audio humain de Tatoeba imposait un fichier par phrase, et aucun n'a
- * jamais été livré — `content/audio` n'en contient qu'un seul. La dictée était
- * donc muette. Les conférences, elles, sont déjà là : découpées en phrases,
- * horodatées, et avec leur son. On dicte sur leur segment.
+ * L'audio humain de Tatoeba marchait, mais impose **un fichier par phrase** :
+ * 50 enregistrements livrés pour le seul palier 1, et autant à rapatrier pour
+ * chacun des dix-neuf autres. Les conférences, elles, sont déjà là : 150
+ * phrases découpées et horodatées pour un lien collé. On dicte sur leur
+ * segment.
  *
  * Pas de `fr` : une conférence n'est pas traduite. Ces phrases ne servent donc
  * qu'à la dictée, jamais à la traduction guidée, qui garde son corpus.

@@ -105,19 +105,41 @@ dans les jeux.
 
 ### 02 — Découverte
 
-Un mot par écran : forme écrite, audio, phrase d'exemple traduite. Deux boutons,
-rien d'autre.
+**La phrase d'abord.** Le mot n'est pas montré seul puis illustré : la phrase
+occupe la première ligne et le mot y est **coloré**. Présenté isolément, un mot
+s'apprend comme une étiquette ; vu dans son emploi, il s'apprend avec.
+
+Le mot n'est pas répété sous la phrase : il y est déjà, en couleur.
+
+Dessous : la prononciation **à la demande** — le son ne part jamais tout seul,
+une voix qui se déclenche sans prévenir rend l'app inutilisable en public —,
+la traduction du mot, puis celle de la phrase. Deux boutons, rien d'autre.
 
 ```
-                    ┌─────────────────────┐
-                    │       reluctant      │
-                    │      /rɪˈlʌk.tənt/   │
-                    │                      │
-                    │  She was reluctant   │
-                    │     to speak.        │
-                    └─────────────────────┘
-        [ Je connais ]            [ Je ne connais pas ]
+                  ┌────────────────────────┐
+                  │  She was «reluctant»   │
+                  │       to speak.        │
+                  │                        │
+                  │  /rɪˈlʌk.tənt/     🔊  │
+                  │  réticent              │
+                  │  Elle hésitait à       │
+                  │  prendre la parole.    │
+                  └────────────────────────┘
+      [ Je ne connais pas ]        [ Je connais ]
 ```
+
+Le refus est **à gauche** : c'est la réponse la plus fréquente sur un mot
+nouveau, et le pouce l'atteint sans traverser l'écran. Les deux boutons sont
+plus grands que les boutons ordinaires — ce sont les seuls gestes de l'écran,
+et ils s'enchaînent des dizaines de fois par séance.
+
+**La coloration renonce plutôt que de se tromper.** Mesuré sur le catalogue :
+**996 mots sur 1000** sont repérés dans leur phrase, tels quels, à une forme
+régulière, ou par leur radical (`carry → carries`, `century → centuries`), et
+**aucun n'est coloré au mauvais endroit**. Les quatre restants sont des verbes
+forts — `get → got`, `become → became`, `win → won`, `steal → stole` — dont la
+phrase s'affiche sans couleur : mieux vaut pas de couleur qu'une couleur sur le
+mauvais mot.
 
 | Réponse | Effet |
 |---|---|
@@ -534,6 +556,41 @@ second tap sur `+` ajoute le mot à la file de découverte (§02). Voir §15.4.
 
 ---
 
+### 3.5 Mots rapportés d'une conversation
+
+La source la plus utile, parce que c'est la seule qui soit **prouvée** : ce
+qu'on a séché à dire à l'oral. Les 1000 mots et le TOEIC sont des listes
+génériques ; celle-ci est la trace d'un manque réel.
+
+Le parcours est délibérément bête : on parle, on récupère un fichier JSON, on
+le dépose dans §01 par **Importer une liste de mots**. Les mots entrent comme
+des ajouts manuels — `source: "conversation"` — et partent en file de
+découverte.
+
+**Le format d'entrée tient en cinq champs**, et c'est volontaire :
+
+```json
+{ "version": 1,
+  "mots": [{ "en": "to make up for",
+             "fr": "compenser",
+             "type": "expr",
+             "def_en": "To do something good to balance a mistake",
+             "exemple_en": "I worked late to make up for the delay." }] }
+```
+
+Une fiche interne en compte vingt-cinq (`famille`, `sens_index`, `rang_freq`,
+`eligible_grille`…). Les faire produire ailleurs serait une invitation à
+l'erreur : tout le reste est calculé à l'import.
+
+**`def_en` n'est pas décoratif.** Le quizz (§03) choisit le mot par sa
+définition et ne retient que les fiches dont `indice.segments` est rempli — il
+promeut les autres **sans les tester**. L'import range donc la définition là où
+le quizz la cherche, et compte à voix haute les mots qui n'en ont pas : « 3 sans
+définition : ils n'iront pas au quizz. »
+
+Les entrées sans `en` ou sans `fr` sont écartées, comme les doublons — y compris
+avec les mots déjà ajoutés.
+
 ## 4. Boucle d'apprentissage
 
 Ordre non négociable : **on découvre, on vérifie, on joue.** Un mot ne peut
@@ -832,11 +889,13 @@ signalant le taux de couverture réel.
 ### 6.7 `phrase de dictée` — corpus externe
 
 > **La dictée ne vient plus de ce corpus.** Elle se fait désormais sur les
-> **conférences** (§10) : une phrase, son segment, son horodatage. L'audio
-> humain de Tatoeba imposait de télécharger un fichier par phrase, et aucun ne
-> l'a jamais été — `content/audio` n'en contenait qu'un seul, si bien que la
-> dictée était muette. Les conférences apportent le son gratuitement, déjà
-> découpé.
+> **conférences** (§10) : une phrase, son segment, son horodatage.
+>
+> Le corpus Tatoeba fonctionnait — 50 enregistrements humains livrés, un par
+> phrase, 722 Ko. Mais il impose **un fichier par phrase** : couvrir les vingt
+> paliers demandait mille téléchargements, et la dictée restait bornée à ce
+> qu'on avait pris la peine de rapatrier. Une conférence apporte 150 phrases
+> déjà découpées et horodatées, pour un lien collé.
 >
 > Ce corpus reste **la source de la traduction guidée**, qui a besoin du
 > français : une conférence n'est pas traduite. Les champs `audio`, `lecteur`

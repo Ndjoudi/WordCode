@@ -2109,6 +2109,52 @@
        (await SYNC.restaurerDepuisLigne({ id: "neuf", enLigne: true,
           recuperer: serveurSync(200, null) })).cause, SYNC.CAUSES.VIDE);
 
+    /* ===================== import de mots rapportés ======================= */
+    section("sessionBuilder — import d'une liste de mots (§3.4)");
+
+    const fichierMots = {
+      version: 1,
+      mots: [
+        { en: "To Make Up For", fr: "compenser", type: "expr",
+          def_en: "To do something good to balance a mistake",
+          exemple_en: "I worked late to make up for the delay." },
+        { en: "leverage", fr: "tirer parti de" },          // sans définition
+        { en: "", fr: "vide" },                            // inexploitable
+        { en: "leverage", fr: "doublon" },                 // déjà vu
+      ],
+    };
+
+    const importe = B.motsDepuisImport(fichierMots, { date: "2026-10-16" });
+    vrai("le fichier est accepté", importe.ok);
+    eq("les entrées creuses et les doublons sont écartés", importe.mots.length, 2);
+    eq("la casse est normalisée", importe.mots[0].en, "to make up for");
+    eq("la source est reconnaissable", importe.mots[0].source, "conversation");
+    eq("l'exemple est conservé", importe.mots[0].exemple_en,
+       "I worked late to make up for the delay.");
+
+    // Le quizz lit `indice.segments` : sans ça, le mot serait promu sans test.
+    vrai("la définition est rangée là où le quizz la cherche",
+         (importe.mots[0].indice?.segments ?? []).length > 0);
+    eq("et son texte est conservé", importe.mots[0].indice.en,
+       "To do something good to balance a mistake");
+    eq("un mot sans définition est signalé", importe.sansDefinition, ["leverage"]);
+    eq("son indice reste vide", importe.mots[1].indice, null);
+
+    eq("les identifiants se suivent",
+       importe.mots.map((m) => m.id), ["p_00001", "p_00002"]);
+    eq("ils continuent après les mots déjà ajoutés",
+       B.motsDepuisImport(fichierMots, { perso: [{ id: "p_00007", en: "autre" }] })
+        .mots[0].id, "p_00008");
+    eq("un mot déjà présent dans les ajouts n'est pas repris",
+       B.motsDepuisImport(fichierMots, { perso: [{ id: "p_00001", en: "leverage" }] })
+        .mots.length, 1);
+
+    eq("un fichier qui n'est pas du JSON est refusé",
+       B.motsDepuisImport("{ceci n'est pas du json").ok, false);
+    eq("un fichier sans liste est refusé", B.motsDepuisImport({ version: 1 }).ok, false);
+    eq("une liste nue est acceptée aussi",
+       B.motsDepuisImport([{ en: "pledge", fr: "promesse" }]).mots.length, 1);
+
     /* ==================================================== conclusion ====== */
     const sum = document.getElementById("sum");
     const bilan = document.createElement("span");

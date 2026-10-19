@@ -7,7 +7,8 @@ import { traduire } from "../services/api.js";
 import { aujourdhui } from "../services/leitner.js";
 import { normaliser } from "../services/normalize.js";
 import { trouverExistant, palierPourRang, prochainIdPerso, motDepuisTraduction,
-         ajouterMotsPerso, ECART_PALIER_ALERTE } from "../services/session-builder.js";
+         ajouterMotsPerso, motsDepuisImport,
+         ECART_PALIER_ALERTE } from "../services/session-builder.js";
 
 /**
  * ManualAdd — saisie manuelle et traduction Gemini (README §11, §2.5).
@@ -123,6 +124,51 @@ export function ManualAdd({ state, contenu, aller, enregistrer }) {
         duration: 5000,
       }));
     },
+  }));
+
+  /* --- Import d'une liste de mots --------------------------------------- */
+
+  // Le sélecteur de fichier n'a pas d'équivalent dans l'inventaire §12 : il
+  // reste masqué, et c'est un `Button` qui le déclenche.
+  const selecteurMots = document.createElement("input");
+  selecteurMots.type = "file";
+  selecteurMots.accept = "application/json,.json";
+  selecteurMots.className = "settings__file";
+  selecteurMots.addEventListener("change", async () => {
+    const fichier = selecteurMots.files?.[0];
+    if (!fichier) return;
+
+    const verdict = motsDepuisImport(await fichier.text(),
+                                     { perso: state.perso ?? [], date: aujourdhui() });
+    selecteurMots.value = "";
+
+    if (!verdict.ok) {
+      messages.replaceChildren(Toast({ message: verdict.erreur, variant: "error",
+                                       duration: 6000 }));
+      return;
+    }
+
+    enregistrer(ajouterMotsPerso(state, verdict.mots), { silencieux: true });
+
+    // Un mot sans définition entrera en découverte mais sautera le quizz : il
+    // vaut mieux le dire que de le laisser filer.
+    const manquants = verdict.sansDefinition.length;
+    const pluriel = verdict.mots.length > 1 ? "s" : "";
+    messages.replaceChildren(Toast({
+      message: `${verdict.mots.length} mot${pluriel} importé${pluriel}.`
+        + (manquants ? ` ${manquants} sans définition : ils n'iront pas au quizz.` : ""),
+      variant: manquants ? "info" : "success",
+      duration: 6000,
+    }));
+  });
+  corps.append(selecteurMots);
+
+  corps.append(Button({
+    label: "Importer une liste de mots",
+    icon: "upload",
+    variant: "secondary",
+    fullWidth: true,
+    onClick: () => selecteurMots.click(),
   }));
 
   corps.append(messages);

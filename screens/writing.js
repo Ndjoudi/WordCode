@@ -32,8 +32,8 @@ export function Writing({ state, contenu, aller, enregistrer }) {
 
   const today = aujourdhui();
   // Deux corpus distincts. La traduction guidée a besoin du français, que les
-  // conférences n'ont pas ; la dictée a besoin d'un son, que Tatoeba n'a jamais
-  // livré (un seul fichier dans content/audio). Chacune prend donc sa source.
+  // conférences n'ont pas ; la dictée a besoin d'un son, que Tatoeba ne fournit
+  // qu'au prix d'un fichier par phrase. Chacune prend donc sa source.
   const phrasesTraduction = contenu.dictees ?? [];
   const phrasesDictee = phrasesDepuisVideos(chargerVideos());
   let mode = null;

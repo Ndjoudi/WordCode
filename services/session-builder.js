@@ -697,6 +697,93 @@ export function motDepuisSegment({ segment, id, origine_partie = null,
 }
 
 /**
+ * Lit un fichier de mots rapporté d'ailleurs — typiquement une conversation
+ * orale où l'on a relevé ce qu'on ne savait pas dire (README §3.4).
+ *
+ * Le format d'entrée est **volontairement minuscule** : cinq champs. Une fiche
+ * interne en compte vingt-cinq (`famille`, `sens_index`, `rang_freq`,
+ * `eligible_grille`…) ; les faire produire ailleurs, c'est inviter l'erreur.
+ * Tout le reste est calculé ici.
+ *
+ * ```json
+ * { "version": 1,
+ *   "mots": [{ "en": "to make up for", "fr": "compenser", "type": "expr",
+ *              "def_en": "To do something good to balance a mistake",
+ *              "exemple_en": "I worked late to make up for the delay." }] }
+ * ```
+ *
+ * **`def_en` n'est pas décoratif.** Le quizz (§03) choisit le mot par sa
+ * définition : `composerQuizz` ne retient que les fiches dont
+ * `indice.segments` est rempli, et promeut les autres SANS les tester. Un mot
+ * importé sans définition traverserait donc la porte sans la franchir. On
+ * range la définition où le quizz la cherche, et on signale ceux qui n'en ont
+ * pas plutôt que de les laisser filer en silence.
+ *
+ * @param {object|string} donnees
+ * @param {object} options
+ * @param {object[]} options.perso  mots déjà ajoutés, pour la suite des identifiants
+ * @param {string} options.date
+ * @returns {{ok:boolean, mots:object[], sansDefinition:string[], erreur:?string}}
+ */
+export function motsDepuisImport(donnees, { perso = [], date = aujourdhui() } = {}) {
+  let objet = donnees;
+  if (typeof donnees === "string") {
+    try {
+      objet = JSON.parse(donnees);
+    } catch {
+      return { ok: false, mots: [], sansDefinition: [],
+               erreur: "Fichier illisible : ce n'est pas du JSON." };
+    }
+  }
+
+  const liste = Array.isArray(objet) ? objet : objet?.mots;
+  if (!Array.isArray(liste) || !liste.length) {
+    return { ok: false, mots: [], sansDefinition: [],
+             erreur: "Aucun mot dans ce fichier : une liste « mots » est attendue." };
+  }
+
+  const mots = [];
+  const sansDefinition = [];
+  const vus = new Set((perso ?? []).map((m) => String(m.en ?? "").toLowerCase()));
+
+  for (const brut of liste) {
+    const en = String(brut?.en ?? "").trim().toLowerCase();
+    const fr = String(brut?.fr ?? "").trim();
+    if (!en || !fr || vus.has(en)) continue;   // doublons et entrées creuses
+    vus.add(en);
+
+    const definition = String(brut?.def_en ?? "").trim();
+    const mot = motDepuisTraduction({
+      mot: { en, fr, type: brut?.type ?? null, def_en: definition || null },
+      id: prochainIdPerso([...(perso ?? []), ...mots]),
+      date,
+    });
+
+    mots.push({
+      ...mot,
+      source: "conversation",
+      exemple_en: String(brut?.exemple_en ?? "").trim() || null,
+      // Là où le quizz va la chercher.
+      indice: definition ? { en: definition, segments: segmenterDefinition(definition) } : null,
+    });
+    if (!definition) sansDefinition.push(en);
+  }
+
+  if (!mots.length) {
+    return { ok: false, mots: [], sansDefinition: [],
+             erreur: "Aucun mot exploitable : il faut au moins « en » et « fr »." };
+  }
+  return { ok: true, mots, sansDefinition, erreur: null };
+}
+
+/** Un segment par mot. Les renvois vers le catalogue sont résolus ailleurs. */
+function segmenterDefinition(texte) {
+  return String(texte).trim().split(/\s+/)
+    .filter(Boolean)
+    .map((txt) => ({ txt, trad: null, ref: null }));
+}
+
+/**
  * Ajoute des mots perso à l'état et les place en file de découverte.
  * Ils seront découverts à la prochaine session, jamais dans celle en cours.
  *
