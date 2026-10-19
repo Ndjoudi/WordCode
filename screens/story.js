@@ -7,7 +7,7 @@ import { StoryReader } from "../components/organisms/story-reader.js";
 import { choisirHistoire, appliquerHistoire, requeteHistoire,
          histoireDepuisApi, idHistoireGeneree,
          COUVERTURE_MIN } from "../services/story-builder.js";
-import { genererHistoire } from "../services/api.js";
+import { genererHistoire, traduire } from "../services/api.js";
 import { ajouterHistoireGeneree } from "../services/store.js";
 import { motDepuisTraduction, prochainIdPerso,
          ajouterMotsPerso } from "../services/session-builder.js";
@@ -115,12 +115,27 @@ export function Story({ state, contenu, aller, enregistrer }) {
 
   /** Popover courant : un seul à la fois dans le DOM. */
   let popover = null;
-  const fermer = () => { popover?.remove(); popover = null; };
+  /** Le mot auquel il est accroché, pour pouvoir refermer au second tap. */
+  let ancrePopover = null;
+  const fermer = () => { popover?.remove(); popover = null; ancrePopover = null; };
 
-  const taper = (nu, ancre) => {
+  /** Pose un popover sous un mot et retient son ancre. */
+  const poser = (element, ancre) => {
+    popover = element;
+    ancrePopover = ancre;
+    ancre.insertAdjacentElement("afterend", element);
+  };
+
+  const taper = async (nu, ancre) => {
+    // Deuxième tap sur le même mot : on referme. Sans cette bascule, le
+    // popover était détruit puis recréé à l'identique — il restait donc
+    // ouvert, et le mot suivant partait à la ligne, ce qui se lit comme un
+    // espace disparu.
+    if (ancrePopover === ancre) { fermer(); return; }
     fermer();
+
     const mot = parEn.get(nu);
-    if (!mot) return;
+    if (!mot) { await traduireInconnu(nu, ancre); return; }
 
     // Consulter la traduction d'un mot du lexique le prive de sa montée (§5).
     if ((histoire.lexique ?? []).includes(mot.id)) aides.add(mot.id);
@@ -144,7 +159,56 @@ export function Story({ state, contenu, aller, enregistrer }) {
       },
       onClose: fermer,
     });
-    ancre.insertAdjacentElement("afterend", popover);
+    poser(popover, ancre);
+  };
+
+  /**
+   * Un mot absent du catalogue se fait traduire à la demande.
+   *
+   * Sans ça, tomber sur un mot inconnu dans une histoire ne produisait
+   * **rien** : il fallait sortir de l'application pour le chercher ailleurs.
+   * Or c'est exactement le mot qu'on veut apprendre.
+   */
+  const traduireInconnu = async (nu, ancre) => {
+    const attente = document.createElement("div");
+    attente.className = "translation-popover";
+    attente.append(Spinner({ size: "md" }));
+    poser(attente, ancre);
+
+    const reponse = await traduire(nu);
+    if (popover !== attente) return;   // l'utilisateur est passé à autre chose
+    attente.remove();
+    popover = null;
+    ancrePopover = null;
+
+    const trouve = reponse.ok ? (reponse.donnees?.mots?.[0] ?? null) : null;
+    const fr = trouve?.fr ?? (reponse.ok ? reponse.donnees?.phrase_fr : null);
+
+    if (!fr) {
+      el.append(Toast({ message: reponse.erreur ?? "Traduction indisponible.",
+                        variant: "error", duration: 4000 }));
+      return;
+    }
+
+    poser(TranslationPopover({
+      word: nu,
+      translation: fr,
+      alreadyKnown: false,
+      canAdd: true,
+      onAdd: () => {
+        const ajout = motDepuisTraduction({
+          mot: { en: nu, fr, type: trouve?.type ?? null,
+                 phonetique: trouve?.phonetique ?? null },
+          phrase_en: histoire.titre_en ?? null,
+          phrase_fr: histoire.titre_fr ?? null,
+          id: prochainIdPerso([...(state.perso ?? []), ...ajoutes]),
+          date: today,
+        });
+        if (ajout) ajoutes.push(ajout);
+        fermer();
+      },
+      onClose: fermer,
+    }), ancre);
   };
 
   const terminer = () => {

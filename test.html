@@ -1377,7 +1377,7 @@
     eq("la prochaine échéance est annoncée à l'utilisateur",
        L.prochaineEcheanceApprentissage(triInconnu, "2026-09-08"), "2026-09-10");
 
-    section("learnBuilder — QUIZ puis écriture (§03)");
+    section("learnBuilder — reconnaissance seule (§04)");
 
     const aTravailler = { ...triInconnu, words: { ...triInconnu.words,
       m2: { ...triInconnu.words.m2, r: "2026-09-10" } } };
@@ -1385,20 +1385,22 @@
                                               today: "2026-09-10" });
     eq("un exercice est composé par mot dû", lecon.exercices.length, 1);
     vrai("il porte un QUIZ", Boolean(lecon.exercices[0].quiz.options.length));
-    vrai("et un exercice d'écriture", Boolean(lecon.exercices[0].ecriture.expected));
+    // L'exercice écrit a été retiré de §04 : un mot, une question, et c'est la
+    // reconnaissance qui décide seule.
+    eq("et plus aucun exercice d'écriture", lecon.exercices[0].ecriture, undefined);
 
     const reussi = APP.appliquerApprentissage(aTravailler, "m2",
-      { quizCorrect: true, ecritureCorrecte: true }, "2026-09-10");
-    eq("les deux réussis → le mot monte d'une boîte", reussi.words.m2.b, 2);
+      { quizCorrect: true }, "2026-09-10");
+    eq("le QUIZ réussi fait monter le mot d'une boîte", reussi.words.m2.b, 2);
 
-    const rateEcriture = APP.appliquerApprentissage(aTravailler, "m2",
-      { quizCorrect: true, ecritureCorrecte: false }, "2026-09-10");
-    eq("l'écriture ratée renvoie en boîte 1", rateEcriture.words.m2.b, 1);
-    eq("et le mot est revu deux jours plus tard", rateEcriture.words.m2.r, "2026-09-12");
+    const rateQuiz = APP.appliquerApprentissage(aTravailler, "m2",
+      { quizCorrect: false }, "2026-09-10");
+    eq("le QUIZ raté renvoie en boîte 1", rateQuiz.words.m2.b, 1);
+    eq("et le mot est revu deux jours plus tard", rateQuiz.words.m2.r, "2026-09-12");
 
     const enBoite2 = { words: { m3: { b: 2, r: "2026-09-10", s: 1, e: 0, d: null, st: "actif" } } };
     const promu = APP.appliquerApprentissage(enBoite2, "m3",
-      { quizCorrect: true, ecritureCorrecte: true }, "2026-09-10");
+      { quizCorrect: true }, "2026-09-10");
     eq("atteindre la boîte 3 renvoie AU QUIZZ, pas aux jeux", promu.words.m3.st, "quizz");
     eq("il est à vérifier le jour même", promu.words.m3.r, "2026-09-10");
     eq("il n'est donc pas encore dans le vivier", L.motsConnus(promu), []);
@@ -1662,8 +1664,13 @@
 
     section("writingBuilder — rédaction libre (§08)");
 
+    // La rédaction est LIBRE : elle ne se verrouille jamais, même sans
+    // vocabulaire validé. Les mots imposés sont un supplément, pas une
+    // condition d'entrée — en dessous du seuil, on écrit sans contrainte.
     const maigre = ECR.composerRedaction({ state: connuEcr, catalogue: catEcr });
-    eq("moins de 30 mots validés → rédaction verrouillée", maigre.verrouille, true);
+    faux("peu de mots validés : la rédaction reste ouverte", maigre.verrouille);
+    eq("mais aucun mot n'est imposé", maigre.mots, []);
+    vrai("et la consigne est quand même donnée", Boolean(maigre.consigne));
 
     const noms = ["alpha", "bravo", "charly", "delta", "echo", "foxtrot", "golf",
                   "hotel", "india", "juliet", "kilo", "lima", "mike", "november",

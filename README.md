@@ -197,15 +197,19 @@ délai est volontaire : revoir un mot deux jours après l'avoir rencontré est c
 qui le fait entrer en mémoire, le revoir immédiatement ne fait que le
 reconnaître.
 
-Deux exercices, dans cet ordre :
+Un seul exercice :
 
 | Exercice | Forme | Ce qu'il teste |
 |---|---|---|
 | **QUIZ** | QCM 4 options, distracteurs proches graphiquement (*MENU / MEAL / MEET / MELT*) | reconnaissance |
-| **Écriture** | FR → EN à taper, sans aide | production |
 
-Réussite des deux → le mot monte d'une boîte Leitner (§5). Échec de l'un des
-deux → retour boîte 1, revu dans 2 jours.
+Réussite → le mot monte d'une boîte Leitner (§5). Échec → retour boîte 1, revu
+dans 2 jours.
+
+**L'exercice écrit FR → EN a été retiré.** Il doublait la longueur de la séance
+pour un seul mot, et la production se travaille déjà ailleurs : dictée,
+traduction guidée et rédaction occupent toute la section §08. Ici, c'est la
+reconnaissance qui décide.
 
 Un mot qui atteint la boîte 3 **retourne au quizz**, il ne file pas dans les
 jeux. Le quizz reste la seule porte : ce qu'on a appris ici doit encore être

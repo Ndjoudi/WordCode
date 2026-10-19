@@ -27,6 +27,8 @@ export const MODES = ["dictee", "traduction", "redaction"];
 export const MOTS_IMPOSES = 5;
 
 /** Il faut de quoi écrire : en dessous, la rédaction n'a pas de matière. */
+// En dessous, la rédaction reste ouverte mais sans mots imposés : tirer cinq
+// mots dans un vivier de dix donnerait toujours les mêmes.
 export const MOTS_MIN_REDACTION = 30;
 
 /**
@@ -245,14 +247,12 @@ export function composerRedaction({ state, catalogue, combien = MOTS_IMPOSES,
     .map((id) => catalogue?.get(id))
     .filter(Boolean);
 
+  // La rédaction est LIBRE : elle ne se verrouille jamais. Les mots imposés
+  // sont un supplément — « si je veux, l'app me donne des mots à placer » —
+  // et non une condition d'entrée. Tant que le vocabulaire validé ne suffit
+  // pas à en tirer un lot honnête, on écrit sans contrainte.
   if (connus.length < MOTS_MIN_REDACTION) {
-    return {
-      verrouille: true,
-      raison: `Il faut au moins ${MOTS_MIN_REDACTION} mots validés au quizz pour rédiger. `
-            + `Tu en as ${connus.length}.`,
-      consigne: null,
-      mots: [],
-    };
+    return { verrouille: false, raison: null, consigne: tirer(CONSIGNES), mots: [] };
   }
 
   // Des noms, des verbes et des adjectifs : imposer des mots-outils ne

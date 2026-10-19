@@ -20,7 +20,7 @@
 
 import { aujourdhui, appliquerResultat, motsAApprendre,
          BOITE_CONNU } from "./leitner.js";
-import { construireQCM, construireRappel } from "./session-builder.js";
+import { construireQCM } from "./session-builder.js";
 
 /** Mots travaillés en une session d'apprentissage. */
 export const MOTS_PAR_APPRENTISSAGE = 5;
@@ -65,7 +65,6 @@ export function composerApprentissage({ state, catalogue,
     exercices: retenus.map((mot) => ({
       mot,
       quiz: construireQCM(mot, candidats),
-      ecriture: construireRappel(mot),
     })),
     restants: Math.max(dus.length - limite, 0),
     vide: dus.length === 0,
@@ -79,15 +78,15 @@ export function composerApprentissage({ state, catalogue,
  * @param {string}  id
  * @param {object}  resultat
  * @param {boolean} resultat.quizCorrect
- * @param {boolean} resultat.ecritureCorrecte
  * @param {string}  today
  * @returns {object} nouvel état
  */
-export function appliquerApprentissage(state, id, { quizCorrect, ecritureCorrecte } = {},
+export function appliquerApprentissage(state, id, { quizCorrect } = {},
                                        today = aujourdhui()) {
   if (!id) return state;
 
-  const reussi = Boolean(quizCorrect) && Boolean(ecritureCorrecte);
+  // L'exercice écrit a été retiré de §04 : la reconnaissance décide seule.
+  const reussi = Boolean(quizCorrect);
   const fiche = appliquerResultat(state.words?.[id], { succes: reussi, date: today,
                                                        statut: reussi ? "actif" : "attente" });
 

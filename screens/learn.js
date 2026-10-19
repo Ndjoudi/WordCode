@@ -2,8 +2,6 @@ import { SessionHeader } from "../components/molecules/session-header.js";
 import { ProgressDots } from "../components/atoms/progress-dots.js";
 import { Button } from "../components/atoms/button.js";
 import { MCQ } from "../components/molecules/mcq.js";
-import { InputAnswer } from "../components/molecules/input-answer.js";
-import { ClozeInput } from "../components/molecules/cloze-input.js";
 import { WordList } from "../components/organisms/word-list.js";
 import { composerApprentissage, appliquerApprentissage } from "../services/learn-builder.js";
 import { debloquerPaliers } from "../services/session-builder.js";
@@ -39,9 +37,9 @@ export function Learn({ state, contenu, aller, enregistrer }) {
     return el;
   }
 
-  /** Rang du mot courant, et étape dans ce mot. */
+  /** Rang du mot courant. Un mot, une question : l'exercice écrit a été
+   *  retiré, seule la reconnaissance subsiste. */
   let rang = 0;
-  let etape = "quiz";
   const resultats = new Map();
 
   const corps = document.createElement("div");
@@ -61,61 +59,32 @@ export function Learn({ state, contenu, aller, enregistrer }) {
     aller("/");
   };
 
-  const noter = (id, champ, correct) => {
-    const courant = resultats.get(id) ?? { quizCorrect: false, ecritureCorrecte: false };
-    resultats.set(id, { ...courant, [champ]: correct });
-  };
+  const noter = (id, correct) => resultats.set(id, { quizCorrect: correct });
 
   const suivant = () => {
-    if (etape === "quiz") { etape = "ecriture"; rendre(); return; }
-    etape = "quiz";
     rang += 1;
     if (rang >= exercices.length) { terminer(); return; }
     rendre();
   };
 
   const rendre = () => {
-    const { mot, quiz, ecriture } = exercices[rang];
+    const { mot, quiz } = exercices[rang];
     el.replaceChildren();
     el.append(SessionHeader({
-      title: etape === "quiz" ? "Reconnaître" : "Écrire",
+      title: "Reconnaître",
       onHome: () => aller("/"),
       progress: ProgressDots({ total: exercices.length, current: rang + 1 }),
     }));
     corps.replaceChildren();
     el.append(corps);
 
-    if (etape === "quiz") {
-      corps.append(MCQ({
-        ...quiz,
-        onAnswer: ({ correct }) => {
-          noter(mot.id, "quizCorrect", correct);
-          setTimeout(suivant, DUREE_VERDICT);
-        },
-      }));
-      return;
-    }
-
-    // L'écriture reprend la forme choisie par `construireRappel` : phrase à
-    // trous pour un mot capturé en contexte, traduction isolée sinon.
-    const apres = ({ correct }) => {
-      noter(mot.id, "ecritureCorrecte", correct);
-      setTimeout(suivant, DUREE_VERDICT);
-    };
-
-    corps.append(ecriture.type === "cloze"
-      ? ClozeInput({
-          sentence: ecriture.sentence,
-          blankIndex: ecriture.blankIndex,
-          expected: ecriture.expected,
-          translation: ecriture.translation,
-          onSubmit: apres,
-        })
-      : InputAnswer({
-          prompt: ecriture.prompt,
-          expected: ecriture.expected,
-          onSubmit: apres,
-        }));
+    corps.append(MCQ({
+      ...quiz,
+      onAnswer: ({ correct }) => {
+        noter(mot.id, correct);
+        setTimeout(suivant, DUREE_VERDICT);
+      },
+    }));
   };
 
   rendre();
