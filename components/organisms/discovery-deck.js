@@ -71,9 +71,9 @@ export function DiscoveryDeck({ words = [], onKnown, onUnknown, onComplete } = {
     );
     el.append(choix);
 
-    // Un mot nouveau se prononce dès qu'il apparaît : écrit + audio + contexte
-    // sont les trois canaux exigés par la §02.
-    parler(mot.en);
+    // Le son ne part PAS tout seul : une voix qui se déclenche sans prévenir
+    // surprend, et rend l'app inutilisable en public. Le haut-parleur de la
+    // carte reste là pour l'entendre à la demande.
   };
 
   rendre();
