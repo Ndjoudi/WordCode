@@ -51,6 +51,7 @@
     import * as VOX from "./services/speech.js";
     import * as VID from "./services/video-builder.js";
     import * as SYNC from "./services/sync.js";
+    import * as R from "./services/router.js";
 
     const racine = document.getElementById("t");
     let ok = 0, ko = 0;
@@ -1890,18 +1891,48 @@
 
     const alEnvers = (l) => [...l].reverse();
     const neufVid = S.etatInitial();
-    const enOrdre = VID.composerPhrase({ video: clip, state: neufVid, mode: "ordre",
-                                         melanger: alEnvers });
-    eq("on commence à la première phrase", enOrdre.exercice.rang, 0);
-    eq("la réponse attendue est la phrase", enOrdre.exercice.attendu,
+    const aTrous = VID.composerPhrase({ video: clip, state: neufVid, melanger: alEnvers });
+    eq("le jeu par défaut est la phrase à trous", aTrous.exercice.mode, "trous");
+    eq("on commence à la première phrase", aTrous.exercice.rang, 0);
+    eq("la réponse attendue est la phrase", aTrous.exercice.attendu,
        "I have a confession to make.");
-    eq("les jetons sont mélangés, pas dans l'ordre",
-       enOrdre.exercice.tokens.join(" "), "make. to confession a have I");
+    eq("trois trous par défaut, les mots de contenu d'abord",
+       aTrous.exercice.reponses, ["confession", "to", "make"]);
+    eq("la phrase garde son texte et sa ponctuation hors des trous",
+       aTrous.exercice.parties,
+       [{ texte: "I have a " }, { trou: 0 }, { texte: " " }, { trou: 1 },
+        { texte: " " }, { trou: 2 }, { texte: "." }]);
+    eq("les leurres viennent des autres phrases de la conférence",
+       aTrous.exercice.choix, ["want", "listen", "Anyone", "make", "to", "confession"]);
     eq("le segment porte une marge de fin (§10)",
-       Math.round((enOrdre.exercice.fin - 5.0) * 100) / 100, VID.MARGE_FIN_S);
+       Math.round((aTrous.exercice.fin - 5.0) * 100) / 100, VID.MARGE_FIN_S);
+
+    const unTrou = VID.composerPhrase({ video: clip, melanger: alEnvers,
+      state: { ...neufVid, progression: { ...neufVid.progression, trous_video: 1 } } });
+    eq("le réglage fixe le nombre de trous", unTrou.exercice.reponses, ["make"]);
+
+    eq("sans réglage, trois trous", VID.nombreDeTrous(neufVid), 3);
+    eq("le réglage est borné en haut",
+       VID.nombreDeTrous({ progression: { trous_video: 40 } }), VID.TROUS_MAX);
+    eq("et en bas", VID.nombreDeTrous({ progression: { trous_video: 0 } }), VID.TROUS_MIN);
+    eq("une valeur illisible retombe sur le défaut",
+       VID.nombreDeTrous({ progression: { trous_video: "beaucoup" } }), VID.TROUS_DEFAUT);
+
+    const court = VID.composerTrous("Anyone here?", { trous: 5, melanger: alEnvers });
+    eq("une phrase de deux mots garde un mot visible", court.reponses, ["Anyone"]);
+    eq("et le trou peut ouvrir la phrase", court.parties, [{ trou: 0 }, { texte: " here?" }]);
+
+    const ponctue = VID.composerTrous("Is it stress?", { trous: 1, melanger: (l) => [...l] });
+    eq("on choisit « stress », pas « stress? »", ponctue.reponses, ["stress"]);
+    eq("le point d'interrogation reste dans la phrase", ponctue.parties.at(-1), { texte: "?" });
+
+    const leurres = VID.composerTrous("We make bread", {
+      trous: 1, melanger: (l) => [...l], reservoir: ["bread", "make", "stone", "river", "cloud", "light"] });
+    eq("jamais un mot de la phrase parmi les leurres, et trois leurres",
+       leurres.choix.filter((m) => !leurres.reponses.includes(m)), ["stone", "river", "cloud"]);
 
     const enEcriture = VID.composerPhrase({ video: clip, state: neufVid, mode: "ecriture" });
-    eq("en écriture, aucun jeton n'est fourni", enEcriture.exercice.tokens.length, 0);
+    eq("en écriture, aucun trou n'est fourni", enEcriture.exercice.choix.length, 0);
     eq("sans conférence, la section est verrouillée",
        VID.composerPhrase({ video: null, state: neufVid }).verrouille, true);
 
@@ -1917,22 +1948,6 @@
        VID.phraseCourante(clip, neufVid, [0]), 1);
     eq("sans liste, le comportement ne change pas",
        VID.phraseCourante(clip, neufVid), 0);
-
-    let essais = 0;
-    const melangeurPaesseux = (l) => { essais += 1; return [...l]; };
-    eq("un mélangeur qui ne mélange rien ne fait pas boucler le service",
-       VID.jetonsMelanges("one two three four", melangeurPaesseux).join(" "),
-       "one two three four");
-    vrai("mais il a bien été rejoué avant d'abandonner", essais > 1);
-
-    let tour = 0;
-    // Rend l'ordre d'origine au premier appel, un ordre différent au second.
-    const melangeurTardif = (l) => (tour++ === 0 ? [...l] : alEnvers(l));
-    eq("un mélange qui retombe sur l'original est rejoué",
-       VID.jetonsMelanges("one two three four", melangeurTardif).join(" "),
-       "four three two one");
-    eq("une phrase de deux mots n'est pas mélangée",
-       VID.jetonsMelanges("Anyone here?", alEnvers).length, 2);
 
     section("videoBuilder — progression");
 
@@ -2170,6 +2185,19 @@
     eq("un fichier sans liste est refusé", B.motsDepuisImport({ version: 1 }).ok, false);
     eq("une liste nue est acceptée aussi",
        B.motsDepuisImport([{ en: "pledge", fr: "promesse" }]).mots.length, 1);
+
+    section("router — défilement");
+
+    // Le hash de la page de test est vide : le chemin courant vaut « / ».
+    const montages = [];
+    const routeurTest = R.creerRouteur({
+      routes: { "/": () => "écran" },
+      monter: (ecran, chemin, options) => montages.push(options),
+    });
+    routeurTest.rafraichir();
+    eq("un rafraîchissement garde la position de défilement", montages.at(-1), { conserver: true });
+    routeurTest.aller("/");
+    eq("une navigation repart du haut", montages.at(-1), { conserver: false });
 
     /* ==================================================== conclusion ====== */
     const sum = document.getElementById("sum");

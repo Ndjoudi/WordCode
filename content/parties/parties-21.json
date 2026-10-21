@@ -1,0 +1,1675 @@
+{
+  "palier": 21,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_2101",
+      "palier": 21,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_208",
+      "phrase_en": "UP IN THE AIR",
+      "phrase_fr": "En suspens",
+      "contexte_fr": "Se dit d'une décision qui n'est pas encore prise.",
+      "mots": [
+        "t_00015",
+        "t_00022",
+        "w_20049",
+        "w_20013",
+        "w_20019"
+      ],
+      "alphabet": {
+        "1": "U",
+        "2": "P",
+        "3": "I",
+        "4": "N",
+        "5": "T",
+        "6": "H",
+        "7": "E",
+        "8": "A",
+        "9": "R",
+        "10": "D",
+        "11": "L",
+        "12": "Y",
+        "13": "X",
+        "14": "O",
+        "15": "G",
+        "16": "M",
+        "17": "S",
+        "18": "V"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "t_00015",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "w_20049",
+            null,
+            null,
+            "t_00015",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "w_20049",
+            null,
+            null,
+            "t_00015",
+            null,
+            null,
+            "w_20019"
+          ],
+          [
+            null,
+            null,
+            null,
+            "w_20049",
+            "t_00022",
+            "t_00022",
+            "t_00015",
+            "t_00022",
+            "t_00022",
+            "w_20019"
+          ],
+          [
+            null,
+            null,
+            null,
+            "w_20049",
+            null,
+            null,
+            "t_00015",
+            null,
+            null,
+            "w_20019"
+          ],
+          [
+            "w_20013",
+            "w_20013",
+            "w_20013",
+            "w_20013",
+            "w_20013",
+            null,
+            null,
+            null,
+            null,
+            "w_20019"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_20019"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "t_00022",
+            "x": 3,
+            "y": 3,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "t_00015",
+            "x": 6,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "w_20049",
+            "x": 3,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_20013",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "w_20019",
+            "x": 9,
+            "y": 2,
+            "dir": "V",
+            "num": 3
+          }
+        ],
+        "largeur": 10,
+        "hauteur": 7
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_2102",
+      "palier": 21,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_201",
+      "phrase_en": "UNDER THE WEATHER",
+      "phrase_fr": "Ne pas être dans son assiette",
+      "contexte_fr": "Se sentir un peu malade, sans être vraiment souffrant.",
+      "mots": [
+        "t_00026",
+        "t_00043",
+        "w_20005",
+        "w_20001",
+        "w_20043"
+      ],
+      "alphabet": {
+        "1": "U",
+        "2": "N",
+        "3": "D",
+        "4": "E",
+        "5": "R",
+        "6": "T",
+        "7": "H",
+        "8": "W",
+        "9": "A",
+        "10": "I",
+        "11": "M",
+        "12": "P",
+        "13": "L",
+        "14": "Y",
+        "15": "S",
+        "16": "C",
+        "17": "Z",
+        "18": "G",
+        "19": "O",
+        "20": "X"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_20043",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_20043",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_20043",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_20005",
+            "w_20005",
+            "w_20043",
+            "w_20005",
+            "w_20005",
+            "w_20005",
+            "w_20005"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_20043",
+            null,
+            "t_00026",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_20001",
+            null,
+            null,
+            null,
+            "t_00026",
+            null,
+            null
+          ],
+          [
+            "t_00043",
+            "t_00043",
+            "w_20001",
+            "t_00043",
+            "t_00043",
+            "t_00043",
+            "t_00026",
+            "t_00043",
+            null
+          ],
+          [
+            null,
+            null,
+            "w_20001",
+            null,
+            null,
+            null,
+            "t_00026",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_20001",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_20001",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "t_00043",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "t_00026",
+            "x": 6,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "w_20005",
+            "x": 2,
+            "y": 3,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "w_20001",
+            "x": 2,
+            "y": 5,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "w_20043",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 10
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_2103",
+      "palier": 21,
+      "ordre": 3,
+      "jeu": "grille",
+      "phrase_id": "ph_203",
+      "phrase_en": "MISS THE BOAT",
+      "phrase_fr": "Rater le coche",
+      "contexte_fr": "Laisser passer une occasion.",
+      "mots": [
+        "t_00010",
+        "t_00050",
+        "w_20002",
+        "w_20034",
+        "w_20026"
+      ],
+      "alphabet": {
+        "1": "M",
+        "2": "I",
+        "3": "S",
+        "4": "T",
+        "5": "H",
+        "6": "E",
+        "7": "B",
+        "8": "O",
+        "9": "A",
+        "10": "C",
+        "11": "L",
+        "12": "W",
+        "13": "N",
+        "14": "D",
+        "15": "R",
+        "16": "U",
+        "17": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_20002",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_20002",
+            null,
+            null
+          ],
+          [
+            "t_00010",
+            null,
+            null,
+            "w_20034",
+            "w_20034",
+            "w_20034",
+            "w_20034",
+            "w_20034"
+          ],
+          [
+            "t_00010",
+            null,
+            null,
+            null,
+            null,
+            "w_20002",
+            null,
+            null
+          ],
+          [
+            "t_00010",
+            "w_20026",
+            "w_20026",
+            "t_00050",
+            "w_20026",
+            "w_20002",
+            "w_20026",
+            "w_20026"
+          ],
+          [
+            "t_00010",
+            null,
+            null,
+            "t_00050",
+            null,
+            "w_20002",
+            null,
+            null
+          ],
+          [
+            "t_00010",
+            null,
+            null,
+            "t_00050",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "t_00050",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "t_00050",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "t_00050",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "t_00050",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "w_20026",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "t_00050",
+            "x": 3,
+            "y": 4,
+            "dir": "V",
+            "num": 5
+          },
+          {
+            "mot": "w_20002",
+            "x": 5,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "t_00010",
+            "x": 0,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_20034",
+            "x": 3,
+            "y": 2,
+            "dir": "H",
+            "num": 3
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 11
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_2104",
+      "palier": 21,
+      "ordre": 4,
+      "jeu": "croises",
+      "phrase_id": "ph_161",
+      "phrase_en": "JUST IN TIME",
+      "phrase_fr": "Juste à temps",
+      "contexte_fr": "De justesse, avant qu'il soit trop tard.",
+      "mots": [
+        "t_00040",
+        "t_00013",
+        "w_19036",
+        "w_20046",
+        "w_20005"
+      ],
+      "alphabet": {
+        "1": "J",
+        "2": "U",
+        "3": "S",
+        "4": "T",
+        "5": "I",
+        "6": "N",
+        "7": "M",
+        "8": "E",
+        "9": "R",
+        "10": "C",
+        "11": "O",
+        "12": "L",
+        "13": "W",
+        "14": "H",
+        "15": "F",
+        "16": "X",
+        "17": "A",
+        "18": "Z",
+        "19": "G"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_20005",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_20046",
+            null,
+            "t_00040",
+            null,
+            "w_20005",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "w_19036",
+            "w_19036",
+            "w_20046",
+            "w_19036",
+            "w_19036",
+            null,
+            "w_20005",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_20046",
+            null,
+            "t_00040",
+            null,
+            "w_20005",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00040",
+            null,
+            "w_20005",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00040",
+            "t_00013",
+            "w_20005",
+            "t_00013",
+            "t_00013",
+            "t_00013",
+            "t_00013"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00040",
+            null,
+            "w_20005",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "t_00013",
+            "x": 4,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "w_20005",
+            "x": 6,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "t_00040",
+            "x": 4,
+            "y": 1,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "w_19036",
+            "x": 0,
+            "y": 2,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "w_20046",
+            "x": 2,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          }
+        ],
+        "largeur": 11,
+        "hauteur": 7
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_2105",
+      "palier": 21,
+      "ordre": 5,
+      "jeu": "grille",
+      "phrase_id": "ph_216",
+      "phrase_en": "HOLD YOUR HORSES",
+      "phrase_fr": "Doucement",
+      "contexte_fr": "On le dit à quelqu'un qui va trop vite.",
+      "mots": [
+        "t_00027",
+        "t_00012",
+        "w_15049",
+        "w_20040",
+        "w_20015"
+      ],
+      "alphabet": {
+        "1": "H",
+        "2": "O",
+        "3": "L",
+        "4": "D",
+        "5": "Y",
+        "6": "U",
+        "7": "R",
+        "8": "S",
+        "9": "E",
+        "10": "I",
+        "11": "N",
+        "12": "Q",
+        "13": "C",
+        "14": "T",
+        "15": "A",
+        "16": "M",
+        "17": "J",
+        "18": "B"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "t_00012",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "t_00012",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "t_00012",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "t_00012",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_15049",
+            null,
+            "t_00012",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "w_20015",
+            "t_00027",
+            "w_20015",
+            "w_15049",
+            "w_20015",
+            "t_00012",
+            "w_20015",
+            "w_20015"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00027",
+            null,
+            "w_15049",
+            null,
+            "t_00012",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00027",
+            null,
+            "w_15049",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00027",
+            null,
+            "w_15049",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00027",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "w_20040",
+            "w_20040",
+            "w_20040",
+            "w_20040",
+            "w_20040",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00027",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "w_20015",
+            "x": 3,
+            "y": 5,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "t_00027",
+            "x": 4,
+            "y": 5,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "t_00012",
+            "x": 8,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "w_15049",
+            "x": 6,
+            "y": 4,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_20040",
+            "x": 0,
+            "y": 10,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 11,
+        "hauteur": 12
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_2106",
+      "palier": 21,
+      "ordre": 6,
+      "jeu": "croises",
+      "phrase_id": "ph_207",
+      "phrase_en": "SIT ON THE FENCE",
+      "phrase_fr": "Ménager la chèvre et le chou",
+      "contexte_fr": "Refuser de choisir un camp.",
+      "mots": [
+        "t_00023",
+        "t_00006",
+        "w_20042",
+        "w_14024",
+        "w_20033"
+      ],
+      "alphabet": {
+        "1": "S",
+        "2": "I",
+        "3": "T",
+        "4": "O",
+        "5": "N",
+        "6": "H",
+        "7": "E",
+        "8": "F",
+        "9": "C",
+        "10": "A",
+        "11": "U",
+        "12": "D",
+        "13": "W",
+        "14": "R",
+        "15": "P",
+        "16": "L",
+        "17": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_20033",
+            null,
+            "w_20042"
+          ],
+          [
+            null,
+            "w_14024",
+            null,
+            "t_00023",
+            null,
+            "w_20033",
+            null,
+            "w_20042"
+          ],
+          [
+            "t_00006",
+            "w_14024",
+            "t_00006",
+            "t_00023",
+            "t_00006",
+            "w_20033",
+            "t_00006",
+            "w_20042"
+          ],
+          [
+            null,
+            "w_14024",
+            null,
+            "t_00023",
+            null,
+            "w_20033",
+            null,
+            "w_20042"
+          ],
+          [
+            null,
+            "w_14024",
+            null,
+            "t_00023",
+            null,
+            "w_20033",
+            null,
+            "w_20042"
+          ],
+          [
+            null,
+            "w_14024",
+            null,
+            "t_00023",
+            null,
+            "w_20033",
+            null,
+            "w_20042"
+          ],
+          [
+            null,
+            "w_14024",
+            null,
+            "t_00023",
+            null,
+            null,
+            null,
+            "w_20042"
+          ],
+          [
+            null,
+            null,
+            null,
+            "t_00023",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "t_00006",
+            "x": 0,
+            "y": 2,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "t_00023",
+            "x": 3,
+            "y": 1,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "w_20042",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_14024",
+            "x": 1,
+            "y": 1,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "w_20033",
+            "x": 5,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 8
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_2107",
+      "palier": 21,
+      "ordre": 7,
+      "jeu": "grille",
+      "phrase_id": "ph_205",
+      "phrase_en": "IN THE HEAT OF THE MOMENT",
+      "phrase_fr": "Sur le coup de l'émotion",
+      "contexte_fr": "Se dit d'un acte commis sans réfléchir.",
+      "mots": [
+        "t_00019",
+        "t_00048",
+        "w_20050",
+        "w_13025",
+        "w_07030"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "N",
+        "3": "T",
+        "4": "H",
+        "5": "E",
+        "6": "A",
+        "7": "O",
+        "8": "F",
+        "9": "M",
+        "10": "D",
+        "11": "U",
+        "12": "R",
+        "13": "P",
+        "14": "L",
+        "15": "S",
+        "16": "C",
+        "17": "Y"
+      },
+      "croises": null,
+      "verifie": true
+    },
+    {
+      "id": "p_2108",
+      "palier": 21,
+      "ordre": 8,
+      "jeu": "croises",
+      "phrase_id": "ph_209",
+      "phrase_en": "FAMILIAR FACES",
+      "phrase_fr": "Des visages connus",
+      "contexte_fr": "Se dit quand on retrouve des gens qu'on connaît déjà.",
+      "mots": [
+        "t_00009",
+        "t_00020",
+        "w_20007",
+        "w_20004",
+        "w_14049"
+      ],
+      "alphabet": {
+        "1": "F",
+        "2": "A",
+        "3": "M",
+        "4": "I",
+        "5": "L",
+        "6": "R",
+        "7": "C",
+        "8": "E",
+        "9": "S",
+        "10": "H",
+        "11": "P",
+        "12": "O",
+        "13": "Y",
+        "14": "W",
+        "15": "D",
+        "16": "N",
+        "17": "G",
+        "18": "U",
+        "19": "T"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            "t_00009",
+            "t_00009",
+            "t_00009",
+            "t_00009",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "w_14049",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "w_14049",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "w_14049",
+            null,
+            null,
+            "w_20004",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "w_20007",
+            "w_14049",
+            "w_20007",
+            "w_20007",
+            "w_20004",
+            "w_20007",
+            "w_20007",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "w_14049",
+            null,
+            null,
+            "w_20004",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "w_14049",
+            null,
+            null,
+            "w_20004",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "w_20004",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00020",
+            "t_00020",
+            "t_00020",
+            "t_00020",
+            "t_00020",
+            "t_00020"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "w_20007",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "w_14049",
+            "x": 1,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "w_20004",
+            "x": 4,
+            "y": 3,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "t_00020",
+            "x": 4,
+            "y": 8,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "t_00009",
+            "x": 1,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          }
+        ],
+        "largeur": 10,
+        "hauteur": 9
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_2109",
+      "palier": 21,
+      "ordre": 9,
+      "jeu": "grille",
+      "phrase_id": "ph_210",
+      "phrase_en": "IT IS NOT ROCKET SCIENCE",
+      "phrase_fr": "Ce n'est pas sorcier",
+      "contexte_fr": "Se dit d'une chose bien plus simple qu'elle en a l'air.",
+      "mots": [
+        "t_00008",
+        "t_00042",
+        "w_19009",
+        "w_20010",
+        "w_19002"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "T",
+        "3": "S",
+        "4": "N",
+        "5": "O",
+        "6": "R",
+        "7": "C",
+        "8": "K",
+        "9": "E",
+        "10": "B",
+        "11": "A",
+        "12": "D",
+        "13": "V",
+        "14": "W",
+        "15": "X",
+        "16": "L",
+        "17": "Y",
+        "18": "M"
+      },
+      "croises": {
+        "grille": [
+          [
+            "t_00008",
+            "t_00042",
+            "t_00008",
+            "t_00008",
+            "t_00008",
+            "w_19009",
+            "t_00008",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "t_00042",
+            null,
+            null,
+            null,
+            "w_19009",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "t_00042",
+            null,
+            null,
+            "w_19002",
+            "w_19002",
+            "w_19002",
+            "w_19002",
+            "w_19002",
+            "w_19002"
+          ],
+          [
+            "w_20010",
+            "w_20010",
+            "w_20010",
+            "w_20010",
+            null,
+            "w_19009",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "t_00042",
+            null,
+            null,
+            null,
+            "w_19009",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "t_00042",
+            null,
+            null,
+            null,
+            "w_19009",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_19009",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "t_00008",
+            "x": 0,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          },
+          {
+            "mot": "w_19009",
+            "x": 5,
+            "y": 0,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "t_00042",
+            "x": 1,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_19002",
+            "x": 4,
+            "y": 2,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "w_20010",
+            "x": 0,
+            "y": 3,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 10,
+        "hauteur": 7
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_2110",
+      "palier": 21,
+      "ordre": 10,
+      "jeu": "croises",
+      "phrase_id": "ph_223",
+      "phrase_en": "AGAINST ALL ODDS",
+      "phrase_fr": "Contre toute attente",
+      "contexte_fr": "Malgré des chances de réussite très faibles.",
+      "mots": [
+        "t_00011",
+        "t_00004",
+        "w_20038",
+        "w_06019",
+        "w_19028"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "G",
+        "3": "I",
+        "4": "N",
+        "5": "S",
+        "6": "T",
+        "7": "L",
+        "8": "O",
+        "9": "D",
+        "10": "C",
+        "11": "M",
+        "12": "P",
+        "13": "R",
+        "14": "E",
+        "15": "Q",
+        "16": "U",
+        "17": "K",
+        "18": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            "t_00011",
+            "t_00011",
+            "t_00011",
+            "t_00011",
+            "t_00004",
+            "t_00011",
+            "t_00011",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00004",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00004",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_20038",
+            "w_20038",
+            "w_20038",
+            "w_20038",
+            "w_20038",
+            "w_19028",
+            "w_20038"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00004",
+            null,
+            null,
+            "w_19028",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "t_00004",
+            null,
+            "w_06019",
+            "w_06019",
+            "w_06019"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "w_19028",
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "t_00011",
+            "x": 0,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          },
+          {
+            "mot": "t_00004",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_20038",
+            "x": 2,
+            "y": 3,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "w_19028",
+            "x": 7,
+            "y": 3,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "w_06019",
+            "x": 6,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 7
+      },
+      "verifie": true
+    }
+  ]
+}

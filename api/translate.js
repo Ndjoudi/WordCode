@@ -184,7 +184,11 @@ export default async function handler(req, res) {
     // UN SEUL appel. La vérification de sens (ex-rétro-traduction) est
     // demandée dans le même passage : deux appels séquentiels doublaient le
     // temps de réponse pour ne poser qu'un booléen.
-    const out = await gemini(SYSTEM_PROMPT, texte, { maxOutputTokens: 1024 });
+    // Réflexion bornée, comme pour l'histoire : sur une phrase entière de
+    // conférence, le modèle consommait 981 jetons sur 1024 à réfléchir et le
+    // JSON sortait coupé (finishReason MAX_TOKENS).
+    const out = await gemini(SYSTEM_PROMPT, texte,
+                             { maxOutputTokens: 2048, thinkingLevel: "MINIMAL" });
 
     return res.status(200).json(out);
   } catch (e) {

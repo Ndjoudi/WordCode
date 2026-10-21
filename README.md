@@ -334,10 +334,32 @@ phrase, au choix à tout moment :
 
 | Jeu | Composant | Ce qu'il travaille |
 |---|---|---|
-| **Remettre dans l'ordre** | `WordOrder` | la structure de la phrase |
+| **Phrase à trous** *(par défaut)* | `ClozeChoice` | le vocabulaire en contexte |
 | **Écrire la phrase** | `InputAnswer` | l'orthographe et l'oreille |
 
 **Pas de micro ici.** L'utilisateur reconstruit, il ne parle pas.
+
+### La phrase à trous
+
+Un micro-jeu, pas un devoir : la phrase entendue s'affiche avec **quelques mots
+retirés**, et on pose chaque mot à sa place en le touchant — sans clavier. Il
+remplace l'ancien « remettre dans l'ordre » : reconstruire quatorze mots d'une
+conférence TED décourageait plus qu'il n'apprenait.
+
+- **Le nombre de trous se règle dans les Réglages**, de 1 à 6, 3 par défaut
+  (`progression.trous_video`). C'est le levier de difficulté : on monte quand
+  ça devient facile.
+- **Les trous visent les mots de contenu.** Masquer `the` ne teste rien. Une
+  phrase qui en manque complète avec ses autres mots, et garde toujours au
+  moins un mot visible.
+- **Trois leurres**, tirés **de la même conférence**. Sans eux, le dernier trou
+  se remplit par élimination ; venus d'ailleurs, ils se repèrent sans lire.
+- **La ponctuation reste dans la phrase** : on pose « stress », pas « stress? ».
+- **Bouton *Traduire*** : la traduction française de la phrase, **à la
+  demande**, jamais d'office. Un seul appel par phrase et par séance (§16).
+
+Touche un trou pour le choisir, puis un mot pour l'y poser ; par défaut le mot
+va dans le premier trou vide. Toucher un trou rempli rend son mot à la liste.
 
 ### Le quizz de fin de conférence
 
@@ -1121,14 +1143,32 @@ dans l'écran Réglages, sans casser l'app :
 pas partie de l'application et n'est jamais appelé depuis le navigateur.
 
 ```
-palier-XX.json + phrases.json
-        ↓  node tools/generateur.js --palier 3
-   parties-XX.json  →  /content/parties/
+manifest.json (tous les paliers) + phrases.json
+        ↓  node tools/generateur.js --generer
+   parties-XX.json  →  /content/parties/   (un fichier par palier)
 ```
 
-### Ce qu'il fait
+La génération est **globale** : tous les paliers du manifeste sont régénérés d’un coup, avec
+une graine fixe — deux exécutions donnent exactement les mêmes parties. Les
+phrases du réservoir, le partage des mots entre les deux jeux et le compteur de
+réemploi courent sur tout le catalogue.
 
-Pour chaque groupe de 5 mots d'un palier :
+### Composition d'une partie
+
+Chaque palier reçoit **10 parties** : 5 pour la grille, 5 pour les mots croisés.
+
+- **Partage des jeux.** Chaque mot jouable est rangé une fois pour toutes dans
+  un seul des deux jeux, en alternance dans l'ordre du palier. C'est ce qui
+  tient la règle « jamais les mêmes mots » (§06).
+- **2 mots du palier courant**, les moins servis d'abord.
+- **3 mots de l'acquis** — les paliers antérieurs, pour le même jeu — choisis
+  pour les lettres qu'ils apportent à la phrase cachée.
+- **Réemploi autorisé** : un mot peut revenir dans plusieurs parties de son
+  jeu, chaque reprise le pénalisant. Résultat : toutes les parties à partir du
+  palier 2 mêlent plusieurs paliers (3,2 en moyenne), sans retarder le
+  déblocage — 10 parties dès le palier 1.
+
+Pour chaque groupe de 5 mots :
 
 1. **Choisir une phrase** du réservoir **dont toutes les lettres apparaissent
    dans les 5 mots**, non encore utilisée
@@ -1168,7 +1208,7 @@ Elles n'avaient de sens qu'avec des lettres offertes.
 | Longueur des mots | 3 à 8 lettres |
 | Alphabet | ≤ 26 entrées, aucune collision |
 | Mots croisés | chaque mot croise au moins un autre |
-| Composition | 5 mots du même palier |
+| Composition | 2 mots du palier courant + 3 de l'acquis (paliers antérieurs) |
 | Partition des jeux | une partie porte `jeu: "grille"` ou `jeu: "croises"`, jamais les deux |
 
 ### Règle absolue
@@ -1339,6 +1379,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `MCQ` | `molecules/mcq.js` | `question(texte ou élément), options[], correctId, onAnswer` | Quizz (§03), apprentissage (§04), particule |
 | `InputAnswer` | `molecules/input-answer.js` | `prompt, expected, hint, onAudio, micro, onSubmit` | Rappel actif, dictée et traduction, saisie vocale (§08, §15.8) |
 | `ClozeInput` | `molecules/cloze-input.js` | `sentence, blankIndex, expected, translation, onSubmit` | Phrase à trous |
+| `ClozeChoice` | `molecules/cloze-choice.js` | `parts[], choices[], expected[], sentence, onSubmit` | Phrase à trous sans clavier, mots à poser (§10) |
 | `VerbTriad` | `molecules/verb-triad.js` | `verb, showBase, onSubmit` | Prétérit + participe |
 | `WordOrder` | `molecules/word-order.js` | `tokens[], expected, onSubmit` | Remise en ordre (phrasal) |
 | `Keyboard` | `molecules/keyboard.js` | `layout, disabledKeys[], onKey, onBackspace` | **Clavier unique de l'app** |
@@ -1372,8 +1413,8 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
   partagent le même composant, seul `state` change
 - Tout clavier passe par `Keyboard` — un seul dans le DOM
 - Tout affichage de mot en liste passe par `WordListItem`
-- Toute saisie passe par `InputAnswer`, `ClozeInput`, `VerbTriad` ou
-  `WordOrder` — jamais un `<input>` ad hoc
+- Toute saisie passe par `InputAnswer`, `ClozeInput`, `ClozeChoice`,
+  `VerbTriad` ou `WordOrder` — jamais un `<input>` ad hoc
 
 ---
 
@@ -1394,7 +1435,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `Video` | `screens/video.js` | §09 — conférence phrase par phrase |
 | `Phrasal` | `screens/phrasal.js` | phrasal verbs — **pas d'entrée dans l'écran principal** |
 | `Progress` | `screens/progress.js` | statistiques, paliers, répartition par boîte |
-| `Settings` | `screens/settings.js` | export/import, objectif, erreurs de contenu |
+| `Settings` | `screens/settings.js` | export/import, objectif, trous de la vidéo, erreurs de contenu |
 
 **Supprimé en v4 :** `screens/challenge.js`, `screens/session.js` et
 `screens/review.js`. Le défi quotidien est retiré du produit, et la session
@@ -1445,7 +1486,7 @@ Home  (six cartes)
  ├─ 06 → Crossword     CrosswordBoard (grille vide) → EndCard  → Home
  ├─ 07 → Story         StoryReader → EndCard                   → Home
  ├─ 08 → Writing       InputAnswer (audio, micro) | CompositionForm → Home
- └─ 09 → Video         VideoPlayer + WordOrder | InputAnswer   → Home
+ └─ 09 → Video         VideoPlayer + ClozeChoice | InputAnswer → Home
 ```
 
 Chaque section revient à Home. Il n'y a **aucun enchaînement automatique** entre

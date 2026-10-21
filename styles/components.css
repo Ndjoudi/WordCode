@@ -1136,7 +1136,8 @@
 }
 
 .video-screen__jeu    { display: flex; flex-direction: column; gap: var(--sp-3); }
-.video-screen__outils { display: flex; gap: var(--sp-2); }
+.video-screen__outils { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); }
+.video-screen__outils .btn { white-space: nowrap; }
 /* Choix après une erreur : les deux options sont de même poids visuel,
    c'est à l'utilisateur de décider s'il refait ou s'il avance. */
 .video-screen__reprise { display: flex; flex-direction: column; gap: var(--sp-2);
@@ -1583,3 +1584,45 @@
 .settings__error--bloquant { background: var(--c-tile-filled); }
 
 .settings__error-file { color: var(--c-text-muted); font-size: var(--fs-xs); }
+
+/* --- ClozeChoice ----------------------------------------------------------
+   Phrase à trous sans clavier (§10). Les trous sont des `Button` posés dans
+   le fil du texte : ils doivent rester à hauteur de ligne. */
+.cloze-choice { display: flex; flex-direction: column; gap: var(--sp-4); }
+
+.cloze-choice__phrase {
+  margin: 0;
+  font-size: var(--fs-lg);
+  line-height: 2.4;
+}
+
+.cloze-choice__trou {
+  display: inline-flex;
+  min-height: var(--touch-min);
+  margin: var(--sp-1);
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-lg);
+  vertical-align: middle;
+}
+
+.cloze-choice__trou--vide  { min-width: var(--sp-7); }
+.cloze-choice__trou--actif { background: var(--c-tile-active); }
+.cloze-choice__trou--juste { background: var(--c-tile-offered); }
+.cloze-choice__trou--faux  { background: var(--c-tile-filled); color: var(--c-error); }
+
+.cloze-choice__pool { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+.cloze-choice__mot { padding: var(--sp-2) var(--sp-4); }
+
+.cloze-choice__verdict:empty { display: none; }
+.cloze-choice__verdict { margin: 0; color: var(--c-success); font-weight: var(--fw-bold); text-align: center; }
+
+.video-screen__traduction:empty { display: none; }
+.video-screen__traduction {
+  margin: 0;
+  padding: var(--sp-3);
+  border-radius: var(--r-md);
+  background: var(--c-surface-alt);
+  color: var(--c-text-muted);
+  font-style: italic;
+}

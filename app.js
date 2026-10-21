@@ -182,9 +182,13 @@ async function demarrer() {
       "/settings": () => Settings(contexte()),
       "/phrasal": () => Phrasal(contexte()),
     },
-    monter: (ecran) => {
+    // Nouvelle page : on repart du haut. Simple rafraîchissement après un
+    // enregistrement : on reste où l'on était — sans quoi chaque « + » des
+    // Réglages renvoyait en haut de l'écran.
+    monter: (ecran, chemin, { conserver = false } = {}) => {
+      const position = conserver ? globalThis.scrollY : 0;
       racine.replaceChildren(ecran);
-      globalThis.scrollTo(0, 0);
+      globalThis.scrollTo(0, position);
     },
   });
 
