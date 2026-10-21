@@ -5,7 +5,7 @@
  * Script Node autonome. Il ne fait PAS partie de l'application et n'est jamais
  * appelé depuis le navigateur (§17.9).
  *
- *   node tools/generateur.js --palier 3
+ *   node tools/generateur.js --generer           (tous les paliers d'un coup)
  *   node tools/generateur.js --verify            (tous les paliers)
  *   node tools/generateur.js --verify --palier 3
  *
@@ -393,73 +393,229 @@ export function composerPartie(mots, phrases,
 /* Commandes                                                                   */
 /* -------------------------------------------------------------------------- */
 
-function genererPalier(numero) {
-  const nom = deuxChiffres(numero);
-  const cheminPalier = path.join(CONTENU, "paliers", `palier-${nom}.json`);
-  const cheminPhrases = path.join(CONTENU, "phrases.json");
+/* -------------------------------------------------------------------------- */
+/* Catalogue                                                                   */
+/* -------------------------------------------------------------------------- */
 
-  if (!fs.existsSync(cheminPalier)) {
-    console.error(`Palier introuvable : ${cheminPalier}`);
-    process.exit(1);
+/**
+ * Paliers déclarés au manifeste, dans l'ordre, avec leurs mots. Les paliers
+ * de fréquence et les paliers thématiques (TOEIC) sont traités pareil : un
+ * palier n'est qu'un fichier de mots et un rang de déblocage.
+ *
+ * @returns {{manifeste:object, paliers:Array<{entree:object, mots:object[]}>}}
+ */
+function chargerCatalogue() {
+  const manifeste = lire(path.join(CONTENU, "manifest.json"));
+  const paliers = [...manifeste.paliers]
+    .sort((a, b) => Number(a.id) - Number(b.id))
+    .filter((entree) => fs.existsSync(path.join(CONTENU, entree.fichier)))
+    .map((entree) => ({ entree, mots: lire(path.join(CONTENU, entree.fichier)).mots ?? [] }));
+  return { manifeste, paliers };
+}
+
+/** Tous les mots du catalogue, par id. */
+function tousLesMots() {
+  const mots = new Map();
+  for (const { mots: liste } of chargerCatalogue().paliers) {
+    for (const mot of liste) mots.set(mot.id, mot);
   }
+  return mots;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Génération                                                                  */
+/* -------------------------------------------------------------------------- */
+
+/** Parties produites, par palier et par jeu. */
+const PARTIES_PAR_JEU = 5;
+
+/** Mots du palier courant dans chaque partie ; les autres viennent de l'acquis. */
+const MOTS_NOUVEAUX = 2;
+
+/** Graine du tirage : deux exécutions donnent exactement les mêmes parties. */
+const GRAINE = 20261021;
+
+/** Générateur pseudo-aléatoire reproductible (mulberry32). */
+function aleatoire(graine) {
+  let a = graine >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** Un mot peut-il entrer dans une partie (gabarit et indice) ? */
+function jouable(mot) {
+  const longueur = lettresDe(mot.en).length;
+  return Boolean(mot.eligible_grille)
+    && longueur >= LONGUEUR_MIN && longueur <= LONGUEUR_MAX
+    && Array.isArray(mot.indice?.segments) && mot.indice.segments.length > 0;
+}
+
+/**
+ * Range chaque mot jouable dans UN seul des deux jeux : c'est la règle « jamais
+ * les mêmes mots » (§06). L'alternance suit l'ordre du palier, pour que chaque
+ * jeu reçoive la moitié de chaque palier. Un mot qui ne peut pas se croiser
+ * reste dans la grille.
+ *
+ * @param {object[]} mots
+ * @returns {Map<string,string>} id → "grille" | "croises"
+ */
+function partagerEntreJeux(mots) {
+  const jeuDe = new Map();
+  let bascule = 0;
+  for (const mot of mots) {
+    if (!jouable(mot)) continue;
+    jeuDe.set(mot.id, mot.eligible_croises === false ? "grille" : JEUX[bascule++ % 2]);
+  }
+  return jeuDe;
+}
+
+/**
+ * Compose un groupe de 5 mots : deux du palier courant, les moins servis
+ * d'abord, puis trois de l'acquis, choisis pour les lettres qu'ils apportent.
+ *
+ * Un mot de l'acquis peut revenir d'une partie à l'autre — c'est ce qui permet
+ * de mêler les paliers sans retarder le déblocage — mais chaque reprise le
+ * pénalise, pour que le réemploi se répartisse au lieu de se concentrer.
+ *
+ * @param {object[]} nouveaux   mots du palier courant, pour ce jeu
+ * @param {object[]} acquis     mots des paliers antérieurs, pour ce jeu
+ * @param {Map<string,number>} usages
+ * @param {Function} alea
+ * @returns {?object[]}
+ */
+function composerGroupe(nouveaux, acquis, usages, alea) {
+  const servi = (mot) => usages.get(mot.id) ?? 0;
+  const amorces = nouveaux
+    .map((mot) => ({ mot, cle: servi(mot) + alea() }))
+    .sort((a, b) => a.cle - b.cle)
+    .slice(0, MOTS_NOUVEAUX)
+    .map(({ mot }) => mot);
+
+  const groupe = [...amorces];
+  const lettres = new Set(groupe.flatMap((mot) => [...distinctes(mot.en)]));
+  const vivier = [...acquis, ...nouveaux];
+
+  while (groupe.length < MOTS_PAR_PARTIE) {
+    let meilleur = null;
+    let score = -Infinity;
+    for (const mot of vivier) {
+      if (groupe.includes(mot)) continue;
+      if (groupe.some((autre) => lettresDe(autre.en) === lettresDe(mot.en))) continue;
+      const apport = [...distinctes(mot.en)].filter((l) => !lettres.has(l)).length;
+      // Au palier 1 l'acquis est vide : les nouveaux mots complètent le groupe.
+      const ancien = acquis.length && acquis.includes(mot) ? 4 : 0;
+      const note = apport + ancien - 2 * servi(mot) + 3 * alea();
+      if (note > score) { meilleur = mot; score = note; }
+    }
+    if (!meilleur) return null;
+    groupe.push(meilleur);
+    for (const l of distinctes(meilleur.en)) lettres.add(l);
+  }
+  return groupe;
+}
+
+/**
+ * Régénère TOUTES les parties, palier par palier (§9).
+ *
+ * La génération est globale et non plus palier par palier : les phrases du
+ * réservoir, le partage des mots entre les deux jeux et le compteur de
+ * réemploi courent sur tout le catalogue.
+ */
+function genererTout() {
+  const cheminPhrases = path.join(CONTENU, "phrases.json");
   if (!fs.existsSync(cheminPhrases)) {
     console.error("content/phrases.json est absent : le réservoir de phrases est");
     console.error("indispensable à la génération (README §6.3). Rien n'a été écrit.");
     process.exit(1);
   }
 
-  const palier = lire(cheminPalier);
+  const { manifeste, paliers } = chargerCatalogue();
   const brutPhrases = lire(cheminPhrases);
   const phrases = Array.isArray(brutPhrases) ? brutPhrases : brutPhrases.phrases ?? [];
+  for (const phrase of phrases) phrase.utilisee_par = null;
 
-  const libres = phrases.filter((p) => !p.utilisee_par);
-  const parties = [];
+  const alea = aleatoire(GRAINE);
+  const jeuDe = partagerEntreJeux(paliers.flatMap(({ mots }) => mots));
+  const usages = new Map();
+  const acquis = { grille: [], croises: [] };
   const rejets = [];
+  let total = 0;
 
-  for (let i = 0; i + MOTS_PAR_PARTIE <= palier.mots.length; i += MOTS_PAR_PARTIE) {
-    const groupe = palier.mots.slice(i, i + MOTS_PAR_PARTIE);
-    const ordre = parties.length + 1;
-    const idPartie = `p_${deuxChiffres(numero)}${deuxChiffres(ordre)}`;
+  for (const { entree, mots } of paliers) {
+    const numero = Number(entree.id);
+    const nom = deuxChiffres(numero);
+    const parties = [];
+    const nouveaux = {
+      grille: mots.filter((mot) => jeuDe.get(mot.id) === "grille"),
+      croises: mots.filter((mot) => jeuDe.get(mot.id) === "croises"),
+    };
 
-    const utilisees = new Set(parties.map((p) => p.phrase_id));
-    const dispo = libres.filter((p) => !utilisees.has(p.id));
+    for (let rang = 0; rang < PARTIES_PAR_JEU; rang += 1) {
+      for (const jeu of JEUX) {
+        const ordre = parties.length + rejets.filter((r) => r.palier === numero).length + 1;
+        const idPartie = `p_${nom}${deuxChiffres(ordre)}`;
+        let reussie = null;
+        let motif = "aucun groupe composé";
 
-    // On vise le jeu actuellement le moins servi. Un bloc dont les mots ne se
-    // croisent pas retombera de toute façon sur le codeword : sans ce rééqui-
-    // librage, les mots croisés se retrouvaient avec trois fois moins de
-    // parties que la grille.
-    const dejaCroises = parties.filter((p) => p.jeu === "croises").length;
-    const jeuSouhaite = dejaCroises * 2 < parties.length + 1 ? "croises" : "grille";
+        for (let essai = 0; essai < ESSAIS_MAX && !reussie; essai += 1) {
+          const groupe = composerGroupe(nouveaux[jeu], acquis[jeu], usages, alea);
+          if (!groupe) break;
+          const libres = phrases.filter((p) => !p.utilisee_par);
+          const resultat = composerPartie(groupe, libres,
+            { palier: numero, ordre, idPartie, jeuSouhaite: jeu });
+          if (!resultat.partie) { motif = resultat.motif; continue; }
+          // Des mots qui ne se croisent pas tomberaient dans l'autre jeu : on
+          // recompose plutôt que de briser le partage.
+          if (resultat.partie.jeu !== jeu) { motif = "les cinq mots ne se croisent pas"; continue; }
+          reussie = resultat;
+        }
 
-    const { partie, phrase, motif } = composerPartie(groupe, dispo,
-      { palier: numero, ordre, idPartie, jeuSouhaite });
+        if (!reussie) {
+          rejets.push({ palier: numero, ordre, jeu, motif });
+          console.log(`  rejet  palier ${nom} ${jeu} — ${motif}`);
+          continue;
+        }
 
-    if (!partie) {
-      rejets.push({ palier: numero, ordre, mots: groupe.map((m) => m.id), motif });
-      console.log(`  rejet  groupe ${ordre} — ${motif}`);
-      continue;
+        reussie.phrase.utilisee_par = reussie.partie.id;
+        for (const id of reussie.partie.mots) usages.set(id, (usages.get(id) ?? 0) + 1);
+        parties.push(reussie.partie);
+      }
     }
 
-    phrase.utilisee_par = partie.id;
-    parties.push(partie);
-    console.log(`  ok     ${partie.id} — ${partie.phrase_en}`);
+    for (const jeu of JEUX) acquis[jeu].push(...nouveaux[jeu]);
+
+    const fichier = `parties/parties-${nom}.json`;
+    fs.writeFileSync(path.join(CONTENU, fichier),
+      JSON.stringify({ palier: numero, version: 3, parties }, null, 2) + "\n");
+    total += parties.length;
+
+    // Les paliers ajoutés après coup (TOEIC) n'avaient pas encore de parties.
+    if (!entree.parties) {
+      const rang = manifeste.paliers.indexOf(entree);
+      const { id, fichier: f, ...reste } = entree;
+      manifeste.paliers[rang] = { id, fichier: f, parties: fichier, ...reste };
+    }
+
+    const melanges = parties.filter((p) => {
+      const origine = new Set(p.mots.map((id) => paliers.find((x) => x.mots.some((m) => m.id === id)).entree.id));
+      return origine.size > 1;
+    }).length;
+    console.log(`palier ${nom} : ${parties.length} parties, ${melanges} mêlant plusieurs paliers`);
   }
 
-  const sortie = path.join(CONTENU, "parties", `parties-${nom}.json`);
-  fs.writeFileSync(sortie, JSON.stringify({ palier: numero, version: 3, parties }, null, 2) + "\n");
-  console.log(`\n${parties.length} parties écrites dans ${path.relative(RACINE, sortie)}`);
-
-  if (rejets.length) {
-    const cheminRejets = path.join(CONTENU, "rejets.json");
-    const anciens = fs.existsSync(cheminRejets) ? lire(cheminRejets) : [];
-    fs.writeFileSync(cheminRejets,
-      JSON.stringify([...anciens.filter((r) => r.palier !== numero), ...rejets], null, 2) + "\n");
-    console.log(`${rejets.length} groupes rejetés, consignés dans content/rejets.json`);
-  }
-
+  fs.writeFileSync(path.join(CONTENU, "manifest.json"), JSON.stringify(manifeste, null, 2) + "\n");
+  fs.writeFileSync(path.join(CONTENU, "rejets.json"), JSON.stringify(rejets, null, 2) + "\n");
   // Le réservoir garde la trace des phrases consommées (§6.3).
   fs.writeFileSync(cheminPhrases, JSON.stringify(
     Array.isArray(brutPhrases) ? phrases : { ...brutPhrases, phrases }, null, 2) + "\n");
+
+  const libres = phrases.filter((p) => !p.utilisee_par).length;
+  console.log(`\n${total} parties écrites · ${rejets.length} rejet(s) · ${libres} phrases encore libres`);
 }
 
 /**
@@ -477,13 +633,8 @@ function croiserPalier(numero) {
   const cheminParties = path.join(CONTENU, "parties", `parties-${nom}.json`);
   if (!fs.existsSync(cheminParties)) return null;
 
-  // Les parties peuvent référencer des mots d'autres paliers : on charge tout.
-  const mots = new Map();
-  for (let i = 1; i <= 56; i += 1) {
-    const chemin = path.join(CONTENU, "paliers", `palier-${deuxChiffres(i)}.json`);
-    if (!fs.existsSync(chemin)) continue;
-    for (const mot of lire(chemin).mots) mots.set(mot.id, mot);
-  }
+  // Les parties référencent des mots d'autres paliers : on charge tout.
+  const mots = tousLesMots();
 
   const donnees = lire(cheminParties);
   let ajoutes = 0, echecs = 0;
@@ -514,13 +665,11 @@ function croiserPalier(numero) {
   return { palier: numero, ajoutes, echecs, total: (donnees.parties ?? []).length };
 }
 
-function verifierPalier(numero) {
+function verifierPalier(numero, mots, jeuDe) {
   const nom = deuxChiffres(numero);
-  const cheminPalier = path.join(CONTENU, "paliers", `palier-${nom}.json`);
   const cheminParties = path.join(CONTENU, "parties", `parties-${nom}.json`);
-  if (!fs.existsSync(cheminPalier) || !fs.existsSync(cheminParties)) return null;
+  if (!fs.existsSync(cheminParties)) return null;
 
-  const mots = new Map(lire(cheminPalier).mots.map((m) => [m.id, m]));
   const parties = lire(cheminParties).parties ?? [];
 
   const rapport = { palier: numero, total: parties.length, resolubles: 0, problemes: [] };
@@ -531,6 +680,22 @@ function verifierPalier(numero) {
       rapport.problemes.push(`${partie.id} : mots inconnus ${inconnus.join(", ")}`);
       continue;
     }
+
+    // L'app ne charge que les paliers débloqués : un mot d'un palier plus
+    // haut rendrait la partie invalide au chargement.
+    const enAvance = partie.mots.filter((id) => Number(mots.get(id).palier) > numero);
+    if (enAvance.length) {
+      rapport.problemes.push(`${partie.id} : mots d'un palier supérieur ${enAvance.join(", ")}`);
+      continue;
+    }
+
+    // §06 — jamais les mêmes mots dans la grille et dans les mots croisés.
+    const partages = partie.mots.filter((id) => jeuDe.has(id) && jeuDe.get(id) !== partie.jeu);
+    if (partages.length) {
+      rapport.problemes.push(`${partie.id} : mots aussi servis par l'autre jeu ${partages.join(", ")}`);
+      continue;
+    }
+    for (const id of partie.mots) jeuDe.set(id, partie.jeu);
 
     const enMajuscules = partie.mots.map((id) => lettresDe(mots.get(id).en));
 
@@ -599,9 +764,11 @@ function principal(argv) {
   if (verifier) {
     const numeros = palier ? [palier] : [...Array(56).keys()].map((i) => i + 1);
     let total = 0, resolubles = 0, fichiers = 0;
+    const mots = tousLesMots();
+    const jeuDe = new Map();
 
     for (const n of numeros) {
-      const rapport = verifierPalier(n);
+      const rapport = verifierPalier(n, mots, jeuDe);
       if (!rapport) continue;
       fichiers += 1;
       total += rapport.total;
@@ -617,15 +784,14 @@ function principal(argv) {
     process.exit(resolubles === total ? 0 : 1);
   }
 
-  if (!palier) {
-    console.error("Usage : node tools/generateur.js --palier 3");
+  if (!argv.includes("--generer")) {
+    console.error("Usage : node tools/generateur.js --generer");
     console.error("        node tools/generateur.js --verify  [--palier 3]");
     console.error("        node tools/generateur.js --croises [--palier 3]");
     process.exit(1);
   }
 
-  console.log(`Génération du palier ${palier}\n`);
-  genererPalier(palier);
+  genererTout();
 }
 
 // Exécuté directement, pas importé.
