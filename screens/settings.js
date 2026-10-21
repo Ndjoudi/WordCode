@@ -9,13 +9,15 @@ import { exporter, importer, nomFichierSauvegarde,
 import { aujourdhui } from "../services/leitner.js";
 import { identifiant, definirIdentifiant, sauvegarderEnLigne,
          restaurerDepuisLigne } from "../services/sync.js";
+import { nombreDeTrous, TROUS_MIN, TROUS_MAX } from "../services/video-builder.js";
 
 /** Objectif quotidien : bornes raisonnables, pas de saisie libre. */
 const OBJECTIF_MIN = 1;
 const OBJECTIF_MAX = 20;
 
 /**
- * Settings — export/import, objectif quotidien, erreurs de contenu (§11).
+ * Settings — export/import, objectif quotidien, trous de la vidéo, erreurs de
+ * contenu (§11).
  * @param {{state:object, contenu:object, aller:Function, enregistrer:Function}} contexte
  * @returns {HTMLElement}
  */
@@ -182,6 +184,36 @@ export function Settings({ state, contenu, aller, enregistrer }) {
              onClick: () => changer(1) }),
   );
   corps.append(reglage);
+
+  corps.append(Divider({ spacing: 5 }));
+
+  /* --- Vidéo : mots à retrouver ----------------------------------------- */
+
+  const titreTrous = document.createElement("h2");
+  titreTrous.className = "settings__title";
+  titreTrous.textContent = "Vidéo — phrase à trous";
+  corps.append(titreTrous);
+
+  const trous = nombreDeTrous(state);
+  const changerTrous = (delta) => {
+    const valeur = Math.min(Math.max(trous + delta, TROUS_MIN), TROUS_MAX);
+    if (valeur === trous) return;
+    enregistrer({
+      ...state,
+      progression: { ...state.progression, trous_video: valeur },
+    });
+  };
+
+  const reglageTrous = document.createElement("div");
+  reglageTrous.className = "settings__objectif";
+  reglageTrous.append(
+    Button({ label: "−", variant: "secondary", disabled: trous <= TROUS_MIN,
+             onClick: () => changerTrous(-1) }),
+    Counter({ value: trous, label: "mots à retrouver" }),
+    Button({ label: "+", variant: "secondary", disabled: trous >= TROUS_MAX,
+             onClick: () => changerTrous(1) }),
+  );
+  corps.append(reglageTrous);
 
   corps.append(Divider({ spacing: 5 }));
 

@@ -3,12 +3,12 @@ import { Button } from "../components/atoms/button.js";
 import { Spinner } from "../components/atoms/spinner.js";
 import { Toast } from "../components/atoms/toast.js";
 import { MCQ } from "../components/molecules/mcq.js";
-import { WordOrder } from "../components/molecules/word-order.js";
+import { ClozeChoice } from "../components/molecules/cloze-choice.js";
 import { InputAnswer } from "../components/molecules/input-answer.js";
 import { VideoPlayer } from "../components/organisms/video-player.js";
 import { normaliserVideo, composerPhrase, appliquerPhrase, avancement,
          composerQuizVideo, estVue, marquerVue } from "../services/video-builder.js";
-import { recupererTranscription } from "../services/api.js";
+import { recupererTranscription, traduire } from "../services/api.js";
 import { chargerVideos, ajouterVideo } from "../services/store.js";
 import { aujourdhui } from "../services/leitner.js";
 
@@ -19,7 +19,7 @@ const DUREE_VERDICT = 1400;
  * Video — section §10 (README §2, §13).
  *
  * La conférence se joue **une phrase à la fois**, puis s'arrête. Deux jeux sur
- * cette phrase, au choix : remettre les mots dans l'ordre, ou l'écrire en
+ * cette phrase, au choix : retrouver les mots qui manquent, ou l'écrire en
  * entier. Jamais de micro — l'utilisateur reconstruit, il ne parle pas.
  *
  * @param {{state:object, contenu:object, aller:Function, enregistrer:Function}} contexte
@@ -32,7 +32,9 @@ export function Video({ state, contenu, aller, enregistrer }) {
   const today = aujourdhui();
   let videos = chargerVideos();
   let choisie = null;
-  let mode = "ordre";
+  let mode = "trous";
+  /** Traductions déjà demandées pendant la séance : un seul appel par phrase. */
+  const traductions = new Map();
   /** Phrases passées pendant CETTE séance — jamais enregistrées : une phrase
    *  ratée doit revenir la prochaine fois. */
   let sautees = new Set();
@@ -222,7 +224,9 @@ export function Video({ state, contenu, aller, enregistrer }) {
 
     rendreBarre(barre, exercice.rang);
     zoneJeu.replaceChildren();
-    zoneJeu.append(barreDOutils(exercice, barre, zoneJeu));
+    const zoneTraduction = document.createElement("p");
+    zoneTraduction.className = "video-screen__traduction";
+    zoneJeu.append(barreDOutils(exercice, barre, zoneJeu, zoneTraduction), zoneTraduction);
 
     const apres = ({ correct }) => {
       state = appliquerPhrase({ state, slug: choisie.slug, rang: exercice.rang,
@@ -239,8 +243,10 @@ export function Video({ state, contenu, aller, enregistrer }) {
       zoneJeu.append(choixApresErreur(exercice, barre, zoneJeu));
     };
 
-    zoneJeu.append(mode === "ordre"
-      ? WordOrder({ tokens: exercice.tokens, expected: exercice.attendu, onSubmit: apres })
+    zoneJeu.append(mode === "trous"
+      ? ClozeChoice({ parts: exercice.parties, choices: exercice.choix,
+                      expected: exercice.reponses, sentence: exercice.attendu,
+                      onSubmit: apres })
       // Pas de micro ici : l'exercice est d'écrire ce qu'on entend.
       : InputAnswer({ prompt: null, expected: exercice.attendu, micro: false,
                       onAudio: () => commandes?.jouer(exercice.debut, exercice.fin),
@@ -270,8 +276,8 @@ export function Video({ state, contenu, aller, enregistrer }) {
     return zone;
   };
 
-  /** Réécouter, et basculer d'un jeu à l'autre. */
-  const barreDOutils = (exercice, barre, zoneJeu) => {
+  /** Réécouter, traduire, et basculer d'un jeu à l'autre. */
+  const barreDOutils = (exercice, barre, zoneJeu, zoneTraduction) => {
     const zone = document.createElement("div");
     zone.className = "video-screen__outils";
 
@@ -280,11 +286,31 @@ export function Video({ state, contenu, aller, enregistrer }) {
       onClick: () => commandes?.jouer(exercice.debut, exercice.fin),
     }));
 
+    // La traduction n'est jamais montrée d'office : c'est une aide qu'on
+    // demande, pas la réponse posée à côté de l'exercice.
+    const traduction = Button({
+      label: "Traduire", variant: "secondary",
+      onClick: async () => {
+        if (zoneTraduction.textContent) { zoneTraduction.textContent = ""; return; }
+        const cle = `${choisie.slug}:${exercice.rang}`;
+        if (!traductions.has(cle)) {
+          traduction.disabled = true;
+          const reponse = await traduire(exercice.attendu);
+          traduction.disabled = false;
+          const fr = reponse.ok ? reponse.donnees?.phrase_fr : null;
+          if (!fr) { signaler(reponse.erreur ?? "Traduction indisponible."); return; }
+          traductions.set(cle, fr);
+        }
+        zoneTraduction.textContent = traductions.get(cle);
+      },
+    });
+    zone.append(traduction);
+
     zone.append(Button({
-      label: mode === "ordre" ? "Écrire la phrase" : "Remettre dans l'ordre",
+      label: mode === "trous" ? "Écrire la phrase" : "Phrase à trous",
       variant: "ghost",
       onClick: () => {
-        mode = mode === "ordre" ? "ecriture" : "ordre";
+        mode = mode === "trous" ? "ecriture" : "trous";
         rendrePhrase(barre, zoneJeu);
       },
     }));

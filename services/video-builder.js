@@ -3,7 +3,7 @@
  *
  * La vidéo joue UNE phrase, puis s'arrête. Deux jeux sur cette phrase :
  *
- *   ordre    — remettre les mots mélangés dans le bon ordre (`WordOrder`)
+ *   trous    — quelques mots manquent, on les choisit dans une liste (`ClozeChoice`)
  *   ecriture — écrire la phrase entière (`InputAnswer`)
  *
  * Aucun micro : l'utilisateur ne parle pas, il reconstruit.
@@ -17,7 +17,24 @@
 import { aujourdhui } from "./leitner.js";
 
 /** Les deux jeux, tels qu'ils apparaissent dans l'écran. */
-export const MODES = ["ordre", "ecriture"];
+export const MODES = ["trous", "ecriture"];
+
+/**
+ * Nombre de mots retirés d'une phrase, réglable dans les Réglages (§11).
+ *
+ * Le réglage est le vrai levier de difficulté : on monte quand ça devient
+ * facile. Au-delà de six, on retombe sur la phrase à reconstruire entière —
+ * c'est ce qu'il fallait éviter.
+ */
+export const TROUS_MIN = 1;
+export const TROUS_MAX = 6;
+export const TROUS_DEFAUT = 3;
+
+/**
+ * Mots en trop dans la liste. Sans eux, on résout par élimination sans lire
+ * la phrase : le dernier trou se remplit tout seul.
+ */
+export const LEURRES_TROUS = 3;
 
 /**
  * Marge ajoutée à la fin d'un segment, en secondes.
@@ -115,29 +132,78 @@ export function avancement(video, state) {
 }
 
 /**
- * Jetons mélangés d'une phrase, pour la remise en ordre.
+ * Nombre de trous demandé, ramené dans les bornes.
  *
- * La ponctuation reste collée à son mot : « stress? » est un jeton. C'est ce
- * que fait le jeu dont l'utilisateur est parti, et `estCorrect` normalise la
- * ponctuation de toute façon.
+ * @param {object} state
+ * @returns {number}
+ */
+export function nombreDeTrous(state) {
+  const brut = Number(state?.progression?.trous_video);
+  if (!Number.isFinite(brut)) return TROUS_DEFAUT;
+  return Math.min(Math.max(Math.round(brut), TROUS_MIN), TROUS_MAX);
+}
+
+/** Sépare la ponctuation collée au mot : « stress? » → « stress » + « ? ». */
+function decouperJeton(jeton) {
+  const [, avant, mot, apres] = /^([^A-Za-z0-9]*)(.*?)([^A-Za-z0-9]*)$/.exec(jeton);
+  return { avant, mot, apres };
+}
+
+/**
+ * Compose une phrase à trous.
  *
- * Un mélange qui rendrait l'ordre d'origine est rejoué : proposer la phrase
- * déjà dans l'ordre supprime l'exercice.
+ * Les trous visent d'abord les mots de contenu : masquer « the » ne teste rien.
+ * Une phrase qui en manque complète avec ses autres mots. Il reste toujours au
+ * moins un mot visible, sauf pour une phrase d'un seul mot.
+ *
+ * La ponctuation reste dans la phrase, hors du trou : on choisit « stress »,
+ * pas « stress? ».
  *
  * @param {string} texte
- * @param {Function} melanger  injectable pour les tests
- * @returns {string[]}
+ * @param {object} options
+ * @param {number} options.trous       nombre de trous voulu
+ * @param {string[]} options.reservoir mots pris ailleurs dans la conférence
+ * @param {Function} options.melanger
+ * @returns {{parties:Array<{texte:string}|{trou:number}>, reponses:string[], choix:string[]}}
  */
-export function jetonsMelanges(texte, melanger = melangerParDefaut) {
-  const jetons = String(texte ?? "").trim().split(/\s+/).filter(Boolean);
-  if (jetons.length < 3) return jetons;
+export function composerTrous(texte, { trous = TROUS_DEFAUT, reservoir = [],
+                                       melanger = melangerParDefaut } = {}) {
+  const jetons = String(texte ?? "").trim().split(/\s+/).filter(Boolean)
+    .map(decouperJeton);
+  const estMot = (j) => /^[A-Za-z][A-Za-z'-]*$/.test(j.mot);
 
-  for (let essai = 0; essai < 8; essai += 1) {
-    const propose = melanger(jetons);
-    if (propose.join(" ") !== jetons.join(" ")) return propose;
-  }
-  // Mélange impossible à distinguer (mots identiques) : on rend tel quel.
-  return jetons;
+  const mots = jetons.map((j, i) => ({ ...j, i })).filter(estMot);
+  const contenu = mots.filter((j) => j.mot.length >= 4 && !MOTS_OUTILS.has(j.mot.toLowerCase()));
+  const reste = mots.filter((j) => !contenu.includes(j));
+
+  const voulu = Math.min(trous, Math.max(1, mots.length - 1));
+  const choisis = [...melanger(contenu), ...melanger(reste)]
+    .slice(0, voulu)
+    .map((j) => j.i);
+  const masques = new Set(choisis);
+
+  const parties = [];
+  const reponses = [];
+  let courant = "";
+  jetons.forEach((jeton, i) => {
+    const espace = i > 0 ? " " : "";
+    if (!masques.has(i)) { courant += espace + jeton.avant + jeton.mot + jeton.apres; return; }
+    courant += espace + jeton.avant;
+    if (courant) parties.push({ texte: courant });
+    parties.push({ trou: reponses.length });
+    reponses.push(jeton.mot);
+    courant = jeton.apres;
+  });
+  if (courant) parties.push({ texte: courant });
+
+  // Les leurres viennent de la même conférence : un intrus venu d'un autre
+  // univers se repère sans réfléchir.
+  const presents = new Set(jetons.map((j) => j.mot.toLowerCase()));
+  const leurres = melanger([...new Set(reservoir)]
+    .filter((m) => !presents.has(m.toLowerCase())))
+    .slice(0, LEURRES_TROUS);
+
+  return { parties, reponses, choix: melanger([...reponses, ...leurres]) };
 }
 
 /**
@@ -146,12 +212,12 @@ export function jetonsMelanges(texte, melanger = melangerParDefaut) {
  * @param {object} options
  * @param {object} options.video
  * @param {object} options.state
- * @param {string} options.mode      "ordre" ou "ecriture"
+ * @param {string} options.mode      "trous" ou "ecriture"
  * @param {Function} options.melanger
  * @param {number[]} options.ignorer   phrases passées pendant la séance
  * @returns {{verrouille:boolean, raison:?string, exercice:?object}}
  */
-export function composerPhrase({ video, state, mode = "ordre",
+export function composerPhrase({ video, state, mode = "trous",
                                  melanger = melangerParDefaut, ignorer = [] } = {}) {
   if (!video?.phrases?.length) {
     return { verrouille: true, raison: "Aucune conférence chargée.", exercice: null };
@@ -159,6 +225,13 @@ export function composerPhrase({ video, state, mode = "ordre",
 
   const rang = phraseCourante(video, state, ignorer);
   const phrase = video.phrases[rang];
+  const trous = mode === "trous"
+    ? composerTrous(phrase.texte, {
+        trous: nombreDeTrous(state),
+        reservoir: video.phrases.filter((p) => p.i !== rang).flatMap((p) => motsUtiles(p.texte)),
+        melanger,
+      })
+    : null;
 
   return {
     verrouille: false,
@@ -171,7 +244,9 @@ export function composerPhrase({ video, state, mode = "ordre",
       // La marge évite de couper la dernière syllabe (voir MARGE_FIN_S).
       fin: phrase.fin + MARGE_FIN_S,
       attendu: phrase.texte,
-      tokens: mode === "ordre" ? jetonsMelanges(phrase.texte, melanger) : [],
+      parties: trous?.parties ?? [],
+      reponses: trous?.reponses ?? [],
+      choix: trous?.choix ?? [],
     },
   };
 }
