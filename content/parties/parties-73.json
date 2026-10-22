@@ -1,0 +1,437 @@
+{
+  "palier": 73,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_7301",
+      "palier": 73,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_575",
+      "phrase_en": "IF OPPORTUNITY DOES NOT KNOCK THEN BUILD A NEW DOOR",
+      "phrase_fr": "Si la chance ne frappe pas, construis une porte",
+      "contexte_fr": "Formule de Milton Berle.",
+      "mots": [
+        "m_01743",
+        "m_01745",
+        "m_01494",
+        "m_01036",
+        "m_01622"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "F",
+        "3": "O",
+        "4": "P",
+        "5": "R",
+        "6": "T",
+        "7": "U",
+        "8": "N",
+        "9": "Y",
+        "10": "D",
+        "11": "E",
+        "12": "S",
+        "13": "K",
+        "14": "C",
+        "15": "H",
+        "16": "B",
+        "17": "L",
+        "18": "A",
+        "19": "W",
+        "20": "M"
+      },
+      "croises": {
+        "grille": [
+          [
+            "m_01036",
+            null,
+            "m_01743",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01036",
+            null,
+            "m_01743",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01036",
+            null,
+            "m_01743",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01036",
+            null,
+            "m_01743",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01036",
+            null,
+            "m_01743",
+            null,
+            null,
+            null,
+            null,
+            "m_01745",
+            null
+          ],
+          [
+            "m_01036",
+            "m_01494",
+            "m_01743",
+            "m_01494",
+            "m_01494",
+            "m_01494",
+            "m_01494",
+            "m_01745",
+            null
+          ],
+          [
+            "m_01036",
+            null,
+            "m_01743",
+            null,
+            null,
+            null,
+            null,
+            "m_01745",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01745",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01622",
+            "m_01622",
+            "m_01622",
+            "m_01622",
+            "m_01622",
+            "m_01622"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01745",
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01494",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01743",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01036",
+            "x": 0,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01745",
+            "x": 7,
+            "y": 4,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01622",
+            "x": 3,
+            "y": 8,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 10
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_7302",
+      "palier": 73,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_589",
+      "phrase_en": "LIFE BEGINS AT THE VERY END OF YOUR COMFORT ZONE",
+      "phrase_fr": "La vie commence là où finit ta zone de confort",
+      "contexte_fr": "Formule de Neale Donald Walsch.",
+      "mots": [
+        "m_01736",
+        "m_01722",
+        "m_01587",
+        "m_01420",
+        "m_01633"
+      ],
+      "alphabet": {
+        "1": "L",
+        "2": "I",
+        "3": "F",
+        "4": "E",
+        "5": "B",
+        "6": "G",
+        "7": "N",
+        "8": "S",
+        "9": "A",
+        "10": "T",
+        "11": "H",
+        "12": "V",
+        "13": "R",
+        "14": "Y",
+        "15": "D",
+        "16": "O",
+        "17": "U",
+        "18": "C",
+        "19": "M",
+        "20": "Z",
+        "21": "P"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01420",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01633",
+            "m_01633",
+            "m_01633",
+            "m_01633",
+            "m_01633",
+            "m_01633",
+            "m_01633"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01420",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01587",
+            null,
+            null,
+            "m_01420",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01587",
+            null,
+            null,
+            "m_01420",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01587",
+            null,
+            null,
+            "m_01420",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01736",
+            "m_01736",
+            "m_01587",
+            "m_01736",
+            "m_01736",
+            "m_01420",
+            "m_01736",
+            "m_01736",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01587",
+            null,
+            null,
+            "m_01420",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01587",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01587",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01722",
+            "m_01722",
+            "m_01722",
+            "m_01722",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01736",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01587",
+            "x": 2,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01420",
+            "x": 5,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01633",
+            "x": 5,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_01722",
+            "x": 1,
+            "y": 10,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 12,
+        "hauteur": 11
+      },
+      "verifie": true
+    }
+  ]
+}

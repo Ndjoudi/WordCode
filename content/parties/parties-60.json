@@ -1,0 +1,419 @@
+{
+  "palier": 60,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_6001",
+      "palier": 60,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_465",
+      "phrase_en": "THE EXPERT IN ANYTHING WAS ONCE A CURIOUS BEGINNER",
+      "phrase_fr": "L'expert en tout domaine fut d'abord un curieux",
+      "contexte_fr": "La curiosité précède la compétence.",
+      "mots": [
+        "m_01087",
+        "m_01096",
+        "m_00610",
+        "m_00894",
+        "m_00990"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "X",
+        "5": "P",
+        "6": "R",
+        "7": "I",
+        "8": "N",
+        "9": "A",
+        "10": "Y",
+        "11": "G",
+        "12": "W",
+        "13": "S",
+        "14": "O",
+        "15": "C",
+        "16": "U",
+        "17": "B",
+        "18": "L",
+        "19": "D",
+        "20": "M"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01087",
+            "m_01087",
+            "m_01087",
+            "m_01087",
+            "m_01087"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00894",
+            null,
+            null,
+            "m_00990",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00894",
+            null,
+            null,
+            "m_00990",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00894",
+            null,
+            null,
+            "m_00990",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00610",
+            "m_00610",
+            "m_00894",
+            "m_00610",
+            "m_00610",
+            "m_00990",
+            "m_00610",
+            "m_00610"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00894",
+            null,
+            null,
+            "m_00990",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00894",
+            null,
+            null,
+            "m_00990",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00894",
+            null,
+            null,
+            "m_00990",
+            null,
+            null
+          ],
+          [
+            "m_01096",
+            "m_01096",
+            "m_01096",
+            "m_01096",
+            "m_01096",
+            "m_01096",
+            "m_01096",
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00610",
+            "x": 4,
+            "y": 4,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_00894",
+            "x": 6,
+            "y": 1,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_00990",
+            "x": 9,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01096",
+            "x": 0,
+            "y": 8,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01087",
+            "x": 7,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          }
+        ],
+        "largeur": 12,
+        "hauteur": 9
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_6002",
+      "palier": 60,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_477",
+      "phrase_en": "THE WORLD IS A BOOK AND THOSE WHO STAY READ ONE PAGE",
+      "phrase_fr": "Le monde est un livre et qui ne voyage pas n'en lit qu'une page",
+      "contexte_fr": "Attribué à saint Augustin.",
+      "mots": [
+        "m_01097",
+        "m_01080",
+        "m_01018",
+        "m_00929",
+        "m_00963"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "W",
+        "5": "O",
+        "6": "R",
+        "7": "L",
+        "8": "D",
+        "9": "I",
+        "10": "S",
+        "11": "A",
+        "12": "B",
+        "13": "K",
+        "14": "N",
+        "15": "Y",
+        "16": "P",
+        "17": "G",
+        "18": "M",
+        "19": "U",
+        "20": "C"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01080",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01080",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01080",
+            null,
+            "m_00929",
+            null
+          ],
+          [
+            null,
+            "m_01097",
+            "m_01018",
+            "m_01097",
+            "m_01097",
+            "m_01080",
+            "m_01097",
+            "m_00929",
+            "m_01097"
+          ],
+          [
+            null,
+            null,
+            "m_01018",
+            null,
+            null,
+            "m_01080",
+            null,
+            "m_00929",
+            null
+          ],
+          [
+            "m_00963",
+            "m_00963",
+            "m_00963",
+            "m_00963",
+            null,
+            null,
+            null,
+            "m_00929",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01018",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01018",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01018",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01018",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01018",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01097",
+            "x": 1,
+            "y": 3,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_01018",
+            "x": 2,
+            "y": 3,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_01080",
+            "x": 5,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00929",
+            "x": 7,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00963",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 11
+      },
+      "verifie": true
+    }
+  ]
+}

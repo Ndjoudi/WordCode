@@ -1,0 +1,406 @@
+{
+  "palier": 68,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_6801",
+      "palier": 68,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_516",
+      "phrase_en": "EVERY EXPERT WAS ONCE A COMPLETE BEGINNER",
+      "phrase_fr": "Tout expert a d'abord été un débutant",
+      "contexte_fr": "Rappel encourageant : personne ne naît compétent.",
+      "mots": [
+        "m_01458",
+        "m_01460",
+        "m_00771",
+        "m_01358",
+        "m_00859"
+      ],
+      "alphabet": {
+        "1": "E",
+        "2": "V",
+        "3": "R",
+        "4": "Y",
+        "5": "X",
+        "6": "P",
+        "7": "T",
+        "8": "W",
+        "9": "A",
+        "10": "S",
+        "11": "O",
+        "12": "N",
+        "13": "C",
+        "14": "M",
+        "15": "L",
+        "16": "B",
+        "17": "G",
+        "18": "I",
+        "19": "H",
+        "20": "D",
+        "21": "U"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00859",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01458",
+            null,
+            "m_00859",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01458",
+            null,
+            "m_00859",
+            null,
+            "m_01460",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00771",
+            "m_00771",
+            "m_01458",
+            "m_00771",
+            "m_00859",
+            "m_00771",
+            "m_01460",
+            "m_00771"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01458",
+            null,
+            "m_00859",
+            null,
+            "m_01460",
+            null
+          ],
+          [
+            "m_01358",
+            "m_01358",
+            "m_01358",
+            "m_01358",
+            "m_01358",
+            "m_01358",
+            null,
+            "m_00859",
+            null,
+            "m_01460",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01458",
+            null,
+            null,
+            null,
+            "m_01460",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01458",
+            null,
+            null,
+            null,
+            "m_01460",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01460",
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00771",
+            "x": 3,
+            "y": 3,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01458",
+            "x": 5,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01460",
+            "x": 9,
+            "y": 2,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01358",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00859",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 11,
+        "hauteur": 9
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_6802",
+      "palier": 68,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_534",
+      "phrase_en": "IT IS NEVER TOO LATE TO BECOME WHAT YOU MIGHT BE",
+      "phrase_fr": "Il n'est jamais trop tard pour devenir ce qu'on aurait pu être",
+      "contexte_fr": "Formule de George Eliot.",
+      "mots": [
+        "m_01490",
+        "m_01482",
+        "m_01444",
+        "m_01275",
+        "m_00552"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "T",
+        "3": "S",
+        "4": "N",
+        "5": "E",
+        "6": "V",
+        "7": "R",
+        "8": "O",
+        "9": "L",
+        "10": "A",
+        "11": "B",
+        "12": "C",
+        "13": "M",
+        "14": "W",
+        "15": "H",
+        "16": "Y",
+        "17": "U",
+        "18": "G",
+        "19": "D"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01275",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01275",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01275",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01490",
+            null,
+            null,
+            "m_01275",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01482",
+            "m_01490",
+            "m_01482",
+            "m_01482",
+            "m_01275",
+            "m_01482",
+            "m_01482",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01490",
+            null,
+            null,
+            "m_01275",
+            null,
+            null,
+            null
+          ],
+          [
+            "m_00552",
+            "m_00552",
+            "m_00552",
+            "m_00552",
+            "m_00552",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01444",
+            "m_01444",
+            "m_01444",
+            "m_01444",
+            "m_01444",
+            "m_01444",
+            "m_01444"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01490",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01482",
+            "x": 3,
+            "y": 4,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_01490",
+            "x": 4,
+            "y": 3,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01444",
+            "x": 4,
+            "y": 7,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01275",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00552",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 4
+          }
+        ],
+        "largeur": 11,
+        "hauteur": 9
+      },
+      "verifie": true
+    }
+  ]
+}

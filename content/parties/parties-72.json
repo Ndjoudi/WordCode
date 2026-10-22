@@ -1,0 +1,400 @@
+{
+  "palier": 72,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_7201",
+      "palier": 72,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_531",
+      "phrase_en": "WORK QUIETLY AND LET YOUR SUCCESS MAKE ALL THE NOISE",
+      "phrase_fr": "Travaille en silence et laisse ton succès faire le bruit",
+      "contexte_fr": "Conseil de discrétion.",
+      "mots": [
+        "m_01699",
+        "m_01671",
+        "m_01603",
+        "m_00570",
+        "m_01513"
+      ],
+      "alphabet": {
+        "1": "W",
+        "2": "O",
+        "3": "R",
+        "4": "K",
+        "5": "Q",
+        "6": "U",
+        "7": "I",
+        "8": "E",
+        "9": "T",
+        "10": "L",
+        "11": "Y",
+        "12": "A",
+        "13": "N",
+        "14": "D",
+        "15": "S",
+        "16": "C",
+        "17": "M",
+        "18": "H",
+        "19": "P",
+        "20": "Z"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "m_01513",
+            "m_01603",
+            "m_01603",
+            "m_01603",
+            "m_01603",
+            "m_01603",
+            "m_01603"
+          ],
+          [
+            null,
+            "m_01699",
+            null,
+            "m_01513",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01699",
+            null,
+            "m_01513",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01671",
+            "m_01699",
+            "m_01671",
+            "m_01671",
+            "m_01671",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01513",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01513",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00570",
+            "m_00570",
+            "m_00570",
+            "m_00570",
+            "m_00570",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01603",
+            "x": 3,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          },
+          {
+            "mot": "m_01513",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01671",
+            "x": 0,
+            "y": 3,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_00570",
+            "x": 3,
+            "y": 6,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01699",
+            "x": 1,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          }
+        ],
+        "largeur": 10,
+        "hauteur": 7
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_7202",
+      "palier": 72,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_430",
+      "phrase_en": "A GOAL WITHOUT A PLAN IS SIMPLY A QUIET WISH",
+      "phrase_fr": "Un but sans plan n'est qu'un souhait",
+      "contexte_fr": "Formule attribuée à Saint-Exupéry.",
+      "mots": [
+        "m_01700",
+        "m_01651",
+        "m_01616",
+        "m_00866",
+        "m_01418"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "G",
+        "3": "O",
+        "4": "L",
+        "5": "W",
+        "6": "I",
+        "7": "T",
+        "8": "H",
+        "9": "U",
+        "10": "P",
+        "11": "N",
+        "12": "S",
+        "13": "M",
+        "14": "Y",
+        "15": "Q",
+        "16": "E",
+        "17": "R",
+        "18": "D",
+        "19": "C",
+        "20": "B",
+        "21": "F"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            "m_01651",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01651",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01651",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01651",
+            null,
+            null,
+            null,
+            "m_01418",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01700",
+            "m_01700",
+            "m_01651",
+            "m_01700",
+            "m_01700",
+            "m_01700",
+            "m_01700",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01651",
+            null,
+            null,
+            null,
+            "m_01418",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01418",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00866",
+            "m_00866",
+            "m_00866",
+            "m_00866",
+            "m_00866",
+            "m_00866",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01418",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01418",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01616",
+            "m_01616",
+            "m_01616",
+            "m_01418",
+            "m_01616",
+            "m_01616",
+            "m_01616",
+            "m_01616"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01616",
+            "x": 3,
+            "y": 10,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01418",
+            "x": 6,
+            "y": 3,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01700",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_01651",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00866",
+            "x": 3,
+            "y": 7,
+            "dir": "H",
+            "num": 4
+          }
+        ],
+        "largeur": 11,
+        "hauteur": 11
+      },
+      "verifie": true
+    }
+  ]
+}

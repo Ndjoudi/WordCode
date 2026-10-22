@@ -1,0 +1,173 @@
+{
+  "palier": 104,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_10405",
+      "palier": 104,
+      "ordre": 5,
+      "jeu": "grille",
+      "phrase_id": "ph_555",
+      "phrase_en": "NOTHING WORTH HAVING EVER COMES QUICKLY OR EASILY",
+      "phrase_fr": "Rien qui vaille ne vient vite ni facilement",
+      "contexte_fr": "Éloge de la patience et de l'effort.",
+      "mots": [
+        "m_03262",
+        "m_03268",
+        "m_02082",
+        "m_03146",
+        "m_02905"
+      ],
+      "alphabet": {
+        "1": "N",
+        "2": "O",
+        "3": "T",
+        "4": "H",
+        "5": "I",
+        "6": "G",
+        "7": "W",
+        "8": "R",
+        "9": "A",
+        "10": "V",
+        "11": "E",
+        "12": "C",
+        "13": "M",
+        "14": "S",
+        "15": "Q",
+        "16": "U",
+        "17": "K",
+        "18": "L",
+        "19": "Y",
+        "20": "B"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02905",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02082",
+            "m_02082",
+            "m_02082",
+            "m_02082",
+            "m_02082",
+            "m_02082"
+          ],
+          [
+            null,
+            "m_03262",
+            null,
+            null,
+            null,
+            "m_02905",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_03262",
+            null,
+            null,
+            null,
+            "m_02905",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_03146",
+            "m_03262",
+            "m_03146",
+            "m_03146",
+            "m_03146",
+            "m_02905",
+            "m_03146",
+            "m_03146",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_03262",
+            null,
+            null,
+            null,
+            "m_02905",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_03268",
+            "m_03268",
+            "m_03268",
+            "m_03268",
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_03146",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_02905",
+            "x": 5,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_02082",
+            "x": 4,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_03262",
+            "x": 1,
+            "y": 2,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_03268",
+            "x": 3,
+            "y": 6,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 10,
+        "hauteur": 7
+      },
+      "verifie": true
+    }
+  ]
+}

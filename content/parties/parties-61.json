@@ -1,0 +1,368 @@
+{
+  "palier": 61,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_6101",
+      "palier": 61,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_510",
+      "phrase_en": "THE ONLY REAL FAILURE IS THE ONE FROM WHICH WE LEARN NOTHING",
+      "phrase_fr": "Le seul vrai échec est celui dont on n'apprend rien",
+      "contexte_fr": "L'erreur utile n'est pas un échec.",
+      "mots": [
+        "m_01144",
+        "m_01117",
+        "m_00872",
+        "m_01064",
+        "m_01043"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "O",
+        "5": "N",
+        "6": "L",
+        "7": "Y",
+        "8": "R",
+        "9": "A",
+        "10": "F",
+        "11": "I",
+        "12": "U",
+        "13": "S",
+        "14": "M",
+        "15": "W",
+        "16": "C",
+        "17": "G",
+        "18": "D",
+        "19": "P"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01064"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00872",
+            null,
+            null,
+            null,
+            "m_01064"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00872",
+            null,
+            null,
+            null,
+            "m_01064"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00872",
+            null,
+            "m_01117",
+            null,
+            "m_01064"
+          ],
+          [
+            null,
+            "m_01043",
+            null,
+            "m_00872",
+            null,
+            "m_01117",
+            null,
+            "m_01064"
+          ],
+          [
+            "m_01144",
+            "m_01043",
+            "m_01144",
+            "m_00872",
+            "m_01144",
+            "m_01117",
+            "m_01144",
+            "m_01064"
+          ],
+          [
+            null,
+            "m_01043",
+            null,
+            "m_00872",
+            null,
+            "m_01117",
+            null,
+            "m_01064"
+          ],
+          [
+            null,
+            "m_01043",
+            null,
+            null,
+            null,
+            "m_01117",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01043",
+            null,
+            null,
+            null,
+            "m_01117",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01117",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01144",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01117",
+            "x": 5,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01064",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00872",
+            "x": 3,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01043",
+            "x": 1,
+            "y": 4,
+            "dir": "V",
+            "num": 4
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 10
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_6102",
+      "palier": 61,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_468",
+      "phrase_en": "NEVER LET A GOOD PROBLEM GO COMPLETELY TO WASTE",
+      "phrase_fr": "Ne gâche jamais un bon problème",
+      "contexte_fr": "Toute difficulté enseigne quelque chose.",
+      "mots": [
+        "m_01106",
+        "m_01127",
+        "m_00806",
+        "m_01077",
+        "m_01094"
+      ],
+      "alphabet": {
+        "1": "N",
+        "2": "E",
+        "3": "V",
+        "4": "R",
+        "5": "L",
+        "6": "T",
+        "7": "A",
+        "8": "G",
+        "9": "O",
+        "10": "D",
+        "11": "P",
+        "12": "B",
+        "13": "M",
+        "14": "C",
+        "15": "Y",
+        "16": "W",
+        "17": "S",
+        "18": "I",
+        "19": "H"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00806",
+            null,
+            "m_01077",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01127",
+            null,
+            null,
+            null,
+            "m_00806",
+            null,
+            "m_01077",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01127",
+            null,
+            null,
+            null,
+            "m_00806",
+            null,
+            "m_01106",
+            "m_01106",
+            "m_01106",
+            "m_01106",
+            "m_01106"
+          ],
+          [
+            null,
+            "m_01127",
+            null,
+            null,
+            null,
+            "m_00806",
+            null,
+            "m_01077",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01127",
+            null,
+            null,
+            null,
+            "m_00806",
+            null,
+            "m_01077",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01094",
+            "m_01127",
+            "m_01094",
+            "m_01094",
+            "m_01094",
+            "m_00806",
+            "m_01094",
+            "m_01077",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01127",
+            null,
+            null,
+            null,
+            "m_00806",
+            null,
+            "m_01077",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01094",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00806",
+            "x": 5,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01077",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01127",
+            "x": 1,
+            "y": 1,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01106",
+            "x": 7,
+            "y": 2,
+            "dir": "H",
+            "num": 4
+          }
+        ],
+        "largeur": 12,
+        "hauteur": 7
+      },
+      "verifie": true
+    }
+  ]
+}

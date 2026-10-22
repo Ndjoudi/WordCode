@@ -1,0 +1,285 @@
+{
+  "palier": 66,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_6601",
+      "palier": 66,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_569",
+      "phrase_en": "WE RISE BY LIFTING OTHER PEOPLE AROUND US EACH DAY",
+      "phrase_fr": "On s'élève en élevant les autres",
+      "contexte_fr": "Formule attribuée à Robert Ingersoll.",
+      "mots": [
+        "m_01395",
+        "m_01372",
+        "m_01241",
+        "m_01341",
+        "m_01011"
+      ],
+      "alphabet": {
+        "1": "W",
+        "2": "E",
+        "3": "R",
+        "4": "I",
+        "5": "S",
+        "6": "B",
+        "7": "Y",
+        "8": "L",
+        "9": "F",
+        "10": "T",
+        "11": "N",
+        "12": "G",
+        "13": "O",
+        "14": "H",
+        "15": "P",
+        "16": "A",
+        "17": "U",
+        "18": "D",
+        "19": "C"
+      },
+      "croises": null,
+      "verifie": true
+    },
+    {
+      "id": "p_6602",
+      "palier": 66,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_539",
+      "phrase_en": "THE ROAD TO SUCCESS IS ALWAYS UNDER SOME KIND OF WORK",
+      "phrase_fr": "La route du succès est toujours en travaux",
+      "contexte_fr": "Rien n'est jamais achevé.",
+      "mots": [
+        "m_01367",
+        "m_01373",
+        "m_01180",
+        "m_00624",
+        "m_01261"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "R",
+        "5": "O",
+        "6": "A",
+        "7": "D",
+        "8": "S",
+        "9": "U",
+        "10": "C",
+        "11": "I",
+        "12": "L",
+        "13": "W",
+        "14": "Y",
+        "15": "N",
+        "16": "M",
+        "17": "K",
+        "18": "F",
+        "19": "Z",
+        "20": "P"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01373"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01373"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01373"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00624",
+            null,
+            null,
+            null,
+            "m_01373"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01261",
+            null,
+            null,
+            "m_00624",
+            null,
+            null,
+            null,
+            "m_01373"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01261",
+            "m_01180",
+            "m_01180",
+            "m_00624",
+            "m_01180",
+            "m_01180",
+            "m_01180",
+            "m_01373"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01261",
+            null,
+            null,
+            "m_00624",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01261",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01261",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01261",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01261",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01367",
+            "m_01367",
+            "m_01367",
+            "m_01367",
+            "m_01367",
+            "m_01367",
+            "m_01367",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01180",
+            "x": 3,
+            "y": 5,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01261",
+            "x": 3,
+            "y": 4,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01367",
+            "x": 0,
+            "y": 11,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01373",
+            "x": 10,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00624",
+            "x": 6,
+            "y": 3,
+            "dir": "V",
+            "num": 2
+          }
+        ],
+        "largeur": 11,
+        "hauteur": 12
+      },
+      "verifie": true
+    }
+  ]
+}

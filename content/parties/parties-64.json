@@ -1,0 +1,394 @@
+{
+  "palier": 64,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_6401",
+      "palier": 64,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_501",
+      "phrase_en": "THE ONLY JOURNEY IS THE ONE THAT GOES DEEP WITHIN",
+      "phrase_fr": "Le seul voyage est celui vers l'intérieur",
+      "contexte_fr": "Formule de Rilke.",
+      "mots": [
+        "m_01258",
+        "m_01293",
+        "m_01222",
+        "m_00768",
+        "m_00643"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "O",
+        "5": "N",
+        "6": "L",
+        "7": "Y",
+        "8": "J",
+        "9": "U",
+        "10": "R",
+        "11": "I",
+        "12": "S",
+        "13": "A",
+        "14": "G",
+        "15": "D",
+        "16": "P",
+        "17": "W",
+        "18": "C",
+        "19": "M"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00768",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00768",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00768",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00768",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01258",
+            "m_01258",
+            "m_01258",
+            "m_00768",
+            "m_01258",
+            "m_01258"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00643",
+            null,
+            "m_00768",
+            null,
+            null
+          ],
+          [
+            "m_01222",
+            null,
+            null,
+            null,
+            "m_00643",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01222",
+            null,
+            null,
+            null,
+            "m_00643",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01222",
+            null,
+            null,
+            null,
+            "m_00643",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01222",
+            "m_01293",
+            "m_01293",
+            "m_01293",
+            "m_00643",
+            "m_01293",
+            "m_01293",
+            null,
+            null
+          ],
+          [
+            "m_01222",
+            null,
+            null,
+            null,
+            "m_00643",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01222",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01293",
+            "x": 0,
+            "y": 9,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00643",
+            "x": 4,
+            "y": 4,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01258",
+            "x": 3,
+            "y": 4,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_01222",
+            "x": 0,
+            "y": 6,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_00768",
+            "x": 6,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 12
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_6402",
+      "palier": 64,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_432",
+      "phrase_en": "A PERSON WHO NEVER MADE A MISTAKE TRIED NOTHING NEW",
+      "phrase_fr": "Qui n'a jamais fait d'erreur n'a jamais rien tenté",
+      "contexte_fr": "Formule d'Einstein.",
+      "mots": [
+        "m_01288",
+        "m_01257",
+        "m_01149",
+        "m_00824",
+        "m_01247"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "P",
+        "3": "E",
+        "4": "R",
+        "5": "S",
+        "6": "O",
+        "7": "N",
+        "8": "W",
+        "9": "H",
+        "10": "V",
+        "11": "M",
+        "12": "D",
+        "13": "I",
+        "14": "T",
+        "15": "K",
+        "16": "G",
+        "17": "B",
+        "18": "L",
+        "19": "C",
+        "20": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01257",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01149",
+            "m_01257",
+            "m_01149",
+            "m_01149",
+            "m_01247",
+            "m_01149",
+            "m_01149",
+            "m_01149"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01257",
+            null,
+            null,
+            "m_01247",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01257",
+            null,
+            null,
+            "m_01247",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01288",
+            "m_01288",
+            "m_01288",
+            "m_01288",
+            null,
+            "m_01247",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01257",
+            null,
+            null,
+            "m_01247",
+            null,
+            null,
+            null
+          ],
+          [
+            "m_00824",
+            "m_00824",
+            "m_00824",
+            "m_00824",
+            "m_00824",
+            "m_00824",
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01149",
+            "x": 3,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_01257",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00824",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01247",
+            "x": 7,
+            "y": 1,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01288",
+            "x": 2,
+            "y": 4,
+            "dir": "H",
+            "num": 4
+          }
+        ],
+        "largeur": 11,
+        "hauteur": 7
+      },
+      "verifie": true
+    }
+  ]
+}

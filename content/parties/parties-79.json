@@ -1,0 +1,393 @@
+{
+  "palier": 79,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_7901",
+      "palier": 79,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_480",
+      "phrase_en": "IF YOU JUDGE PEOPLE YOU HAVE NO TIME TO LOVE THEM",
+      "phrase_fr": "Si tu juges les gens, tu n'as pas le temps de les aimer",
+      "contexte_fr": "Formule de Mère Teresa.",
+      "mots": [
+        "m_02048",
+        "m_02011",
+        "m_01897",
+        "m_01764",
+        "m_01975"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "F",
+        "3": "Y",
+        "4": "O",
+        "5": "U",
+        "6": "J",
+        "7": "D",
+        "8": "G",
+        "9": "E",
+        "10": "P",
+        "11": "L",
+        "12": "H",
+        "13": "A",
+        "14": "V",
+        "15": "N",
+        "16": "T",
+        "17": "M",
+        "18": "S",
+        "19": "B",
+        "20": "R",
+        "21": "C",
+        "22": "K"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            "m_02011",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02011",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01975",
+            "m_01975",
+            "m_01975",
+            "m_01975",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02011",
+            null,
+            "m_01897",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02011",
+            null,
+            "m_01897",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02048",
+            "m_02011",
+            "m_02048",
+            "m_01897",
+            "m_02048",
+            "m_01764",
+            "m_02048",
+            "m_02048"
+          ],
+          [
+            null,
+            null,
+            "m_02011",
+            null,
+            "m_01897",
+            null,
+            "m_01764",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01897",
+            null,
+            "m_01764",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01897",
+            null,
+            "m_01764",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01764",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01764",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01764",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02048",
+            "x": 1,
+            "y": 5,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_02011",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01764",
+            "x": 6,
+            "y": 5,
+            "dir": "V",
+            "num": 5
+          },
+          {
+            "mot": "m_01897",
+            "x": 4,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01975",
+            "x": 0,
+            "y": 2,
+            "dir": "H",
+            "num": 2
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 12
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_7902",
+      "palier": 79,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_579",
+      "phrase_en": "EDUCATION IS THE MOST POWERFUL WEAPON TO CHANGE ANYTHING",
+      "phrase_fr": "L'éducation est l'arme la plus puissante pour changer le monde",
+      "contexte_fr": "Formule de Nelson Mandela.",
+      "mots": [
+        "m_02050",
+        "m_02004",
+        "m_01905",
+        "m_01780",
+        "m_01961"
+      ],
+      "alphabet": {
+        "1": "E",
+        "2": "D",
+        "3": "U",
+        "4": "C",
+        "5": "A",
+        "6": "T",
+        "7": "I",
+        "8": "O",
+        "9": "N",
+        "10": "S",
+        "11": "H",
+        "12": "M",
+        "13": "P",
+        "14": "W",
+        "15": "R",
+        "16": "F",
+        "17": "L",
+        "18": "G",
+        "19": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01780",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02004",
+            "m_02004",
+            "m_02004",
+            "m_02004",
+            null,
+            "m_01780",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01961",
+            null,
+            null,
+            "m_01780",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01961",
+            null,
+            null,
+            "m_01780",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02050",
+            "m_01961",
+            "m_02050",
+            "m_02050",
+            "m_01780",
+            "m_02050",
+            "m_02050"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01961",
+            null,
+            null,
+            "m_01780",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01961",
+            null,
+            null,
+            "m_01780",
+            null,
+            null
+          ],
+          [
+            "m_01905",
+            "m_01905",
+            "m_01905",
+            "m_01905",
+            "m_01905",
+            "m_01905",
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02050",
+            "x": 2,
+            "y": 4,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01780",
+            "x": 6,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01961",
+            "x": 3,
+            "y": 1,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01905",
+            "x": 0,
+            "y": 7,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02004",
+            "x": 1,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 8
+      },
+      "verifie": true
+    }
+  ]
+}

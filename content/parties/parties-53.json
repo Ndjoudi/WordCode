@@ -1,0 +1,654 @@
+{
+  "palier": 53,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_5301",
+      "palier": 53,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_485",
+      "phrase_en": "THE ONLY WAY OUT OF A HARD TIME IS STRAIGHT THROUGH IT",
+      "phrase_fr": "La seule sortie d'un moment difficile est de le traverser",
+      "contexte_fr": "Il n'y a pas de raccourci.",
+      "mots": [
+        "m_00722",
+        "m_00705",
+        "m_00273",
+        "m_00584",
+        "m_00351"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "O",
+        "5": "N",
+        "6": "L",
+        "7": "Y",
+        "8": "W",
+        "9": "A",
+        "10": "U",
+        "11": "F",
+        "12": "R",
+        "13": "D",
+        "14": "I",
+        "15": "M",
+        "16": "S",
+        "17": "G",
+        "18": "C",
+        "19": "P"
+      },
+      "croises": null,
+      "verifie": true
+    },
+    {
+      "id": "p_5302",
+      "palier": 53,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_519",
+      "phrase_en": "EVERY BEGINNING IS ONLY A CONTINUATION OF SOMETHING",
+      "phrase_fr": "Tout début n'est que la suite de quelque chose",
+      "contexte_fr": "Vers de Wislawa Szymborska.",
+      "mots": [
+        "m_00732",
+        "m_00738",
+        "m_00668",
+        "m_00179",
+        "m_00499"
+      ],
+      "alphabet": {
+        "1": "E",
+        "2": "V",
+        "3": "R",
+        "4": "Y",
+        "5": "B",
+        "6": "G",
+        "7": "I",
+        "8": "N",
+        "9": "S",
+        "10": "O",
+        "11": "L",
+        "12": "A",
+        "13": "C",
+        "14": "T",
+        "15": "U",
+        "16": "F",
+        "17": "M",
+        "18": "H",
+        "19": "K",
+        "20": "P",
+        "21": "D"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00179",
+            null,
+            null,
+            null
+          ],
+          [
+            "m_00732",
+            "m_00668",
+            "m_00668",
+            "m_00668",
+            "m_00668",
+            "m_00668",
+            null,
+            null,
+            null
+          ],
+          [
+            "m_00732",
+            null,
+            null,
+            null,
+            null,
+            "m_00179",
+            null,
+            null,
+            null
+          ],
+          [
+            "m_00732",
+            null,
+            null,
+            null,
+            null,
+            "m_00179",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00499",
+            null,
+            "m_00179",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00499",
+            null,
+            "m_00179",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00738",
+            "m_00499",
+            "m_00738",
+            "m_00179",
+            "m_00738",
+            "m_00738",
+            "m_00738"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00499",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00499",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00499",
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00738",
+            "x": 2,
+            "y": 6,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_00179",
+            "x": 5,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00668",
+            "x": 0,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_00499",
+            "x": 3,
+            "y": 4,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_00732",
+            "x": 0,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 10
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_5303",
+      "palier": 53,
+      "ordre": 3,
+      "jeu": "grille",
+      "phrase_id": "ph_484",
+      "phrase_en": "WE MUST BE WILLING TO LET GO OF THE LIFE WE PLANNED",
+      "phrase_fr": "Il faut savoir renoncer à la vie qu'on avait prévue",
+      "contexte_fr": "Formule de Joseph Campbell.",
+      "mots": [
+        "m_00741",
+        "m_00708",
+        "m_00551",
+        "m_00645",
+        "m_00317"
+      ],
+      "alphabet": {
+        "1": "W",
+        "2": "E",
+        "3": "M",
+        "4": "U",
+        "5": "S",
+        "6": "T",
+        "7": "B",
+        "8": "I",
+        "9": "L",
+        "10": "N",
+        "11": "G",
+        "12": "O",
+        "13": "F",
+        "14": "H",
+        "15": "P",
+        "16": "A",
+        "17": "D",
+        "18": "R",
+        "19": "C",
+        "20": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            "m_00317",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_00708",
+            null,
+            "m_00317",
+            null,
+            null,
+            null,
+            "m_00551",
+            null,
+            null
+          ],
+          [
+            "m_00708",
+            "m_00741",
+            "m_00317",
+            "m_00741",
+            "m_00741",
+            "m_00741",
+            "m_00551",
+            "m_00741",
+            null
+          ],
+          [
+            "m_00708",
+            null,
+            "m_00317",
+            null,
+            null,
+            null,
+            "m_00551",
+            null,
+            null
+          ],
+          [
+            "m_00708",
+            null,
+            "m_00317",
+            null,
+            null,
+            null,
+            "m_00551",
+            null,
+            null
+          ],
+          [
+            "m_00708",
+            null,
+            null,
+            null,
+            "m_00645",
+            "m_00645",
+            "m_00645",
+            "m_00645",
+            "m_00645"
+          ],
+          [
+            "m_00708",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00551",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00551",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00551",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00741",
+            "x": 0,
+            "y": 2,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_00551",
+            "x": 6,
+            "y": 1,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_00708",
+            "x": 0,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00645",
+            "x": 4,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00317",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 9
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_5305",
+      "palier": 53,
+      "ordre": 5,
+      "jeu": "grille",
+      "phrase_id": "ph_407",
+      "phrase_en": "THE SUN HIMSELF IS WEAK WHEN HE FIRST RISES IN THE SKY",
+      "phrase_fr": "Le soleil lui-même est faible à son lever",
+      "contexte_fr": "Formule de Charles Dickens.",
+      "mots": [
+        "m_00745",
+        "m_00724",
+        "m_00595",
+        "m_00699",
+        "m_00466"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "S",
+        "5": "U",
+        "6": "N",
+        "7": "I",
+        "8": "M",
+        "9": "L",
+        "10": "F",
+        "11": "W",
+        "12": "A",
+        "13": "K",
+        "14": "R",
+        "15": "Y",
+        "16": "P",
+        "17": "O",
+        "18": "C",
+        "19": "D"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "m_00466",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00466",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_00745",
+            null,
+            "m_00466",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_00745",
+            null,
+            "m_00466",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_00745",
+            null,
+            "m_00466",
+            null,
+            "m_00699",
+            null,
+            null
+          ],
+          [
+            "m_00724",
+            "m_00745",
+            "m_00724",
+            "m_00466",
+            "m_00724",
+            "m_00699",
+            "m_00724",
+            "m_00724"
+          ],
+          [
+            null,
+            "m_00745",
+            null,
+            null,
+            null,
+            "m_00699",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00699",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00699",
+            null,
+            null
+          ],
+          [
+            "m_00595",
+            "m_00595",
+            "m_00595",
+            "m_00595",
+            "m_00595",
+            "m_00595",
+            "m_00595",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00699",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00724",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_00699",
+            "x": 5,
+            "y": 4,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_00595",
+            "x": 0,
+            "y": 9,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00466",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00745",
+            "x": 1,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 11
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_5307",
+      "palier": 53,
+      "ordre": 7,
+      "jeu": "grille",
+      "phrase_id": "ph_514",
+      "phrase_en": "CROSS THAT BRIDGE WHEN YOU COME TO IT",
+      "phrase_fr": "On verra le moment venu",
+      "contexte_fr": "Ne t'inquiète pas d'un problème qui n'existe pas encore.",
+      "mots": [
+        "m_00743",
+        "m_00739",
+        "m_00675",
+        "t_00567",
+        "m_00649"
+      ],
+      "alphabet": {
+        "1": "C",
+        "2": "R",
+        "3": "O",
+        "4": "S",
+        "5": "T",
+        "6": "H",
+        "7": "A",
+        "8": "B",
+        "9": "I",
+        "10": "D",
+        "11": "G",
+        "12": "E",
+        "13": "W",
+        "14": "N",
+        "15": "Y",
+        "16": "U",
+        "17": "M",
+        "18": "L",
+        "19": "P"
+      },
+      "croises": null,
+      "verifie": true
+    }
+  ]
+}

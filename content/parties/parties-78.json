@@ -1,0 +1,436 @@
+{
+  "palier": 78,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_7801",
+      "palier": 78,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_553",
+      "phrase_en": "THE BEST PREPARATION FOR TOMORROW IS DOING WELL TODAY",
+      "phrase_fr": "La meilleure préparation pour demain est de bien faire aujourd'hui",
+      "contexte_fr": "Formule de H. Jackson Brown.",
+      "mots": [
+        "m_01971",
+        "m_01999",
+        "m_01517",
+        "m_01839",
+        "m_01107"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "B",
+        "5": "S",
+        "6": "P",
+        "7": "R",
+        "8": "A",
+        "9": "I",
+        "10": "O",
+        "11": "N",
+        "12": "F",
+        "13": "M",
+        "14": "W",
+        "15": "D",
+        "16": "G",
+        "17": "L",
+        "18": "Y",
+        "19": "C",
+        "20": "U"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01971",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01971",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01971",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01839",
+            null,
+            "m_01971",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01839",
+            null,
+            "m_01971",
+            null,
+            null,
+            "m_01517",
+            null
+          ],
+          [
+            "m_01999",
+            "m_01999",
+            "m_01839",
+            "m_01999",
+            "m_01971",
+            "m_01999",
+            "m_01999",
+            "m_01517",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01839",
+            null,
+            null,
+            null,
+            null,
+            "m_01517",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01839",
+            null,
+            null,
+            null,
+            null,
+            "m_01517",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01839",
+            null,
+            null,
+            null,
+            "m_01107",
+            "m_01107",
+            "m_01107"
+          ],
+          [
+            null,
+            null,
+            "m_01839",
+            null,
+            null,
+            null,
+            null,
+            "m_01517",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01517",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01517",
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01999",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01517",
+            "x": 7,
+            "y": 4,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01839",
+            "x": 2,
+            "y": 3,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01971",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01107",
+            "x": 6,
+            "y": 8,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 12
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_7802",
+      "palier": 78,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_559",
+      "phrase_en": "THE MOST DIFFICULT THING IS SIMPLY TO BEGIN SOMEWHERE",
+      "phrase_fr": "Le plus difficile est simplement de commencer",
+      "contexte_fr": "Le premier pas est le plus coûteux.",
+      "mots": [
+        "m_01953",
+        "m_01981",
+        "m_01938",
+        "m_01903",
+        "m_00911"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "M",
+        "5": "O",
+        "6": "S",
+        "7": "D",
+        "8": "I",
+        "9": "F",
+        "10": "C",
+        "11": "U",
+        "12": "L",
+        "13": "N",
+        "14": "G",
+        "15": "P",
+        "16": "Y",
+        "17": "B",
+        "18": "W",
+        "19": "R",
+        "20": "A"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01903",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01903",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00911",
+            "m_00911",
+            "m_00911",
+            "m_00911",
+            "m_00911",
+            "m_01903",
+            "m_00911"
+          ],
+          [
+            null,
+            null,
+            "m_01981",
+            null,
+            null,
+            null,
+            null,
+            "m_01903",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01981",
+            null,
+            null,
+            null,
+            null,
+            "m_01903",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01981",
+            null,
+            null,
+            null,
+            null,
+            "m_01903",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01981",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01981",
+            null,
+            null,
+            "m_01953",
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01938",
+            "m_01938",
+            "m_01981",
+            "m_01938",
+            "m_01938",
+            "m_01953",
+            "m_01938",
+            "m_01938",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01953",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01953",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01953",
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01938",
+            "x": 0,
+            "y": 8,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01981",
+            "x": 2,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00911",
+            "x": 2,
+            "y": 2,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_01903",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01953",
+            "x": 5,
+            "y": 7,
+            "dir": "V",
+            "num": 3
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 12
+      },
+      "verifie": true
+    }
+  ]
+}

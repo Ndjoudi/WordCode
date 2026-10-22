@@ -1,0 +1,212 @@
+{
+  "palier": 65,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_6501",
+      "palier": 65,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_512",
+      "phrase_en": "WE SUFFER MORE IN IMAGINATION THAN WE DO IN REALITY",
+      "phrase_fr": "On souffre plus en imagination qu'en réalité",
+      "contexte_fr": "Formule de Sénèque.",
+      "mots": [
+        "m_01307",
+        "m_01328",
+        "m_01300",
+        "m_01177",
+        "m_01119"
+      ],
+      "alphabet": {
+        "1": "W",
+        "2": "E",
+        "3": "S",
+        "4": "U",
+        "5": "F",
+        "6": "R",
+        "7": "M",
+        "8": "O",
+        "9": "I",
+        "10": "N",
+        "11": "A",
+        "12": "G",
+        "13": "T",
+        "14": "H",
+        "15": "D",
+        "16": "L",
+        "17": "Y",
+        "18": "P",
+        "19": "C",
+        "20": "B"
+      },
+      "croises": null,
+      "verifie": true
+    },
+    {
+      "id": "p_6502",
+      "palier": 65,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_545",
+      "phrase_en": "IT IS BETTER TO FAIL AT WHAT YOU LOVE THAN SUCCEED",
+      "phrase_fr": "Mieux vaut échouer dans ce qu'on aime que réussir ailleurs",
+      "contexte_fr": "Formule de George Burns.",
+      "mots": [
+        "m_01311",
+        "m_01335",
+        "m_01208",
+        "m_01266",
+        "m_01279"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "T",
+        "3": "S",
+        "4": "B",
+        "5": "E",
+        "6": "R",
+        "7": "O",
+        "8": "F",
+        "9": "A",
+        "10": "L",
+        "11": "W",
+        "12": "H",
+        "13": "Y",
+        "14": "U",
+        "15": "V",
+        "16": "N",
+        "17": "C",
+        "18": "D",
+        "19": "X",
+        "20": "M",
+        "21": "P"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "m_01266",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01279",
+            "m_01279",
+            "m_01279",
+            "m_01279",
+            null
+          ],
+          [
+            null,
+            "m_01335",
+            null,
+            "m_01266",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01335",
+            null,
+            "m_01266",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01335",
+            null,
+            "m_01266",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01208",
+            "m_01208",
+            "m_01266",
+            "m_01208",
+            "m_01208",
+            "m_01208"
+          ],
+          [
+            null,
+            "m_01335",
+            null,
+            "m_01266",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01335",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01311",
+            "m_01335",
+            "m_01311",
+            "m_01311",
+            "m_01311",
+            "m_01311",
+            "m_01311"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01311",
+            "x": 0,
+            "y": 8,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01335",
+            "x": 1,
+            "y": 2,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01208",
+            "x": 1,
+            "y": 5,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01266",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01279",
+            "x": 2,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          }
+        ],
+        "largeur": 7,
+        "hauteur": 9
+      },
+      "verifie": true
+    }
+  ]
+}

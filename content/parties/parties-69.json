@@ -1,0 +1,374 @@
+{
+  "palier": 69,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_6901",
+      "palier": 69,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_420",
+      "phrase_en": "IF YOU WANT TO GO FAR THEN TRAVEL WITH OTHER PEOPLE",
+      "phrase_fr": "Si tu veux aller loin, voyage avec d'autres",
+      "contexte_fr": "Proverbe africain : seul on va vite, ensemble on va loin.",
+      "mots": [
+        "m_01543",
+        "m_01541",
+        "m_01121",
+        "m_01225",
+        "m_01287"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "F",
+        "3": "Y",
+        "4": "O",
+        "5": "U",
+        "6": "W",
+        "7": "A",
+        "8": "N",
+        "9": "T",
+        "10": "G",
+        "11": "R",
+        "12": "H",
+        "13": "E",
+        "14": "V",
+        "15": "L",
+        "16": "P",
+        "17": "D",
+        "18": "C",
+        "19": "B",
+        "20": "M",
+        "21": "S"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            "m_01287",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01287",
+            null,
+            null,
+            null,
+            null,
+            "m_01225",
+            null
+          ],
+          [
+            null,
+            "m_01287",
+            null,
+            null,
+            null,
+            null,
+            "m_01225",
+            null
+          ],
+          [
+            null,
+            "m_01287",
+            null,
+            null,
+            null,
+            null,
+            "m_01225",
+            null
+          ],
+          [
+            "m_01121",
+            "m_01287",
+            "m_01121",
+            "m_01121",
+            "m_01543",
+            "m_01121",
+            "m_01225",
+            "m_01121"
+          ],
+          [
+            null,
+            "m_01287",
+            null,
+            null,
+            "m_01543",
+            null,
+            "m_01225",
+            null
+          ],
+          [
+            null,
+            "m_01287",
+            null,
+            null,
+            "m_01543",
+            null,
+            "m_01225",
+            null
+          ],
+          [
+            null,
+            "m_01287",
+            null,
+            null,
+            "m_01543",
+            null,
+            "m_01225",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01543",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01541",
+            "m_01541",
+            "m_01541",
+            "m_01541",
+            "m_01541",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01543",
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01121",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_01287",
+            "x": 1,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01543",
+            "x": 4,
+            "y": 4,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_01225",
+            "x": 6,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01541",
+            "x": 2,
+            "y": 9,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 11
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_6902",
+      "palier": 69,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_571",
+      "phrase_en": "NEVER GIVE UP ON A DREAM BECAUSE OF THE TIME IT TAKES",
+      "phrase_fr": "N'abandonne pas un rêve à cause du temps qu'il demande",
+      "contexte_fr": "Formule d'Earl Nightingale.",
+      "mots": [
+        "m_01512",
+        "m_01544",
+        "m_01439",
+        "m_00854",
+        "m_01005"
+      ],
+      "alphabet": {
+        "1": "N",
+        "2": "E",
+        "3": "V",
+        "4": "R",
+        "5": "G",
+        "6": "I",
+        "7": "U",
+        "8": "P",
+        "9": "O",
+        "10": "A",
+        "11": "D",
+        "12": "M",
+        "13": "B",
+        "14": "C",
+        "15": "S",
+        "16": "F",
+        "17": "T",
+        "18": "H",
+        "19": "K",
+        "20": "L",
+        "21": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "m_01439",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01439",
+            null,
+            null,
+            null,
+            "m_00854"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01439",
+            null,
+            "m_01512",
+            null,
+            "m_00854"
+          ],
+          [
+            null,
+            "m_01544",
+            null,
+            "m_01439",
+            null,
+            "m_01512",
+            null,
+            "m_00854"
+          ],
+          [
+            "m_01005",
+            "m_01544",
+            "m_01005",
+            "m_01439",
+            "m_01005",
+            "m_01512",
+            "m_01005",
+            "m_00854"
+          ],
+          [
+            null,
+            "m_01544",
+            null,
+            "m_01439",
+            null,
+            "m_01512",
+            null,
+            "m_00854"
+          ],
+          [
+            null,
+            "m_01544",
+            null,
+            null,
+            null,
+            "m_01512",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01544",
+            null,
+            null,
+            null,
+            "m_01512",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01544",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01005",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01512",
+            "x": 5,
+            "y": 2,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01544",
+            "x": 1,
+            "y": 3,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_01439",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00854",
+            "x": 7,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 9
+      },
+      "verifie": true
+    }
+  ]
+}

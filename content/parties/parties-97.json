@@ -1,0 +1,424 @@
+{
+  "palier": 97,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_9701",
+      "palier": 97,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_582",
+      "phrase_en": "ALMOST EVERYTHING WILL WORK AGAIN IF YOU UNPLUG IT",
+      "phrase_fr": "Presque tout refonctionne si on le débranche un moment",
+      "contexte_fr": "Formule d'Anne Lamott, y compris toi.",
+      "mots": [
+        "m_02930",
+        "m_02907",
+        "m_02062",
+        "m_01445",
+        "m_02134"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "L",
+        "3": "M",
+        "4": "O",
+        "5": "S",
+        "6": "T",
+        "7": "E",
+        "8": "V",
+        "9": "R",
+        "10": "Y",
+        "11": "H",
+        "12": "I",
+        "13": "N",
+        "14": "G",
+        "15": "W",
+        "16": "K",
+        "17": "F",
+        "18": "U",
+        "19": "P",
+        "20": "C",
+        "21": "B"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02062",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02062",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02907",
+            null,
+            null,
+            "m_02062",
+            null,
+            null
+          ],
+          [
+            "m_01445",
+            "m_01445",
+            "m_01445",
+            "m_01445",
+            "m_01445",
+            "m_01445",
+            "m_01445",
+            null,
+            "m_02062",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02907",
+            null,
+            null,
+            "m_02062",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02907",
+            null,
+            null,
+            "m_02062",
+            null,
+            "m_02134"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02930",
+            "m_02930",
+            "m_02907",
+            "m_02930",
+            "m_02930",
+            "m_02062",
+            "m_02930",
+            "m_02134"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02907",
+            null,
+            null,
+            null,
+            null,
+            "m_02134"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02907",
+            null,
+            null,
+            null,
+            null,
+            "m_02134"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02907",
+            null,
+            null,
+            null,
+            null,
+            "m_02134"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02930",
+            "x": 3,
+            "y": 6,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02907",
+            "x": 5,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_02062",
+            "x": 8,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01445",
+            "x": 0,
+            "y": 3,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_02134",
+            "x": 10,
+            "y": 5,
+            "dir": "V",
+            "num": 4
+          }
+        ],
+        "largeur": 11,
+        "hauteur": 10
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_9704",
+      "palier": 97,
+      "ordre": 4,
+      "jeu": "croises",
+      "phrase_id": "ph_549",
+      "phrase_en": "A GOOD BOOK IS A FRIEND THAT NEVER TURNS AWAY",
+      "phrase_fr": "Un bon livre est un ami qui ne se détourne jamais",
+      "contexte_fr": "Formule attribuée à Emerson.",
+      "mots": [
+        "m_02912",
+        "m_02931",
+        "m_02130",
+        "m_02514",
+        "m_02726"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "G",
+        "3": "O",
+        "4": "D",
+        "5": "B",
+        "6": "K",
+        "7": "I",
+        "8": "S",
+        "9": "F",
+        "10": "R",
+        "11": "E",
+        "12": "N",
+        "13": "T",
+        "14": "H",
+        "15": "V",
+        "16": "U",
+        "17": "W",
+        "18": "Y",
+        "19": "L",
+        "20": "P",
+        "21": "C"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02931",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02931",
+            null,
+            null,
+            "m_02130",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02931",
+            null,
+            null,
+            "m_02130",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02912",
+            "m_02931",
+            "m_02912",
+            "m_02912",
+            "m_02130",
+            "m_02912",
+            "m_02912",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02931",
+            null,
+            null,
+            "m_02130",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02931",
+            null,
+            null,
+            "m_02130",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_02726",
+            "m_02726",
+            "m_02726",
+            "m_02726",
+            "m_02726",
+            null,
+            "m_02514",
+            "m_02514",
+            "m_02514",
+            "m_02514",
+            "m_02514",
+            "m_02514",
+            "m_02514"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02130",
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02912",
+            "x": 3,
+            "y": 3,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_02931",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_02130",
+            "x": 7,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_02514",
+            "x": 6,
+            "y": 6,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02726",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 4
+          }
+        ],
+        "largeur": 13,
+        "hauteur": 8
+      },
+      "verifie": true
+    }
+  ]
+}

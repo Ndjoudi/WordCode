@@ -1,0 +1,571 @@
+{
+  "palier": 99,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_9901",
+      "palier": 99,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_554",
+      "phrase_en": "FORTUNE FAVOURS THE BRAVE WHO KEEP MOVING FORWARD",
+      "phrase_fr": "La fortune sourit aux audacieux qui avancent",
+      "contexte_fr": "Adage latin repris en anglais.",
+      "mots": [
+        "m_03050",
+        "m_03001",
+        "m_02484",
+        "m_02750",
+        "m_00774"
+      ],
+      "alphabet": {
+        "1": "F",
+        "2": "O",
+        "3": "R",
+        "4": "T",
+        "5": "U",
+        "6": "N",
+        "7": "E",
+        "8": "A",
+        "9": "V",
+        "10": "S",
+        "11": "H",
+        "12": "B",
+        "13": "W",
+        "14": "K",
+        "15": "P",
+        "16": "M",
+        "17": "I",
+        "18": "G",
+        "19": "D",
+        "20": "C",
+        "21": "L",
+        "22": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            "m_02484",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02484",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02484",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02484",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02750"
+          ],
+          [
+            "m_03001",
+            "m_03001",
+            "m_03001",
+            "m_03001",
+            "m_03001",
+            "m_03001",
+            null,
+            null,
+            "m_02750"
+          ],
+          [
+            null,
+            null,
+            "m_02484",
+            null,
+            null,
+            null,
+            "m_00774",
+            null,
+            "m_02750"
+          ],
+          [
+            null,
+            null,
+            "m_02484",
+            null,
+            null,
+            null,
+            "m_00774",
+            null,
+            "m_02750"
+          ],
+          [
+            null,
+            "m_03050",
+            "m_02484",
+            "m_03050",
+            "m_03050",
+            "m_03050",
+            "m_00774",
+            "m_03050",
+            "m_02750"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00774",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00774",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_03050",
+            "x": 1,
+            "y": 7,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02484",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_03001",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_02750",
+            "x": 8,
+            "y": 3,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00774",
+            "x": 6,
+            "y": 5,
+            "dir": "V",
+            "num": 4
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 10
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_9904",
+      "palier": 99,
+      "ordre": 4,
+      "jeu": "croises",
+      "phrase_id": "ph_588",
+      "phrase_en": "GREAT WORK COMES FROM LOVING WHAT YOU ACTUALLY DO",
+      "phrase_fr": "Le grand travail vient de l'amour de ce qu'on fait",
+      "contexte_fr": "Formule de Steve Jobs.",
+      "mots": [
+        "m_03039",
+        "m_03021",
+        "m_01492",
+        "m_02871",
+        "m_02429"
+      ],
+      "alphabet": {
+        "1": "G",
+        "2": "R",
+        "3": "E",
+        "4": "A",
+        "5": "T",
+        "6": "W",
+        "7": "O",
+        "8": "K",
+        "9": "C",
+        "10": "M",
+        "11": "S",
+        "12": "F",
+        "13": "L",
+        "14": "V",
+        "15": "I",
+        "16": "N",
+        "17": "H",
+        "18": "Y",
+        "19": "U",
+        "20": "D",
+        "21": "B",
+        "22": "P"
+      },
+      "croises": {
+        "grille": [
+          [
+            "m_03021",
+            null,
+            "m_02871",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_03021",
+            null,
+            "m_02871",
+            null,
+            null,
+            "m_01492",
+            null,
+            "m_02429"
+          ],
+          [
+            "m_03021",
+            null,
+            "m_02871",
+            null,
+            null,
+            "m_01492",
+            null,
+            "m_02429"
+          ],
+          [
+            "m_03021",
+            null,
+            "m_02871",
+            null,
+            null,
+            "m_01492",
+            null,
+            "m_02429"
+          ],
+          [
+            "m_03021",
+            "m_03039",
+            "m_02871",
+            "m_03039",
+            "m_03039",
+            "m_01492",
+            "m_03039",
+            "m_02429"
+          ],
+          [
+            "m_03021",
+            null,
+            "m_02871",
+            null,
+            null,
+            "m_01492",
+            null,
+            "m_02429"
+          ],
+          [
+            "m_03021",
+            null,
+            "m_02871",
+            null,
+            null,
+            "m_01492",
+            null,
+            "m_02429"
+          ],
+          [
+            "m_03021",
+            null,
+            "m_02871",
+            null,
+            null,
+            "m_01492",
+            null,
+            "m_02429"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02429"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_03039",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_03021",
+            "x": 0,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_02871",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_02429",
+            "x": 7,
+            "y": 1,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_01492",
+            "x": 5,
+            "y": 1,
+            "dir": "V",
+            "num": 3
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 9
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_9905",
+      "palier": 99,
+      "ordre": 5,
+      "jeu": "grille",
+      "phrase_id": "ph_525",
+      "phrase_en": "IF YOU CANNOT EXPLAIN IT SIMPLY YOU DO NOT KNOW IT",
+      "phrase_fr": "Si tu ne peux l'expliquer simplement, tu ne le sais pas",
+      "contexte_fr": "Attribué à Einstein.",
+      "mots": [
+        "m_03040",
+        "m_03047",
+        "m_00889",
+        "m_02629",
+        "m_01960"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "F",
+        "3": "Y",
+        "4": "O",
+        "5": "U",
+        "6": "C",
+        "7": "A",
+        "8": "N",
+        "9": "T",
+        "10": "E",
+        "11": "X",
+        "12": "P",
+        "13": "L",
+        "14": "S",
+        "15": "M",
+        "16": "D",
+        "17": "K",
+        "18": "W",
+        "19": "G",
+        "20": "R",
+        "21": "H",
+        "22": "B"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            "m_00889",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00889",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01960",
+            null,
+            "m_00889",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01960",
+            null,
+            "m_00889",
+            null,
+            null,
+            "m_03047",
+            null,
+            null
+          ],
+          [
+            "m_01960",
+            "m_03040",
+            "m_00889",
+            "m_03040",
+            "m_03040",
+            "m_03047",
+            "m_03040",
+            "m_03040"
+          ],
+          [
+            "m_01960",
+            null,
+            "m_00889",
+            null,
+            null,
+            "m_03047",
+            null,
+            null
+          ],
+          [
+            "m_01960",
+            null,
+            "m_00889",
+            null,
+            null,
+            "m_03047",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_03047",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02629",
+            "m_02629",
+            "m_02629",
+            "m_02629",
+            "m_02629",
+            "m_02629"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_03047",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_03047",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_03040",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_03047",
+            "x": 5,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_00889",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_02629",
+            "x": 2,
+            "y": 8,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01960",
+            "x": 0,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 11
+      },
+      "verifie": true
+    }
+  ]
+}

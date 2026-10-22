@@ -1,0 +1,592 @@
+{
+  "palier": 59,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_5901",
+      "palier": 59,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_550",
+      "phrase_en": "HARD TIMES CREATE STRONG PEOPLE WHO BUILD GOOD TIMES",
+      "phrase_fr": "Les temps durs forgent des gens forts",
+      "contexte_fr": "Cycle bien connu des générations.",
+      "mots": [
+        "m_01021",
+        "m_01032",
+        "m_00912",
+        "m_00965",
+        "m_00941"
+      ],
+      "alphabet": {
+        "1": "H",
+        "2": "A",
+        "3": "R",
+        "4": "D",
+        "5": "T",
+        "6": "I",
+        "7": "M",
+        "8": "E",
+        "9": "S",
+        "10": "C",
+        "11": "O",
+        "12": "N",
+        "13": "G",
+        "14": "P",
+        "15": "L",
+        "16": "W",
+        "17": "B",
+        "18": "U",
+        "19": "K"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "m_01021",
+            null,
+            null,
+            null,
+            null,
+            "m_00912",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01021",
+            null,
+            null,
+            null,
+            "m_00941",
+            "m_00941",
+            "m_00941",
+            "m_00941"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01021",
+            null,
+            null,
+            null,
+            null,
+            "m_00912",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00965",
+            "m_01021",
+            "m_00965",
+            "m_00965",
+            "m_00965",
+            "m_00965",
+            "m_00912",
+            "m_00965",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01021",
+            null,
+            null,
+            null,
+            null,
+            "m_00912",
+            null,
+            null
+          ],
+          [
+            "m_01032",
+            "m_01032",
+            "m_01032",
+            "m_01032",
+            null,
+            null,
+            null,
+            null,
+            "m_00912",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00912",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00965",
+            "x": 2,
+            "y": 3,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_00912",
+            "x": 8,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01021",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01032",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00941",
+            "x": 7,
+            "y": 1,
+            "dir": "H",
+            "num": 3
+          }
+        ],
+        "largeur": 11,
+        "hauteur": 7
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_5902",
+      "palier": 59,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_471",
+      "phrase_en": "THE HARDER YOU WORK THE LUCKIER YOU SEEM TO BECOME",
+      "phrase_fr": "Plus on travaille, plus on semble chanceux",
+      "contexte_fr": "La chance suit souvent l'effort.",
+      "mots": [
+        "m_01033",
+        "m_01025",
+        "m_00665",
+        "m_00428",
+        "m_00972"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "A",
+        "5": "R",
+        "6": "D",
+        "7": "Y",
+        "8": "O",
+        "9": "U",
+        "10": "W",
+        "11": "K",
+        "12": "L",
+        "13": "C",
+        "14": "I",
+        "15": "S",
+        "16": "M",
+        "17": "B",
+        "18": "P",
+        "19": "N"
+      },
+      "croises": {
+        "grille": [
+          [
+            "m_00665",
+            "m_00665",
+            "m_00665",
+            "m_00665",
+            "m_00665",
+            "m_00665",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01033",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01033",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01033",
+            null,
+            "m_00428",
+            null,
+            "m_01025",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00972",
+            "m_01033",
+            "m_00972",
+            "m_00428",
+            "m_00972",
+            "m_01025",
+            "m_00972",
+            "m_00972"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01033",
+            null,
+            "m_00428",
+            null,
+            "m_01025",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01033",
+            null,
+            "m_00428",
+            null,
+            "m_01025",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00428",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00428",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00428",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00972",
+            "x": 4,
+            "y": 4,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01033",
+            "x": 5,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00428",
+            "x": 7,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_00665",
+            "x": 0,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          },
+          {
+            "mot": "m_01025",
+            "x": 9,
+            "y": 3,
+            "dir": "V",
+            "num": 4
+          }
+        ],
+        "largeur": 12,
+        "hauteur": 10
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_5903",
+      "palier": 59,
+      "ordre": 3,
+      "jeu": "grille",
+      "phrase_id": "ph_499",
+      "phrase_en": "TRUST YOURSELF YOU KNOW MORE THAN YOU THINK YOU DO",
+      "phrase_fr": "Fais-toi confiance, tu en sais plus que tu ne crois",
+      "contexte_fr": "Formule de Benjamin Spock.",
+      "mots": [
+        "m_01016",
+        "m_01007",
+        "m_00915",
+        "m_00627",
+        "m_00834"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "R",
+        "3": "U",
+        "4": "S",
+        "5": "Y",
+        "6": "O",
+        "7": "E",
+        "8": "L",
+        "9": "F",
+        "10": "K",
+        "11": "N",
+        "12": "W",
+        "13": "M",
+        "14": "H",
+        "15": "A",
+        "16": "I",
+        "17": "D",
+        "18": "C",
+        "19": "P",
+        "20": "B"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            "m_00915",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00915",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00915",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00915",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_00627",
+            "m_00627",
+            "m_00915",
+            "m_00627",
+            "m_00627",
+            null,
+            null
+          ],
+          [
+            "m_01016",
+            null,
+            "m_00915",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01016",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01007"
+          ],
+          [
+            "m_01016",
+            "m_00834",
+            "m_00834",
+            "m_00834",
+            "m_00834",
+            "m_00834",
+            "m_01007"
+          ],
+          [
+            "m_01016",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01007"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01007"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01007"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01007"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00834",
+            "x": 0,
+            "y": 7,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01007",
+            "x": 6,
+            "y": 6,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01016",
+            "x": 0,
+            "y": 4,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00627",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_00915",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 7,
+        "hauteur": 12
+      },
+      "verifie": true
+    }
+  ]
+}

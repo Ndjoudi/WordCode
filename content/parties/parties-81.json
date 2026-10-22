@@ -1,0 +1,439 @@
+{
+  "palier": 81,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_8101",
+      "palier": 81,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_498",
+      "phrase_en": "THE GREATEST GLORY IS RISING EVERY TIME WE FALL DOWN",
+      "phrase_fr": "La plus grande gloire est de se relever à chaque chute",
+      "contexte_fr": "Formule attribuée à Confucius.",
+      "mots": [
+        "m_02108",
+        "m_02114",
+        "m_02069",
+        "m_01767",
+        "m_00747"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "G",
+        "5": "R",
+        "6": "A",
+        "7": "S",
+        "8": "L",
+        "9": "O",
+        "10": "Y",
+        "11": "I",
+        "12": "N",
+        "13": "V",
+        "14": "M",
+        "15": "W",
+        "16": "F",
+        "17": "D",
+        "18": "J",
+        "19": "C",
+        "20": "U",
+        "21": "P"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            "m_02069",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00747",
+            null
+          ],
+          [
+            null,
+            "m_02069",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00747",
+            null
+          ],
+          [
+            null,
+            "m_02069",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00747",
+            null
+          ],
+          [
+            null,
+            "m_02069",
+            null,
+            null,
+            null,
+            null,
+            "m_02108",
+            "m_02108",
+            "m_02108"
+          ],
+          [
+            null,
+            "m_02069",
+            null,
+            null,
+            "m_01767",
+            null,
+            null,
+            "m_00747",
+            null
+          ],
+          [
+            "m_02114",
+            "m_02069",
+            "m_02114",
+            "m_02114",
+            "m_01767",
+            "m_02114",
+            "m_02114",
+            "m_00747",
+            null
+          ],
+          [
+            null,
+            "m_02069",
+            null,
+            null,
+            "m_01767",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02069",
+            null,
+            null,
+            "m_01767",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01767",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02114",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02069",
+            "x": 1,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00747",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01767",
+            "x": 4,
+            "y": 4,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_02108",
+            "x": 6,
+            "y": 3,
+            "dir": "H",
+            "num": 3
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 9
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_8102",
+      "palier": 81,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_564",
+      "phrase_en": "NEVER BE AFRAID TO SIT AWHILE AND THINK QUIETLY",
+      "phrase_fr": "N'aie jamais peur de t'asseoir un moment pour réfléchir",
+      "contexte_fr": "Vers de Lorraine Hansberry.",
+      "mots": [
+        "m_02119",
+        "m_02115",
+        "m_01475",
+        "m_01804",
+        "m_02006"
+      ],
+      "alphabet": {
+        "1": "N",
+        "2": "E",
+        "3": "V",
+        "4": "R",
+        "5": "B",
+        "6": "A",
+        "7": "F",
+        "8": "I",
+        "9": "D",
+        "10": "T",
+        "11": "O",
+        "12": "S",
+        "13": "W",
+        "14": "H",
+        "15": "L",
+        "16": "K",
+        "17": "Q",
+        "18": "U",
+        "19": "Y",
+        "20": "C",
+        "21": "M",
+        "22": "P"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            "m_02119",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02119",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02119",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02119",
+            null,
+            null,
+            "m_02115",
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01475",
+            "m_01475",
+            "m_02119",
+            "m_01475",
+            "m_01475",
+            "m_02115",
+            "m_01475",
+            "m_01475",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02119",
+            null,
+            null,
+            "m_02115",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02115",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02115",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02006",
+            null,
+            "m_02115",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01804",
+            "m_02006",
+            "m_01804",
+            "m_01804",
+            "m_01804",
+            "m_01804",
+            "m_01804"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02006",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02006",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02006",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02006",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02006",
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01475",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_02115",
+            "x": 5,
+            "y": 3,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01804",
+            "x": 2,
+            "y": 9,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02006",
+            "x": 3,
+            "y": 8,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_02119",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 15
+      },
+      "verifie": true
+    }
+  ]
+}

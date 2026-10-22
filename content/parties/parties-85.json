@@ -1,0 +1,233 @@
+{
+  "palier": 85,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_8501",
+      "palier": 85,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_551",
+      "phrase_en": "KINDNESS IS A LANGUAGE WHICH EVERY PERSON CAN HEAR",
+      "phrase_fr": "La bonté est un langage que tous entendent",
+      "contexte_fr": "Formule de Mark Twain.",
+      "mots": [
+        "m_02310",
+        "m_02301",
+        "m_01070",
+        "m_02297",
+        "m_01899"
+      ],
+      "alphabet": {
+        "1": "K",
+        "2": "I",
+        "3": "N",
+        "4": "D",
+        "5": "E",
+        "6": "S",
+        "7": "A",
+        "8": "L",
+        "9": "G",
+        "10": "U",
+        "11": "W",
+        "12": "H",
+        "13": "C",
+        "14": "V",
+        "15": "R",
+        "16": "Y",
+        "17": "P",
+        "18": "O",
+        "19": "M",
+        "20": "T",
+        "21": "B"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01899",
+            "m_01899",
+            "m_01899",
+            "m_01899",
+            "m_01899"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01070",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01070",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01070",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02301",
+            null,
+            null,
+            null,
+            "m_01070",
+            null
+          ],
+          [
+            null,
+            "m_02297",
+            null,
+            "m_02301",
+            null,
+            null,
+            null,
+            "m_01070",
+            null
+          ],
+          [
+            "m_02310",
+            "m_02297",
+            "m_02310",
+            "m_02301",
+            "m_02310",
+            "m_02310",
+            "m_02310",
+            "m_01070",
+            null
+          ],
+          [
+            null,
+            "m_02297",
+            null,
+            "m_02301",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02297",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02297",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02297",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02297",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02297",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02310",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02297",
+            "x": 1,
+            "y": 5,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_01070",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01899",
+            "x": 4,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          },
+          {
+            "mot": "m_02301",
+            "x": 3,
+            "y": 4,
+            "dir": "V",
+            "num": 3
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 13
+      },
+      "verifie": true
+    }
+  ]
+}

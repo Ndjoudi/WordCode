@@ -1,0 +1,423 @@
+{
+  "palier": 75,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_7501",
+      "palier": 75,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_533",
+      "phrase_en": "A GREAT ATTITUDE BECOMES A GREAT DAY VERY QUICKLY",
+      "phrase_fr": "Une belle attitude fait vite une belle journée",
+      "contexte_fr": "L'humeur précède l'événement.",
+      "mots": [
+        "m_01829",
+        "m_01836",
+        "m_01476",
+        "m_01800",
+        "m_00885"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "G",
+        "3": "R",
+        "4": "E",
+        "5": "T",
+        "6": "I",
+        "7": "U",
+        "8": "D",
+        "9": "B",
+        "10": "C",
+        "11": "O",
+        "12": "M",
+        "13": "S",
+        "14": "Y",
+        "15": "V",
+        "16": "Q",
+        "17": "K",
+        "18": "L",
+        "19": "P",
+        "20": "N",
+        "21": "F",
+        "22": "H"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01829",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01829",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01829",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01836",
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            "m_01829",
+            null,
+            null
+          ],
+          [
+            "m_01476",
+            "m_01836",
+            "m_01476",
+            "m_01476",
+            "m_00885",
+            "m_01476",
+            "m_01476",
+            "m_01829",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01836",
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01836",
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01836",
+            null,
+            "m_01800",
+            "m_01800",
+            "m_01800",
+            "m_01800",
+            "m_01800",
+            "m_01800",
+            "m_01800"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01476",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_00885",
+            "x": 4,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01800",
+            "x": 3,
+            "y": 7,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01829",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01836",
+            "x": 1,
+            "y": 3,
+            "dir": "V",
+            "num": 2
+          }
+        ],
+        "largeur": 10,
+        "hauteur": 11
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_7502",
+      "palier": 75,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_557",
+      "phrase_en": "A QUIET MIND CAN SOLVE THE MOST DIFFICULT PROBLEM",
+      "phrase_fr": "Un esprit calme résout le plus difficile des problèmes",
+      "contexte_fr": "Le calme précède la clarté.",
+      "mots": [
+        "m_01831",
+        "m_01811",
+        "m_00376",
+        "m_01271",
+        "m_00158"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "Q",
+        "3": "U",
+        "4": "I",
+        "5": "E",
+        "6": "T",
+        "7": "M",
+        "8": "N",
+        "9": "D",
+        "10": "C",
+        "11": "S",
+        "12": "O",
+        "13": "L",
+        "14": "V",
+        "15": "H",
+        "16": "F",
+        "17": "P",
+        "18": "R",
+        "19": "B",
+        "20": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "m_01811",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01831",
+            "m_01831",
+            "m_01831",
+            "m_01831",
+            "m_01831",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01811",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00158",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01811",
+            null,
+            null,
+            null,
+            "m_00376",
+            null,
+            "m_00158",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01811",
+            null,
+            null,
+            null,
+            "m_00376",
+            null,
+            "m_00158",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01811",
+            "m_01271",
+            "m_01271",
+            "m_01271",
+            "m_00376",
+            "m_01271",
+            "m_00158",
+            "m_01271"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01811",
+            null,
+            null,
+            null,
+            "m_00376",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00376",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00376",
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01271",
+            "x": 3,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01811",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00376",
+            "x": 7,
+            "y": 3,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_01831",
+            "x": 0,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_00158",
+            "x": 9,
+            "y": 2,
+            "dir": "V",
+            "num": 3
+          }
+        ],
+        "largeur": 11,
+        "hauteur": 9
+      },
+      "verifie": true
+    }
+  ]
+}

@@ -1,0 +1,381 @@
+{
+  "palier": 67,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_6701",
+      "palier": 67,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_570",
+      "phrase_en": "YOU CANNOT GO BACK AND CHANGE THE VERY FIRST PART",
+      "phrase_fr": "On ne peut pas revenir changer le début",
+      "contexte_fr": "Mais on peut changer la fin.",
+      "mots": [
+        "m_01415",
+        "m_01434",
+        "m_01183",
+        "m_01304",
+        "m_01059"
+      ],
+      "alphabet": {
+        "1": "Y",
+        "2": "O",
+        "3": "U",
+        "4": "C",
+        "5": "A",
+        "6": "N",
+        "7": "T",
+        "8": "G",
+        "9": "B",
+        "10": "K",
+        "11": "D",
+        "12": "H",
+        "13": "E",
+        "14": "V",
+        "15": "R",
+        "16": "F",
+        "17": "I",
+        "18": "S",
+        "19": "P",
+        "20": "L"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            "m_01304",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01059",
+            "m_01059",
+            "m_01059",
+            "m_01059",
+            "m_01059",
+            null,
+            null,
+            null,
+            "m_01434",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01304",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01434",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01304",
+            null,
+            null,
+            null,
+            "m_01415",
+            "m_01415",
+            "m_01415",
+            "m_01415"
+          ],
+          [
+            null,
+            null,
+            "m_01304",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01434",
+            null
+          ],
+          [
+            null,
+            "m_01183",
+            "m_01304",
+            "m_01183",
+            "m_01183",
+            "m_01183",
+            "m_01183",
+            "m_01183",
+            "m_01434",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01304",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01434",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01304",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01183",
+            "x": 1,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01304",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01434",
+            "x": 8,
+            "y": 1,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01059",
+            "x": 0,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_01415",
+            "x": 6,
+            "y": 3,
+            "dir": "H",
+            "num": 4
+          }
+        ],
+        "largeur": 10,
+        "hauteur": 8
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_6702",
+      "palier": 67,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_418",
+      "phrase_en": "THE ONLY REAL MISTAKE IS THE ONE WE LEARN NOTHING FROM",
+      "phrase_fr": "La seule vraie erreur est celle dont on n'apprend rien",
+      "contexte_fr": "Attribué à Henry Ford.",
+      "mots": [
+        "m_01446",
+        "m_01404",
+        "m_01245",
+        "m_01306",
+        "m_00880"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "O",
+        "5": "N",
+        "6": "L",
+        "7": "Y",
+        "8": "R",
+        "9": "A",
+        "10": "M",
+        "11": "I",
+        "12": "S",
+        "13": "K",
+        "14": "W",
+        "15": "G",
+        "16": "F",
+        "17": "U",
+        "18": "P",
+        "19": "V",
+        "20": "D",
+        "21": "C"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01446",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01404",
+            "m_01404",
+            "m_01404",
+            "m_01404",
+            "m_01404",
+            "m_01404",
+            null,
+            "m_01245",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01446",
+            null,
+            "m_01245",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01446",
+            null,
+            "m_01245",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01306",
+            "m_01446",
+            "m_01306",
+            "m_01245",
+            "m_01306",
+            "m_01306",
+            "m_01306",
+            "m_01306"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01446",
+            null,
+            "m_01245",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00880",
+            "m_00880",
+            "m_00880",
+            "m_00880",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01245",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01306",
+            "x": 4,
+            "y": 4,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01245",
+            "x": 7,
+            "y": 1,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01446",
+            "x": 5,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01404",
+            "x": 0,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_00880",
+            "x": 7,
+            "y": 6,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 12,
+        "hauteur": 8
+      },
+      "verifie": true
+    }
+  ]
+}

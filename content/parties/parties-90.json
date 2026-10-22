@@ -1,0 +1,437 @@
+{
+  "palier": 90,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_9002",
+      "palier": 90,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_472",
+      "phrase_en": "A GOOD QUESTION IS WORTH MORE THAN A QUICK ANSWER",
+      "phrase_fr": "Une bonne question vaut mieux qu'une réponse rapide",
+      "contexte_fr": "Poser bien vaut mieux que répondre vite.",
+      "mots": [
+        "m_02583",
+        "m_02589",
+        "m_01988",
+        "m_02418",
+        "m_00883"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "G",
+        "3": "O",
+        "4": "D",
+        "5": "Q",
+        "6": "U",
+        "7": "E",
+        "8": "S",
+        "9": "T",
+        "10": "I",
+        "11": "N",
+        "12": "W",
+        "13": "R",
+        "14": "H",
+        "15": "M",
+        "16": "C",
+        "17": "K",
+        "18": "B",
+        "19": "P",
+        "20": "L",
+        "21": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01988",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_02418",
+            "m_02418",
+            "m_02418",
+            "m_02418",
+            "m_02418",
+            "m_02418",
+            "m_02418",
+            "m_02418",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01988",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01988",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01988",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02583",
+            "m_02583",
+            "m_01988",
+            "m_02583",
+            "m_02583",
+            "m_02583",
+            "m_02589",
+            "m_02583"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01988",
+            null,
+            null,
+            null,
+            "m_02589",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00883",
+            "m_00883",
+            "m_00883",
+            "m_00883",
+            "m_00883",
+            null,
+            "m_02589",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02589",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02589",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02589",
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02583",
+            "x": 2,
+            "y": 5,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_01988",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_02418",
+            "x": 0,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_02589",
+            "x": 8,
+            "y": 5,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_00883",
+            "x": 2,
+            "y": 7,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 10,
+        "hauteur": 11
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_9004",
+      "palier": 90,
+      "ordre": 4,
+      "jeu": "croises",
+      "phrase_id": "ph_546",
+      "phrase_en": "THINK LIGHTLY OF YOURSELF AND DEEPLY OF THE WORLD",
+      "phrase_fr": "Pense peu à toi et beaucoup au monde",
+      "contexte_fr": "Formule de Miyamoto Musashi.",
+      "mots": [
+        "m_02577",
+        "m_02598",
+        "m_02269",
+        "m_02532",
+        "m_01539"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "I",
+        "4": "N",
+        "5": "K",
+        "6": "L",
+        "7": "G",
+        "8": "Y",
+        "9": "O",
+        "10": "F",
+        "11": "U",
+        "12": "R",
+        "13": "S",
+        "14": "E",
+        "15": "A",
+        "16": "D",
+        "17": "P",
+        "18": "W",
+        "19": "C",
+        "20": "M"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02598",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01539",
+            "m_01539",
+            "m_01539",
+            "m_01539",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02598",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02577",
+            "m_02577",
+            "m_02577",
+            "m_02577",
+            "m_02577"
+          ],
+          [
+            null,
+            "m_02532",
+            null,
+            null,
+            "m_02598",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_02269",
+            "m_02532",
+            "m_02269",
+            "m_02269",
+            "m_02598",
+            "m_02269",
+            "m_02269",
+            "m_02269",
+            null
+          ],
+          [
+            null,
+            "m_02532",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02532",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02532",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02532",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02532",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02532",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02269",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02532",
+            "x": 1,
+            "y": 4,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_02598",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_02577",
+            "x": 4,
+            "y": 3,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_01539",
+            "x": 3,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 12
+      },
+      "verifie": true
+    }
+  ]
+}

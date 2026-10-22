@@ -1,0 +1,898 @@
+{
+  "palier": 57,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_5701",
+      "palier": 57,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_576",
+      "phrase_en": "KEEP GOING BECAUSE YOU DID NOT COME THIS FAR FOR THIS",
+      "phrase_fr": "Continue, tu n'es pas venu si loin pour t'arrêter là",
+      "contexte_fr": "Encouragement dans la difficulté.",
+      "mots": [
+        "m_00939",
+        "m_00934",
+        "m_00663",
+        "m_00891",
+        "m_00882"
+      ],
+      "alphabet": {
+        "1": "K",
+        "2": "E",
+        "3": "P",
+        "4": "G",
+        "5": "O",
+        "6": "I",
+        "7": "N",
+        "8": "B",
+        "9": "C",
+        "10": "A",
+        "11": "U",
+        "12": "S",
+        "13": "Y",
+        "14": "D",
+        "15": "T",
+        "16": "M",
+        "17": "H",
+        "18": "F",
+        "19": "R",
+        "20": "L"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00891",
+            "m_00891",
+            "m_00891",
+            "m_00891",
+            "m_00891",
+            "m_00891"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00882",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00882",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00882",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00934",
+            null,
+            null,
+            null,
+            null,
+            "m_00882",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00939",
+            "m_00939",
+            "m_00934",
+            "m_00939",
+            "m_00939",
+            "m_00939",
+            "m_00939",
+            "m_00882",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00934",
+            null,
+            null,
+            null,
+            null,
+            "m_00882",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00934",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00934",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_00663",
+            "m_00663",
+            "m_00663",
+            "m_00663",
+            "m_00663",
+            "m_00663",
+            "m_00663",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00934",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00934",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00939",
+            "x": 2,
+            "y": 5,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_00934",
+            "x": 4,
+            "y": 4,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00663",
+            "x": 0,
+            "y": 9,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_00882",
+            "x": 9,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00891",
+            "x": 9,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          }
+        ],
+        "largeur": 15,
+        "hauteur": 12
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_5702",
+      "palier": 57,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_543",
+      "phrase_en": "A NEGATIVE MIND WILL NEVER GIVE YOU A POSITIVE LIFE",
+      "phrase_fr": "Un esprit négatif ne donnera jamais une vie positive",
+      "contexte_fr": "L'état d'esprit conditionne l'existence.",
+      "mots": [
+        "m_00908",
+        "m_00933",
+        "m_00888",
+        "m_00860",
+        "m_00876"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "N",
+        "3": "E",
+        "4": "G",
+        "5": "T",
+        "6": "I",
+        "7": "V",
+        "8": "M",
+        "9": "D",
+        "10": "W",
+        "11": "L",
+        "12": "R",
+        "13": "Y",
+        "14": "O",
+        "15": "U",
+        "16": "P",
+        "17": "S",
+        "18": "F",
+        "19": "Q",
+        "20": "C"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00876",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00876",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00876",
+            null,
+            "m_00888"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00933",
+            "m_00908",
+            "m_00908",
+            "m_00908",
+            "m_00908",
+            "m_00876",
+            "m_00908",
+            "m_00888"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00933",
+            null,
+            null,
+            null,
+            null,
+            "m_00876",
+            null,
+            "m_00888"
+          ],
+          [
+            "m_00860",
+            "m_00860",
+            "m_00860",
+            "m_00860",
+            "m_00860",
+            "m_00860",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00888"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00933",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00888"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00933",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00888"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00933",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00908",
+            "x": 4,
+            "y": 3,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_00933",
+            "x": 4,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_00888",
+            "x": 11,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00860",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_00876",
+            "x": 9,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 12,
+        "hauteur": 9
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_5703",
+      "palier": 57,
+      "ordre": 3,
+      "jeu": "grille",
+      "phrase_id": "ph_495",
+      "phrase_en": "THE SMALLEST ACT OF KINDNESS IS WORTH MORE THAN PLANS",
+      "phrase_fr": "Le plus petit acte de bonté vaut mieux que la plus grande intention",
+      "contexte_fr": "D'après Kahlil Gibran.",
+      "mots": [
+        "m_00921",
+        "m_00945",
+        "m_00863",
+        "m_00660",
+        "m_00789"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "S",
+        "5": "M",
+        "6": "A",
+        "7": "L",
+        "8": "C",
+        "9": "O",
+        "10": "F",
+        "11": "K",
+        "12": "I",
+        "13": "N",
+        "14": "D",
+        "15": "W",
+        "16": "R",
+        "17": "P",
+        "18": "U",
+        "19": "X",
+        "20": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00863",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00863",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00660",
+            "m_00660",
+            "m_00660",
+            "m_00660",
+            "m_00660"
+          ],
+          [
+            null,
+            "m_00789",
+            null,
+            null,
+            "m_00863",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_00789",
+            null,
+            null,
+            "m_00863",
+            null,
+            "m_00945",
+            null
+          ],
+          [
+            null,
+            "m_00789",
+            null,
+            null,
+            "m_00863",
+            null,
+            "m_00945",
+            null
+          ],
+          [
+            "m_00921",
+            "m_00789",
+            "m_00921",
+            "m_00921",
+            "m_00863",
+            "m_00921",
+            "m_00945",
+            "m_00921"
+          ],
+          [
+            null,
+            "m_00789",
+            null,
+            null,
+            null,
+            null,
+            "m_00945",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00945",
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00921",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00863",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00945",
+            "x": 6,
+            "y": 4,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_00660",
+            "x": 3,
+            "y": 2,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_00789",
+            "x": 1,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 9
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_5705",
+      "palier": 57,
+      "ordre": 5,
+      "jeu": "grille",
+      "phrase_id": "ph_422",
+      "phrase_en": "A WISE PERSON LEARNS MORE FROM A FOOLISH QUESTION",
+      "phrase_fr": "Le sage apprend plus d'une question sotte que le sot d'une sage réponse",
+      "contexte_fr": "D'après Bruce Lee.",
+      "mots": [
+        "m_00915",
+        "m_00937",
+        "m_00289",
+        "m_00726",
+        "m_00885"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "W",
+        "3": "I",
+        "4": "S",
+        "5": "E",
+        "6": "P",
+        "7": "R",
+        "8": "O",
+        "9": "N",
+        "10": "L",
+        "11": "M",
+        "12": "F",
+        "13": "H",
+        "14": "Q",
+        "15": "U",
+        "16": "T",
+        "17": "C",
+        "18": "G",
+        "19": "Y",
+        "20": "D"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            "m_00915",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            "m_00915",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            "m_00915",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00885",
+            null,
+            null,
+            "m_00915",
+            null,
+            null
+          ],
+          [
+            "m_00289",
+            "m_00289",
+            "m_00885",
+            "m_00726",
+            "m_00289",
+            "m_00915",
+            "m_00289",
+            "m_00289"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00726",
+            null,
+            "m_00915",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00726",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00726",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_00937",
+            "m_00937",
+            "m_00937",
+            "m_00937",
+            "m_00937",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00726",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00726",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00289",
+            "x": 0,
+            "y": 7,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_00885",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00726",
+            "x": 3,
+            "y": 7,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_00915",
+            "x": 5,
+            "y": 3,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00937",
+            "x": 0,
+            "y": 11,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 14
+      },
+      "verifie": true
+    }
+  ]
+}

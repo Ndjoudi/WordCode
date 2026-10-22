@@ -1,0 +1,360 @@
+{
+  "palier": 80,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_8001",
+      "palier": 80,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_513",
+      "phrase_en": "DON'T JUDGE A BOOK BY ITS COVER",
+      "phrase_fr": "L'habit ne fait pas le moine",
+      "contexte_fr": "Ne juge pas sur l'apparence.",
+      "mots": [
+        "m_02064",
+        "m_02080",
+        "m_01815",
+        "m_01566",
+        "m_01928"
+      ],
+      "alphabet": {
+        "1": "D",
+        "2": "O",
+        "3": "N",
+        "4": "T",
+        "5": "J",
+        "6": "U",
+        "7": "G",
+        "8": "E",
+        "9": "A",
+        "10": "B",
+        "11": "K",
+        "12": "Y",
+        "13": "I",
+        "14": "S",
+        "15": "C",
+        "16": "V",
+        "17": "R",
+        "18": "Z",
+        "19": "L",
+        "20": "M",
+        "21": "X"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            "m_01815",
+            "m_01815",
+            "m_01815",
+            "m_01815",
+            "m_01566",
+            "m_01815",
+            "m_01815",
+            "m_01815"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01566",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02064",
+            null,
+            "m_02080",
+            "m_02080",
+            "m_02080",
+            "m_02080",
+            "m_02080",
+            "m_02080"
+          ],
+          [
+            null,
+            "m_02064",
+            null,
+            null,
+            null,
+            "m_01566",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02064",
+            null,
+            null,
+            null,
+            "m_01566",
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01928",
+            "m_02064",
+            "m_01928",
+            "m_01928",
+            "m_01928",
+            "m_01928",
+            "m_01928",
+            "m_01928",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01566",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01566",
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01815",
+            "x": 1,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          },
+          {
+            "mot": "m_01566",
+            "x": 5,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01928",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02080",
+            "x": 3,
+            "y": 2,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_02064",
+            "x": 1,
+            "y": 2,
+            "dir": "V",
+            "num": 3
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 8
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_8002",
+      "palier": 80,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_497",
+      "phrase_en": "WE ARE WHAT WE REPEATEDLY DO SO MAKE IT A GOOD HABIT",
+      "phrase_fr": "Nous sommes ce que nous faisons de façon répétée",
+      "contexte_fr": "D'après Aristote.",
+      "mots": [
+        "m_02096",
+        "m_02057",
+        "m_01337",
+        "m_01797",
+        "m_01835"
+      ],
+      "alphabet": {
+        "1": "W",
+        "2": "E",
+        "3": "A",
+        "4": "R",
+        "5": "H",
+        "6": "T",
+        "7": "P",
+        "8": "D",
+        "9": "L",
+        "10": "Y",
+        "11": "O",
+        "12": "S",
+        "13": "M",
+        "14": "K",
+        "15": "I",
+        "16": "G",
+        "17": "B",
+        "18": "U",
+        "19": "N",
+        "20": "V"
+      },
+      "croises": {
+        "grille": [
+          [
+            "m_02096",
+            "m_02096",
+            "m_02096",
+            "m_02096",
+            "m_02096",
+            "m_02096",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02057",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02057",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02057",
+            null,
+            "m_01835",
+            null,
+            "m_01797"
+          ],
+          [
+            null,
+            "m_01337",
+            "m_01337",
+            "m_01337",
+            "m_02057",
+            "m_01337",
+            "m_01835",
+            "m_01337",
+            "m_01797"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02057",
+            null,
+            "m_01835",
+            null,
+            "m_01797"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01835",
+            null,
+            "m_01797"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01835",
+            null,
+            "m_01797"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01797"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01337",
+            "x": 1,
+            "y": 4,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02057",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_02096",
+            "x": 0,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          },
+          {
+            "mot": "m_01797",
+            "x": 8,
+            "y": 3,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_01835",
+            "x": 6,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 9
+      },
+      "verifie": true
+    }
+  ]
+}

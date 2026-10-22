@@ -1,0 +1,262 @@
+{
+  "palier": 96,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_9601",
+      "palier": 96,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_560",
+      "phrase_en": "WE CANNOT SOLVE PROBLEMS WITH THE THINKING THAT MADE THEM",
+      "phrase_fr": "On ne résout pas un problème avec la pensée qui l'a créé",
+      "contexte_fr": "Attribué à Einstein.",
+      "mots": [
+        "m_02870",
+        "m_02885",
+        "m_02019",
+        "m_01377",
+        "m_02027"
+      ],
+      "alphabet": {
+        "1": "W",
+        "2": "E",
+        "3": "C",
+        "4": "A",
+        "5": "N",
+        "6": "O",
+        "7": "T",
+        "8": "S",
+        "9": "L",
+        "10": "V",
+        "11": "P",
+        "12": "R",
+        "13": "B",
+        "14": "M",
+        "15": "I",
+        "16": "H",
+        "17": "K",
+        "18": "G",
+        "19": "D",
+        "20": "Y",
+        "21": "U"
+      },
+      "croises": null,
+      "verifie": true
+    },
+    {
+      "id": "p_9603",
+      "palier": 96,
+      "ordre": 3,
+      "jeu": "grille",
+      "phrase_id": "ph_585",
+      "phrase_en": "KEEP YOUR FACE ALWAYS TOWARDS THE MORNING SUNLIGHT",
+      "phrase_fr": "Garde toujours le visage tourné vers le soleil",
+      "contexte_fr": "Attribué à Walt Whitman : les ombres resteront derrière.",
+      "mots": [
+        "m_02867",
+        "m_02877",
+        "m_02336",
+        "m_01751",
+        "m_02778"
+      ],
+      "alphabet": {
+        "1": "K",
+        "2": "E",
+        "3": "P",
+        "4": "Y",
+        "5": "O",
+        "6": "U",
+        "7": "R",
+        "8": "F",
+        "9": "A",
+        "10": "C",
+        "11": "L",
+        "12": "W",
+        "13": "S",
+        "14": "T",
+        "15": "D",
+        "16": "H",
+        "17": "M",
+        "18": "N",
+        "19": "I",
+        "20": "G",
+        "21": "B"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "m_02877",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02877",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02877",
+            null,
+            "m_02778",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02877",
+            null,
+            "m_02778",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02877",
+            null,
+            "m_02778",
+            null,
+            "m_02336"
+          ],
+          [
+            null,
+            "m_01751",
+            null,
+            "m_02877",
+            null,
+            "m_02778",
+            null,
+            "m_02336"
+          ],
+          [
+            "m_02867",
+            "m_01751",
+            "m_02867",
+            "m_02877",
+            "m_02867",
+            "m_02778",
+            "m_02867",
+            "m_02336"
+          ],
+          [
+            null,
+            "m_01751",
+            null,
+            "m_02877",
+            null,
+            "m_02778",
+            null,
+            "m_02336"
+          ],
+          [
+            null,
+            "m_01751",
+            null,
+            null,
+            null,
+            "m_02778",
+            null,
+            "m_02336"
+          ],
+          [
+            null,
+            "m_01751",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02336"
+          ],
+          [
+            null,
+            "m_01751",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02336"
+          ],
+          [
+            null,
+            "m_01751",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02336"
+          ],
+          [
+            null,
+            "m_01751",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02867",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02877",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_02336",
+            "x": 7,
+            "y": 4,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01751",
+            "x": 1,
+            "y": 5,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_02778",
+            "x": 5,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 13
+      },
+      "verifie": true
+    }
+  ]
+}

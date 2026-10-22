@@ -1,0 +1,428 @@
+{
+  "palier": 93,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_9301",
+      "palier": 93,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_470",
+      "phrase_en": "WHAT WE LEARN WITH PLEASURE WE NEVER QUITE FORGET",
+      "phrase_fr": "Ce qu'on apprend avec plaisir ne s'oublie jamais",
+      "contexte_fr": "Attribué à Alfred Mercier.",
+      "mots": [
+        "m_02725",
+        "m_02727",
+        "m_02428",
+        "m_02253",
+        "m_02599"
+      ],
+      "alphabet": {
+        "1": "W",
+        "2": "H",
+        "3": "A",
+        "4": "T",
+        "5": "E",
+        "6": "L",
+        "7": "R",
+        "8": "N",
+        "9": "I",
+        "10": "P",
+        "11": "S",
+        "12": "U",
+        "13": "V",
+        "14": "Q",
+        "15": "F",
+        "16": "O",
+        "17": "G",
+        "18": "C",
+        "19": "Y",
+        "20": "D",
+        "21": "M",
+        "22": "Z"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02727"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02727"
+          ],
+          [
+            null,
+            null,
+            "m_02428",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02727"
+          ],
+          [
+            null,
+            null,
+            "m_02428",
+            null,
+            null,
+            "m_02599",
+            null,
+            null,
+            "m_02727"
+          ],
+          [
+            null,
+            null,
+            "m_02428",
+            null,
+            null,
+            "m_02599",
+            null,
+            null,
+            "m_02727"
+          ],
+          [
+            null,
+            "m_02253",
+            "m_02428",
+            "m_02253",
+            "m_02253",
+            "m_02599",
+            "m_02253",
+            "m_02253",
+            "m_02727"
+          ],
+          [
+            null,
+            null,
+            "m_02428",
+            null,
+            null,
+            "m_02599",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02428",
+            null,
+            null,
+            "m_02599",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02428",
+            null,
+            null,
+            "m_02599",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02599",
+            null,
+            null,
+            null
+          ],
+          [
+            "m_02725",
+            "m_02725",
+            "m_02725",
+            "m_02725",
+            "m_02725",
+            "m_02725",
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02253",
+            "x": 1,
+            "y": 5,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_02599",
+            "x": 5,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_02428",
+            "x": 2,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_02725",
+            "x": 0,
+            "y": 10,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02727",
+            "x": 8,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 11
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_9302",
+      "palier": 93,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_524",
+      "phrase_en": "THE BEGINNING IS ALWAYS THE MOST IMPORTANT PART OF WORK",
+      "phrase_fr": "Le début est toujours la partie la plus importante",
+      "contexte_fr": "Formule de Platon.",
+      "mots": [
+        "m_02707",
+        "m_02749",
+        "m_02696",
+        "m_01528",
+        "m_00717"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "B",
+        "5": "G",
+        "6": "I",
+        "7": "N",
+        "8": "S",
+        "9": "A",
+        "10": "L",
+        "11": "W",
+        "12": "Y",
+        "13": "M",
+        "14": "O",
+        "15": "P",
+        "16": "R",
+        "17": "F",
+        "18": "K",
+        "19": "C",
+        "20": "U",
+        "21": "D"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "m_02696",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02696",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02696",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02696",
+            null,
+            "m_01528",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02696",
+            null,
+            "m_01528",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_02707",
+            "m_02707",
+            "m_02707",
+            "m_02696",
+            "m_02707",
+            "m_01528",
+            "m_02707",
+            "m_00717",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02696",
+            null,
+            "m_01528",
+            null,
+            "m_00717",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02696",
+            null,
+            "m_01528",
+            null,
+            "m_00717",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02749",
+            "m_02749",
+            "m_02749",
+            "m_02749"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00717",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00717",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02707",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_02696",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00717",
+            "x": 7,
+            "y": 5,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_01528",
+            "x": 5,
+            "y": 3,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_02749",
+            "x": 6,
+            "y": 8,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 10,
+        "hauteur": 11
+      },
+      "verifie": true
+    }
+  ]
+}

@@ -1,0 +1,621 @@
+{
+  "palier": 101,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_10101",
+      "palier": 101,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_573",
+      "phrase_en": "GOOD JUDGEMENT COMES FROM A LOT OF BAD EXPERIENCE",
+      "phrase_fr": "Le bon jugement vient de la mauvaise expérience",
+      "contexte_fr": "L'erreur forme le discernement.",
+      "mots": [
+        "m_03103",
+        "m_03141",
+        "m_01082",
+        "m_02899",
+        "m_02245"
+      ],
+      "alphabet": {
+        "1": "G",
+        "2": "O",
+        "3": "D",
+        "4": "J",
+        "5": "U",
+        "6": "E",
+        "7": "M",
+        "8": "N",
+        "9": "T",
+        "10": "C",
+        "11": "S",
+        "12": "F",
+        "13": "R",
+        "14": "A",
+        "15": "L",
+        "16": "B",
+        "17": "X",
+        "18": "P",
+        "19": "I",
+        "20": "K",
+        "21": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02245",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02245",
+            null
+          ],
+          [
+            null,
+            "m_03141",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02245",
+            null
+          ],
+          [
+            null,
+            "m_03141",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02245",
+            null
+          ],
+          [
+            "m_03103",
+            "m_03141",
+            "m_03103",
+            "m_03103",
+            "m_03103",
+            "m_03103",
+            "m_02899",
+            "m_02245",
+            null
+          ],
+          [
+            null,
+            "m_03141",
+            null,
+            null,
+            null,
+            null,
+            "m_02899",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_03141",
+            null,
+            null,
+            null,
+            null,
+            "m_02899",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01082",
+            "m_01082",
+            "m_01082",
+            "m_01082",
+            "m_01082",
+            "m_01082"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02899",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02899",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02899",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_03103",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_02899",
+            "x": 6,
+            "y": 4,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_01082",
+            "x": 3,
+            "y": 7,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_03141",
+            "x": 1,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_02245",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 11
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_10103",
+      "palier": 101,
+      "ordre": 3,
+      "jeu": "grille",
+      "phrase_id": "ph_536",
+      "phrase_en": "THE WAY TO GET STARTED IS TO QUIT TALKING AND BEGIN",
+      "phrase_fr": "Pour démarrer, arrête de parler et commence",
+      "contexte_fr": "Formule de Walt Disney.",
+      "mots": [
+        "m_03117",
+        "m_03108",
+        "m_02888",
+        "m_01913",
+        "m_01870"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "W",
+        "5": "A",
+        "6": "Y",
+        "7": "O",
+        "8": "G",
+        "9": "S",
+        "10": "R",
+        "11": "D",
+        "12": "I",
+        "13": "Q",
+        "14": "U",
+        "15": "L",
+        "16": "K",
+        "17": "N",
+        "18": "B",
+        "19": "P",
+        "20": "C",
+        "21": "M"
+      },
+      "croises": {
+        "grille": [
+          [
+            "m_01913",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01913",
+            "m_03117",
+            "m_03117",
+            "m_03117",
+            "m_03117",
+            "m_03117",
+            null,
+            "m_01870",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01913",
+            null,
+            null,
+            null,
+            "m_03108",
+            null,
+            null,
+            "m_01870",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_01913",
+            null,
+            null,
+            null,
+            "m_03108",
+            null,
+            null,
+            "m_01870",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_03108",
+            "m_02888",
+            "m_02888",
+            "m_01870",
+            "m_02888",
+            "m_02888",
+            "m_02888",
+            "m_02888"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_03108",
+            null,
+            null,
+            "m_01870",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_03108",
+            null,
+            null,
+            "m_01870",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_03108",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02888",
+            "x": 4,
+            "y": 4,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_03108",
+            "x": 4,
+            "y": 1,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_03117",
+            "x": 0,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_01870",
+            "x": 7,
+            "y": 1,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_01913",
+            "x": 0,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 12,
+        "hauteur": 8
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_10104",
+      "palier": 101,
+      "ordre": 4,
+      "jeu": "croises",
+      "phrase_id": "ph_556",
+      "phrase_en": "CHOOSE A JOB YOU LOVE AND YOU WILL NEVER WORK AGAIN",
+      "phrase_fr": "Choisis un métier que tu aimes et tu ne travailleras jamais",
+      "contexte_fr": "Formule attribuée à Confucius.",
+      "mots": [
+        "m_03135",
+        "m_03137",
+        "m_02212",
+        "m_02373",
+        "m_02024"
+      ],
+      "alphabet": {
+        "1": "C",
+        "2": "H",
+        "3": "O",
+        "4": "S",
+        "5": "E",
+        "6": "A",
+        "7": "J",
+        "8": "B",
+        "9": "Y",
+        "10": "U",
+        "11": "L",
+        "12": "V",
+        "13": "N",
+        "14": "D",
+        "15": "W",
+        "16": "I",
+        "17": "R",
+        "18": "K",
+        "19": "G",
+        "20": "T",
+        "21": "F"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02024",
+            null,
+            null,
+            "m_02212",
+            null,
+            null,
+            null
+          ],
+          [
+            "m_03137",
+            "m_03137",
+            "m_03137",
+            "m_03137",
+            "m_03137",
+            "m_03137",
+            null,
+            "m_02212",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02024",
+            null,
+            null,
+            "m_02212",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02024",
+            null,
+            null,
+            "m_02212",
+            null,
+            null,
+            "m_03135"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_02373",
+            "m_02024",
+            "m_02373",
+            "m_02373",
+            "m_02212",
+            "m_02373",
+            "m_02373",
+            "m_03135"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02024",
+            null,
+            null,
+            "m_02212",
+            null,
+            null,
+            "m_03135"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02024",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_03135"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_02024",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_03135"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_03135"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_03135"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02373",
+            "x": 3,
+            "y": 4,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02024",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_03135",
+            "x": 10,
+            "y": 3,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_03137",
+            "x": 0,
+            "y": 1,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_02212",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          }
+        ],
+        "largeur": 11,
+        "hauteur": 10
+      },
+      "verifie": true
+    }
+  ]
+}

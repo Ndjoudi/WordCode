@@ -1,0 +1,220 @@
+{
+  "palier": 98,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_9802",
+      "palier": 98,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_566",
+      "phrase_en": "THE MIND IS EVERYTHING WHAT YOU THINK YOU BECOME",
+      "phrase_fr": "L'esprit est tout : tu deviens ce que tu penses",
+      "contexte_fr": "Formule attribuée au Bouddha.",
+      "mots": [
+        "m_03000",
+        "m_02952",
+        "m_01557",
+        "m_01876",
+        "m_01432"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "M",
+        "5": "I",
+        "6": "N",
+        "7": "D",
+        "8": "S",
+        "9": "V",
+        "10": "R",
+        "11": "Y",
+        "12": "G",
+        "13": "W",
+        "14": "A",
+        "15": "O",
+        "16": "U",
+        "17": "K",
+        "18": "B",
+        "19": "C",
+        "20": "P",
+        "21": "L"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "m_01876",
+            "m_01876",
+            "m_01876",
+            "m_01876",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01432",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01432",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01432",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01432",
+            null
+          ],
+          [
+            null,
+            "m_02952",
+            null,
+            null,
+            null,
+            null,
+            "m_01432",
+            null
+          ],
+          [
+            "m_01557",
+            "m_01557",
+            "m_01557",
+            "m_01557",
+            "m_01557",
+            "m_01557",
+            "m_01432",
+            null
+          ],
+          [
+            null,
+            "m_02952",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02952",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_03000",
+            "m_02952",
+            "m_03000",
+            "m_03000",
+            "m_03000",
+            "m_03000",
+            "m_03000",
+            "m_03000"
+          ],
+          [
+            null,
+            "m_02952",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02952",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02952",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_03000",
+            "x": 0,
+            "y": 9,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02952",
+            "x": 1,
+            "y": 5,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01557",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01432",
+            "x": 6,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01876",
+            "x": 3,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 13
+      },
+      "verifie": true
+    }
+  ]
+}

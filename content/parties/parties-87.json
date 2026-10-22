@@ -1,0 +1,180 @@
+{
+  "palier": 87,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_8702",
+      "palier": 87,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_459",
+      "phrase_en": "THE ART OF BEING WISE IS KNOWING WHAT TO OVERLOOK",
+      "phrase_fr": "L'art d'être sage est de savoir ce qu'il faut ignorer",
+      "contexte_fr": "Formule de William James.",
+      "mots": [
+        "m_02424",
+        "m_02429",
+        "m_01339",
+        "m_02061",
+        "m_00874"
+      ],
+      "alphabet": {
+        "1": "T",
+        "2": "H",
+        "3": "E",
+        "4": "A",
+        "5": "R",
+        "6": "O",
+        "7": "F",
+        "8": "B",
+        "9": "I",
+        "10": "N",
+        "11": "G",
+        "12": "W",
+        "13": "S",
+        "14": "K",
+        "15": "V",
+        "16": "L",
+        "17": "M",
+        "18": "U",
+        "19": "C",
+        "20": "Y",
+        "21": "P"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            "m_01339",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01339",
+            null,
+            "m_00874",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01339",
+            null,
+            "m_00874",
+            null,
+            "m_02424",
+            null,
+            null
+          ],
+          [
+            "m_02429",
+            "m_01339",
+            "m_02429",
+            "m_00874",
+            "m_02429",
+            "m_02424",
+            "m_02429",
+            "m_02429"
+          ],
+          [
+            null,
+            "m_01339",
+            null,
+            "m_00874",
+            null,
+            "m_02424",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01339",
+            null,
+            "m_00874",
+            null,
+            "m_02424",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01339",
+            null,
+            "m_00874",
+            null,
+            "m_02424",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01339",
+            null,
+            "m_00874",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_02061",
+            "m_02061",
+            "m_02061",
+            "m_02061",
+            "m_02061",
+            "m_02061"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02429",
+            "x": 0,
+            "y": 3,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01339",
+            "x": 1,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00874",
+            "x": 3,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_02061",
+            "x": 2,
+            "y": 8,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02424",
+            "x": 5,
+            "y": 2,
+            "dir": "V",
+            "num": 3
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 9
+      },
+      "verifie": true
+    }
+  ]
+}

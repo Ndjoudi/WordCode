@@ -1,0 +1,467 @@
+{
+  "palier": 89,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_8901",
+      "palier": 89,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_518",
+      "phrase_en": "LIFE IS WHAT HAPPENS WHILE YOU ARE MAKING OTHER PLANS",
+      "phrase_fr": "La vie est ce qui arrive pendant qu'on fait d'autres projets",
+      "contexte_fr": "Vers de John Lennon.",
+      "mots": [
+        "m_02530",
+        "m_02515",
+        "m_01346",
+        "m_02260",
+        "m_01115"
+      ],
+      "alphabet": {
+        "1": "L",
+        "2": "I",
+        "3": "F",
+        "4": "E",
+        "5": "S",
+        "6": "W",
+        "7": "H",
+        "8": "A",
+        "9": "T",
+        "10": "P",
+        "11": "N",
+        "12": "Y",
+        "13": "O",
+        "14": "U",
+        "15": "R",
+        "16": "M",
+        "17": "K",
+        "18": "G",
+        "19": "V",
+        "20": "B",
+        "21": "C",
+        "22": "D"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "m_01115",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01115",
+            null,
+            "m_01346",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01115",
+            null,
+            "m_01346",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01115",
+            null,
+            "m_01346",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02530",
+            null,
+            "m_01115",
+            null,
+            "m_01346",
+            null,
+            null
+          ],
+          [
+            "m_02515",
+            "m_02515",
+            "m_02515",
+            "m_01115",
+            "m_02515",
+            "m_01346",
+            "m_02515",
+            null
+          ],
+          [
+            null,
+            "m_02530",
+            null,
+            null,
+            null,
+            "m_01346",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02530",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_02530",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_02260",
+            "m_02530",
+            "m_02260",
+            "m_02260",
+            "m_02260",
+            "m_02260",
+            "m_02260",
+            "m_02260"
+          ],
+          [
+            null,
+            "m_02530",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_02260",
+            "x": 0,
+            "y": 9,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_02530",
+            "x": 1,
+            "y": 4,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_02515",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01346",
+            "x": 5,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01115",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 11
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_8902",
+      "palier": 89,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_523",
+      "phrase_en": "COURAGE IS NOT THE ABSENCE OF FEAR BUT MOVING ANYWAY",
+      "phrase_fr": "Le courage n'est pas l'absence de peur mais l'action malgré elle",
+      "contexte_fr": "D'après Mark Twain.",
+      "mots": [
+        "m_02517",
+        "m_02545",
+        "m_01047",
+        "m_01353",
+        "m_00740"
+      ],
+      "alphabet": {
+        "1": "C",
+        "2": "O",
+        "3": "U",
+        "4": "R",
+        "5": "A",
+        "6": "G",
+        "7": "E",
+        "8": "I",
+        "9": "S",
+        "10": "N",
+        "11": "T",
+        "12": "H",
+        "13": "B",
+        "14": "F",
+        "15": "M",
+        "16": "V",
+        "17": "Y",
+        "18": "W",
+        "19": "P",
+        "20": "D",
+        "21": "L"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00740",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00740",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00740",
+            null,
+            null,
+            null,
+            "m_01353",
+            null,
+            null
+          ],
+          [
+            "m_02545",
+            "m_02545",
+            "m_02545",
+            "m_02545",
+            "m_02545",
+            "m_02545",
+            "m_02545",
+            null,
+            "m_01353",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00740",
+            null,
+            null,
+            null,
+            "m_01353",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00740",
+            null,
+            null,
+            null,
+            "m_01353",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00740",
+            null,
+            null,
+            null,
+            "m_01353",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01047",
+            "m_00740",
+            "m_01047",
+            "m_02517",
+            "m_01047",
+            "m_01353",
+            "m_01047",
+            "m_01047"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02517",
+            null,
+            "m_01353",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02517",
+            null,
+            "m_01353",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02517",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02517",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02517",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_02517",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01047",
+            "x": 3,
+            "y": 7,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_01353",
+            "x": 8,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00740",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_02517",
+            "x": 6,
+            "y": 7,
+            "dir": "V",
+            "num": 5
+          },
+          {
+            "mot": "m_02545",
+            "x": 0,
+            "y": 3,
+            "dir": "H",
+            "num": 3
+          }
+        ],
+        "largeur": 11,
+        "hauteur": 14
+      },
+      "verifie": true
+    }
+  ]
+}

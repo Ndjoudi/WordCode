@@ -1,0 +1,420 @@
+{
+  "palier": 70,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_7001",
+      "palier": 70,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_542",
+      "phrase_en": "ACT AS IF WHAT YOU DO MAKES A REAL DIFFERENCE IT DOES",
+      "phrase_fr": "Agis comme si ce que tu fais comptait, car c'est le cas",
+      "contexte_fr": "Formule de William James.",
+      "mots": [
+        "m_01586",
+        "m_01551",
+        "m_01399",
+        "m_01479",
+        "m_01454"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "C",
+        "3": "T",
+        "4": "S",
+        "5": "I",
+        "6": "F",
+        "7": "W",
+        "8": "H",
+        "9": "Y",
+        "10": "O",
+        "11": "U",
+        "12": "D",
+        "13": "M",
+        "14": "K",
+        "15": "E",
+        "16": "R",
+        "17": "L",
+        "18": "N",
+        "19": "P",
+        "20": "V",
+        "21": "B"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            "m_01479",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01586",
+            "m_01586",
+            "m_01586",
+            "m_01586",
+            "m_01586",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01479",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01479",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01479",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_01479",
+            null,
+            "m_01399",
+            null,
+            "m_01454",
+            null
+          ],
+          [
+            "m_01551",
+            "m_01551",
+            "m_01479",
+            "m_01551",
+            "m_01399",
+            "m_01551",
+            "m_01454",
+            "m_01551"
+          ],
+          [
+            null,
+            null,
+            "m_01479",
+            null,
+            "m_01399",
+            null,
+            "m_01454",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01399",
+            null,
+            "m_01454",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01399",
+            null,
+            "m_01454",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01399",
+            null,
+            "m_01454",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01399",
+            null,
+            "m_01454",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01399",
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01551",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01399",
+            "x": 4,
+            "y": 5,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01479",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01454",
+            "x": 6,
+            "y": 5,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_01586",
+            "x": 1,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 13
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_7002",
+      "palier": 70,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_540",
+      "phrase_en": "A YEAR FROM NOW YOU WILL WISH YOU HAD BEGUN TODAY",
+      "phrase_fr": "Dans un an tu regretteras de ne pas avoir commencé aujourd'hui",
+      "contexte_fr": "Formule de Karen Lamb.",
+      "mots": [
+        "m_01554",
+        "m_01565",
+        "m_00913",
+        "m_01380",
+        "m_01435"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "Y",
+        "3": "E",
+        "4": "R",
+        "5": "F",
+        "6": "O",
+        "7": "M",
+        "8": "N",
+        "9": "W",
+        "10": "U",
+        "11": "I",
+        "12": "L",
+        "13": "S",
+        "14": "H",
+        "15": "D",
+        "16": "B",
+        "17": "G",
+        "18": "T",
+        "19": "P",
+        "20": "C"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "m_01435",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01435",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01435",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01435",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01435",
+            null,
+            "m_01380",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_01435",
+            null,
+            "m_01380",
+            null
+          ],
+          [
+            "m_01565",
+            "m_01565",
+            "m_00913",
+            "m_01435",
+            "m_01565",
+            "m_01380",
+            "m_01565"
+          ],
+          [
+            null,
+            null,
+            "m_00913",
+            null,
+            null,
+            "m_01380",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00913",
+            null,
+            null,
+            "m_01380",
+            null
+          ],
+          [
+            "m_01554",
+            "m_01554",
+            "m_01554",
+            "m_01554",
+            "m_01554",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00913",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00913",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00913",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01565",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_00913",
+            "x": 2,
+            "y": 6,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_01435",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01554",
+            "x": 0,
+            "y": 9,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01380",
+            "x": 5,
+            "y": 4,
+            "dir": "V",
+            "num": 2
+          }
+        ],
+        "largeur": 7,
+        "hauteur": 13
+      },
+      "verifie": true
+    }
+  ]
+}

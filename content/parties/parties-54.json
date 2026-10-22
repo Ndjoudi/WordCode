@@ -1,0 +1,228 @@
+{
+  "palier": 54,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_5404",
+      "palier": 54,
+      "ordre": 4,
+      "jeu": "croises",
+      "phrase_id": "ph_544",
+      "phrase_en": "IF YOU WANT TO LIFT YOURSELF THEN LIFT SOMEBODY UP",
+      "phrase_fr": "Pour t'élever, élève quelqu'un d'autre",
+      "contexte_fr": "Formule de Booker T. Washington.",
+      "mots": [
+        "m_00781",
+        "m_00772",
+        "m_00490",
+        "m_00686",
+        "m_00694"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "F",
+        "3": "Y",
+        "4": "O",
+        "5": "U",
+        "6": "W",
+        "7": "A",
+        "8": "N",
+        "9": "T",
+        "10": "L",
+        "11": "R",
+        "12": "S",
+        "13": "E",
+        "14": "H",
+        "15": "M",
+        "16": "B",
+        "17": "D",
+        "18": "P",
+        "19": "C"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00490"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00686",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00490"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00686",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00490"
+          ],
+          [
+            "m_00694",
+            "m_00694",
+            "m_00694",
+            "m_00694",
+            "m_00694",
+            "m_00694",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00490"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00686",
+            null,
+            null,
+            null,
+            null,
+            "m_00781",
+            null,
+            "m_00490"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00686",
+            "m_00772",
+            "m_00772",
+            "m_00772",
+            "m_00772",
+            "m_00781",
+            "m_00772",
+            "m_00490"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00686",
+            null,
+            null,
+            null,
+            null,
+            "m_00781",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00686",
+            null,
+            null,
+            null,
+            null,
+            "m_00781",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00686",
+            null,
+            null,
+            null,
+            null,
+            "m_00781",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00781",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00772",
+            "x": 4,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00686",
+            "x": 4,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00781",
+            "x": 9,
+            "y": 4,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_00490",
+            "x": 11,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00694",
+            "x": 0,
+            "y": 3,
+            "dir": "H",
+            "num": 3
+          }
+        ],
+        "largeur": 12,
+        "hauteur": 10
+      },
+      "verifie": true
+    }
+  ]
+}

@@ -1,0 +1,379 @@
+{
+  "palier": 74,
+  "version": 3,
+  "parties": [
+    {
+      "id": "p_7401",
+      "palier": 74,
+      "ordre": 1,
+      "jeu": "grille",
+      "phrase_id": "ph_426",
+      "phrase_en": "A GOOD FRIEND KNOWS ALL YOUR STORIES AND STAYS ANYWAY",
+      "phrase_fr": "Un bon ami connaît toutes tes histoires et reste quand même",
+      "contexte_fr": "L'amitié durable suppose l'indulgence.",
+      "mots": [
+        "m_01772",
+        "m_01770",
+        "m_00996",
+        "m_01653",
+        "m_01697"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "G",
+        "3": "O",
+        "4": "D",
+        "5": "F",
+        "6": "R",
+        "7": "I",
+        "8": "E",
+        "9": "N",
+        "10": "K",
+        "11": "W",
+        "12": "S",
+        "13": "L",
+        "14": "Y",
+        "15": "U",
+        "16": "T",
+        "17": "P",
+        "18": "C",
+        "19": "M"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01697",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01653",
+            "m_01653",
+            "m_01653",
+            "m_01653",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01697",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01697",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_01770",
+            "m_01770",
+            "m_01770",
+            "m_01772",
+            "m_01697",
+            "m_01770",
+            "m_01770",
+            "m_01770"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01772",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_01772",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_00996",
+            "m_00996",
+            "m_00996",
+            "m_00996",
+            "m_00996",
+            "m_00996",
+            "m_00996",
+            "m_00996",
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01770",
+            "x": 4,
+            "y": 4,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_01697",
+            "x": 8,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_01772",
+            "x": 7,
+            "y": 4,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_00996",
+            "x": 0,
+            "y": 7,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01653",
+            "x": 6,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          }
+        ],
+        "largeur": 12,
+        "hauteur": 8
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_7402",
+      "palier": 74,
+      "ordre": 2,
+      "jeu": "croises",
+      "phrase_id": "ph_526",
+      "phrase_en": "IT IS THE QUIET PEOPLE WHO CHANGE THE WORLD THE MOST",
+      "phrase_fr": "Ce sont les gens discrets qui changent le plus le monde",
+      "contexte_fr": "L'influence n'est pas toujours bruyante.",
+      "mots": [
+        "m_01758",
+        "m_01761",
+        "m_01238",
+        "m_00900",
+        "m_01630"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "T",
+        "3": "S",
+        "4": "H",
+        "5": "E",
+        "6": "Q",
+        "7": "U",
+        "8": "P",
+        "9": "O",
+        "10": "L",
+        "11": "W",
+        "12": "C",
+        "13": "A",
+        "14": "N",
+        "15": "G",
+        "16": "R",
+        "17": "D",
+        "18": "M",
+        "19": "F",
+        "20": "Y"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            "m_01238",
+            null,
+            null,
+            "m_01630",
+            null,
+            null,
+            "m_00900",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01238",
+            null,
+            null,
+            "m_01630",
+            null,
+            "m_01761",
+            "m_01761",
+            "m_01761",
+            "m_01761"
+          ],
+          [
+            null,
+            "m_01238",
+            null,
+            null,
+            "m_01630",
+            null,
+            null,
+            "m_00900",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01238",
+            null,
+            null,
+            "m_01630",
+            null,
+            null,
+            "m_00900",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01238",
+            null,
+            null,
+            "m_01630",
+            null,
+            null,
+            "m_00900",
+            null,
+            null
+          ],
+          [
+            "m_01758",
+            "m_01238",
+            "m_01758",
+            "m_01758",
+            "m_01630",
+            "m_01758",
+            "m_01758",
+            "m_00900",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01238",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00900",
+            null,
+            null
+          ],
+          [
+            null,
+            "m_01238",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00900",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_01758",
+            "x": 0,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_01238",
+            "x": 1,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00900",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_01630",
+            "x": 4,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_01761",
+            "x": 6,
+            "y": 1,
+            "dir": "H",
+            "num": 4
+          }
+        ],
+        "largeur": 10,
+        "hauteur": 8
+      },
+      "verifie": true
+    }
+  ]
+}
