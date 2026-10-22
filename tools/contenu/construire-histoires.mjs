@@ -4,6 +4,7 @@
  *
  * Format d'un fichier source :
  *   # arc: <id> | ordre: <n> | titre_en: <…> | titre_fr: <…>
+ *     [| feuilleton: oui | serie_en: <…> | serie_fr: <…>]
  *   --- EN
  *   <texte anglais>
  *   --- FR
@@ -129,9 +130,13 @@ function analyser(texte, parEn) {
 }
 
 function principal() {
+  // Tout le catalogue, TOEIC et monde professionnel compris : le feuilleton
+  // emploie ce vocabulaire, et un mot hors catalogue ne compterait pas comme
+  // une révision.
   const parEn = new Map();
-  for (let n = 1; n <= 20; n += 1) {
-    const f = join(RACINE, "content", "paliers", `palier-${String(n).padStart(2, "0")}.json`);
+  const manifeste = JSON.parse(readFileSync(join(RACINE, "content", "manifest.json"), "utf8"));
+  for (const entree of manifeste.paliers) {
+    const f = join(RACINE, "content", entree.fichier);
     for (const mot of JSON.parse(readFileSync(f, "utf8")).mots) {
       if (!parEn.has(mot.en)) parEn.set(mot.en, mot.id);
     }
@@ -165,6 +170,10 @@ function principal() {
       lexique: stats.lexique,
       hors_lexique: stats.hors_lexique,
       suite_de: precedente?.id ?? null,
+      // Un feuilleton se lit dans l'ordre, chapitre après chapitre (§07).
+      ...(meta.feuilleton === "oui"
+        ? { feuilleton: true, serie_en: meta.serie_en ?? null, serie_fr: meta.serie_fr ?? null }
+        : {}),
       source: "contenu",
     });
   }
