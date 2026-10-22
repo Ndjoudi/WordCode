@@ -6,6 +6,7 @@
  * appelé depuis le navigateur (§17.9).
  *
  *   node tools/generateur.js --generer           (tous les paliers d'un coup)
+ *   node tools/generateur.js --mots-meles        (grilles de mots mêlés)
  *   node tools/generateur.js --verify            (tous les paliers)
  *   node tools/generateur.js --verify --palier 3
  *
@@ -18,6 +19,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
+import { controlerGrille, SENS } from "../services/wordsearch-builder.js";
 
 const RACINE = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const CONTENU = path.join(RACINE, "content");
@@ -413,6 +415,11 @@ function chargerCatalogue() {
   return { manifeste, paliers };
 }
 
+/** Numéros de tous les paliers déclarés, dans l'ordre. */
+function idsDesPaliers() {
+  return chargerCatalogue().paliers.map(({ entree }) => Number(entree.id));
+}
+
 /** Tous les mots du catalogue, par id. */
 function tousLesMots() {
   const mots = new Map();
@@ -428,6 +435,12 @@ function tousLesMots() {
 
 /** Parties produites, par palier et par jeu. */
 const PARTIES_PAR_JEU = 5;
+
+/**
+ * Parties garanties à chaque palier, même quand le réservoir de phrases
+ * s'épuise : une pour la grille, une pour les mots croisés.
+ */
+const MIN_PAR_PALIER = 2;
 
 /** Mots du palier courant dans chaque partie ; les autres viennent de l'acquis. */
 const MOTS_NOUVEAUX = 2;
@@ -546,7 +559,7 @@ function genererTout() {
   const rejets = [];
   let total = 0;
 
-  for (const { entree, mots } of paliers) {
+  for (const [rangPalier, { entree, mots }] of paliers.entries()) {
     const numero = Number(entree.id);
     const nom = deuxChiffres(numero);
     const parties = [];
@@ -555,8 +568,17 @@ function genererTout() {
       croises: mots.filter((mot) => jeuDe.get(mot.id) === "croises"),
     };
 
-    for (let rang = 0; rang < PARTIES_PAR_JEU; rang += 1) {
-      for (const jeu of JEUX) {
+    // Chaque phrase cachée ne sert qu'une fois (§6.3) : le réservoir borne le
+    // nombre de parties. Un palier en prend dix tant qu'il en reste assez pour
+    // garantir le minimum à tous les paliers suivants.
+    const restants = paliers.length - rangPalier - 1;
+    const libres = phrases.filter((p) => !p.utilisee_par).length;
+    const quota = Math.max(MIN_PAR_PALIER,
+      Math.min(PARTIES_PAR_JEU * JEUX.length, libres - restants * MIN_PAR_PALIER));
+
+    for (let rang = 0; rang < quota; rang += 1) {
+      {
+        const jeu = JEUX[rang % JEUX.length];
         const ordre = parties.length + rejets.filter((r) => r.palier === numero).length + 1;
         const idPartie = `p_${nom}${deuxChiffres(ordre)}`;
         let reussie = null;
@@ -616,6 +638,198 @@ function genererTout() {
 
   const libres = phrases.filter((p) => !p.utilisee_par).length;
   console.log(`\n${total} parties écrites · ${rejets.length} rejet(s) · ${libres} phrases encore libres`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Mots mêlés (§10)                                                            */
+/* -------------------------------------------------------------------------- */
+
+/** Grilles produites par palier. */
+const MELES_PAR_PALIER = 5;
+
+/** Tailles essayées : la grille s'ajuste à la longueur de l'expression. */
+const MELES_TAILLES = [7, 8, 9];
+
+/** Bornes du nombre de mots cachés dans une grille. */
+const MELES_MOTS_MIN = 5;
+const MELES_MOTS_MAX = 10;
+
+/** Mots du palier courant dans chaque grille ; les autres viennent de l'acquis. */
+const MELES_NOUVEAUX = 3;
+
+/** Essais avant d'abandonner une grille. */
+const MELES_ESSAIS = 400;
+
+/**
+ * Sens de lecture : vers la droite, vers le bas, en diagonale descendante.
+ * Jamais à l'envers — c'est la version facile, la seule livrée. Le service
+ * de l'application relit les grilles avec les mêmes sens.
+ */
+const MELES_SENS = SENS;
+
+/**
+ * Pose des mots dans une grille vide jusqu'à ce que les cases libres soient
+ * exactement aussi nombreuses que les lettres de l'expression.
+ *
+ * @returns {?{lignes:Array<Array<?string>>, places:object[]}}
+ */
+function poserMotsMeles(taille, cible, candidats, alea) {
+  const g = Array.from({ length: taille }, () => Array(taille).fill(null));
+  const places = [];
+  let occupees = 0;
+
+  for (const mot of candidats) {
+    if (places.length >= MELES_MOTS_MAX || occupees === cible) break;
+    const en = lettresDe(mot.en);
+    if (en.length > taille) continue;
+
+    const options = [];
+    for (const [dx, dy] of MELES_SENS) {
+      for (let y = 0; y + dy * (en.length - 1) < taille; y += 1) {
+        for (let x = 0; x + dx * (en.length - 1) < taille; x += 1) {
+          let nouvelles = 0, ok = true;
+          for (let i = 0; i < en.length; i += 1) {
+            const v = g[y + dy * i][x + dx * i];
+            if (v === null) nouvelles += 1;
+            else if (v !== en[i]) { ok = false; break; }
+          }
+          if (ok && nouvelles > 0 && occupees + nouvelles <= cible) options.push({ x, y, dx, dy, nouvelles });
+        }
+      }
+    }
+    if (!options.length) continue;
+    const choix = options[Math.floor(alea() * options.length)];
+    for (let i = 0; i < en.length; i += 1) g[choix.y + choix.dy * i][choix.x + choix.dx * i] = en[i];
+    occupees += choix.nouvelles;
+    places.push({ id: mot.id, x: choix.x, y: choix.y, dx: choix.dx, dy: choix.dy });
+  }
+
+  if (occupees !== cible || places.length < MELES_MOTS_MIN) return null;
+  return { lignes: g, places };
+}
+
+/**
+ * Régénère toutes les grilles de mots mêlés (§10).
+ *
+ * Même logique que les parties : des mots du palier courant, complétés par
+ * l'acquis. Les lettres restantes, lues dans l'ordre, forment une expression
+ * du réservoir. Une expression ne sert qu'une fois parmi les mots mêlés ;
+ * elle peut avoir déjà servi au codeword, c'est un autre jeu.
+ */
+function genererMotsMeles() {
+  const { manifeste, paliers } = chargerCatalogue();
+  const tous = new Map(paliers.flatMap(({ mots }) => mots.map((m) => [m.id, m])));
+  const brutPhrases = lire(path.join(CONTENU, "phrases.json"));
+  const phrases = (Array.isArray(brutPhrases) ? brutPhrases : brutPhrases.phrases ?? [])
+    .map((p) => ({ ...p, lettres: lettresDe(p.en) }));
+
+  const alea = aleatoire(GRAINE + 1);
+  const servies = new Set();
+  const usages = new Map();
+  const acquis = [];
+  const rejets = [];
+  let total = 0;
+
+  fs.mkdirSync(path.join(CONTENU, "motsmeles"), { recursive: true });
+
+  for (const { entree, mots } of paliers) {
+    const numero = Number(entree.id);
+    const nom = deuxChiffres(numero);
+    const nouveaux = mots.filter(jouable);
+    const grilles = [];
+
+    for (let rang = 0; rang < MELES_PAR_PALIER; rang += 1) {
+      let reussie = null;
+
+      for (let essai = 0; essai < MELES_ESSAIS && !reussie; essai += 1) {
+        const libres = phrases.filter((p) => !servies.has(p.id));
+        if (!libres.length) break;
+        const phrase = libres[Math.floor(alea() * libres.length)];
+        const taille = MELES_TAILLES.find((t) => t * t - phrase.lettres.length >= 3 * MELES_MOTS_MIN
+                                             && t * t - phrase.lettres.length <= 8 * MELES_MOTS_MAX
+                                             && alea() < 0.6) ?? MELES_TAILLES[2];
+        const cible = taille * taille - phrase.lettres.length;
+        if (cible < 3 * MELES_MOTS_MIN) continue;
+
+        // Les nouveaux d'abord, les moins servis devant ; puis l'acquis mélangé.
+        const tri = (liste) => liste
+          .map((m) => ({ m, cle: (usages.get(m.id) ?? 0) + alea() }))
+          .sort((a, b) => a.cle - b.cle).map(({ m }) => m);
+        const premiers = tri(nouveaux).slice(0, MELES_NOUVEAUX);
+        const suite = tri([...acquis, ...nouveaux].filter((m) => !premiers.includes(m)));
+        const vus = new Set();
+        const candidats = [...premiers, ...suite].filter((m) => {
+          const cle = lettresDe(m.en);
+          if (vus.has(cle)) return false;
+          vus.add(cle);
+          return true;
+        });
+
+        const pose = poserMotsMeles(taille, cible, candidats, alea);
+        if (!pose) continue;
+
+        let k = 0;
+        const lignes = pose.lignes.map((ligne) =>
+          ligne.map((v) => v ?? phrase.lettres[k++]).join(""));
+        const grille = {
+          id: `mm_${nom}${deuxChiffres(grilles.length + 1)}`,
+          palier: numero,
+          taille,
+          lignes,
+          mots: pose.places,
+          phrase_id: phrase.id,
+          phrase_en: phrase.en,
+          phrase_fr: phrase.fr,
+          contexte_fr: phrase.contexte_fr ?? null,
+          verifie: true,
+        };
+        if (controlerGrille(grille, tous).length) continue;
+        reussie = grille;
+      }
+
+      if (!reussie) {
+        rejets.push({ palier: numero, rang: rang + 1 });
+        continue;
+      }
+      servies.add(reussie.phrase_id);
+      for (const p of reussie.mots) usages.set(p.id, (usages.get(p.id) ?? 0) + 1);
+      grilles.push(reussie);
+    }
+
+    acquis.push(...nouveaux);
+    const fichier = `motsmeles/motsmeles-${nom}.json`;
+    fs.writeFileSync(path.join(CONTENU, fichier),
+      JSON.stringify({ palier: numero, version: 1, grilles }, null, 2) + "\n");
+    total += grilles.length;
+
+    if (!entree.mots_meles) {
+      const rangManifeste = manifeste.paliers.indexOf(entree);
+      manifeste.paliers[rangManifeste] = { ...entree, mots_meles: fichier };
+    }
+  }
+
+  fs.writeFileSync(path.join(CONTENU, "manifest.json"), JSON.stringify(manifeste, null, 2) + "\n");
+  console.log(`${total} grilles de mots mêlés écrites · ${rejets.length} manquante(s)`);
+  for (const r of rejets.slice(0, 10)) console.log(`  palier ${deuxChiffres(r.palier)}, grille ${r.rang} : aucune combinaison trouvée`);
+}
+
+/** Relit toutes les grilles de mots mêlés et les contrôle. */
+function verifierMotsMeles() {
+  const mots = tousLesMots();
+  let total = 0;
+  const problemes = [];
+  for (const n of idsDesPaliers()) {
+    const chemin = path.join(CONTENU, "motsmeles", `motsmeles-${deuxChiffres(n)}.json`);
+    if (!fs.existsSync(chemin)) continue;
+    for (const grille of lire(chemin).grilles ?? []) {
+      total += 1;
+      problemes.push(...controlerGrille(grille, mots));
+      if (grille.mots.some((p) => Number(mots.get(p.id)?.palier) > n)) {
+        problemes.push(`${grille.id} : mot d'un palier supérieur`);
+      }
+    }
+  }
+  return { total, problemes };
 }
 
 /**
@@ -746,7 +960,7 @@ function principal(argv) {
 
   if (croiser) {
     const rangP = argv.indexOf("--palier");
-    const numeros = rangP !== -1 ? [Number(argv[rangP + 1])] : [...Array(56).keys()].map((i) => i + 1);
+    const numeros = rangP !== -1 ? [Number(argv[rangP + 1])] : idsDesPaliers();
     let ajoutes = 0, echecs = 0;
 
     for (const n of numeros) {
@@ -762,7 +976,7 @@ function principal(argv) {
   }
 
   if (verifier) {
-    const numeros = palier ? [palier] : [...Array(56).keys()].map((i) => i + 1);
+    const numeros = palier ? [palier] : idsDesPaliers();
     let total = 0, resolubles = 0, fichiers = 0;
     const mots = tousLesMots();
     const jeuDe = new Map();
@@ -784,8 +998,17 @@ function principal(argv) {
     process.exit(resolubles === total ? 0 : 1);
   }
 
+  if (argv.includes("--mots-meles")) {
+    genererMotsMeles();
+    const { total, problemes } = verifierMotsMeles();
+    console.log(`contrôle : ${total} grilles, ${problemes.length} problème(s)`);
+    for (const p of problemes.slice(0, 5)) console.log(`  ${p}`);
+    process.exit(problemes.length ? 1 : 0);
+  }
+
   if (!argv.includes("--generer")) {
     console.error("Usage : node tools/generateur.js --generer");
+    console.error("        node tools/generateur.js --mots-meles");
     console.error("        node tools/generateur.js --verify  [--palier 3]");
     console.error("        node tools/generateur.js --croises [--palier 3]");
     process.exit(1);
