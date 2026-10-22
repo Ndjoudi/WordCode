@@ -34,7 +34,7 @@
 
 Application web d'apprentissage du vocabulaire anglais pour un francophone.
 
-L'écran principal est un **tableau de bord découpé en neuf sections**. Il n'y a
+L'écran principal est un **tableau de bord découpé en dix sections**. Il n'y a
 plus de session guidée : l'utilisateur entre où il veut, quand il veut. Chaque
 section fait **une seule chose**.
 
@@ -49,6 +49,7 @@ section fait **une seule chose**.
 | 07 | **Histoire du jour** | lecture d'une page en vocabulaire connu |
 | 08 | **Écrire** | dictée, traduction, rédaction libre |
 | 09 | **Vidéo** | une conférence TED, phrase par phrase |
+| 10 | **Mots mêlés** | retrouver en anglais une liste donnée en français |
 
 **Les jeux ne sont pas le cours, ils sont l'examen.** Un codeword ne transmet
 aucun sens : il fait *retrouver* un mot déjà connu. Les sections 05, 06 et 07
@@ -83,7 +84,7 @@ reconnaître sans support.
 
 ---
 
-## 2. Les neuf sections
+## 2. Les dix sections
 
 ### 01 — Traduire / Ajouter un mot
 
@@ -279,6 +280,32 @@ traduction.
 **Origine du texte** : un stock rédigé hors ligne dans `/content/histoires/`, et
 en secours la génération par l'API (§16) quand le stock ne propose plus rien
 d'assez adapté au vocabulaire courant.
+
+### Le feuilleton
+
+Plutôt qu'une histoire nouvelle chaque jour, **une seule grande histoire, lue
+chapitre après chapitre pendant un mois**. Le premier feuilleton s'intitule
+*Le dossier Verrier* (*The Verrier Account*) : trente chapitres de 300 à 350
+mots, dans le monde de l'entreprise. Inès, une jeune Française arrivée dans une
+société de logistique à Londres, hérite d'un client lyonnais mécontent et
+découvre que des livraisons disparaissent. Chaque chapitre finit sur une
+question ; le vocabulaire des affaires (facture, fournisseur, audit, fusion…)
+y revient sans cesse.
+
+- **Un feuilleton en cours passe avant tout le reste** : la section sert le
+  premier chapitre non lu, dans l'ordre. Jamais de saut.
+- **Deux chapitres par jour au plus.** À la fin du premier, l'écran propose de
+  lire le suivant ou de garder la suite pour le lendemain.
+- **Pas de seuil de 95%** : c'est une seule intrigue, on ne saute pas un
+  chapitre parce qu'il contient des mots nouveaux — un tap les traduit, et la
+  traduction intégrale reste repliée sous le texte.
+- **Le feuilleton terminé**, la section reprend son fonctionnement habituel.
+
+Un chapitre est un fichier de `tools/contenu/histoires/` dont l'en-tête porte
+`feuilleton: oui | serie_en: … | serie_fr: …`. Le lexique est calculé sur tout
+le catalogue (les 104 paliers), pour que les mots TOEIC et professionnels lus
+dans le feuilleton comptent comme des révisions. Les chapitres lus le jour même
+sont suivis dans `progression.histoires_du_jour` (`{ date, ids }`).
 
 ---
 
@@ -494,6 +521,34 @@ prise en connaissance de cause, la clause ND interdisant de transformer l'œuvre
 Les transcriptions récupérées vivent en `localStorage`, **jamais** dans
 `/content`.
 
+### 10 — Mots mêlés
+
+Une grille de lettres où sont cachés des mots anglais. **La liste à trouver
+n'est jamais en anglais** : elle est en français (*facture*, *date limite*), ou
+en définition anglaise pour la version difficile. Un mots mêlés classique se
+résout en cherchant des formes de lettres sans rien comprendre ; ici il faut
+d'abord se rappeler le mot, puis son orthographe exacte — impossible de
+trouver DEADLINE si on l'imagine « dedline ».
+
+- **Les mots sont ceux validés au quizz**, comme pour la grille et les mots
+  croisés : une grille n'est servie que si tous ses mots sont connus.
+- **On glisse sur un mot**, ou on touche sa première puis sa dernière lettre.
+  Les mots se lisent vers la droite, vers le bas ou en diagonale descendante,
+  jamais à l'envers.
+- **Un mot trouvé s'affiche en anglais** avec sa phonétique et un bouton
+  d'écoute. Le son ne part jamais tout seul.
+- **Le mot mystère.** Les lettres restantes, lues dans l'ordre, forment une
+  expression du réservoir, révélée à la fin avec sa traduction et son contexte.
+- **Indice** : la première lettre d'un mot reste marquée. Ce mot ne monte pas
+  de boîte ; tous les autres montent d'une boîte, comme dans la grille.
+- **Le choix français / définition est mémorisé** (`progression.indice_mots_meles`).
+
+Les grilles sont produites **hors ligne** (règle 9 de §17) par
+`node tools/generateur.js --mots-meles` : cinq par palier, de 7×7 à 9×9 selon
+la longueur de l'expression, avec des mots du palier et de l'acquis. Une
+expression ne sert qu'une fois parmi les mots mêlés, mais peut avoir déjà servi
+au codeword : c'est un autre jeu, vu à un autre moment.
+
 ---
 
 ## 3. Sources de vocabulaire
@@ -513,7 +568,26 @@ Le champ `source` pilote l'écran de découverte et l'éligibilité aux jeux.
 | Paliers | Contenu | Volume |
 |---|---|---|
 | 1 → 20 | **les 1000 mots les plus fréquents**, dans l'ordre de fréquence | 50 mots par palier |
-| 21+ | thèmes (cuisine, voyage, corps, travail…) | 50 mots par palier |
+| 21 → 38 | **anglais professionnel — TOEIC** : 898 mots de la liste TOEIC absents des 1000 | 50 mots par palier |
+| 39 → 104 | **monde professionnel** : 3 271 mots des listes NGSL 1.2, BSL 1.2 et TSL 1.2, classés par fréquence | 50 mots par palier |
+
+**Vocabulaire total : 5 184 mots** (1000 + 898 + 3 271, plus les 15 verbes
+irréguliers de §3.2).
+
+Les séries TOEIC et « monde professionnel » sont rédigées à la main dans
+`tools/contenu/toeic-NN.txt` et `pro-NN.txt`, une ligne par mot — `en | fr |
+type | phonétique | définition anglaise | exemple | traduction de l'exemple` —
+puis construites par `node tools/contenu/construire-series.mjs`. Chaque série a
+son espace d'identifiants (`t_`, `m_`) et une répartition figée
+(`*-repartition.json`) : un mot oublié ou rangé dans le mauvais paquet bloque
+la construction.
+
+**Origine de la série « monde professionnel ».** Les listes du projet NGSL
+(Browne & Culligan, licence CC BY-SA 4.0) : NGSL pour l'anglais courant, BSL
+(Business Service List) pour les affaires, TSL pour la vie de bureau. On en
+retire les mots déjà présents, les mots-outils, les noms de monnaies, les
+préfixes isolés et le jargon trop étroit (`stochastic`, `tuple`…). La liste
+retenue est conservée dans `tools/contenu/pro-source.txt`.
 
 **Les thèmes n'arrivent qu'après les 1000 mots.** Justification : les 1000 mots
 les plus fréquents couvrent environ 75 à 80% d'un texte courant. C'est là que le
@@ -912,6 +986,31 @@ Si aucune histoire du stock n'atteint 95%, elle demande une génération à l'AP
 Si l'API est indisponible, elle sert la meilleure histoire disponible en
 signalant le taux de couverture réel.
 
+### 6.8 `grille de mots mêlés` — produite par le générateur
+
+```json
+{
+  "id": "mm_0101",
+  "palier": 1,
+  "taille": 7,
+  "lignes": ["LBODYPT", "UEFRNER", "…"],
+  "mots": [ { "id": "w_01024", "x": 0, "y": 0, "dx": 0, "dy": 1 } ],
+  "phrase_id": "ph_204",
+  "phrase_en": "Turn a blind eye",
+  "phrase_fr": "Fermer les yeux",
+  "contexte_fr": "…",
+  "verifie": true
+}
+```
+
+- `dx`, `dy` : le sens de lecture — `(1,0)`, `(0,1)` ou `(1,1)`
+- Chaque mot n'apparaît **qu'une fois** dans la grille : sinon on pourrait le
+  trouver au mauvais endroit, sans crédit
+- Les cases qu'aucun mot ne couvre, lues ligne par ligne, forment exactement
+  `phrase_en`
+- Le chargeur recontrôle chaque grille (`controlerGrille`, le même contrôle que
+  le générateur) et écarte toute grille fautive
+
 ### 6.7 `phrase de dictée` — corpus externe
 
 > **La dictée ne vient plus de ce corpus.** Elle se fait désormais sur les
@@ -1021,9 +1120,12 @@ détruirait la sauvegarde distante avant qu'on ait pu la restaurer.
     "parties_servies": { "grille": ["p_0101"], "croises": ["p_0203"] },
     "histoires_lues": ["h_012","h_013"],
     "derniere_histoire": "2026-09-07",
+    "histoires_du_jour": { "date": "2026-09-07", "ids": ["h_012"] },
     "dictees_faites": ["d_01038"],
     "phrases_video": { "kelly_mcgonigal_how_to_make_stress_your_friend": [0, 1, 2] },
     "videos_vues": { "kelly_mcgonigal_how_to_make_stress_your_friend": "2026-09-30" },
+    "mots_meles_servis": ["mm_0101"],
+    "indice_mots_meles": "fr",
     "ajouts_aujourdhui": 2,
     "derniere_session": "2026-09-07",
     "derniere_sauvegarde": "2026-09-01",
@@ -1146,6 +1248,9 @@ pas partie de l'application et n'est jamais appelé depuis le navigateur.
 manifest.json (tous les paliers) + phrases.json
         ↓  node tools/generateur.js --generer
    parties-XX.json  →  /content/parties/   (un fichier par palier)
+
+        ↓  node tools/generateur.js --mots-meles
+   motsmeles-XX.json  →  /content/motsmeles/   (grilles de mots mêlés, §10)
 ```
 
 La génération est **globale** : tous les paliers du manifeste sont régénérés d’un coup, avec
@@ -1155,7 +1260,16 @@ réemploi courent sur tout le catalogue.
 
 ### Composition d'une partie
 
-Chaque palier reçoit **10 parties** : 5 pour la grille, 5 pour les mots croisés.
+Chaque palier reçoit **jusqu'à 10 parties** : autant pour la grille que pour
+les mots croisés, en alternance.
+
+**Le réservoir de phrases borne le nombre de parties.** Une phrase cachée ne
+sert qu'une fois (§6.3), et le réservoir en compte 592. Un palier prend donc
+dix parties tant qu'il en reste assez pour garantir **deux parties à chacun des
+paliers suivants**. Aujourd'hui, les paliers 1 à 41 en ont dix ; de 42 à 57,
+entre une et neuf ; au-delà, deux en général, et six paliers aucune, faute de
+phrase couvrable par leurs mots (584 parties en tout). Les paliers anciens restent jouables : un nouveau palier ne
+réduit jamais les grilles déjà disponibles.
 
 - **Partage des jeux.** Chaque mot jouable est rangé une fois pour toutes dans
   un seul des deux jeux, en alternance dans l'ordre du palier. C'est ce qui
@@ -1404,6 +1518,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `StoryReader` | `organisms/story-reader.js` | `histoire, onWordTap, onFinish` | Texte de l'histoire du jour, chaque mot tappable (§07) |
 | `WordList` | `organisms/word-list.js` | `groupes[], showBox, actions` | Liste groupée : ajouts (§01), suivi d'apprentissage (§04) |
 | `VideoPlayer` | `organisms/video-player.js` | `source, hls, titre, onPret, onFin, onProgres, onErreur` | Lecteur `<video>` piloté phrase par phrase (§10) |
+| `WordSearchBoard` | `organisms/word-search-board.js` | `lignes[], trouvees[], mystere, indice, items[], onTrace, onEcouter` | Grille de mots mêlés et liste à trouver, au glissé ou en deux touchers (§10) |
 | `CompositionForm` | `organisms/composition-form.js` | `consigne, mots[], onCheck, onCorriger, onTerminer` | Rédaction libre : mots imposés suivis en direct, correction API (§08) |
 
 ### 12.4 Composants explicitement uniques
@@ -1433,6 +1548,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `Story` | `screens/story.js` | §07 — histoire du jour |
 | `Writing` | `screens/writing.js` | §08 — dictée, traduction, rédaction |
 | `Video` | `screens/video.js` | §09 — conférence phrase par phrase |
+| `WordSearch` | `screens/word-search.js` | §10 — mots mêlés, liste en français, mot mystère |
 | `Phrasal` | `screens/phrasal.js` | phrasal verbs — **pas d'entrée dans l'écran principal** |
 | `Progress` | `screens/progress.js` | statistiques, paliers, répartition par boîte |
 | `Settings` | `screens/settings.js` | export/import, objectif, trous de la vidéo, erreurs de contenu |
@@ -1486,7 +1602,8 @@ Home  (six cartes)
  ├─ 06 → Crossword     CrosswordBoard (grille vide) → EndCard  → Home
  ├─ 07 → Story         StoryReader → EndCard                   → Home
  ├─ 08 → Writing       InputAnswer (audio, micro) | CompositionForm → Home
- └─ 09 → Video         VideoPlayer + ClozeChoice | InputAnswer → Home
+ ├─ 09 → Video         VideoPlayer + ClozeChoice | InputAnswer → Home
+ └─ 10 → WordSearch    WordSearchBoard → EndCard              → Home
 ```
 
 Chaque section revient à Home. Il n'y a **aucun enchaînement automatique** entre
@@ -1508,6 +1625,7 @@ sections : c'est l'utilisateur qui choisit.
 | `storyBuilder` | `services/story-builder.js` | Choisit l'histoire du jour, calcule la couverture |
 | `writingBuilder` | `services/writing-builder.js` | Compose dictée, traduction et rédaction (§08) |
 | `videoBuilder` | `services/video-builder.js` | Découpe, mélange, suit l'avancement et compose le quizz d'une conférence (§10) |
+| `wordsearchBuilder` | `services/wordsearch-builder.js` | Choisit une grille de mots mêlés jouable, reconnaît un mot tracé, contrôle les grilles, applique le résultat (§10) |
 | `normalize` | `services/normalize.js` | Normalisation unique des réponses (§15.5) |
 | `audio` | `services/audio.js` | Synthèse vocale — l'application parle |
 | `speech` | `services/speech.js` | Reconnaissance vocale — l'application écoute (§15.8) |

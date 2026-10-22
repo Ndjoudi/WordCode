@@ -138,8 +138,8 @@ export function Game({ state, contenu, aller, enregistrer }, { jeu, titre }) {
   return el;
 }
 
-/** État vide : dire pourquoi, et proposer la sortie (§13). */
-function vide(el, aller, texte) {
+/** État vide : dire pourquoi, et proposer la sortie (§13). Partagé avec les mots mêlés. */
+export function vide(el, aller, texte) {
   const zone = document.createElement("div");
   zone.className = "ecran__empty";
 

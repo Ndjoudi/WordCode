@@ -7,6 +7,7 @@ import { chargerVideos } from "../services/store.js";
 import { avancement } from "../services/video-builder.js";
 import { composerDecouverte } from "../services/discovery-builder.js";
 import { partiesDisponibles } from "../services/game-builder.js";
+import { grillesDisponibles, MOTS_CONNUS_MIN } from "../services/wordsearch-builder.js";
 import { choisirHistoire } from "../services/story-builder.js";
 import { motsAApprendre, motsAQuizzer, prochaineEcheanceApprentissage,
          motsConnus, aujourdhui } from "../services/leitner.js";
@@ -51,6 +52,7 @@ export function Home({ state, contenu, aller }) {
     carteHistoire(state, contenu, today, aller),
     carteEcrire(state, contenu, aller),
     carteVideo(state, aller),
+    carteMotsMeles(state, contenu, connus, aller),
   );
   el.append(sections);
 
@@ -168,6 +170,29 @@ function carteJeu(state, contenu, connus, jeu, numero, titre, route, aller) {
   });
 }
 
+/** §10 — la liste est en français, les mots à trouver en anglais. */
+function carteMotsMeles(state, contenu, connus, aller) {
+  if (connus.length < MOTS_CONNUS_MIN) {
+    return SectionCard({
+      numero: 10, titre: "Mots mêlés", etat: "verrouille",
+      message: `Il faut au moins ${MOTS_CONNUS_MIN} mots validés au quizz pour jouer. Tu en as ${connus.length}.`,
+    });
+  }
+
+  const disponibles = grillesDisponibles(state, contenu.motsMeles ?? []);
+  return SectionCard({
+    numero: 10,
+    titre: "Mots mêlés",
+    compteur: disponibles,
+    uniteCompteur: disponibles > 1 ? "grilles" : "grille",
+    icone: "grid",
+    etat: disponibles ? "ouvert" : "verrouille",
+    message: "Aucune grille ne tient encore avec les mots que tu connais.",
+    action: "Jouer",
+    onOpen: () => aller("/wordsearch"),
+  });
+}
+
 function carteEcrire(state, contenu, aller) {
   // Deux sources derrière la carte : la dictée vient désormais des conférences
   // (§10), la traduction garde le corpus livré. L'une ou l'autre suffit.
@@ -229,7 +254,23 @@ function carteHistoire(state, contenu, today, aller) {
   if (choix.dejaLue) {
     return SectionCard({
       numero: 7, titre: "Histoire du jour", etat: "vide",
-      message: "Histoire du jour lue. Reviens demain.",
+      message: choix.chapitre
+        ? `${choix.chapitre.serie_fr ?? "Feuilleton"} : chapitres du jour lus. La suite demain.`
+        : "Histoire du jour lue. Reviens demain.",
+    });
+  }
+
+  // Feuilleton en cours : on affiche où l'on en est, pas la couverture.
+  if (choix.chapitre) {
+    return SectionCard({
+      numero: 7,
+      titre: "Histoire du jour",
+      compteur: choix.chapitre.numero,
+      uniteCompteur: `/ ${choix.chapitre.total} · ${choix.chapitre.serie_fr ?? "feuilleton"}`,
+      icone: "book",
+      etat: "ouvert",
+      action: `Lire le chapitre ${choix.chapitre.numero}`,
+      onOpen: () => aller("/story"),
     });
   }
 

@@ -1626,3 +1626,54 @@
   color: var(--c-text-muted);
   font-style: italic;
 }
+
+/* --- WordSearchBoard ------------------------------------------------------
+   Mots mêlés (§10). La grille prend toute la largeur disponible : jusqu'à
+   neuf colonnes sur un téléphone, d'où des cases calculées et non fixes. */
+.word-search { display: flex; flex-direction: column; gap: var(--sp-4); }
+
+.word-search__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--word-search-taille, 8), minmax(0, 1fr));
+  gap: var(--sp-1);
+  width: 100%;
+  max-width: calc(var(--touch-min) * 9);
+  margin: 0 auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.word-search__grid .tile {
+  width: auto;
+  height: auto;
+  min-width: 0;
+  aspect-ratio: 1;
+}
+
+.word-search__list { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+
+.word-search__item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: var(--touch-min);
+  border-bottom: 1px solid var(--c-surface-alt);
+}
+
+.word-search__indice { flex: 1 1 auto; min-width: 0; }
+.word-search__item--trouve .word-search__indice { color: var(--c-text-muted); }
+.word-search__en { font-weight: var(--fw-bold); color: var(--c-success); }
+.word-search__phonetique { font-size: var(--fs-sm); color: var(--c-text-muted); }
+
+.word-search-screen__outils { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.word-search-screen__outils .btn { white-space: nowrap; }
+.word-search-screen__consigne { margin: 0; font-size: var(--fs-sm); color: var(--c-text-muted); }
+
+/* Repère du feuilleton, au-dessus du titre du chapitre (§07). */
+.story-screen__chapitre {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--c-text-muted);
+}

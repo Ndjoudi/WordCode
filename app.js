@@ -21,6 +21,7 @@ import { Crossword } from "./screens/crossword.js";
 import { Story } from "./screens/story.js";
 import { Writing } from "./screens/writing.js";
 import { Video } from "./screens/video.js";
+import { WordSearch } from "./screens/word-search.js";
 import { Progress } from "./screens/progress.js";
 import { Settings } from "./screens/settings.js";
 import { ManualAdd } from "./screens/manual-add.js";
@@ -177,6 +178,7 @@ async function demarrer() {
       "/story": () => Story(contexte()),
       "/writing": () => Writing(contexte()),
       "/video": () => Video(contexte()),
+      "/wordsearch": () => WordSearch(contexte()),
       // Hors sections.
       "/progress": () => Progress(contexte()),
       "/settings": () => Settings(contexte()),

@@ -52,6 +52,8 @@ export function etatInitial() {
       parties_servies: { grille: [], croises: [] },
       histoires_lues: [],
       derniere_histoire: null,
+      // §07 : chapitres du feuilleton lus aujourd'hui — { date, ids }.
+      histoires_du_jour: null,
       // §08 : phrases de dictée et de traduction déjà servies.
       dictees_faites: [],
       // §10 : phrases réussies, par conférence — { slug: [rangs] }.
@@ -59,6 +61,9 @@ export function etatInitial() {
       // §10 : conférences regardées en entier — { slug: "AAAA-MM-JJ" }. C'est
       // ce qui ouvre le quizz, indépendamment des exercices.
       videos_vues: {},
+      // §10 : grilles de mots mêlés déjà servies — le cycle recommence quand
+      // toutes l'ont été.
+      mots_meles_servis: [],
       ajouts_aujourdhui: 0,
       derniere_session: null,
       derniere_sauvegarde: null,
@@ -109,6 +114,7 @@ function completerProgression(base, lue = {}) {
       ? lue.phrases_video : {},
     videos_vues: (lue?.videos_vues && typeof lue.videos_vues === "object")
       ? lue.videos_vues : {},
+    mots_meles_servis: Array.isArray(lue?.mots_meles_servis) ? lue.mots_meles_servis : [],
   };
 }
 

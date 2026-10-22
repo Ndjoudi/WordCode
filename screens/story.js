@@ -34,7 +34,9 @@ export function Story({ state, contenu, aller, enregistrer }) {
   el.append(SessionHeader({ title: "Histoire du jour", onHome: () => aller("/") }));
 
   if (choix.dejaLue) {
-    return vide(el, aller, "Tu as déjà lu l'histoire du jour. Reviens demain.");
+    return vide(el, aller, choix.chapitre
+      ? "Tu as lu tes chapitres du jour. La suite demain."
+      : "Tu as déjà lu l'histoire du jour. Reviens demain.");
   }
   if (choix.verrouille || !choix.histoire) {
     return vide(el, aller, choix.raison ?? "Aucune histoire disponible.");
@@ -226,7 +228,6 @@ export function Story({ state, contenu, aller, enregistrer }) {
         },
       };
     }
-    enregistrer(suivant);
     if (ajoutes.length) {
       el.append(Toast({
         message: `${ajoutes.length} mot(s) ajouté(s) à ta file de découverte.`,
@@ -234,9 +235,48 @@ export function Story({ state, contenu, aller, enregistrer }) {
         duration: 3000,
       }));
     }
+
+    // Feuilleton : un deuxième chapitre est permis aujourd'hui. On propose la
+    // suite plutôt que de renvoyer à l'accueil — mais sans l'imposer.
+    const apres = choisirHistoire({ state: suivant, histoires, today });
+    if (choix.chapitre && apres.chapitre && !apres.dejaLue) {
+      // Silencieux : un re-rendu servirait tout de suite le chapitre suivant,
+      // sans laisser le choix.
+      enregistrer(suivant, { silencieux: true });
+      corps.replaceChildren(finDeChapitre(apres.chapitre));
+      return;
+    }
+    enregistrer(suivant);
     aller("/");
   };
 
+  /** Fin d'un chapitre : lire la suite maintenant, ou garder le suspense. */
+  const finDeChapitre = (prochain) => {
+    const zone = document.createElement("div");
+    zone.className = "ecran__empty";
+
+    const message = document.createElement("p");
+    message.className = "ecran__empty-text";
+    message.textContent = `Chapitre ${choix.chapitre.numero} terminé. Tu peux lire `
+      + `le chapitre ${prochain.numero} maintenant, ou garder la suite pour demain.`;
+    zone.append(message);
+
+    zone.append(
+      Button({ label: `Lire le chapitre ${prochain.numero}`, fullWidth: true,
+               onClick: () => aller("/story") }),
+      Button({ label: "La suite demain", variant: "secondary", fullWidth: true,
+               onClick: () => aller("/") }),
+    );
+    return zone;
+  };
+
+  if (choix.chapitre) {
+    const repere = document.createElement("p");
+    repere.className = "story-screen__chapitre";
+    repere.textContent = `${choix.chapitre.serie_fr ?? "Feuilleton"} · chapitre `
+      + `${choix.chapitre.numero} sur ${choix.chapitre.total}`;
+    corps.append(repere);
+  }
   corps.append(StoryReader({ histoire, onWordTap: taper, onFinish: terminer }));
   el.append(corps);
   return el;

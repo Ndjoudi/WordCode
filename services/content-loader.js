@@ -9,6 +9,8 @@
  *  - une partie dont `verifie` n'est pas `true` n'est jamais servie (§5.3).
  */
 
+import { controlerGrille } from "./wordsearch-builder.js";
+
 /** Dossier racine du contenu, relatif à la page. */
 export const BASE = "content/";
 
@@ -917,7 +919,7 @@ export function paliersDebloques(manifeste, state) {
  * @param {Function} options.recuperer  implémentation de fetch, injectable
  * @returns {Promise<{
  *   manifeste:?object, paliers:object[], mots:Map<string,object>,
- *   parties:object[], phrases:Map<string,object>,
+ *   parties:object[], motsMeles:object[], phrases:Map<string,object>,
  *   filieres:Object<string,boolean>, erreurs:Anomalie[]
  * }>}
  */
@@ -926,17 +928,18 @@ export async function chargerContenu({ state, base = BASE,
   const erreurs = [];
   const mots = new Map();
   const parties = [];
+  const motsMeles = [];
   const paliers = [];
 
   const lu = await lireJSON(`${base}manifest.json`, recuperer);
   if (!lu.ok) {
     signaler(erreurs, "manifest.json", lu.erreur);
-    return { manifeste: null, paliers, mots, parties, phrases: new Map(), filieres: {}, erreurs };
+    return { manifeste: null, paliers, mots, parties, motsMeles, phrases: new Map(), filieres: {}, erreurs };
   }
 
   const manifeste = lu.donnees;
   if (!validerManifeste(manifeste, erreurs)) {
-    return { manifeste, paliers, mots, parties, phrases: new Map(), filieres: {}, erreurs };
+    return { manifeste, paliers, mots, parties, motsMeles, phrases: new Map(), filieres: {}, erreurs };
   }
 
   // Une filière déclarée mais absente n'est pas une erreur : elle n'est pas
@@ -967,6 +970,30 @@ export async function chargerContenu({ state, base = BASE,
     }
   }
 
+  /**
+   * Grilles de mots mêlés d'un palier (§10). Chacune est recontrôlée : une
+   * grille dont les lettres restantes ne forment plus l'expression ne serait
+   * pas jouable jusqu'au bout. Les mots des paliers antérieurs sont déjà
+   * chargés, l'ordre du manifeste le garantit.
+   */
+  const chargerMotsMeles = async (fichier) => {
+    const lu = await lireJSON(`${base}${fichier}`, recuperer);
+    if (!lu.ok) {
+      signaler(erreurs, fichier,
+        lu.absent ? "Mots mêlés déclarés au manifeste mais introuvables." : lu.erreur, false);
+      return;
+    }
+    for (const grille of lu.donnees?.grilles ?? []) {
+      if (grille?.verifie !== true) {
+        signaler(erreurs, fichier, `${grille?.id ?? "grille"} : « verifie » n'est pas true, grille écartée.`);
+        continue;
+      }
+      const problemes = controlerGrille(grille, mots);
+      if (problemes.length) { signaler(erreurs, fichier, problemes[0]); continue; }
+      motsMeles.push(grille);
+    }
+  };
+
   for (const entree of paliersDebloques(manifeste, state)) {
     const fichierPalier = entree.fichier;
     const luPalier = await lireJSON(`${base}${fichierPalier}`, recuperer);
@@ -982,6 +1009,7 @@ export async function chargerContenu({ state, base = BASE,
     }
     paliers.push({ ...entree, titre: luPalier.donnees.titre ?? entree.titre });
 
+    if (entree.mots_meles) await chargerMotsMeles(entree.mots_meles);
     if (!entree.parties) continue;
 
     const luParties = await lireJSON(`${base}${entree.parties}`, recuperer);
@@ -1006,5 +1034,5 @@ export async function chargerContenu({ state, base = BASE,
     }
   }
 
-  return { manifeste, paliers, mots, parties, phrases, filieres, erreurs };
+  return { manifeste, paliers, mots, parties, motsMeles, phrases, filieres, erreurs };
 }

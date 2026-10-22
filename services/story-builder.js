@@ -18,6 +18,45 @@ import { aujourdhui, motsConnus } from "./leitner.js";
 export const COUVERTURE_MIN = 0.95;
 
 /**
+ * Chapitres d'un feuilleton qu'on peut lire le même jour. Un seul, c'est trop
+ * frustrant quand l'intrigue accroche ; davantage, et le mois de lecture se
+ * réduit à une semaine.
+ */
+export const CHAPITRES_PAR_JOUR = 2;
+
+/**
+ * Prochain chapitre à lire d'un feuilleton : le premier non lu, dans l'ordre.
+ * Les feuilletons se suivent dans l'ordre où le contenu les livre.
+ *
+ * @param {object[]} histoires
+ * @param {Set<string>} lues
+ * @returns {?{histoire:object, numero:number, total:number}}
+ */
+export function prochainChapitre(histoires = [], lues = new Set()) {
+  const arcs = [...new Set(histoires.filter((h) => h.feuilleton).map((h) => h.arc))];
+  for (const arc of arcs) {
+    const chapitres = histoires
+      .filter((h) => h.feuilleton && h.arc === arc)
+      .sort((a, b) => Number(a.ordre) - Number(b.ordre));
+    const rang = chapitres.findIndex((h) => !lues.has(h.id));
+    if (rang !== -1) return { histoire: chapitres[rang], numero: rang + 1, total: chapitres.length };
+  }
+  return null;
+}
+
+/**
+ * Histoires lues aujourd'hui.
+ *
+ * @param {object} state
+ * @param {string} today
+ * @returns {string[]} ids
+ */
+export function luesAujourdhui(state, today = aujourdhui()) {
+  const jour = state?.progression?.histoires_du_jour;
+  return jour?.date === today && Array.isArray(jour.ids) ? jour.ids : [];
+}
+
+/**
  * Part du lexique d'une histoire que l'utilisateur connaît déjà.
  * Une histoire sans lexique déclaré est considérée comme non couverte : on ne
  * sert pas un texte dont on ne sait pas mesurer la difficulté.
@@ -36,8 +75,14 @@ export function couverture(histoire, connus = new Set()) {
 /**
  * Choisit l'histoire du jour (README §14, `storyBuilder`).
  *
- * À couverture égale, la continuation d'un arc déjà entamé l'emporte : une
- * histoire suivie tient le lecteur mieux qu'une succession de textes isolés.
+ * Un feuilleton en cours passe avant tout : on lit la suite, chapitre après
+ * chapitre, jusqu'à deux par jour (§07). Il n'est pas soumis aux 95% : c'est
+ * une seule intrigue, on ne saute pas un chapitre parce qu'il contient des
+ * mots nouveaux — un tap les traduit.
+ *
+ * Sans feuilleton en cours, à couverture égale, la continuation d'un arc déjà
+ * entamé l'emporte : une histoire suivie tient le lecteur mieux qu'une
+ * succession de textes isolés.
  *
  * @param {object} options
  * @param {object} options.state
@@ -48,6 +93,30 @@ export function couverture(histoire, connus = new Set()) {
  */
 export function choisirHistoire({ state, histoires = [], today = aujourdhui() } = {}) {
   const lues = new Set(state?.progression?.histoires_lues ?? []);
+
+  const chapitre = prochainChapitre(histoires, lues);
+  if (chapitre) {
+    const duJour = luesAujourdhui(state, today);
+    const infos = { numero: chapitre.numero, total: chapitre.total,
+                    serie_fr: chapitre.histoire.serie_fr ?? null,
+                    serie_en: chapitre.histoire.serie_en ?? null };
+    if (duJour.length >= CHAPITRES_PAR_JOUR) {
+      return {
+        histoire: histoires.find((h) => h.id === duJour.at(-1)) ?? null,
+        couverture: 1, suffisante: true, dejaLue: true, verrouille: false, raison: null,
+        chapitre: { ...infos, restantsAujourdhui: 0 },
+      };
+    }
+    return {
+      histoire: chapitre.histoire,
+      couverture: couverture(chapitre.histoire, new Set(motsConnus(state))),
+      suffisante: true,
+      dejaLue: false,
+      verrouille: false,
+      raison: null,
+      chapitre: { ...infos, restantsAujourdhui: CHAPITRES_PAR_JOUR - duJour.length },
+    };
+  }
 
   if (state?.progression?.derniere_histoire === today) {
     const id = [...lues].at(-1);
@@ -128,6 +197,7 @@ export function appliquerHistoire({ state, histoire, aides = [], appliquer,
   }
 
   const lues = state?.progression?.histoires_lues ?? [];
+  const duJour = luesAujourdhui(state, today);
   return {
     ...state,
     words,
@@ -135,6 +205,11 @@ export function appliquerHistoire({ state, histoire, aides = [], appliquer,
       ...state.progression,
       histoires_lues: lues.includes(histoire.id) ? lues : [...lues, histoire.id],
       derniere_histoire: today,
+      // Sert à la limite de chapitres par jour du feuilleton.
+      histoires_du_jour: {
+        date: today,
+        ids: duJour.includes(histoire.id) ? duJour : [...duJour, histoire.id],
+      },
     },
   };
 }

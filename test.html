@@ -52,6 +52,7 @@
     import * as VID from "./services/video-builder.js";
     import * as SYNC from "./services/sync.js";
     import * as R from "./services/router.js";
+    import * as MM from "./services/wordsearch-builder.js";
 
     const racine = document.getElementById("t");
     let ok = 0, ko = 0;
@@ -1438,6 +1439,39 @@
     eq("un mot dont la traduction a été lue ne monte pas (§5)",
        avecAideLecture.words.m1.b, 3);
 
+    section("storyBuilder — feuilleton (§07)");
+
+    const chap = (n) => ({ id: `h_f${n}`, arc: "serie", ordre: n, feuilleton: true,
+                           serie_fr: "Le dossier test", lexique: ["m1"], texte_en: "x" });
+    const feuilleton = [chap(2), chap(1), chap(3)];
+    const lecteur = { progression: S.etatInitial().progression, words: {} };
+
+    const ch1 = HIS.choisirHistoire({ state: lecteur, histoires: [H1, ...feuilleton], today: "2026-10-22" });
+    eq("le feuilleton passe avant les histoires isolées", ch1.histoire.id, "h_f1");
+    eq("il commence au chapitre 1, dans l'ordre", [ch1.chapitre.numero, ch1.chapitre.total], [1, 3]);
+    eq("un chapitre n'est pas soumis aux 95% de mots connus", ch1.suffisante, true);
+
+    const apres1 = HIS.appliquerHistoire({ state: lecteur, histoire: ch1.histoire,
+      appliquer: L.appliquerResultat, today: "2026-10-22" });
+    eq("le chapitre lu est compté pour la journée",
+       apres1.progression.histoires_du_jour, { date: "2026-10-22", ids: ["h_f1"] });
+    const ch2 = HIS.choisirHistoire({ state: apres1, histoires: feuilleton, today: "2026-10-22" });
+    eq("un deuxième chapitre est permis le même jour", [ch2.histoire.id, ch2.dejaLue], ["h_f2", false]);
+
+    const apres2 = HIS.appliquerHistoire({ state: apres1, histoire: ch2.histoire,
+      appliquer: L.appliquerResultat, today: "2026-10-22" });
+    eq("au-delà de deux, la suite attend demain",
+       HIS.choisirHistoire({ state: apres2, histoires: feuilleton, today: "2026-10-22" }).dejaLue, true);
+    eq("le lendemain, on reprend au chapitre suivant",
+       HIS.choisirHistoire({ state: apres2, histoires: feuilleton, today: "2026-10-23" }).histoire.id, "h_f3");
+
+    const fini = { ...apres2, progression: { ...apres2.progression,
+      histoires_lues: ["h_f1", "h_f2", "h_f3"], histoires_du_jour: null, derniere_histoire: null } };
+    eq("le feuilleton fini, les histoires isolées reprennent",
+       HIS.choisirHistoire({ state: fini, histoires: [H1, ...feuilleton], today: "2026-10-30" }).histoire.id, "h_001");
+    eq("prochainChapitre ne renvoie rien quand tout est lu",
+       HIS.prochainChapitre(feuilleton, new Set(["h_f1", "h_f2", "h_f3"])), null);
+
     section("store — schéma v4 (§6.6)");
 
     eq("la version du schéma est 4", S.VERSION, 4);
@@ -2198,6 +2232,74 @@
     eq("un rafraîchissement garde la position de défilement", montages.at(-1), { conserver: true });
     routeurTest.aller("/");
     eq("une navigation repart du haut", montages.at(-1), { conserver: false });
+
+    section("wordsearchBuilder — mots mêlés (§10)");
+
+    // Grille minuscule : CAT sur la première ligne, DOG sur la deuxième, et la
+    // troisième ligne, libre, forme l'expression « Hey ».
+    const motsMM = new Map([
+      ["w_cat", { id: "w_cat", en: "cat", fr: "chat", indice: { en: "A small animal that says meow" } }],
+      ["w_dog", { id: "w_dog", en: "dog", fr: "chien", indice: { en: "An animal that barks" } }],
+    ]);
+    const grilleMM = {
+      id: "mm_test", verifie: true, lignes: ["CAT", "DOG", "HEY"],
+      mots: [{ id: "w_cat", x: 0, y: 0, dx: 1, dy: 0 }, { id: "w_dog", x: 0, y: 1, dx: 1, dy: 0 }],
+      phrase_en: "Hey", phrase_fr: "Salut",
+    };
+    eq("une grille juste passe le contrôle", MM.controlerGrille(grilleMM, motsMM), []);
+    eq("si les lettres restantes ne forment pas l'expression, elle est refusée",
+       MM.controlerGrille({ ...grilleMM, lignes: ["CAT", "DOG", "HAY"] }, motsMM).length, 1);
+    vrai("un mot présent deux fois est refusé",
+       MM.controlerGrille({ ...grilleMM, lignes: ["CAT", "DOG", "CAT"], phrase_en: "Cat" }, motsMM)
+         .some((p) => p.includes("plusieurs fois")));
+    vrai("un mot absent du catalogue est refusé",
+       MM.controlerGrille(grilleMM, new Map([["w_cat", motsMM.get("w_cat")]])).length > 0);
+
+    eq("ligne droite horizontale", MM.cheminEntre([0, 0], [2, 0]), [[0, 0], [1, 0], [2, 0]]);
+    eq("diagonale tracée à l'envers", MM.cheminEntre([2, 2], [0, 0]), [[2, 2], [1, 1], [0, 0]]);
+    eq("deux cases non alignées ne forment pas de chemin", MM.cheminEntre([0, 0], [2, 1]), null);
+
+    eq("le chemin d'un mot le désigne",
+       MM.motSurChemin(grilleMM, MM.cheminEntre([0, 1], [2, 1]), motsMM), "w_dog");
+    eq("dans les deux sens",
+       MM.motSurChemin(grilleMM, MM.cheminEntre([2, 1], [0, 1]), motsMM), "w_dog");
+    eq("un bout de mot ne compte pas",
+       MM.motSurChemin(grilleMM, MM.cheminEntre([0, 0], [1, 0]), motsMM), null);
+    eq("un mot déjà trouvé ne se retrouve pas",
+       MM.motSurChemin(grilleMM, MM.cheminEntre([0, 0], [2, 0]), motsMM, new Set(["w_cat"])), null);
+    eq("les cases restantes, dans l'ordre de lecture", MM.casesMystere(grilleMM, motsMM),
+       [[0, 2], [1, 2], [2, 2]]);
+
+    eq("la liste est en français par défaut", MM.texteIndice(motsMM.get("w_cat"), "fr"), "chat");
+    eq("ou en définition anglaise", MM.texteIndice(motsMM.get("w_cat"), "def"),
+       "A small animal that says meow");
+    const etatMM = S.etatInitial();
+    eq("le mode par défaut est le français", MM.modeIndice(etatMM), "fr");
+    eq("le choix du mode est retenu", MM.modeIndice(MM.choisirModeIndice(etatMM, "def")), "def");
+    eq("un mode inconnu est ignoré", MM.choisirModeIndice(etatMM, "klingon"), etatMM);
+
+    const connuMM = { b: 3, r: "2026-12-01", s: 3, e: 0, d: null, st: "connu" };
+    const cinqConnus = Object.fromEntries(
+      ["w_cat", "w_dog", "w_a", "w_b", "w_c"].map((id) => [id, { ...connuMM }]));
+    eq("sans mots connus, la section est verrouillée",
+       MM.choisirGrille({ state: etatMM, grilles: [grilleMM] }).verrouille, true);
+    eq("une grille dont un mot est inconnu n'est pas jouable",
+       MM.grillesJouables([grilleMM], new Set(["w_cat"])), []);
+    const etatJeu = { ...etatMM, words: cinqConnus };
+    const tirageMM = MM.choisirGrille({ state: etatJeu, grilles: [grilleMM], tirer: (l) => l[0] });
+    eq("avec les mots connus, la grille est servie", tirageMM.grille?.id, "mm_test");
+    eq("et comptée sur l'accueil", MM.grillesDisponibles(etatJeu, [grilleMM]), 1);
+
+    const indiceMM = MM.indiceGrille(grilleMM, new Set(["w_cat"]), (l) => l[0]);
+    eq("l'indice montre la première lettre d'un mot non trouvé", indiceMM, { id: "w_dog", x: 0, y: 1 });
+
+    const apresMM = MM.appliquerGrille({ state: etatJeu, grille: grilleMM, aides: ["w_dog"],
+                                         today: "2026-10-22" });
+    eq("un mot trouvé sans aide monte d'une boîte", apresMM.words.w_cat.b, 4);
+    eq("un mot aidé reste dans sa boîte", apresMM.words.w_dog.b, 3);
+    eq("la grille est notée servie", apresMM.progression.mots_meles_servis, ["mm_test"]);
+    eq("une grille servie relance le cycle quand c'était la dernière",
+       MM.choisirGrille({ state: apresMM, grilles: [grilleMM], tirer: (l) => l[0] }).reinitialise, true);
 
     /* ==================================================== conclusion ====== */
     const sum = document.getElementById("sum");
