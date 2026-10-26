@@ -549,6 +549,13 @@ la longueur de l'expression, avec des mots du palier et de l'acquis. Une
 expression ne sert qu'une fois parmi les mots mêlés, mais peut avoir déjà servi
 au codeword : c'est un autre jeu, vu à un autre moment.
 
+**Le réservoir borne les mots mêlés aussi.** Ses 592 expressions donnent 592
+grilles : les paliers 1 à 118 en ont cinq, le 119 deux, les paliers 120 à 201
+aucune. Un palier sans grille n'a pas de fichier `motsmeles-NNN.json` ni
+d'entrée `mots_meles` au manifeste ; il en recevra dès que le réservoir
+s'agrandira, sans que les grilles déjà produites changent (la génération suit
+l'ordre des paliers avec une graine fixe).
+
 ---
 
 ## 3. Sources de vocabulaire
@@ -570,17 +577,21 @@ Le champ `source` pilote l'écran de découverte et l'éligibilité aux jeux.
 | 1 → 20 | **les 1000 mots les plus fréquents**, dans l'ordre de fréquence | 50 mots par palier |
 | 21 → 38 | **anglais professionnel — TOEIC** : 898 mots de la liste TOEIC absents des 1000 | 50 mots par palier |
 | 39 → 104 | **monde professionnel** : 3 271 mots des listes NGSL 1.2, BSL 1.2 et TSL 1.2, classés par fréquence | 50 mots par palier |
+| 105 → 201 | **vers le bilingue** : 4 850 mots, les suivants de la liste de fréquence NGSL-SFI 31K, plus la NAWL | 50 mots par palier |
 
-**Vocabulaire total : 5 184 mots** (1000 + 898 + 3 271, plus les 15 verbes
-irréguliers de §3.2).
+**Vocabulaire total : 10 034 mots** (1000 + 898 + 3 271 + 4 850, plus les 15
+verbes irréguliers de §3.2).
 
-Les séries TOEIC et « monde professionnel » sont rédigées à la main dans
-`tools/contenu/toeic-NN.txt` et `pro-NN.txt`, une ligne par mot — `en | fr |
-type | phonétique | définition anglaise | exemple | traduction de l'exemple` —
-puis construites par `node tools/contenu/construire-series.mjs`. Chaque série a
-son espace d'identifiants (`t_`, `m_`) et une répartition figée
+Les séries TOEIC, « monde professionnel » et « vers le bilingue » sont rédigées
+à la main dans `tools/contenu/toeic-NN.txt`, `pro-NN.txt` et `bilingue-NN.txt`,
+une ligne par mot — `en | fr | type | phonétique | définition anglaise | exemple
+| traduction de l'exemple` — puis construites par
+`node tools/contenu/construire-series.mjs`. Chaque série a son espace
+d'identifiants (`t_`, `m_`, `b_`) et une répartition figée
 (`*-repartition.json`) : un mot oublié ou rangé dans le mauvais paquet bloque
-la construction.
+la construction. L'exemple emploie le mot sous une forme que la carte sait
+colorer (§01) : forme de base, `-s`, `-ed`, `-ing`… jamais un pluriel ou un
+prétérit irrégulier.
 
 **Origine de la série « monde professionnel ».** Les listes du projet NGSL
 (Browne & Culligan, licence CC BY-SA 4.0) : NGSL pour l'anglais courant, BSL
@@ -588,6 +599,16 @@ la construction.
 retire les mots déjà présents, les mots-outils, les noms de monnaies, les
 préfixes isolés et le jargon trop étroit (`stochastic`, `tuple`…). La liste
 retenue est conservée dans `tools/contenu/pro-source.txt`.
+
+**Origine de la série « vers le bilingue ».** La liste de fréquence
+NGSL-SFI 31K (Browne, licence CC BY-SA 4.0), parcourue dans l'ordre au-delà
+des mots déjà présents, complétée par la NAWL (New Academic Word List, même
+licence). Mêmes exclusions que ci-dessus, plus les mots vulgaires, les
+fragments (`handwrite`, `outskirt`) remplacés par leur vraie forme
+(`handwriting`, `outskirts`), les doublons orthographiques
+(`acknowledgment`/`acknowledgement`) et quelques termes du monde du travail
+ajoutés à la main (`onboarding`, `headhunter`, `bottleneck`…). La liste
+retenue est conservée dans `tools/contenu/bilingue-source.txt`.
 
 **Les thèmes n'arrivent qu'après les 1000 mots.** Justification : les 1000 mots
 les plus fréquents couvrent environ 75 à 80% d'un texte courant. C'est là que le
@@ -1269,7 +1290,9 @@ dix parties tant qu'il en reste assez pour garantir **deux parties à chacun des
 paliers suivants**. Aujourd'hui, les paliers 1 à 41 en ont dix ; de 42 à 57,
 entre une et neuf ; au-delà, deux en général, et six paliers aucune, faute de
 phrase couvrable par leurs mots (584 parties en tout). Les paliers anciens restent jouables : un nouveau palier ne
-réduit jamais les grilles déjà disponibles.
+réduit jamais les grilles déjà disponibles. Les paliers 105 à 201 (« vers le
+bilingue ») n'ont pas encore de parties : relancer `--generer` redistribuerait
+le quota des paliers 23 et suivants, et le réservoir est de toute façon épuisé.
 
 - **Partage des jeux.** Chaque mot jouable est rangé une fois pour toutes dans
   un seul des deux jeux, en alternance dans l'ordre du palier. C'est ce qui
