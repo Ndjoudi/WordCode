@@ -797,6 +797,8 @@ function genererMotsMeles() {
     }
 
     acquis.push(...nouveaux);
+    // Réservoir épuisé : pas de fichier vide, le palier attend de nouvelles expressions.
+    if (!grilles.length) continue;
     const fichier = `motsmeles/motsmeles-${nom}.json`;
     fs.writeFileSync(path.join(CONTENU, fichier),
       JSON.stringify({ palier: numero, version: 1, grilles }, null, 2) + "\n");
