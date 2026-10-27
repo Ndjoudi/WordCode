@@ -524,8 +524,10 @@ Les transcriptions récupérées vivent en `localStorage`, **jamais** dans
 ### Les conférences proposées
 
 Coller un lien reste possible, mais l'écran propose aussi des conférences
-**à la mesure du vocabulaire** : cinq à la fois, *Autres conférences* pour les
-suivantes. On en touche une, elle se récupère comme un lien collé.
+**à la mesure du vocabulaire** : cinq par page, avec une **pagination**
+(précédente, numéros, suivante) pour avancer ou revenir en arrière. On en touche
+une, elle se récupère comme un lien collé. La page reste la même tant que
+l'écran est ouvert ; si la liste raccourcit, on tombe sur la dernière page.
 
 - **Le palier conseillé** d'une conférence est le premier palier à partir
   duquel **95 % de ses mots** sont au catalogue — le seuil de compréhension de
@@ -1558,6 +1560,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `InputAnswer` | `molecules/input-answer.js` | `prompt, expected, hint, onAudio, micro, onSubmit` | Rappel actif, dictée et traduction, saisie vocale (§08, §15.8) |
 | `ClozeInput` | `molecules/cloze-input.js` | `sentence, blankIndex, expected, translation, onSubmit` | Phrase à trous |
 | `ClozeChoice` | `molecules/cloze-choice.js` | `parts[], choices[], expected[], sentence, onSubmit` | Phrase à trous sans clavier, mots à poser (§10) |
+| `Pagination` | `molecules/pagination.js` | `page, pages, onChange` | Précédente, numéros, suivante ; « … » au-delà de sept pages (§09) |
 | `VerbTriad` | `molecules/verb-triad.js` | `verb, showBase, onSubmit` | Prétérit + participe |
 | `WordOrder` | `molecules/word-order.js` | `tokens[], expected, onSubmit` | Remise en ordre (phrasal) |
 | `Keyboard` | `molecules/keyboard.js` | `layout, disabledKeys[], onKey, onBackspace` | **Clavier unique de l'app** |

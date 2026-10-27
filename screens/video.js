@@ -4,6 +4,7 @@ import { Spinner } from "../components/atoms/spinner.js";
 import { Toast } from "../components/atoms/toast.js";
 import { Chip } from "../components/atoms/chip.js";
 import { MCQ } from "../components/molecules/mcq.js";
+import { Pagination } from "../components/molecules/pagination.js";
 import { ClozeChoice } from "../components/molecules/cloze-choice.js";
 import { InputAnswer } from "../components/molecules/input-answer.js";
 import { VideoPlayer } from "../components/organisms/video-player.js";
@@ -45,7 +46,7 @@ export function Video({ state, contenu, aller, enregistrer }) {
   let commandes = null;
   /** Catalogue des conférences proposées, lu à la première ouverture. */
   let catalogue = null;
-  /** Page de propositions affichée : « Autres conférences » la fait tourner. */
+  /** Page de propositions affichée, gardée tant que l'écran est ouvert. */
   let pageProposee = 0;
 
   const corps = document.createElement("div");
@@ -165,11 +166,12 @@ export function Video({ state, contenu, aller, enregistrer }) {
     };
 
     const rendre = () => {
-      const { conferences, pages } = suggererConferences(catalogue, {
+      const { conferences, page, pages } = suggererConferences(catalogue, {
         palier: Number(state.progression?.palier_actuel ?? 1),
         exclus: videos.map((v) => v.slug),
         page: pageProposee,
       });
+      pageProposee = page;
       zone.replaceChildren();
       if (!conferences.length) return;
 
@@ -183,11 +185,10 @@ export function Video({ state, contenu, aller, enregistrer }) {
       zone.append(titre, liste);
 
       if (pages > 1) {
-        zone.append(Button({
-          label: "Autres conférences",
-          variant: "ghost",
-          fullWidth: true,
-          onClick: () => { pageProposee += 1; rendre(); },
+        zone.append(Pagination({
+          page,
+          pages,
+          onChange: (cible) => { pageProposee = cible; rendre(); },
         }));
       }
     };

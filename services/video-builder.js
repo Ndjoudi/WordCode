@@ -425,7 +425,7 @@ function melangerParDefaut(liste) {
 /* Conférences proposées                                                       */
 /* -------------------------------------------------------------------------- */
 
-/** Conférences montrées à la fois ; « Autres conférences » passe aux suivantes. */
+/** Conférences montrées par page ; la pagination mène aux autres. */
 export const PROPOSITIONS_PAR_PAGE = 5;
 
 /**
@@ -441,7 +441,8 @@ export const PROPOSITIONS_PAR_PAGE = 5;
  * @param {number}   options.palier  palier actuel de l'utilisateur
  * @param {string[]} options.exclus  slugs déjà enregistrés
  * @param {number}   options.page    0 pour les premières, puis 1, 2…
- * @returns {{conferences:object[], pages:number}} chaque conférence porte `aPortee`
+ * @returns {{conferences:object[], page:number, pages:number}}
+ *   `page` ramenée dans les bornes ; chaque conférence porte `aPortee`
  */
 export function suggererConferences(conferences, { palier = 1, exclus = [], page = 0 } = {}) {
   const deja = new Set(exclus);
@@ -456,8 +457,10 @@ export function suggererConferences(conferences, { palier = 1, exclus = [], page
                  ...auDessus.map((c) => ({ ...c, aPortee: false }))];
 
   const pages = Math.ceil(ordre.length / PROPOSITIONS_PAR_PAGE);
-  if (!pages) return { conferences: [], pages: 0 };
-  // Au bout de la liste, on repart du début plutôt que d'afficher du vide.
-  const debut = (((page % pages) + pages) % pages) * PROPOSITIONS_PAR_PAGE;
-  return { conferences: ordre.slice(debut, debut + PROPOSITIONS_PAR_PAGE), pages };
+  if (!pages) return { conferences: [], page: 0, pages: 0 };
+  // Une conférence enregistrée entre-temps peut raccourcir la liste : la page
+  // demandée est ramenée à la dernière plutôt que d'afficher du vide.
+  const courante = Math.min(Math.max(0, Math.trunc(page) || 0), pages - 1);
+  const debut = courante * PROPOSITIONS_PAR_PAGE;
+  return { conferences: ordre.slice(debut, debut + PROPOSITIONS_PAR_PAGE), page: courante, pages };
 }

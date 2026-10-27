@@ -1110,6 +1110,49 @@
 .video-screen__propositions:empty { display: none; }
 .video-screen__titre { margin: 0; font-size: var(--fs-md); }
 
+/* --- Pagination ------------------------------------------------------------ */
+/* Les cases rétrécissent ensemble : neuf tiennent sur un téléphone. */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-1);
+  margin-top: var(--sp-2);
+}
+
+.pagination__page,
+.pagination__trou {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: var(--touch-min);
+  height: var(--touch-min);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+}
+
+.pagination__page {
+  border: 0;
+  background: var(--c-surface);
+  box-shadow: var(--sh-sm);
+  color: var(--c-text);
+  font: inherit;
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+}
+
+.pagination__page:disabled { cursor: default; opacity: .45; box-shadow: none; }
+.pagination__page:active:not(:disabled) { background: var(--c-surface-alt); }
+.pagination__page--courante,
+.pagination__page--courante:disabled {
+  background: var(--c-primary);
+  color: var(--c-surface);
+  opacity: 1;
+}
+
+.pagination__trou { color: var(--c-text-muted); }
+
 .lecteur { display: block; }
 
 .lecteur__video {

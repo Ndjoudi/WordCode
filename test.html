@@ -50,6 +50,7 @@
     import * as ECR from "./services/writing-builder.js";
     import * as VOX from "./services/speech.js";
     import * as VID from "./services/video-builder.js";
+    import * as PAG from "./components/molecules/pagination.js";
     import * as SYNC from "./services/sync.js";
     import * as R from "./services/router.js";
     import * as MM from "./services/wordsearch-builder.js";
@@ -2003,11 +2004,25 @@
       Array.from({ length: 7 }, (_, i) => conf(`c${i}`, 10 + i)), { palier: 100 });
     eq("cinq par page", pages.conferences.length, VID.PROPOSITIONS_PAR_PAGE);
     eq("deux pages pour sept conférences", pages.pages, 2);
-    eq("après la dernière page, on repart du début",
-       VID.suggererConferences(Array.from({ length: 7 }, (_, i) => conf(`c${i}`, 10 + i)),
-                               { palier: 100, page: 2 }).conferences[0].slug, "c6");
+    const auDela = VID.suggererConferences(Array.from({ length: 7 }, (_, i) => conf(`c${i}`, 10 + i)),
+                                           { palier: 100, page: 9 });
+    eq("au-delà de la dernière page, on reste sur la dernière", [auDela.page, auDela.conferences[0].slug], [1, "c1"]);
+    eq("page négative : la première",
+       VID.suggererConferences(catalogueConf, { palier: 80, page: -3 }).page, 0);
     eq("catalogue vide : rien à proposer",
-       VID.suggererConferences([], { palier: 50 }), { conferences: [], pages: 0 });
+       VID.suggererConferences([], { palier: 50 }), { conferences: [], page: 0, pages: 0 });
+
+    section("Pagination — numéros affichés");
+
+    eq("peu de pages : toutes", PAG.pagesAffichees(2, 5), [0, 1, 2, 3, 4]);
+    eq("au début : les premières, puis la dernière", PAG.pagesAffichees(0, 60), [0, 1, 2, 3, null, 59]);
+    eq("au milieu : la première, les voisines, la dernière",
+       PAG.pagesAffichees(29, 60), [0, null, 28, 29, 30, null, 59]);
+    eq("à la fin : la première, puis les dernières", PAG.pagesAffichees(59, 60), [0, null, 56, 57, 58, 59]);
+    eq("un trou d'une seule page montre la page", PAG.pagesAffichees(3, 60), [0, 1, 2, 3, 4, null, 59]);
+    const nav = PAG.Pagination({ page: 0, pages: 60 });
+    vrai("à la première page, « précédente » est désactivée", nav.querySelector("button").disabled);
+    eq("la page courante est signalée", nav.querySelector("[aria-current]").textContent, "1");
 
     const erreursConf = [];
     eq("le catalogue écarte une entrée sans palier",
