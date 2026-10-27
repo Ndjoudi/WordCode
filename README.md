@@ -292,6 +292,15 @@ découvre que des livraisons disparaissent. Chaque chapitre finit sur une
 question ; le vocabulaire des affaires (facture, fournisseur, audit, fusion…)
 y revient sans cesse.
 
+**Un feuilleton par mois, pour une année de lecture.** Les suivants changent
+d'univers professionnel pour varier le vocabulaire, chacun avec trente
+chapitres :
+
+| Saison | Feuilleton | Univers |
+|---|---|---|
+| 1 | *Le dossier Verrier* (`verrier`) | logistique, Londres |
+| 2 | *Le lancement* (`nordlicht`) | start-up, Berlin : une fuite de données clients |
+
 - **Un feuilleton en cours passe avant tout le reste** : la section sert le
   premier chapitre non lu, dans l'ordre. Jamais de saut.
 - **Deux chapitres par jour au plus.** À la fin du premier, l'écran propose de
@@ -299,11 +308,14 @@ y revient sans cesse.
 - **Pas de seuil de 95%** : c'est une seule intrigue, on ne saute pas un
   chapitre parce qu'il contient des mots nouveaux — un tap les traduit, et la
   traduction intégrale reste repliée sous le texte.
-- **Le feuilleton terminé**, la section reprend son fonctionnement habituel.
+- **Les feuilletons se suivent par saison** (`saison: n` dans l'en-tête, 1 par
+  défaut) : un nouveau feuilleton ne passe jamais devant celui qu'on lit.
+- **Tous les feuilletons terminés**, la section reprend son fonctionnement
+  habituel.
 
 Un chapitre est un fichier de `tools/contenu/histoires/` dont l'en-tête porte
-`feuilleton: oui | serie_en: … | serie_fr: …`. Le lexique est calculé sur tout
-le catalogue (les 104 paliers), pour que les mots TOEIC et professionnels lus
+`feuilleton: oui | serie_en: … | serie_fr: … | saison: n`. Le lexique est
+calculé sur tout le catalogue, pour que les mots TOEIC et professionnels lus
 dans le feuilleton comptent comme des révisions. Les chapitres lus le jour même
 sont suivis dans `progression.histoires_du_jour` (`{ date, ids }`).
 

@@ -4,7 +4,7 @@
  *
  * Format d'un fichier source :
  *   # arc: <id> | ordre: <n> | titre_en: <…> | titre_fr: <…>
- *     [| feuilleton: oui | serie_en: <…> | serie_fr: <…>]
+ *     [| feuilleton: oui | serie_en: <…> | serie_fr: <…> | saison: <n>]
  *   --- EN
  *   <texte anglais>
  *   --- FR
@@ -111,7 +111,8 @@ function principal() {
       suite_de: precedente?.id ?? null,
       // Un feuilleton se lit dans l'ordre, chapitre après chapitre (§07).
       ...(meta.feuilleton === "oui"
-        ? { feuilleton: true, serie_en: meta.serie_en ?? null, serie_fr: meta.serie_fr ?? null }
+        ? { feuilleton: true, serie_en: meta.serie_en ?? null, serie_fr: meta.serie_fr ?? null,
+            saison: Number(meta.saison ?? 1) }
         : {}),
       source: "contenu",
     });

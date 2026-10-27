@@ -1,0 +1,77 @@
+# arc: nordlicht | ordre: 8 | titre_en: The Logs | titre_fr: Les journaux | feuilleton: oui | serie_en: The Launch | serie_fr: Le lancement | saison: 2
+--- EN
+That evening, the office was empty except for Camille and Aylin. Bruno the dog was asleep on a cushion. Outside, the bakery was closed and the street was dark.
+
+Aylin turned her screen toward Camille.
+
+"Every server keeps a log," she explained. "A log is like a diary. It writes down who connected, when, and what they did. I checked the logs of our main server. Nothing strange. Nobody copied data from there."
+
+"So where did the data come from?" asked Camille.
+
+"From this one." Aylin pointed at a name on the screen: test-server-03. "Last year, we built a test server. We used it to try new features with real data. It was supposed to be a copy of the main server, only for developers."
+
+"And?"
+
+"And it is still online," said Aylin. "It should not be. We stopped using it in October. I asked our freelancer to shut it down."
+
+She scrolled through the log. There were hundreds of lines. Then she stopped and pointed at one.
+
+"Here. On the eighth of December, at 23:14, someone connected from an address in Amsterdam. They downloaded a file called export-clients-full."
+
+Camille read the line twice. "Amsterdam. Like Planwise."
+
+"Like Planwise," said Aylin. "But an address in Amsterdam doesn't prove anything. It could be anybody. A hacker, a tourist, a bot."
+
+"Did they need a password?"
+
+Aylin was quiet for a moment. "Yes. And they used a valid one. Not a stolen one that failed ten times. They connected on the first try."
+
+Camille felt her heart beat faster. "So someone gave them the password."
+
+"Or someone used it from Amsterdam themselves," said Aylin.
+
+They looked at each other. Neither of them wanted to say the next question out loud.
+
+Finally, Camille asked, "Who had the password for the test server?"
+
+Aylin closed her laptop slowly.
+
+"Three people," she said. "Me, the freelancer who built it, and Jonas."
+--- FR
+Ce soir-là, le bureau était vide, à part Camille et Aylin. Bruno le chien dormait sur un coussin. Dehors, la boulangerie était fermée et la rue était sombre.
+
+Aylin a tourné son écran vers Camille.
+
+« Chaque serveur tient un journal, a-t-elle expliqué. Un journal, c'est comme un carnet intime. Il note qui s'est connecté, quand, et ce qu'il a fait. J'ai vérifié les journaux de notre serveur principal. Rien d'étrange. Personne n'a copié de données là-dessus.
+
+— Alors d'où viennent les données ? a demandé Camille.
+
+— De celui-ci. » Aylin a montré un nom à l'écran : test-server-03. « L'an dernier, on a construit un serveur de test. On s'en servait pour essayer de nouvelles fonctions avec de vraies données. C'était censé être une copie du serveur principal, réservée aux développeurs.
+
+— Et ?
+
+— Et il est toujours en ligne, a dit Aylin. Il ne devrait pas l'être. On a arrêté de l'utiliser en octobre. J'ai demandé à notre prestataire de l'éteindre. »
+
+Elle a fait défiler le journal. Il y avait des centaines de lignes. Puis elle s'est arrêtée et en a montré une.
+
+« Là. Le huit décembre, à 23 h 14, quelqu'un s'est connecté depuis une adresse à Amsterdam. Il a téléchargé un fichier appelé export-clients-full. »
+
+Camille a relu la ligne deux fois. « Amsterdam. Comme Planwise.
+
+— Comme Planwise, a dit Aylin. Mais une adresse à Amsterdam ne prouve rien. Ça peut être n'importe qui. Un pirate, un touriste, un robot.
+
+— Il fallait un mot de passe ? »
+
+Aylin s'est tue un instant. « Oui. Et la personne en a utilisé un valide. Pas un mot de passe volé qui échoue dix fois. Elle s'est connectée du premier coup. »
+
+Camille a senti son cœur battre plus vite. « Donc quelqu'un leur a donné le mot de passe.
+
+— Ou quelqu'un l'a utilisé lui-même depuis Amsterdam », a dit Aylin.
+
+Elles se sont regardées. Aucune des deux ne voulait poser la question suivante à voix haute.
+
+Finalement, Camille a demandé : « Qui avait le mot de passe du serveur de test ? »
+
+Aylin a fermé son ordinateur lentement.
+
+« Trois personnes, a-t-elle dit. Moi, le prestataire qui l'a construit, et Jonas. »

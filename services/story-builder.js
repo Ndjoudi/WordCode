@@ -26,14 +26,22 @@ export const CHAPITRES_PAR_JOUR = 2;
 
 /**
  * Prochain chapitre à lire d'un feuilleton : le premier non lu, dans l'ordre.
- * Les feuilletons se suivent dans l'ordre où le contenu les livre.
+ * Les feuilletons se suivent par saison (`saison`, 1 par défaut), puis dans
+ * l'ordre où le contenu les livre — un nouveau feuilleton ne passe jamais
+ * devant celui qu'on est en train de lire.
  *
  * @param {object[]} histoires
  * @param {Set<string>} lues
  * @returns {?{histoire:object, numero:number, total:number}}
  */
 export function prochainChapitre(histoires = [], lues = new Set()) {
-  const arcs = [...new Set(histoires.filter((h) => h.feuilleton).map((h) => h.arc))];
+  const feuilletons = histoires.filter((h) => h.feuilleton);
+  const saisonDe = (arc) => Math.min(...feuilletons
+    .filter((h) => h.arc === arc).map((h) => Number(h.saison) || 1));
+  const arcs = [...new Set(feuilletons.map((h) => h.arc))]
+    .map((arc, rang) => ({ arc, rang, saison: saisonDe(arc) }))
+    .sort((a, b) => a.saison - b.saison || a.rang - b.rang)
+    .map(({ arc }) => arc);
   for (const arc of arcs) {
     const chapitres = histoires
       .filter((h) => h.feuilleton && h.arc === arc)

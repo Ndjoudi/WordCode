@@ -1489,6 +1489,11 @@
        HIS.choisirHistoire({ state: fini, histoires: [H1, ...feuilleton], today: "2026-10-30" }).histoire.id, "h_001");
     eq("prochainChapitre ne renvoie rien quand tout est lu",
        HIS.prochainChapitre(feuilleton, new Set(["h_f1", "h_f2", "h_f3"])), null);
+    const saison2 = { id: "h_s2", arc: "aaa_suite", ordre: 1, feuilleton: true, saison: 2 };
+    eq("un feuilleton de saison 2 attend la fin du premier, même livré avant lui",
+       HIS.prochainChapitre([saison2, ...feuilleton], new Set()).histoire.id, "h_f1");
+    eq("puis il prend la suite",
+       HIS.prochainChapitre([saison2, ...feuilleton], new Set(["h_f1", "h_f2", "h_f3"])).histoire.id, "h_s2");
 
     section("store — schéma v4 (§6.6)");
 
