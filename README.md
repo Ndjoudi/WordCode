@@ -301,6 +301,7 @@ chapitres :
 | 1 | *Le dossier Verrier* (`verrier`) | logistique, Londres |
 | 2 | *Le lancement* (`nordlicht`) | start-up, Berlin : une fuite de données clients |
 | 3 | *Le Grand Marlow* (`marlow`) | hôtellerie, Édimbourg : des chambres louées en douce |
+| 4 | *Le témoin* (`dublin`) | cabinet d'avocats, Dublin : une lanceuse d'alerte licenciée |
 
 - **Un feuilleton en cours passe avant tout le reste** : la section sert le
   premier chapitre non lu, dans l'ordre. Jamais de saut.
