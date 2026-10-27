@@ -390,7 +390,8 @@
            contenu.parties.every((partie) => partie.lettres_offertes === undefined
                                           && partie.mot_amorce === undefined));
       eq("les filières non livrées sont marquées absentes, les livrées présentes",
-         contenu.filieres, { verbes: true, phrasal: false, histoires: true, blocs: false });
+         contenu.filieres, { verbes: true, phrasal: false, histoires: true, blocs: false,
+                             conferences: true });
 
       vrai("toutes les parties servies sont vérifiées",
            contenu.parties.every((p) => p.verifie === true));
@@ -1982,6 +1983,43 @@
        VID.phraseCourante(clip, neufVid, [0]), 1);
     eq("sans liste, le comportement ne change pas",
        VID.phraseCourante(clip, neufVid), 0);
+
+    section("videoBuilder — conférences proposées (§09)");
+
+    const conf = (slug, palier, vues = 0) => ({ slug, titre: slug, palier, vues, duree: 600 });
+    const catalogueConf = [conf("facile", 40, 9), conf("proche", 75, 5), conf("proche_bis", 75, 8),
+                           conf("juste_au_dessus", 90), conf("loin", 150), conf("deja", 60)];
+    const pour80 = VID.suggererConferences(catalogueConf, { palier: 80, exclus: ["deja"] });
+    eq("à portée d'abord, la plus proche du niveau en tête, puis la plus vue",
+       pour80.conferences.map((c) => c.slug),
+       ["proche_bis", "proche", "facile", "juste_au_dessus", "loin"]);
+    eq("chaque proposition dit si elle est à portée",
+       pour80.conferences.map((c) => c.aPortee), [true, true, true, false, false]);
+    faux("une conférence déjà enregistrée n'est pas reproposée",
+         pour80.conferences.some((c) => c.slug === "deja"));
+    eq("sous le niveau de toutes : la plus abordable d'abord",
+       VID.suggererConferences(catalogueConf, { palier: 1 }).conferences[0].slug, "facile");
+    const pages = VID.suggererConferences(
+      Array.from({ length: 7 }, (_, i) => conf(`c${i}`, 10 + i)), { palier: 100 });
+    eq("cinq par page", pages.conferences.length, VID.PROPOSITIONS_PAR_PAGE);
+    eq("deux pages pour sept conférences", pages.pages, 2);
+    eq("après la dernière page, on repart du début",
+       VID.suggererConferences(Array.from({ length: 7 }, (_, i) => conf(`c${i}`, 10 + i)),
+                               { palier: 100, page: 2 }).conferences[0].slug, "c6");
+    eq("catalogue vide : rien à proposer",
+       VID.suggererConferences([], { palier: 50 }), { conferences: [], pages: 0 });
+
+    const erreursConf = [];
+    eq("le catalogue écarte une entrée sans palier",
+       C.validerConferences({ conferences: [conf("ok_un", 12), { slug: "sans_palier", titre: "x" }] },
+                            "conferences.json", erreursConf).map((c) => c.slug), ["ok_un"]);
+    faux("et ce n'est pas bloquant", erreursConf.some((e) => e.bloquant));
+    const chargees = await C.chargerConferences({
+      manifeste: { conferences: "conferences.json" },
+      recuperer: serveur({ "conferences.json": { version: 1, conferences: [conf("ok_un", 12)] } }) });
+    eq("le catalogue se charge depuis le manifeste", chargees.conferences.length, 1);
+    eq("catalogue non déclaré : absent, sans erreur",
+       await C.chargerConferences({ manifeste: {} }), { conferences: [], erreurs: [], absente: true });
 
     section("videoBuilder — progression");
 

@@ -21,7 +21,7 @@ export const MOTS_PAR_PARTIE = 5;
 export const JEUX = ["grille", "croises"];
 
 /** Filières optionnelles : déclarées au manifeste, pas encore produites (§8). */
-export const FILIERES_OPTIONNELLES = ["verbes", "phrasal", "histoires", "blocs"];
+export const FILIERES_OPTIONNELLES = ["verbes", "phrasal", "histoires", "blocs", "conferences"];
 
 /** Version de schéma de contenu attendue (README §8). */
 export const VERSION_CONTENU = 3;
@@ -664,6 +664,54 @@ export async function chargerHistoires({ manifeste, base = BASE,
   }
 
   return { histoires: validerHistoires(lu.donnees, fichier, erreurs), erreurs, absente: false };
+}
+
+/* -------------------------------------------------------------------------- */
+/* Chargement — conférences proposées (README §09)                             */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Une conférence du catalogue n'est proposée que si on peut la récupérer et la
+ * situer : un slug TED, un titre, un palier conseillé.
+ *
+ * @param {object} donnees
+ * @param {string} fichier
+ * @param {Anomalie[]} erreurs
+ * @returns {object[]}
+ */
+export function validerConferences(donnees, fichier, erreurs) {
+  const liste = Array.isArray(donnees?.conferences) ? donnees.conferences : [];
+  if (!Array.isArray(donnees?.conferences)) {
+    signaler(erreurs, fichier, "Champ « conferences » absent ou mal formé.", false);
+  }
+  return liste.filter((c) => {
+    const ok = /^[a-z0-9_]+$/.test(c?.slug ?? "") && typeof c?.titre === "string"
+      && Number.isFinite(Number(c?.palier)) && Number(c.palier) >= 1;
+    if (!ok) signaler(erreurs, fichier, `${c?.slug ?? "conférence"} : slug, titre ou palier manquant, écartée.`, false);
+    return ok;
+  });
+}
+
+/**
+ * Charge le catalogue des conférences proposées. Lu par l'écran Vidéo
+ * seulement, à son ouverture : rien ne le demande au démarrage.
+ *
+ * @param {object} options
+ * @returns {{conferences:object[], erreurs:Anomalie[], absente:boolean}}
+ */
+export async function chargerConferences({ manifeste, base = BASE,
+                                           recuperer = globalThis.fetch } = {}) {
+  const erreurs = [];
+  const fichier = manifeste?.conferences;
+  if (!fichier) return { conferences: [], erreurs, absente: true };
+
+  const lu = await lireJSON(`${base}${fichier}`, recuperer);
+  if (!lu.ok) {
+    if (lu.absent) return { conferences: [], erreurs, absente: true };
+    signaler(erreurs, fichier, lu.erreur, false);
+    return { conferences: [], erreurs, absente: false };
+  }
+  return { conferences: validerConferences(lu.donnees, fichier, erreurs), erreurs, absente: false };
 }
 
 /* -------------------------------------------------------------------------- */

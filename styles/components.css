@@ -1097,8 +1097,18 @@
   cursor: pointer;
 }
 
-.video-screen__item-titre { flex: 1 1 auto; min-width: 0; font-weight: var(--fw-medium); }
+.video-screen__item-titre { flex: 1 1 auto; min-width: 0; font-weight: var(--fw-medium);
+                            display: flex; flex-direction: column; gap: var(--sp-1); }
 .video-screen__item-etat  { flex: 0 0 auto; color: var(--c-text-muted); font-size: var(--fs-sm); }
+.video-screen__item-detail { color: var(--c-text-muted); font-size: var(--fs-sm);
+                             font-weight: var(--fw-regular); }
+.video-screen__item:disabled { cursor: progress; }
+
+/* Conférences proposées d'après le palier (§09). */
+.video-screen__propositions { display: flex; flex-direction: column; gap: var(--sp-2);
+                              margin-top: var(--sp-5); }
+.video-screen__propositions:empty { display: none; }
+.video-screen__titre { margin: 0; font-size: var(--fs-md); }
 
 .lecteur { display: block; }
 

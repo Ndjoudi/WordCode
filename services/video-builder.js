@@ -420,3 +420,44 @@ function melangerParDefaut(liste) {
   }
   return copie;
 }
+
+/* -------------------------------------------------------------------------- */
+/* Conférences proposées                                                       */
+/* -------------------------------------------------------------------------- */
+
+/** Conférences montrées à la fois ; « Autres conférences » passe aux suivantes. */
+export const PROPOSITIONS_PAR_PAGE = 5;
+
+/**
+ * Choisit les conférences à proposer, d'après le palier de l'utilisateur.
+ *
+ * D'abord celles qui sont à sa portée — palier conseillé atteint —, la plus
+ * proche de son niveau en tête : c'est elle qui fait travailler le vocabulaire
+ * qu'il vient d'apprendre. Ensuite les plus abordables parmi celles qui le
+ * dépassent. Les conférences déjà enregistrées ne sont pas reproposées.
+ *
+ * @param {object[]} conferences  catalogue (§09)
+ * @param {object}   options
+ * @param {number}   options.palier  palier actuel de l'utilisateur
+ * @param {string[]} options.exclus  slugs déjà enregistrés
+ * @param {number}   options.page    0 pour les premières, puis 1, 2…
+ * @returns {{conferences:object[], pages:number}} chaque conférence porte `aPortee`
+ */
+export function suggererConferences(conferences, { palier = 1, exclus = [], page = 0 } = {}) {
+  const deja = new Set(exclus);
+  const libres = (conferences ?? []).filter((c) => c?.slug && !deja.has(c.slug));
+  const parVues = (a, b) => (b.vues ?? 0) - (a.vues ?? 0);
+
+  const aPortee = libres.filter((c) => c.palier <= palier)
+    .sort((a, b) => b.palier - a.palier || parVues(a, b));
+  const auDessus = libres.filter((c) => c.palier > palier)
+    .sort((a, b) => a.palier - b.palier || parVues(a, b));
+  const ordre = [...aPortee.map((c) => ({ ...c, aPortee: true })),
+                 ...auDessus.map((c) => ({ ...c, aPortee: false }))];
+
+  const pages = Math.ceil(ordre.length / PROPOSITIONS_PAR_PAGE);
+  if (!pages) return { conferences: [], pages: 0 };
+  // Au bout de la liste, on repart du début plutôt que d'afficher du vide.
+  const debut = (((page % pages) + pages) % pages) * PROPOSITIONS_PAR_PAGE;
+  return { conferences: ordre.slice(debut, debut + PROPOSITIONS_PAR_PAGE), pages };
+}

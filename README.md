@@ -521,6 +521,45 @@ prise en connaissance de cause, la clause ND interdisant de transformer l'œuvre
 Les transcriptions récupérées vivent en `localStorage`, **jamais** dans
 `/content`.
 
+### Les conférences proposées
+
+Coller un lien reste possible, mais l'écran propose aussi des conférences
+**à la mesure du vocabulaire** : cinq à la fois, *Autres conférences* pour les
+suivantes. On en touche une, elle se récupère comme un lien collé.
+
+- **Le palier conseillé** d'une conférence est le premier palier à partir
+  duquel **95 % de ses mots** sont au catalogue — le seuil de compréhension de
+  Paul Nation. Un mot compte pour son lemme (`went` pour `go`), les mots-outils
+  et les nombres pour connus, les noms propres ne comptent pas.
+- **D'abord celles qui sont à portée**, la plus proche du palier actuel en
+  tête : c'est elle qui fait travailler le vocabulaire qu'on vient d'apprendre.
+  Ensuite les plus abordables parmi celles qui le dépassent, avec leur palier.
+  Une conférence déjà enregistrée n'est pas reproposée.
+- **Ordres de grandeur mesurés** : les conférences les plus vues demandent
+  entre le palier 45 et le palier 140. Le catalogue entier en couvre 97 à 99 %
+  des mots ; le reste est du vocabulaire de spécialité (`seaweed`,
+  `psychopath`). Sous le palier 45, l'écran propose donc les plus abordables,
+  en affichant le palier visé.
+
+Le catalogue `content/conferences.json` est produit **hors ligne** par
+`node tools/contenu/construire-conferences.mjs [--taille 300]` :
+
+1. la liste vient de l'API GraphQL publique de TED (titre, orateur, durée,
+   vues) — elle ne sait ni trier ni filtrer, l'outil le fait ;
+2. on garde les conférences de 3 à 18 minutes, les plus vues d'abord, hors
+   « Best of Web » (vidéos extérieures à TED) ;
+3. chaque nouvelle conférence est lue une fois pour mesurer son vocabulaire.
+   Sont écartées celles sans vidéo, celles de moins de 300 mots (musique,
+   beatbox) et celles qui n'atteignent jamais 95 %. Les écartées sont notées
+   dans `tools/contenu/conferences-rejets.json` et ne sont pas relues.
+
+**Seules les métadonnées sont écrites** — slug, titre, orateur, durée, vues,
+thèmes, palier, couverture. Aucune transcription n'entre dans `/content`, la
+règle de licence ci-dessus tient. L'outil est incrémental : relancé, il ne lit
+que les conférences qu'il ne connaît pas encore. Le rattachement d'un mot à
+son lemme est partagé avec la construction des histoires
+(`tools/contenu/lexique.mjs`).
+
 ### 10 — Mots mêlés
 
 Une grille de lettres où sont cachés des mots anglais. **La liste à trouver
@@ -1225,6 +1264,7 @@ modification de code.**
     parties-01.json       ← produit par le générateur
   verbes.json
   phrasal.json
+  conferences.json        ← conférences TED proposées, métadonnées seules (§09)
 ```
 
 ### `manifest.json`
@@ -1241,7 +1281,8 @@ modification de code.**
   "phrases": "phrases.json",
   "verbes": "verbes.json",
   "phrasal": "phrasal.json",
-  "histoires": "histoires/index.json"
+  "histoires": "histoires/index.json",
+  "conferences": "conferences.json"
 }
 ```
 
@@ -1570,7 +1611,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `Game` | `screens/game.js` | **orchestrateur partagé** par §05 et §06 |
 | `Story` | `screens/story.js` | §07 — histoire du jour |
 | `Writing` | `screens/writing.js` | §08 — dictée, traduction, rédaction |
-| `Video` | `screens/video.js` | §09 — conférence phrase par phrase |
+| `Video` | `screens/video.js` | §09 — conférence phrase par phrase, conférences proposées d'après le palier |
 | `WordSearch` | `screens/word-search.js` | §10 — mots mêlés, liste en français, mot mystère |
 | `Phrasal` | `screens/phrasal.js` | phrasal verbs — **pas d'entrée dans l'écran principal** |
 | `Progress` | `screens/progress.js` | statistiques, paliers, répartition par boîte |
@@ -1647,7 +1688,7 @@ sections : c'est l'utilisateur qui choisit.
 | `gameBuilder` | `services/game-builder.js` | Tire les parties de §04 et §05, applique la partition |
 | `storyBuilder` | `services/story-builder.js` | Choisit l'histoire du jour, calcule la couverture |
 | `writingBuilder` | `services/writing-builder.js` | Compose dictée, traduction et rédaction (§08) |
-| `videoBuilder` | `services/video-builder.js` | Découpe, mélange, suit l'avancement et compose le quizz d'une conférence (§10) |
+| `videoBuilder` | `services/video-builder.js` | Découpe, mélange, suit l'avancement, compose le quizz d'une conférence et choisit les conférences à proposer (§09) |
 | `wordsearchBuilder` | `services/wordsearch-builder.js` | Choisit une grille de mots mêlés jouable, reconnaît un mot tracé, contrôle les grilles, applique le résultat (§10) |
 | `normalize` | `services/normalize.js` | Normalisation unique des réponses (§15.5) |
 | `audio` | `services/audio.js` | Synthèse vocale — l'application parle |

@@ -2,12 +2,15 @@ import { SessionHeader } from "../components/molecules/session-header.js";
 import { Button } from "../components/atoms/button.js";
 import { Spinner } from "../components/atoms/spinner.js";
 import { Toast } from "../components/atoms/toast.js";
+import { Chip } from "../components/atoms/chip.js";
 import { MCQ } from "../components/molecules/mcq.js";
 import { ClozeChoice } from "../components/molecules/cloze-choice.js";
 import { InputAnswer } from "../components/molecules/input-answer.js";
 import { VideoPlayer } from "../components/organisms/video-player.js";
 import { normaliserVideo, composerPhrase, appliquerPhrase, avancement,
-         composerQuizVideo, estVue, marquerVue } from "../services/video-builder.js";
+         composerQuizVideo, estVue, marquerVue,
+         suggererConferences } from "../services/video-builder.js";
+import { chargerConferences } from "../services/content-loader.js";
 import { recupererTranscription, traduire } from "../services/api.js";
 import { chargerVideos, ajouterVideo } from "../services/store.js";
 import { aujourdhui } from "../services/leitner.js";
@@ -40,6 +43,10 @@ export function Video({ state, contenu, aller, enregistrer }) {
   let sautees = new Set();
   /** Commandes du lecteur, remises par l'organism une fois monté. */
   let commandes = null;
+  /** Catalogue des conférences proposées, lu à la première ouverture. */
+  let catalogue = null;
+  /** Page de propositions affichée : « Autres conférences » la fait tourner. */
+  let pageProposee = 0;
 
   const corps = document.createElement("div");
   corps.className = "session__body";
@@ -68,9 +75,14 @@ export function Video({ state, contenu, aller, enregistrer }) {
         "Colle le lien d'une conférence TED, ou celui de sa vidéo YouTube. "
         + "L'application récupère la transcription et la découpe en phrases.";
       corps.append(vide);
-      return;
+    } else {
+      corps.append(enregistrees());
     }
+    corps.append(propositions());
+  };
 
+  /** Conférences déjà récupérées, la plus récente en tête. */
+  const enregistrees = () => {
     const liste = document.createElement("div");
     liste.className = "video-screen__liste";
     for (const video of [...videos].reverse()) {
@@ -91,7 +103,103 @@ export function Video({ state, contenu, aller, enregistrer }) {
       ligne.append(nom, etat);
       liste.append(ligne);
     }
-    corps.append(liste);
+    return liste;
+  };
+
+  /**
+   * Récupère une conférence et l'ouvre.
+   * @returns {Promise<boolean>} false si elle n'a pas pu l'être : l'appelant
+   *   remet son bouton en place.
+   */
+  const importer = async (lien) => {
+    const reponse = await recupererTranscription({ lien });
+    if (!reponse.ok) { signaler(reponse.erreur); return false; }
+
+    const video = normaliserVideo(reponse.donnees);
+    if (!video) { signaler("Cette conférence n'a pas de transcription exploitable."); return false; }
+
+    videos = ajouterVideo(video);
+    choisie = video;
+    jouer();
+    return true;
+  };
+
+  /**
+   * Conférences proposées d'après le palier (§09). Le catalogue n'est lu qu'à
+   * la première ouverture de l'écran ; sans lui, la zone reste vide.
+   */
+  const propositions = () => {
+    const zone = document.createElement("section");
+    zone.className = "video-screen__propositions";
+
+    const ligne = (conference) => {
+      const bouton = document.createElement("button");
+      bouton.type = "button";
+      bouton.className = "video-screen__item";
+
+      const texte = document.createElement("span");
+      texte.className = "video-screen__item-titre";
+      const nom = document.createElement("span");
+      nom.textContent = conference.titre;
+      const detail = document.createElement("span");
+      detail.className = "video-screen__item-detail";
+      detail.textContent = [conference.orateur, `${Math.max(1, Math.round(conference.duree / 60))} min`]
+        .filter(Boolean).join(" · ");
+      texte.append(nom, detail);
+
+      const niveau = Chip(conference.aPortee
+        ? { label: "à ta portée", variant: "success" }
+        : { label: `palier ${conference.palier}`, variant: "theme" });
+      bouton.append(texte, niveau);
+
+      bouton.addEventListener("click", async () => {
+        if (bouton.disabled) return;
+        bouton.disabled = true;
+        bouton.replaceChildren(Spinner({ size: "sm" }));
+        if (!(await importer(`https://www.ted.com/talks/${conference.slug}`))) {
+          bouton.disabled = false;
+          bouton.replaceChildren(texte, niveau);
+        }
+      });
+      return bouton;
+    };
+
+    const rendre = () => {
+      const { conferences, pages } = suggererConferences(catalogue, {
+        palier: Number(state.progression?.palier_actuel ?? 1),
+        exclus: videos.map((v) => v.slug),
+        page: pageProposee,
+      });
+      zone.replaceChildren();
+      if (!conferences.length) return;
+
+      const titre = document.createElement("h2");
+      titre.className = "video-screen__titre";
+      titre.textContent = "Conférences pour toi";
+
+      const liste = document.createElement("div");
+      liste.className = "video-screen__liste";
+      for (const conference of conferences) liste.append(ligne(conference));
+      zone.append(titre, liste);
+
+      if (pages > 1) {
+        zone.append(Button({
+          label: "Autres conférences",
+          variant: "ghost",
+          fullWidth: true,
+          onClick: () => { pageProposee += 1; rendre(); },
+        }));
+      }
+    };
+
+    if (catalogue) rendre();
+    else {
+      chargerConferences({ manifeste: contenu.manifeste }).then(({ conferences }) => {
+        catalogue = conferences;
+        rendre();
+      });
+    }
+    return zone;
   };
 
   /** Formulaire de récupération d'une conférence. */
@@ -124,15 +232,7 @@ export function Video({ state, contenu, aller, enregistrer }) {
       if (!lien) return;
 
       action.replaceChildren(Spinner({ size: "md" }));
-      const reponse = await recupererTranscription({ lien });
-      if (!reponse.ok) { signaler(reponse.erreur); bouton(); return; }
-
-      const video = normaliserVideo(reponse.donnees);
-      if (!video) { signaler("Cette conférence n'a pas de transcription exploitable."); bouton(); return; }
-
-      videos = ajouterVideo(video);
-      choisie = video;
-      jouer();
+      if (!(await importer(lien))) bouton();
     });
 
     return zone;

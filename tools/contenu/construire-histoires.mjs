@@ -19,22 +19,10 @@
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { OUTILS, basesDe } from "./lexique.mjs";
 
 const ICI = dirname(fileURLToPath(import.meta.url));
 const RACINE = join(ICI, "..", "..");
-
-/** Mots-outils : hors lexique et hors « hors_lexique » (§3.1). */
-const OUTILS = new Set(`a an the this that these those there here
-i you he she it we they me him her us them my your his its our their mine yours
-am is are was were be been being do does did done have has had having
-will would shall should can could may might must
-and or but so if then than as because while when where why how what which who whom
-of to in on at by for with from into onto out up down over under about after before
-not no nor none nothing very too also just only even still yet again once more most
-some any all both each every other another such same own
-i'm it's don't doesn't didn't can't won't isn't aren't wasn't weren't
-he's she's they're we're you're i've there's that's what's let's
-mr mrs miss o'clock`.split(/\s+/).filter(Boolean));
 
 function lireSource(chemin) {
   const brut = readFileSync(chemin, "utf8");
@@ -47,55 +35,6 @@ function lireSource(chemin) {
   const en = brut.split(/^--- EN\s*$/m)[1]?.split(/^--- FR\s*$/m)[0]?.trim() ?? "";
   const fr = brut.split(/^--- FR\s*$/m)[1]?.trim() ?? "";
   return { meta, en, fr };
-}
-
-/**
- * Formes irrégulières courantes qu'aucune règle ne rattrape.
- * Sans elles, « went » serait compté comme un mot inconnu alors que le lecteur
- * connaît « go » — et la couverture mesurée serait fausse.
- */
-const IRREGULIERS = new Map(Object.entries({
-  went: "go", gone: "go", said: "say", got: "get", made: "make", saw: "see",
-  seen: "see", came: "come", took: "take", taken: "take", knew: "know",
-  known: "know", gave: "give", given: "give", found: "find", told: "tell",
-  left: "leave", felt: "feel", kept: "keep", stood: "stand", understood: "understand",
-  ran: "run", read: "read", sat: "sit", won: "win", lost: "lose", sold: "sell",
-  paid: "pay", met: "meet", sent: "send", spent: "spend", built: "build",
-  heard: "hear", held: "hold", brought: "bring", bought: "buy", caught: "catch",
-  taught: "teach", thought: "think", fought: "fight", broke: "break",
-  broken: "break", spoke: "speak", spoken: "speak", wrote: "write",
-  written: "write", drank: "drink", ate: "eat", eaten: "eat", fell: "fall",
-  grew: "grow", began: "begin", chose: "choose", drove: "drive", forgot: "forget",
-  wore: "wear", woke: "wake", threw: "throw", slept: "sleep", swam: "swim",
-  children: "child", men: "man", women: "woman", feet: "foot", teeth: "tooth",
-  lives: "life", wives: "wife", knives: "knife", better: "good", best: "good",
-  worse: "bad", worst: "bad", more: "much", most: "much",
-}));
-
-/**
- * Bases plausibles d'une forme fléchie, de la plus probable à la moins.
- * @param {string} mot
- * @returns {string[]}
- */
-function basesDe(mot) {
-  const b = [];
-  if (IRREGULIERS.has(mot)) b.push(IRREGULIERS.get(mot));
-  if (mot.endsWith("ies")) b.push(mot.slice(0, -3) + "y");
-  if (mot.endsWith("es")) b.push(mot.slice(0, -2));
-  if (mot.endsWith("s") && !mot.endsWith("ss")) b.push(mot.slice(0, -1));
-  if (mot.endsWith("ied")) b.push(mot.slice(0, -3) + "y");
-  if (mot.endsWith("ed")) {
-    b.push(mot.slice(0, -1), mot.slice(0, -2));
-    if (/(.)\1ed$/.test(mot)) b.push(mot.slice(0, -3));
-  }
-  if (mot.endsWith("ing")) {
-    b.push(mot.slice(0, -3), mot.slice(0, -3) + "e");
-    if (/(.)\1ing$/.test(mot)) b.push(mot.slice(0, -4));
-  }
-  if (mot.endsWith("ly")) b.push(mot.slice(0, -2));
-  if (mot.endsWith("er")) b.push(mot.slice(0, -2), mot.slice(0, -1));
-  if (mot.endsWith("est")) b.push(mot.slice(0, -3), mot.slice(0, -2));
-  return b;
 }
 
 /**
