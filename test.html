@@ -1495,6 +1495,13 @@
     eq("puis il prend la suite",
        HIS.prochainChapitre([saison2, ...feuilleton], new Set(["h_f1", "h_f2", "h_f3"])).histoire.id, "h_s2");
 
+    // histoires_lues retient des ids : un nouvel arc ne doit jamais les décaler.
+    const livrees = (await (await fetch("content/histoires/index.json")).json()).histoires;
+    const idDe = (arc, ordre) => livrees.find((h) => h.arc === arc && h.ordre === ordre)?.id;
+    eq("ids figés : Le dossier Verrier commence toujours à h_008", idDe("verrier", 1), "h_008");
+    eq("et la saison 2 garde h_038", idDe("nordlicht", 1), "h_038");
+    eq("aucun id en double", new Set(livrees.map((h) => h.id)).size, livrees.length);
+
     section("store — schéma v4 (§6.6)");
 
     eq("la version du schéma est 4", S.VERSION, 4);

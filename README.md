@@ -300,6 +300,7 @@ chapitres :
 |---|---|---|
 | 1 | *Le dossier Verrier* (`verrier`) | logistique, Londres |
 | 2 | *Le lancement* (`nordlicht`) | start-up, Berlin : une fuite de données clients |
+| 3 | *Le Grand Marlow* (`marlow`) | hôtellerie, Édimbourg : des chambres louées en douce |
 
 - **Un feuilleton en cours passe avant tout le reste** : la section sert le
   premier chapitre non lu, dans l'ordre. Jamais de saut.
@@ -318,6 +319,11 @@ Un chapitre est un fichier de `tools/contenu/histoires/` dont l'en-tête porte
 calculé sur tout le catalogue, pour que les mots TOEIC et professionnels lus
 dans le feuilleton comptent comme des révisions. Les chapitres lus le jour même
 sont suivis dans `progression.histoires_du_jour` (`{ date, ids }`).
+
+Les identifiants (`h_001`…) sont **figés** dans
+`tools/contenu/histoires-ids.json` (`arc#ordre → id`) : `histoires_lues` y est
+attaché, un nouvel arc prend donc les numéros suivants au lieu de décaler les
+chapitres existants. Ne jamais renuméroter ce fichier.
 
 ---
 

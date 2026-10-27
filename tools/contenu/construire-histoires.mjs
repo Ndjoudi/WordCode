@@ -14,6 +14,9 @@
  * (mots de contenu absents du catalogue) et `nb_mots`. Les mots-outils sont
  * ignorés des deux listes : ils ne se traduisent pas isolément (§3.1).
  *
+ * Les identifiants viennent de ./histoires-ids.json (arc#ordre → id) ; un
+ * nouveau chapitre reçoit le numéro suivant et y est ajouté.
+ *
  * Usage : node tools/contenu/construire-histoires.mjs
  */
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from "node:fs";
@@ -81,13 +84,29 @@ function principal() {
     }
   }
 
+  // Les identifiants sont figés : la progression du lecteur (histoires_lues)
+  // y est attachée. Numéroter dans l'ordre alphabétique des fichiers décalait
+  // tous les chapitres suivants dès qu'un nouvel arc s'intercalait.
+  const cheminIds = join(ICI, "histoires-ids.json");
+  const registre = JSON.parse(readFileSync(cheminIds, "utf8"));
+  const numero = (id) => Number(id.slice(2));
+  let dernier = Math.max(0, ...Object.values(registre.ids).map(numero));
+
   const fichiers = readdirSync(join(ICI, "histoires")).filter((f) => f.endsWith(".txt")).sort();
+  const sources = fichiers.map((fichier) => {
+    const source = lireSource(join(ICI, "histoires", fichier));
+    const cle = `${source.meta.arc}#${source.meta.ordre}`;
+    if (!registre.ids[cle]) {
+      dernier += 1;
+      registre.ids[cle] = `h_${String(dernier).padStart(3, "0")}`;
+    }
+    return { fichier, id: registre.ids[cle], ...source };
+  }).sort((a, b) => numero(a.id) - numero(b.id));
+
   const histoires = [];
   const alertes = [];
 
-  for (const fichier of fichiers) {
-    const { meta, en, fr } = lireSource(join(ICI, "histoires", fichier));
-    const id = `h_${String(histoires.length + 1).padStart(3, "0")}`;
+  for (const { fichier, id, meta, en, fr } of sources) {
     const stats = analyser(en, parEn);
 
     if (stats.nb_mots < 250 || stats.nb_mots > 350) {
@@ -100,7 +119,7 @@ function principal() {
     histoires.push({
       id,
       arc,
-      ordre: Number(meta.ordre ?? histoires.length + 1),
+      ordre: Number(meta.ordre),
       titre_en: meta.titre_en ?? null,
       titre_fr: meta.titre_fr ?? null,
       texte_en: en,
@@ -118,6 +137,7 @@ function principal() {
     });
   }
 
+  writeFileSync(cheminIds, JSON.stringify(registre, null, 2) + "\n");
   mkdirSync(join(RACINE, "content", "histoires"), { recursive: true });
   writeFileSync(join(RACINE, "content", "histoires", "index.json"),
                 JSON.stringify({ version: 4, histoires }, null, 2) + "\n");
