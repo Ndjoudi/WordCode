@@ -303,6 +303,7 @@ chapitres :
 | 3 | *Le Grand Marlow* (`marlow`) | hôtellerie, Édimbourg : des chambres louées en douce |
 | 4 | *Le témoin* (`dublin`) | cabinet d'avocats, Dublin : une lanceuse d'alerte licenciée |
 | 5 | *Garde de nuit* (`montreal`) | urgences, Montréal : des médicaments qui disparaissent |
+| 6 | *La une* (`manchester`) | presse locale, Manchester : une association caritative trop belle |
 
 - **Un feuilleton en cours passe avant tout le reste** : la section sert le
   premier chapitre non lu, dans l'ordre. Jamais de saut.
