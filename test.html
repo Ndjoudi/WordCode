@@ -1607,29 +1607,7 @@
     vrai("aucun fichier livré : la filière est absente", aucuneDictee.absente);
     eq("et aucune phrase n'est servie", aucuneDictee.phrases.length, 0);
 
-    section("writingBuilder — dictée depuis les conférences (§08, §10)");
-
-    const confsDictee = [
-      { slug: "talk_a", titre: "Talk A", video: "https://x/a.mp4", hls: null,
-        phrases: [{ i: 0, debut: 10, fin: 14, texte: "First sentence." },
-                  { i: 1, debut: 14, fin: 18, texte: "   " }] },
-      { slug: null, phrases: [{ i: 0, debut: 0, fin: 1, texte: "ignorée" }] },
-    ];
-    const depuisVideo = ECR.phrasesDepuisVideos(confsDictee);
-
-    eq("une phrase par segment exploitable", depuisVideo.length, 1);
-    eq("l'identifiant mêle conférence et rang", depuisVideo[0].id, "talk_a#0");
-    eq("le texte devient la réponse attendue", depuisVideo[0].en, "First sentence.");
-    // Sans français, ces phrases ne peuvent pas servir à la traduction guidée :
-    // c'est voulu, la traduction garde son corpus.
-    eq("aucune traduction n'est inventée", depuisVideo[0].fr, []);
-    eq("la borne de fin reprend la marge de l'écran vidéo",
-       Math.round((depuisVideo[0].fin - 14) * 100) / 100, VID.MARGE_FIN_S);
-    eq("une conférence sans slug est ignorée",
-       ECR.phrasesDepuisVideos([{ phrases: [{ i: 0, texte: "x" }] }]).length, 0);
-    eq("sans conférence, aucune phrase", ECR.phrasesDepuisVideos().length, 0);
-
-    section("writingBuilder — dictée et traduction (§08)");
+    section("writingBuilder — traduction (§08)");
 
     const phrasesEcr = [
       { id: "d_1", en: "The dog is on the chair.", fr: ["Le chien est sur la chaise."],
@@ -1639,16 +1617,12 @@
     ];
     const premiere = (liste) => liste[0];
 
-    const dictee = ECR.composerEcriture({ state: S.etatInitial(), phrases: phrasesEcr,
-                                          mode: "dictee", tirer: premiere });
-    eq("en dictée, aucun énoncé écrit n'est fourni", dictee.exercice.invite, null);
-    eq("la réponse attendue est la phrase prononcée",
-       dictee.exercice.attendu, "The dog is on the chair.");
-
     const trad = ECR.composerEcriture({ state: S.etatInitial(), phrases: phrasesEcr,
-                                        mode: "traduction", tirer: premiere });
-    eq("en traduction, l'énoncé est le français",
-       trad.exercice.invite, "Le chien est sur la chaise.");
+                                        tirer: premiere });
+    eq("l'énoncé est le français", trad.exercice.invite, "Le chien est sur la chaise.");
+    eq("la réponse attendue est la phrase anglaise",
+       trad.exercice.attendu, "The dog is on the chair.");
+    eq("il ne reste que la traduction et la rédaction", ECR.MODES, ["traduction", "redaction"]);
 
     eq("sans phrase livrée, la section est verrouillée",
        ECR.composerEcriture({ state: S.etatInitial(), phrases: [] }).verrouille, true);
@@ -1656,13 +1630,13 @@
     section("writingBuilder — correction d'une réponse");
 
     vrai("la casse et la ponctuation ne comptent pas (§17.4)",
-         ECR.verifierEcriture("the dog is on the chair", dictee.exercice).correct);
+         ECR.verifierEcriture("the dog is on the chair", trad.exercice).correct);
     eq("une réponse exacte est signalée comme telle",
-       ECR.verifierEcriture("The dog is on the chair.", dictee.exercice).exact, true);
+       ECR.verifierEcriture("The dog is on the chair.", trad.exercice).exact, true);
     faux("une réponse fausse est refusée",
-         ECR.verifierEcriture("the cat is on the table", dictee.exercice).correct);
+         ECR.verifierEcriture("the cat is on the table", trad.exercice).correct);
     faux("une réponse vide est refusée",
-         ECR.verifierEcriture("   ", dictee.exercice).correct);
+         ECR.verifierEcriture("   ", trad.exercice).correct);
 
     const avecAlt = ECR.composerEcriture({ state: S.etatInitial(), phrases: [phrasesEcr[1]],
                                            mode: "traduction", tirer: premiere });
@@ -1679,13 +1653,13 @@
     const connuEcr = { ...S.etatInitial(),
       words: { w1: L.ficheConnue("2026-09-10"), w2: L.ficheConnue("2026-09-10") } };
 
-    const reussie = ECR.appliquerEcriture({ state: connuEcr, exercice: dictee.exercice,
+    const reussie = ECR.appliquerEcriture({ state: connuEcr, exercice: trad.exercice,
                                             correct: true, catalogue: catEcr, today: "2026-09-10" });
     eq("écrire la phrase fait monter les mots connus qu'elle contient",
        [reussie.words.w1.b, reussie.words.w2.b], [4, 4]);
     eq("la phrase est retenue comme faite", reussie.progression.dictees_faites, ["d_1"]);
 
-    const ratee = ECR.appliquerEcriture({ state: connuEcr, exercice: dictee.exercice,
+    const ratee = ECR.appliquerEcriture({ state: connuEcr, exercice: trad.exercice,
                                           correct: false, catalogue: catEcr, today: "2026-09-10" });
     eq("un échec ne fait redescendre aucun mot",
        [ratee.words.w1.b, ratee.words.w2.b], [3, 3]);
@@ -1693,11 +1667,11 @@
 
     eq("une phrase déjà faite n'est pas reproposée tant qu'il en reste",
        ECR.composerEcriture({ state: reussie, phrases: phrasesEcr,
-                              mode: "dictee", tirer: premiere }).exercice.phrase.id, "d_2");
+                              tirer: premiere }).exercice.phrase.id, "d_2");
     vrai("stock épuisé → le cycle repart",
          ECR.composerEcriture({
            state: { ...reussie, progression: { ...reussie.progression, dictees_faites: ["d_1", "d_2"] } },
-           phrases: phrasesEcr, mode: "dictee", tirer: premiere }).reinitialise);
+           phrases: phrasesEcr, tirer: premiere }).reinitialise);
 
     section("writingBuilder — rédaction libre (§08)");
 

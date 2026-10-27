@@ -1,16 +1,14 @@
 /**
  * writing-builder.js — section §08 « Écrire » (README §2, §14).
  *
- * Trois modes, un seul corpus.
+ * Deux modes.
  *
- *   dictée      — on écoute, on écrit. Une seule réponse possible, par
- *                 construction : c'est ce qui a été prononcé.
  *   traduction  — on lit le français, on écrit l'anglais, sans aide.
  *   rédaction   — texte libre sur une consigne, avec des mots imposés.
  *
- * Les deux premiers modes sont les seuls exercices de l'application où
- * l'utilisateur produit une phrase entière sans modèle sous les yeux. C'est
- * aussi le seul endroit qui travaille l'oreille.
+ * La traduction est le seul exercice de l'application où l'utilisateur produit
+ * une phrase entière sans modèle sous les yeux. La dictée, tirée des
+ * conférences, a été retirée : elle n'était pas utilisée.
  *
  * Fonctions pures : aucun appel réseau ici. La rédaction se contente de
  * composer la consigne, c'est l'écran qui appelle l'API (§16).
@@ -18,10 +16,9 @@
 
 import { aujourdhui, appliquerResultat, motsConnus } from "./leitner.js";
 import { normaliser } from "./normalize.js";
-import { MARGE_FIN_S } from "./video-builder.js";
 
-/** Les trois modes, tels qu'ils apparaissent dans l'état et dans l'écran. */
-export const MODES = ["dictee", "traduction", "redaction"];
+/** Les deux modes, tels qu'ils apparaissent dans l'écran. */
+export const MODES = ["traduction", "redaction"];
 
 /** Mots imposés dans une rédaction libre. Au-delà, la consigne devient un carcan. */
 export const MOTS_IMPOSES = 5;
@@ -35,7 +32,8 @@ export const MOTS_MIN_REDACTION = 30;
  * Phrases encore disponibles pour l'écriture, au palier courant.
  *
  * Une phrase déjà faite ne revient pas tant que le stock n'est pas épuisé :
- * réécrire la même dictée deux fois de suite n'apprend rien.
+ * retraduire la même phrase deux fois de suite n'apprend rien. Le champ d'état
+ * garde son nom d'origine, `dictees_faites`, pour ne rien perdre de l'historique.
  *
  * @param {object} state
  * @param {object[]} phrases  contenu de content/dictees/dictee-XX.json
@@ -50,53 +48,16 @@ export function phrasesDisponibles(state, phrases = []) {
 }
 
 /**
- * Compose un exercice d'écriture.
+ * Compose un exercice de traduction.
  *
  * @param {object} options
  * @param {object} options.state
  * @param {object[]} options.phrases
- * @param {string} options.mode      "dictee" ou "traduction"
+ * @param {string} options.mode      "traduction"
  * @param {Function} options.tirer   injectable pour les tests
  * @returns {{verrouille:boolean, raison:?string, exercice:?object, reinitialise:boolean}}
  */
-/**
- * Transforme les conférences enregistrées en phrases de dictée (§08, §10).
- *
- * L'audio humain de Tatoeba marchait, mais impose **un fichier par phrase** :
- * 50 enregistrements livrés pour le seul palier 1, et autant à rapatrier pour
- * chacun des dix-neuf autres. Les conférences, elles, sont déjà là : 150
- * phrases découpées et horodatées pour un lien collé. On dicte sur leur
- * segment.
- *
- * Pas de `fr` : une conférence n'est pas traduite. Ces phrases ne servent donc
- * qu'à la dictée, jamais à la traduction guidée, qui garde son corpus.
- *
- * @param {object[]} videos  conférences enregistrées
- * @returns {object[]} phrases au format attendu par `composerEcriture`
- */
-export function phrasesDepuisVideos(videos = []) {
-  const phrases = [];
-  for (const video of videos) {
-    if (!video?.slug) continue;
-    for (const phrase of video.phrases ?? []) {
-      if (!phrase?.texte?.trim()) continue;
-      phrases.push({
-        id: `${video.slug}#${phrase.i}`,
-        en: phrase.texte,
-        fr: [],
-        titre: video.titre ?? video.slug,
-        source: video.video ?? null,
-        hls: video.hls ?? null,
-        debut: phrase.debut,
-        // Même marge qu'à l'écran vidéo, sinon la dernière syllabe est coupée.
-        fin: phrase.fin + MARGE_FIN_S,
-      });
-    }
-  }
-  return phrases;
-}
-
-export function composerEcriture({ state, phrases = [], mode = "dictee",
+export function composerEcriture({ state, phrases = [], mode = "traduction",
                                    tirer = tirerAuHasard } = {}) {
   if (!phrases.length) {
     return {
@@ -117,9 +78,8 @@ export function composerEcriture({ state, phrases = [], mode = "dictee",
     exercice: {
       mode,
       phrase,
-      // En dictée on n'affiche rien : l'énoncé est le son. En traduction on
-      // montre le français, jamais les mots anglais — c'est la demande.
-      invite: mode === "dictee" ? null : phrase.fr[0],
+      // On montre le français, jamais les mots anglais — c'est la demande.
+      invite: phrase.fr?.[0] ?? null,
       attendu: phrase.en,
       // Toutes les formulations anglaises que le corpus relie au même sens.
       acceptees: [phrase.en, ...(phrase.en_alt ?? [])],
@@ -156,8 +116,8 @@ export function verifierEcriture(saisie, exercice) {
  *
  * Une phrase réussie fait monter d'une boîte les mots CONNUS qu'elle contient :
  * les avoir écrits sans modèle est une preuve plus forte que de les avoir
- * reconnus. Un échec ne fait rien redescendre — en dictée, se tromper vient
- * souvent de l'oreille, pas du vocabulaire, et punir le mot serait injuste.
+ * reconnus. Un échec ne fait rien redescendre — une traduction ratée tient
+ * souvent à la tournure, pas au vocabulaire, et punir le mot serait injuste.
  *
  * @param {object} options
  * @param {object} options.state

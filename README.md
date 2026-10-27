@@ -47,7 +47,7 @@ section fait **une seule chose**.
 | 05 | **La grille** | codeword sur les mots validés |
 | 06 | **Mots croisés** | même règle, mots différents |
 | 07 | **Histoire du jour** | lecture d'une page en vocabulaire connu |
-| 08 | **Écrire** | dictée, traduction, rédaction libre |
+| 08 | **Écrire** | traduction, rédaction libre |
 | 09 | **Vidéo** | une conférence TED, phrase par phrase |
 | 10 | **Mots mêlés** | retrouver en anglais une liste donnée en français |
 
@@ -208,8 +208,8 @@ Réussite → le mot monte d'une boîte Leitner (§5). Échec → retour boîte 
 dans 2 jours.
 
 **L'exercice écrit FR → EN a été retiré.** Il doublait la longueur de la séance
-pour un seul mot, et la production se travaille déjà ailleurs : dictée,
-traduction guidée et rédaction occupent toute la section §08. Ici, c'est la
+pour un seul mot, et la production se travaille déjà ailleurs : traduction
+guidée et rédaction occupent toute la section §08. Ici, c'est la
 reconnaissance qui décide.
 
 Un mot qui atteint la boîte 3 **retourne au quizz**, il ne file pas dans les
@@ -312,17 +312,13 @@ sont suivis dans `progression.histoires_du_jour` (`{ date, ids }`).
 ### 08 — Écrire
 
 La seule section où l'utilisateur **produit** une phrase entière sans modèle
-sous les yeux. Trois modes, un seul corpus.
+sous les yeux. Deux modes : **Traduction** et **Rédaction libre**.
 
-**Dictée.** L'application prononce une phrase, l'utilisateur l'écrit.
-
-L'audio est un **enregistrement humain**, jamais une synthèse vocale : une voix
-de synthèse ne reproduit ni les liaisons, ni le rythme, ni les élisions, c'est-
-à-dire précisément ce que l'oreille doit apprendre. Les phrases viennent du
-corpus Tatoeba, filtrées pour n'employer que du vocabulaire déjà vu (§6.7).
-
-C'est aussi le seul exercice dont la correction est **incontestable** : il n'y a
-qu'une bonne réponse, c'est ce qui a été prononcé.
+**La dictée a été retirée** (octobre 2026) : tirée des conférences TED, elle
+n'était pas utilisée. Le corpus de `content/dictees/` garde son nom d'origine,
+mais c'est la traduction qui s'en sert — ses phrases Tatoeba portent le
+français. Le champ d'état `dictees_faites` garde lui aussi son nom, pour ne
+rien perdre de l'historique.
 
 **Traduction.** Le français est affiché, l'utilisateur écrit l'anglais. **Aucun
 mot n'est fourni** : la phrase se compose entièrement.
@@ -347,10 +343,10 @@ Leitner** : une boîte ne sait pas représenter « compréhensible mais maladroi
 
 ### Ce que l'écriture fait progresser
 
-Une dictée ou une traduction réussie fait monter d'une boîte les mots **connus**
-que la phrase contient : les avoir écrits sans modèle prouve plus que de les
-avoir reconnus. Un échec ne fait rien redescendre — en dictée, se tromper vient
-souvent de l'oreille, pas du vocabulaire.
+Une traduction réussie fait monter d'une boîte les mots **connus** que la
+phrase contient : les avoir écrits sans modèle prouve plus que de les avoir
+reconnus. Un échec ne fait rien redescendre — une traduction ratée tient
+souvent à la tournure, pas au vocabulaire.
 
 ---
 
@@ -1086,8 +1082,8 @@ signalant le taux de couverture réel.
 
 ### 6.7 `phrase de dictée` — corpus externe
 
-> **La dictée ne vient plus de ce corpus.** Elle se fait désormais sur les
-> **conférences** (§10) : une phrase, son segment, son horodatage.
+> **La dictée a été retirée** (§08). Elle s'est d'abord faite sur ce corpus,
+> puis sur les conférences (§09), et n'était plus utilisée.
 >
 > Le corpus Tatoeba fonctionnait — 50 enregistrements humains livrés, un par
 > phrase, 722 Ko. Mais il impose **un fichier par phrase** : couvrir les vingt
@@ -1568,7 +1564,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `TranslationPopover` | `molecules/translation-popover.js` | `word, translation, alreadyKnown, canAdd, onAdd, onClose` | Popover au tap |
 | `WordCard` | `molecules/word-card.js` | `word, showAudio, otherSense, onNext` | Carte de découverte |
 | `MCQ` | `molecules/mcq.js` | `question(texte ou élément), options[], correctId, onAnswer` | Quizz (§03), apprentissage (§04), particule |
-| `InputAnswer` | `molecules/input-answer.js` | `prompt, expected, hint, onAudio, micro, onSubmit` | Rappel actif, dictée et traduction, saisie vocale (§08, §15.8) |
+| `InputAnswer` | `molecules/input-answer.js` | `prompt, expected, hint, onAudio, micro, onSubmit` | Rappel actif, traduction, saisie vocale (§08, §15.8) |
 | `ClozeInput` | `molecules/cloze-input.js` | `sentence, blankIndex, expected, translation, onSubmit` | Phrase à trous |
 | `ClozeChoice` | `molecules/cloze-choice.js` | `parts[], choices[], expected[], sentence, onSubmit` | Phrase à trous sans clavier, mots à poser (§10) |
 | `Pagination` | `molecules/pagination.js` | `page, pages, onChange` | Précédente, numéros, suivante ; « … » au-delà de sept pages (§09) |
@@ -1624,7 +1620,7 @@ cette liste, ou par l'ajout documenté d'un nouveau composant dans ce README.
 | `Crossword` | `screens/crossword.js` | §06 — les mots croisés |
 | `Game` | `screens/game.js` | **orchestrateur partagé** par §05 et §06 |
 | `Story` | `screens/story.js` | §07 — histoire du jour |
-| `Writing` | `screens/writing.js` | §08 — dictée, traduction, rédaction |
+| `Writing` | `screens/writing.js` | §08 — traduction, rédaction |
 | `Video` | `screens/video.js` | §09 — conférence phrase par phrase, conférences proposées d'après le palier |
 | `WordSearch` | `screens/word-search.js` | §10 — mots mêlés, liste en français, mot mystère |
 | `Phrasal` | `screens/phrasal.js` | phrasal verbs — **pas d'entrée dans l'écran principal** |
@@ -1701,7 +1697,7 @@ sections : c'est l'utilisateur qui choisit.
 | `learnBuilder` | `services/learn-builder.js` | Compose QUIZ + écriture pour les mots dus |
 | `gameBuilder` | `services/game-builder.js` | Tire les parties de §04 et §05, applique la partition |
 | `storyBuilder` | `services/story-builder.js` | Choisit l'histoire du jour, calcule la couverture |
-| `writingBuilder` | `services/writing-builder.js` | Compose dictée, traduction et rédaction (§08) |
+| `writingBuilder` | `services/writing-builder.js` | Compose traduction et rédaction (§08) |
 | `videoBuilder` | `services/video-builder.js` | Découpe, mélange, suit l'avancement, compose le quizz d'une conférence et choisit les conférences à proposer (§09) |
 | `wordsearchBuilder` | `services/wordsearch-builder.js` | Choisit une grille de mots mêlés jouable, reconnaît un mot tracé, contrôle les grilles, applique le résultat (§10) |
 | `normalize` | `services/normalize.js` | Normalisation unique des réponses (§15.5) |

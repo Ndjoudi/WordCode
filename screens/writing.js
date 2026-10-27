@@ -6,12 +6,10 @@ import { Divider } from "../components/atoms/divider.js";
 import { InputAnswer } from "../components/molecules/input-answer.js";
 import { SectionCard } from "../components/molecules/section-card.js";
 import { CompositionForm } from "../components/organisms/composition-form.js";
-import { phrasesDepuisVideos, composerEcriture, verifierEcriture, appliquerEcriture,
+import { composerEcriture, verifierEcriture, appliquerEcriture,
          composerRedaction, verifierRedaction } from "../services/writing-builder.js";
 import { corrigerRedaction } from "../services/api.js";
 import { aujourdhui } from "../services/leitner.js";
-import { VideoPlayer } from "../components/organisms/video-player.js";
-import { chargerVideos } from "../services/store.js";
 
 /** Délai d'affichage du verdict avant l'exercice suivant. */
 const DUREE_VERDICT = 1600;
@@ -19,9 +17,10 @@ const DUREE_VERDICT = 1600;
 /**
  * Writing — section §08 « Écrire » (README §2, §13).
  *
- * Trois modes derrière une seule carte : dictée, traduction, rédaction. Ils
- * partagent l'écran mais rien d'autre — le premier travaille l'oreille, le
- * deuxième la production guidée, le troisième la production libre.
+ * Deux modes derrière une seule carte : traduction et rédaction. Ils
+ * partagent l'écran mais rien d'autre — le premier travaille la production
+ * guidée, le second la production libre. La dictée a été retirée : elle
+ * n'était pas utilisée.
  *
  * @param {{state:object, contenu:object, aller:Function, enregistrer:Function}} contexte
  * @returns {HTMLElement}
@@ -31,38 +30,14 @@ export function Writing({ state, contenu, aller, enregistrer }) {
   el.className = "ecran writing";
 
   const today = aujourdhui();
-  // Deux corpus distincts. La traduction guidée a besoin du français, que les
-  // conférences n'ont pas ; la dictée a besoin d'un son, que Tatoeba ne fournit
-  // qu'au prix d'un fichier par phrase. Chacune prend donc sa source.
+  // Le corpus Tatoeba de `content/dictees/` : son nom date de la dictée, mais
+  // c'est la traduction guidée qui s'en sert — elle a besoin du français.
   const phrasesTraduction = contenu.dictees ?? [];
-  const phrasesDictee = phrasesDepuisVideos(chargerVideos());
-  let mode = null;
-
-  /** Le lecteur reste le MÊME élément d'une phrase à l'autre : le remonter
-   *  rechargerait le flux de la conférence. On ne le reconstruit qu'en
-   *  changeant de conférence. */
-  const zoneLecteur = document.createElement("div");
-  zoneLecteur.className = "writing__lecteur";
-  let slugCourant = null;
-  let commandes = null;
-
-  const assurerLecteur = (phrase) => {
-    if (slugCourant === phrase.slug && commandes) return;
-    slugCourant = phrase.slug;
-    commandes = null;
-    zoneLecteur.replaceChildren(VideoPlayer({
-      source: phrase.source,
-      hls: phrase.hls,
-      titre: phrase.titre,
-      onPret: (c) => { commandes = c; },
-      onErreur: (m) => corps.append(Toast({ message: m, variant: "error", duration: 4000 })),
-    }));
-  };
 
   const corps = document.createElement("div");
   corps.className = "session__body";
 
-  const quitter = () => { commandes?.detruire?.(); aller("/"); };
+  const quitter = () => aller("/");
 
   /* ------------------------------------------------------------- Choix du mode */
 
@@ -76,62 +51,43 @@ export function Writing({ state, contenu, aller, enregistrer }) {
     cartes.className = "home__sections";
     cartes.append(
       SectionCard({
-        numero: 1, titre: "Dictée", icone: "audio",
-        compteur: phrasesDictee.length, uniteCompteur: "phrases",
-        etat: phrasesDictee.length ? "ouvert" : "verrouille",
-        message: "Aucune phrase enregistrée n'est encore livrée pour ton palier.",
-        action: "Écouter et écrire",
-        onOpen: () => { mode = "dictee"; exercice(); },
-      }),
-      SectionCard({
-        numero: 2, titre: "Traduction", icone: "pencil",
+        numero: 1, titre: "Traduction", icone: "pencil",
         compteur: phrasesTraduction.length, uniteCompteur: "phrases",
         etat: phrasesTraduction.length ? "ouvert" : "verrouille",
         message: "Aucune phrase n'est encore livrée pour ton palier.",
         action: "Traduire en anglais",
-        onOpen: () => { mode = "traduction"; exercice(); },
+        onOpen: exercice,
       }),
       SectionCard({
-        numero: 3, titre: "Rédaction libre", icone: "book",
+        numero: 2, titre: "Rédaction libre", icone: "book",
         etat: "ouvert",
         action: "Écrire un texte",
-        onOpen: () => { mode = "redaction"; redaction(); },
+        onOpen: redaction,
       }),
     );
     corps.append(cartes);
     corps.append(credit());
   };
 
-  /* ------------------------------------------------- Dictée et traduction */
+  /* ------------------------------------------------------------ Traduction */
 
   const exercice = () => {
-    commandes?.arreter?.();
-    const tirage = composerEcriture({
-      state, mode,
-      phrases: mode === "dictee" ? phrasesDictee : phrasesTraduction,
-    });
+    const tirage = composerEcriture({ state, mode: "traduction", phrases: phrasesTraduction });
 
     el.replaceChildren();
-    el.append(SessionHeader({
-      title: mode === "dictee" ? "Dictée" : "Traduction",
-      onHome: choisirMode,
-    }));
+    el.append(SessionHeader({ title: "Traduction", onHome: choisirMode }));
     corps.replaceChildren();
     el.append(corps);
 
     if (tirage.verrouille) { corps.append(vide(tirage.raison, choisirMode)); return; }
 
     const { exercice: ex } = tirage;
-    // On rejoue exactement le segment de la conférence, bornes comprises.
-    const jouer = () => commandes?.jouer(ex.phrase.debut, ex.phrase.fin);
-    if (mode === "dictee") { assurerLecteur(ex.phrase); corps.append(zoneLecteur); }
 
     corps.append(InputAnswer({
       prompt: ex.invite,
       // La comparaison réelle passe par le service : le composant ne connaît
       // pas les formulations alternatives du corpus.
       expected: ex.acceptees.join(" | "),
-      onAudio: mode === "dictee" ? jouer : null,
       onSubmit: ({ value }) => {
         const verdict = verifierEcriture(value, ex);
         corps.append(bilan(verdict, ex));
@@ -143,7 +99,6 @@ export function Writing({ state, contenu, aller, enregistrer }) {
       },
     }));
 
-    if (mode === "dictee") jouer();
     corps.append(credit(ex.phrase));
   };
 
@@ -168,13 +123,6 @@ export function Writing({ state, contenu, aller, enregistrer }) {
     attendu.lang = "en";
     attendu.textContent = ex.attendu;
     zone.append(attendu);
-
-    if (mode === "dictee") {
-      const fr = document.createElement("p");
-      fr.className = "writing__traduction";
-      fr.textContent = ex.phrase.fr[0];
-      zone.append(fr);
-    }
     return zone;
   };
 
@@ -281,17 +229,13 @@ export function Writing({ state, contenu, aller, enregistrer }) {
   /* ---------------------------------------------------------------- Divers */
 
   /**
-   * Crédit des enregistrements. Ce n'est pas une politesse : la licence
-   * CC BY-NC-ND l'impose (§16).
+   * Crédit du corpus. Ce n'est pas une politesse : la licence CC BY-NC-ND
+   * l'impose (§16).
    */
   const credit = (phrase = null) => {
     const zone = document.createElement("p");
     zone.className = "writing__credit";
-    // Deux sources, deux licences, deux crédits : la dictée vient d'une
-    // conférence TED, la traduction du corpus Tatoeba. Chacune l'impose.
-    zone.textContent = phrase?.titre
-      ? `${phrase.titre} — TED, CC BY-NC-ND 4.0. Usage personnel, non commercial.`
-      : phrase?.lecteur
+    zone.textContent = phrase?.lecteur
         ? `Enregistrement : ${phrase.lecteur} — Tatoeba, ${phrase.licence ?? "CC BY-NC-ND 3.0"}.`
         : "Phrases : Tatoeba (tatoeba.org), CC BY-NC-ND 3.0. Usage non commercial.";
     return zone;

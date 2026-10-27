@@ -194,11 +194,9 @@ function carteMotsMeles(state, contenu, connus, aller) {
 }
 
 function carteEcrire(state, contenu, aller) {
-  // Deux sources derrière la carte : la dictée vient désormais des conférences
-  // (§10), la traduction garde le corpus livré. L'une ou l'autre suffit.
-  const dePhrasesVideo = chargerVideos()
-    .reduce((n, v) => n + (v.phrases?.length ?? 0), 0);
-  const phrases = (contenu.dictees ?? []).length + dePhrasesVideo;
+  // La carte compte les phrases de traduction ; elle reste ouverte sans elles,
+  // parce que la rédaction libre ne se verrouille jamais (§08).
+  const phrases = (contenu.dictees ?? []).length;
   const faites = new Set(state.progression?.dictees_faites ?? []);
   const restantes = (contenu.dictees ?? []).filter((p) => !faites.has(p.id)).length;
 
@@ -208,9 +206,8 @@ function carteEcrire(state, contenu, aller) {
     compteur: restantes || phrases,
     uniteCompteur: "phrases",
     icone: "pencil",
-    etat: phrases ? "ouvert" : "verrouille",
-    message: "Aucune phrase enregistrée n'est livrée pour ton palier.",
-    action: "Dictée, traduction, rédaction",
+    etat: "ouvert",
+    action: "Traduction, rédaction",
     onOpen: () => aller("/writing"),
   });
 }

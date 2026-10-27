@@ -951,7 +951,7 @@
   gap: var(--sp-3);
 }
 
-/* --- Écrire : dictée et traduction (§08) ---------------------------------- */
+/* --- Écrire : traduction (§08) -------------------------------------------- */
 .input-answer__audio { display: flex; justify-content: center; padding: var(--sp-2) 0; }
 
 .writing__bilan {
@@ -967,7 +967,6 @@
 .writing__bilan--ok { background: var(--c-tile-offered); }
 .writing__verdict   { margin: 0; font-weight: var(--fw-medium); }
 .writing__attendu   { margin: 0; font-size: var(--fs-lg); }
-.writing__traduction { margin: 0; color: var(--c-text-muted); font-size: var(--fs-sm); }
 
 /* Le crédit est une obligation de licence : il reste lisible, pas caché. */
 .writing__credit {
