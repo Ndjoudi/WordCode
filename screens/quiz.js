@@ -5,6 +5,7 @@ import { Toast } from "../components/atoms/toast.js";
 import { ClueText } from "../components/molecules/clue-text.js";
 import { TranslationPopover } from "../components/molecules/translation-popover.js";
 import { MCQ } from "../components/molecules/mcq.js";
+import { InputAnswer } from "../components/molecules/input-answer.js";
 import { composerQuizz, appliquerQuizz,
          promouvoirSansDefinition } from "../services/quiz-builder.js";
 import { marquerSegmentsConnus } from "../services/game-builder.js";
@@ -131,6 +132,27 @@ export function Quiz({ state, contenu, aller, enregistrer }) {
     // Le drapeau « connu » vient du même service que pour les grilles : le
     // popover ne propose d'ajouter que ce que l'utilisateur ignore vraiment.
     const [enrichi] = marquerSegmentsConnus([question.mot], state, ajoutes);
+
+    // Verbe irrégulier de la série dédiée : on écrit ses trois formes (§3.2).
+    if (question.formes) {
+      const zone = document.createElement("div");
+      zone.className = "quiz-screen__formes";
+      const enonce = ClueText({ segments: enrichi.indice.segments, onWordTap: taper });
+      enonce.classList.add("quiz-screen__enonce");
+      zone.append(enonce, InputAnswer({
+        prompt: "Écris les trois formes : base, prétérit, participe.",
+        hint: "Exemple : go went gone",
+        expected: question.formes.join(" | "),
+        micro: false,
+        onSubmit: ({ correct }) => {
+          verdicts.set(question.mot.id, correct);
+          // Une erreur affiche la bonne réponse : on lui laisse le temps d'être lue.
+          setTimeout(avancer, correct ? DUREE_VERDICT : DUREE_VERDICT * 3);
+        },
+      }));
+      corps.append(zone);
+      return;
+    }
 
     corps.append(MCQ({
       question: ClueText({ segments: enrichi.indice.segments, onWordTap: taper }),

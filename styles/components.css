@@ -419,6 +419,7 @@
 }
 
 .word-card__phon { margin-top: var(--sp-1); color: var(--c-text-muted); font-size: var(--fs-sm); }
+.word-card__formes { margin-top: var(--sp-1); font-size: var(--fs-md); font-weight: var(--fw-medium); }
 .word-card__fr   { font-size: var(--fs-lg); font-weight: var(--fw-medium); }
 
 .word-card__themes { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
@@ -1247,13 +1248,17 @@
 
 /* --- Quizz (§03) ---------------------------------------------------------- */
 /* L'énoncé est une définition tappable, pas une simple phrase : il respire. */
-.quiz-screen .mcq__question {
+.quiz-screen .mcq__question,
+.quiz-screen__enonce {
   padding: var(--sp-4);
   border-radius: var(--r-md);
   background: var(--c-surface-alt);
   font-size: var(--fs-lg);
   line-height: 1.5;
 }
+
+.quiz-screen__formes { display: flex; flex-direction: column; gap: var(--sp-4); }
+.quiz-screen__enonce  { margin: 0; text-align: center; font-weight: var(--fw-medium); }
 
 /* --- StoryReader (§06) ---------------------------------------------------- */
 .story {

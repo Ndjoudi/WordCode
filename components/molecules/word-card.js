@@ -12,7 +12,8 @@ import { Chip } from "../atoms/chip.js";
  * seul (mots importés, ajouts manuels sans exemple).
  *
  * Sous la phrase : la prononciation, la traduction du mot, celle de la phrase.
- * Le mot n'y est pas répété — il est déjà lisible, coloré, dans la phrase.
+ * Le mot n'y est pas répété — il est déjà lisible, coloré, dans la phrase —
+ * sauf pour un verbe irrégulier, qui montre ses trois formes (§3.2).
  *
  * `otherSense` affiche « autre sens déjà connu : … » pour consolider au lieu
  * de créer de la confusion (README §5.2).
@@ -54,6 +55,16 @@ export function WordCard({ word = {}, showAudio = true, otherSense = null,
     phon.className = "word-card__phon";
     phon.textContent = word.phonetique;
     titre.append(phon);
+  }
+
+  // Un verbe irrégulier montre ses trois formes : base, prétérit, participe.
+  if (word.preterit && word.participe) {
+    const formes = document.createElement("p");
+    formes.className = "word-card__formes";
+    formes.lang = "en";
+    formes.textContent = [word.en, word.preterit, word.participe]
+      .map((f) => String(f).replace(/\//g, " / ")).join(" — ");
+    titre.append(formes);
   }
 
   entete.append(titre);
@@ -122,8 +133,11 @@ function trouverCible(phrase, word) {
   const base = String(word.en ?? "").trim();
   if (!base) return null;
 
-  const formes = [base, ...FLEXIONS.map((suffixe) => base + suffixe),
-                  word.preterit, word.participe].filter(Boolean);
+  // Une forme double s'écrit « was/were » : chacune compte.
+  const irregulieres = [word.preterit, word.participe]
+    .flatMap((forme) => String(forme ?? "").split("/")).map((f) => f.trim());
+  const formes = [base, ...FLEXIONS.map((suffixe) => base + suffixe), ...irregulieres]
+    .filter(Boolean);
 
   for (const forme of formes) {
     const trouve = phrase.match(new RegExp(`\\b${echapper(forme)}\\b`, "i"));

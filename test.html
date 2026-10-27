@@ -1355,6 +1355,22 @@
     vrai("l'énoncé est la définition, segments compris",
          passe.questions[0].segments.length > 0);
     vrai("le QCM propose plusieurs options", passe.questions[0].options.length > 1);
+    eq("un mot ordinaire n'a pas de formes à écrire", passe.questions[0].formes, null);
+
+    section("quizBuilder — verbes irréguliers : les trois formes (§3.2)");
+
+    const verbeTake = { id: "i1", en: "take", preterit: "took", participe: "taken", source: "irreguliers" };
+    eq("base, prétérit, participe", QZ.formesAttendues(verbeTake), ["take took taken"]);
+    eq("une forme double admet chaque variante",
+       QZ.formesAttendues({ id: "i2", en: "burn", preterit: "burnt/burned",
+                            participe: "burnt/burned", source: "irreguliers" }),
+       ["burn burnt burnt", "burn burnt burned", "burn burned burnt", "burn burned burned"]);
+    eq("hors de la série dédiée, le quizz reste un QCM",
+       QZ.formesAttendues({ ...verbeTake, source: "verbe" }), null);
+    vrai("virgules et majuscules ne comptent pas",
+         estCorrect("Take, took, taken", QZ.formesAttendues(verbeTake).join(" | ")));
+    faux("une forme fausse est refusée",
+         estCorrect("take taked taken", QZ.formesAttendues(verbeTake).join(" | ")));
 
     const juste = QZ.appliquerQuizz(aVerifier, "q1", true, "2026-09-08");
     eq("quizz réussi → boîte 3", juste.words.q1.b, 3);

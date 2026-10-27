@@ -5,6 +5,7 @@
  *   pro   — tools/contenu/pro-NN.txt   → content/pro/pro-XX.json      (paliers 39-104)
  *   bilingue — tools/contenu/bilingue-NN.txt → content/bilingue/…        (paliers 105-201)
  *   essentiels — tools/contenu/essentiels-NN.txt → content/essentiels/…  (palier 202)
+ *   irreguliers — tools/contenu/irreguliers-NN.txt → content/irreguliers/… (paliers 203-204)
  *
  * Le TOEIC prolonge les vingt paliers de fréquence. Sur les 1056 mots de sa
  * liste, 158 figuraient déjà au catalogue ; les 898 autres sont écrits ici.
@@ -17,6 +18,14 @@
  * absents du catalogue sous toute forme. Elle vient en fin d'échelle pour ne
  * renuméroter aucun palier : l'écran Progression permet de l'ouvrir à tout
  * moment (« Travailler ce palier »).
+ *
+ * La série « irreguliers » reprend les cent verbes irréguliers courants pour
+ * leurs FORMES : base, prétérit, participe. Ces verbes sont déjà au catalogue
+ * comme mots simples ; ici, ils se découvrent avec leurs trois formes et le
+ * quizz les fait écrire. Ils n'entrent pas dans les jeux — une grille les
+ * ferait apparaître deux fois. Ligne source à neuf champs :
+ *   en | prétérit | participe | fr | type | phonétique | définition | exemple | traduction
+ * Une forme double s'écrit « burnt/burned ».
  *
  * La série « pro » complète le vocabulaire jusqu'à 5000 mots, avec les listes
  * du projet NGSL (Browne & Culligan, CC BY-SA 4.0) : NGSL 1.2 pour l'anglais
@@ -56,6 +65,8 @@ const SERIES = [
     titreFichier: (palier) => `Vers le bilingue ${num(palier)}` },
   { nom: "essentiels", prefixe: "e_", premier: 202, titre: "Mots essentiels",
     titreFichier: () => "Mots essentiels" },
+  { nom: "irreguliers", prefixe: "i_", premier: 203, titre: "Verbes irréguliers",
+    titreFichier: (palier) => `Verbes irréguliers ${palier - 202}`, formes: true },
 ];
 
 /** Types admis, alignés sur le catalogue (§6.1). */
@@ -68,22 +79,25 @@ const jouable = (en) => /^[A-Za-z]{3,8}$/.test(en);
 const segmenter = (texte) =>
   texte.trim().split(/\s+/).filter(Boolean).map((txt) => ({ txt, trad: null, ref: null }));
 
-function lirePalier(fichier) {
+function lirePalier(fichier, { formes = false } = {}) {
   const lignes = readFileSync(fichier, "utf8").split("\n")
     .map((l) => l.trim())
     .filter((l) => l && !l.startsWith("#"));
+  const attendus = formes ? 9 : 7;
 
   return lignes.map((ligne, rang) => {
     const champs = ligne.split("|").map((c) => c.trim());
-    if (champs.length !== 7) {
-      throw new Error(`${fichier} ligne ${rang + 1} : 7 champs attendus, ${champs.length} trouvés\n  ${ligne}`);
+    if (champs.length !== attendus) {
+      throw new Error(`${fichier} ligne ${rang + 1} : ${attendus} champs attendus, ${champs.length} trouvés\n  ${ligne}`);
     }
+    const [preterit, participe] = formes ? champs.splice(1, 2) : [null, null];
+    if (formes && (!preterit || !participe)) throw new Error(`${fichier} : ${champs[0]} sans ses formes`);
     const [en, fr, type, phonetique, def, exemple, traduction] = champs;
     if (!TYPES.has(type)) throw new Error(`${fichier} : type inconnu « ${type} » pour ${en}`);
     if (!def) throw new Error(`${fichier} : ${en} sans définition — le quizz le sauterait`);
     // La carte de découverte affiche la phrase puis sa traduction (§02).
     if (!traduction) throw new Error(`${fichier} : ${en} sans traduction de l'exemple`);
-    return { en, fr, type, phonetique, def, exemple, traduction };
+    return { en, fr, type, phonetique, def, exemple, traduction, preterit, participe };
   });
 }
 
@@ -110,14 +124,15 @@ function construire(serie, entrees, palier, depart) {
     phrase_fr: null,
     date_capture: null,
     origine_partie: null,
-    preterit: null,
-    participe: null,
+    preterit: e.preterit ?? null,
+    participe: e.participe ?? null,
     groupe_verbe: null,
     verbe_base: null,
     particule: null,
     litteral: null,
-    eligible_grille: jouable(e.en),
-    eligible_croises: jouable(e.en),
+    // La série des formes reprend des verbes déjà jouables ailleurs.
+    eligible_grille: !serie.formes && jouable(e.en),
+    eligible_croises: !serie.formes && jouable(e.en),
   }));
 }
 
@@ -198,11 +213,12 @@ function principal() {
     for (const source of sources) {
       const palier = serie.premier - 1 + Number(source.match(motif)[1]);
       ecrits.add(palier);
-      const entrees = lirePalier(join(ICI, source));
+      const entrees = lirePalier(join(ICI, source), serie);
       verifierRepartition(serie, palier, entrees);
 
-      // Un doublon entre séries ferait apprendre deux fois le même mot.
-      for (const e of entrees) {
+      // Un doublon entre séries ferait apprendre deux fois le même mot. La
+      // série des formes reprend des verbes connus à dessein : elle y échappe.
+      for (const e of serie.formes ? [] : entrees) {
         const cle = e.en.toLowerCase();
         if (vus.has(cle)) throw new Error(`doublon : « ${e.en} » apparaît deux fois`);
         vus.add(cle);

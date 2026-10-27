@@ -615,6 +615,7 @@ Le champ `source` pilote l'écran de découverte et l'éligibilité aux jeux.
 | 39 → 104 | **monde professionnel** : 3 271 mots des listes NGSL 1.2, BSL 1.2 et TSL 1.2, classés par fréquence | 50 mots par palier |
 | 105 → 201 | **vers le bilingue** : 4 850 mots, les suivants de la liste de fréquence NGSL-SFI 31K, plus la NAWL | 50 mots par palier |
 | 202 | **mots essentiels** : 27 mots de la NGSL (les 2 800 mots essentiels) absents du catalogue sous toute forme | un palier |
+| 203 → 204 | **verbes irréguliers** : les 100 plus courants, pour leurs trois formes (§3.2) | 50 verbes par palier |
 
 **Vocabulaire total : 10 061 mots** (1000 + 898 + 3 271 + 4 850 + 27, plus les
 15 verbes irréguliers de §3.2).
@@ -707,6 +708,24 @@ plus aucun écran ne l'exploite :
 09 et son `VerbTriad` suivaient chaque forme dans une fiche Leitner distincte ;
 elle a été retirée au profit d'un parcours unique. Un verbe est un mot : il
 passe par Découverte, puis par le quizz, puis par les jeux.
+
+**Les formes ont leurs propres paliers : 203 et 204, « Verbes irréguliers ».**
+Les cent verbes irréguliers les plus courants, de *be* à *show*, rédigés dans
+`tools/contenu/irreguliers-NN.txt` (neuf champs : base, prétérit, participe,
+puis les sept habituels ; une forme double s'écrit `burnt/burned`). Ils
+s'ouvrent depuis l'écran Progression (« Travailler ce palier »).
+
+- **En Découverte**, la carte montre les trois formes sous la phrase :
+  *take — took — taken*. Toute carte de verbe qui porte un prétérit et un
+  participe les affiche, y compris `be`, `have`, `do`, `go` de `verbes.json`.
+- **Au quizz**, ces verbes ne se choisissent pas parmi quatre : on **écrit
+  les trois formes** (`formesAttendues`, service quiz). Virgules et majuscules
+  ne comptent pas ; une forme double admet chaque variante.
+- **Pas de jeux** : ces verbes sont déjà dans les grilles comme mots simples.
+  Les paliers 203 et 204 n'ont ni parties ni mots mêlés (`eligible_grille`
+  faux), et le générateur saute les paliers sans mot jouable.
+- **Pas de doublon de vocabulaire** : le total de mots ne change pas, ce sont
+  les mêmes verbes travaillés sous un autre angle.
 
 ### 3.3 Phrasal verbs
 

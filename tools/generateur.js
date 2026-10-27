@@ -687,6 +687,9 @@ function completerParties() {
       grille: mots.filter((mot) => jeuDe.get(mot.id) === "grille"),
       croises: mots.filter((mot) => jeuDe.get(mot.id) === "croises"),
     };
+    // Un palier sans mot jouable (les verbes irréguliers, travaillés pour leurs
+    // formes) n'a pas de parties : elles ne contiendraient que de l'acquis.
+    if (!nouveaux.grille.length && !nouveaux.croises.length) continue;
     const dejaIci = new Set(parties.map((p) => p.phrase_id));
     const ids = new Set(parties.map((p) => p.id));
     let ordre = Math.max(0, ...parties.map((p) => Number(p.ordre) || 0));
@@ -842,6 +845,8 @@ function genererMotsMeles() {
     const numero = Number(entree.id);
     const nom = deuxChiffres(numero);
     const nouveaux = mots.filter(jouable);
+    // Pas de mot jouable (verbes irréguliers) : pas de grille de pur acquis.
+    if (!nouveaux.length) continue;
     const grilles = [];
     const dejaIci = new Set();
 

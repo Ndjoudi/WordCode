@@ -22,6 +22,30 @@ import { construireQCM } from "./session-builder.js";
 export const MOTS_PAR_QUIZZ = 8;
 
 /**
+ * Réponses admises pour un verbe de la série « irreguliers » (§3.2) : ses
+ * trois formes, base, prétérit, participe, séparées par des espaces. Une forme
+ * double (« burnt/burned ») admet chacune de ses variantes.
+ *
+ * Ces verbes sont déjà au catalogue comme mots simples : ce que leur série
+ * travaille, ce sont les formes. Le quizz les fait donc écrire au lieu de les
+ * faire choisir.
+ *
+ * @param {object} mot
+ * @returns {?string[]} null pour un mot ordinaire, quizzé par QCM
+ */
+export function formesAttendues(mot) {
+  if (mot?.source !== "irreguliers" || !mot.preterit || !mot.participe) return null;
+  const variantes = (forme) => String(forme).split("/").map((f) => f.trim()).filter(Boolean);
+  const reponses = [];
+  for (const preterit of variantes(mot.preterit)) {
+    for (const participe of variantes(mot.participe)) {
+      reponses.push(`${mot.en} ${preterit} ${participe}`);
+    }
+  }
+  return reponses;
+}
+
+/**
  * Résout les ids dus en entités complètes, catalogue et mots perso confondus.
  *
  * @param {object} state
@@ -67,6 +91,7 @@ export function composerQuizz({ state, catalogue, limite = MOTS_PAR_QUIZZ,
       // un mot inconnu dans l'énoncé doit pouvoir partir en apprentissage.
       segments: mot.indice.segments,
       ...construireQCM(mot, candidats),
+      formes: formesAttendues(mot),
     })),
     sansDefinition,
     restants: Math.max(quizzables.length - limite, 0),
