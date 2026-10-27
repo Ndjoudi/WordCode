@@ -586,12 +586,11 @@ la longueur de l'expression, avec des mots du palier et de l'acquis. Une
 expression ne sert qu'une fois parmi les mots mêlés, mais peut avoir déjà servi
 au codeword : c'est un autre jeu, vu à un autre moment.
 
-**Le réservoir borne les mots mêlés aussi.** Ses 592 expressions donnent 592
-grilles : les paliers 1 à 118 en ont cinq, le 119 deux, les paliers 120 à 201
-aucune. Un palier sans grille n'a pas de fichier `motsmeles-NNN.json` ni
-d'entrée `mots_meles` au manifeste ; il en recevra dès que le réservoir
-s'agrandira, sans que les grilles déjà produites changent (la génération suit
-l'ordre des paliers avec une graine fixe).
+**Une expression peut revenir.** Les 592 expressions du réservoir ont toutes
+servi dès le palier 119. Au-delà, la moins servie revient, jamais deux fois
+dans le même palier : chacun des 202 paliers a ses cinq grilles (1 010 en
+tout). Tant qu'il reste des expressions neuves, le tirage est celui d'avant —
+les grilles déjà livrées ne changent pas (graine fixe, ordre des paliers).
 
 ---
 
@@ -1334,15 +1333,18 @@ réemploi courent sur tout le catalogue.
 Chaque palier reçoit **jusqu'à 10 parties** : autant pour la grille que pour
 les mots croisés, en alternance.
 
-**Le réservoir de phrases borne le nombre de parties.** Une phrase cachée ne
-sert qu'une fois (§6.3), et le réservoir en compte 592. Un palier prend donc
-dix parties tant qu'il en reste assez pour garantir **deux parties à chacun des
-paliers suivants**. Aujourd'hui, les paliers 1 à 41 en ont dix ; de 42 à 57,
-entre une et neuf ; au-delà, deux en général, et six paliers aucune, faute de
-phrase couvrable par leurs mots (584 parties en tout). Les paliers anciens restent jouables : un nouveau palier ne
-réduit jamais les grilles déjà disponibles. Les paliers 105 à 201 (« vers le
-bilingue ») n'ont pas encore de parties : relancer `--generer` redistribuerait
-le quota des paliers 23 et suivants, et le réservoir est de toute façon épuisé.
+**Le réservoir de phrases a borné les parties, puis s'est épuisé.** Une phrase
+cachée ne servait qu'une fois (§6.3) et le réservoir en compte 592 : `--generer`
+a donné dix parties aux paliers 1 à 41, puis deux en général, puis plus rien
+après le 104 (584 parties).
+
+**`node tools/generateur.js --completer` porte chaque palier à dix parties**,
+cinq par jeu, **sans toucher à celles qui existent** : ni modifiées, ni
+renumérotées, donc une partie déjà jouée reste valable et relancer la commande
+ne change rien. Pour les parties ajoutées, une expression déjà servie revient —
+la moins servie d'abord, jamais deux fois dans le même palier. Résultat : 2 020
+parties, toutes résolubles (`--verify`). Ne plus relancer `--generer` : il
+repartirait d'un réservoir vierge et renuméroterait tout.
 
 - **Partage des jeux.** Chaque mot jouable est rangé une fois pour toutes dans
   un seul des deux jeux, en alternance dans l'ordre du palier. C'est ce qui
