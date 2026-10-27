@@ -1269,6 +1269,371 @@
         "hauteur": 11
       },
       "verifie": true
+    },
+    {
+      "id": "p_4411",
+      "palier": 44,
+      "ordre": 11,
+      "jeu": "grille",
+      "phrase_id": "ph_254",
+      "phrase_en": "ONE SOLID REASON",
+      "phrase_fr": "Une seule bonne raison",
+      "contexte_fr": "Souligne qu'un seul argument suffit.",
+      "mots": [
+        "m_00259",
+        "m_00282",
+        "t_00197",
+        "m_00023",
+        "w_03026"
+      ],
+      "alphabet": {
+        "1": "O",
+        "2": "N",
+        "3": "E",
+        "4": "S",
+        "5": "L",
+        "6": "I",
+        "7": "D",
+        "8": "R",
+        "9": "A",
+        "10": "T",
+        "11": "U",
+        "12": "M",
+        "13": "C",
+        "14": "P",
+        "15": "F"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            "m_00023",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_00023",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_00023",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "t_00197",
+            "m_00023",
+            "t_00197",
+            "m_00259",
+            "t_00197",
+            "t_00197",
+            "t_00197",
+            null
+          ],
+          [
+            null,
+            "m_00023",
+            null,
+            "m_00259",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00259",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_00282",
+            "m_00282",
+            "m_00282",
+            "m_00282",
+            "m_00282",
+            "m_00282",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00259",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_03026",
+            "w_03026",
+            "w_03026",
+            "w_03026",
+            "w_03026",
+            "w_03026"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "t_00197",
+            "x": 0,
+            "y": 3,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_00259",
+            "x": 3,
+            "y": 3,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_00282",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "w_03026",
+            "x": 2,
+            "y": 8,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00023",
+            "x": 1,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 9
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_4412",
+      "palier": 44,
+      "ordre": 12,
+      "jeu": "grille",
+      "phrase_id": "ph_315",
+      "phrase_en": "YOU CAN SAY THAT AGAIN",
+      "phrase_fr": "Tu l'as dit",
+      "contexte_fr": "Marque un accord total avec ce qui vient d'être dit.",
+      "mots": [
+        "m_00276",
+        "m_00266",
+        "m_00045",
+        "t_00536",
+        "w_08014"
+      ],
+      "alphabet": {
+        "1": "Y",
+        "2": "O",
+        "3": "U",
+        "4": "C",
+        "5": "A",
+        "6": "N",
+        "7": "S",
+        "8": "T",
+        "9": "H",
+        "10": "G",
+        "11": "I",
+        "12": "E",
+        "13": "M",
+        "14": "L",
+        "15": "R",
+        "16": "F",
+        "17": "D",
+        "18": "P"
+      },
+      "croises": null,
+      "verifie": true
+    },
+    {
+      "id": "p_4413",
+      "palier": 44,
+      "ordre": 13,
+      "jeu": "croises",
+      "phrase_id": "ph_104",
+      "phrase_en": "NOT A DROP",
+      "phrase_fr": "Pas une goutte",
+      "contexte_fr": "Marque une absence totale.",
+      "mots": [
+        "m_00288",
+        "m_00274",
+        "m_00144",
+        "m_00149",
+        "w_02024"
+      ],
+      "alphabet": {
+        "1": "N",
+        "2": "O",
+        "3": "T",
+        "4": "A",
+        "5": "D",
+        "6": "R",
+        "7": "P",
+        "8": "E",
+        "9": "L",
+        "10": "I",
+        "11": "F",
+        "12": "S",
+        "13": "U",
+        "14": "C",
+        "15": "H"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            "m_00149",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "w_02024",
+            "w_02024",
+            "w_02024",
+            "w_02024",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00149",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00274",
+            "m_00274",
+            "m_00274",
+            "m_00274",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00149",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00149",
+            null,
+            null,
+            null,
+            null,
+            "m_00288"
+          ],
+          [
+            null,
+            "m_00144",
+            "m_00149",
+            "m_00144",
+            "m_00144",
+            "m_00144",
+            "m_00144",
+            "m_00288"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00288"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00144",
+            "x": 1,
+            "y": 6,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00149",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00274",
+            "x": 2,
+            "y": 3,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "w_02024",
+            "x": 0,
+            "y": 1,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_00288",
+            "x": 7,
+            "y": 5,
+            "dir": "V",
+            "num": 4
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 8
+      },
+      "verifie": true
     }
   ]
 }

@@ -1505,6 +1505,386 @@
         "hauteur": 8
       },
       "verifie": true
+    },
+    {
+      "id": "p_4311",
+      "palier": 43,
+      "ordre": 11,
+      "jeu": "grille",
+      "phrase_id": "ph_229",
+      "phrase_en": "IN A NUTSHELL",
+      "phrase_fr": "En résumé",
+      "contexte_fr": "Introduit un résumé très court.",
+      "mots": [
+        "m_00250",
+        "m_00241",
+        "m_00176",
+        "t_00332",
+        "t_00353"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "N",
+        "3": "A",
+        "4": "U",
+        "5": "T",
+        "6": "S",
+        "7": "H",
+        "8": "E",
+        "9": "L",
+        "10": "D",
+        "11": "C",
+        "12": "R",
+        "13": "Y",
+        "14": "M",
+        "15": "O",
+        "16": "V",
+        "17": "P"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            "t_00353",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "t_00353",
+            null,
+            null,
+            null,
+            "m_00250",
+            null,
+            null
+          ],
+          [
+            null,
+            "t_00353",
+            null,
+            null,
+            null,
+            "m_00250",
+            null,
+            null
+          ],
+          [
+            null,
+            "t_00353",
+            null,
+            null,
+            null,
+            "m_00250",
+            null,
+            null
+          ],
+          [
+            "t_00332",
+            "t_00353",
+            "t_00332",
+            "m_00241",
+            "t_00332",
+            "m_00250",
+            "t_00332",
+            "m_00176"
+          ],
+          [
+            null,
+            "t_00353",
+            null,
+            "m_00241",
+            null,
+            "m_00250",
+            null,
+            "m_00176"
+          ],
+          [
+            null,
+            "t_00353",
+            null,
+            "m_00241",
+            null,
+            "m_00250",
+            null,
+            "m_00176"
+          ],
+          [
+            null,
+            "t_00353",
+            null,
+            "m_00241",
+            null,
+            null,
+            null,
+            "m_00176"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00241",
+            null,
+            null,
+            null,
+            "m_00176"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00176"
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "t_00332",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "t_00353",
+            "x": 1,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00250",
+            "x": 5,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00176",
+            "x": 7,
+            "y": 4,
+            "dir": "V",
+            "num": 5
+          },
+          {
+            "mot": "m_00241",
+            "x": 3,
+            "y": 4,
+            "dir": "V",
+            "num": 4
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 10
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_4312",
+      "palier": 43,
+      "ordre": 12,
+      "jeu": "grille",
+      "phrase_id": "ph_052",
+      "phrase_en": "NO SALE",
+      "phrase_fr": "Pas vendu",
+      "contexte_fr": "Refus net d'une proposition.",
+      "mots": [
+        "m_00206",
+        "m_00213",
+        "m_00193",
+        "w_17006",
+        "w_15033"
+      ],
+      "alphabet": {
+        "1": "N",
+        "2": "O",
+        "3": "S",
+        "4": "A",
+        "5": "L",
+        "6": "E",
+        "7": "M",
+        "8": "T",
+        "9": "X",
+        "10": "U",
+        "11": "C",
+        "12": "R",
+        "13": "I",
+        "14": "K",
+        "15": "F",
+        "16": "D"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            "m_00206",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00206",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00206",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00206",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00206",
+            null,
+            null,
+            null,
+            null,
+            "m_00213"
+          ],
+          [
+            null,
+            "w_15033",
+            "m_00193",
+            "m_00206",
+            "m_00193",
+            "m_00193",
+            "m_00193",
+            "m_00193",
+            "m_00213"
+          ],
+          [
+            null,
+            "w_15033",
+            null,
+            "m_00206",
+            null,
+            null,
+            null,
+            null,
+            "m_00213"
+          ],
+          [
+            null,
+            "w_15033",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00213"
+          ],
+          [
+            null,
+            "w_15033",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "w_17006",
+            "w_17006",
+            "w_17006",
+            "w_17006",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "w_15033",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00193",
+            "x": 1,
+            "y": 5,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_00206",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "w_15033",
+            "x": 1,
+            "y": 5,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_00213",
+            "x": 8,
+            "y": 4,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "w_17006",
+            "x": 0,
+            "y": 9,
+            "dir": "H",
+            "num": 4
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 11
+      },
+      "verifie": true
     }
   ]
 }

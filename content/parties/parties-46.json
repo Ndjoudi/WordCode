@@ -1813,6 +1813,208 @@
         "hauteur": 8
       },
       "verifie": true
+    },
+    {
+      "id": "p_4611",
+      "palier": 46,
+      "ordre": 11,
+      "jeu": "grille",
+      "phrase_id": "ph_081",
+      "phrase_en": "OUT OF ORDER",
+      "phrase_fr": "Hors service",
+      "contexte_fr": "Se dit d'une machine qui ne fonctionne plus.",
+      "mots": [
+        "m_00366",
+        "m_00399",
+        "w_12048",
+        "t_00088",
+        "m_00123"
+      ],
+      "alphabet": {
+        "1": "O",
+        "2": "U",
+        "3": "T",
+        "4": "F",
+        "5": "R",
+        "6": "D",
+        "7": "E",
+        "8": "I",
+        "9": "S",
+        "10": "C",
+        "11": "A",
+        "12": "P",
+        "13": "W",
+        "14": "N",
+        "15": "G",
+        "16": "Q",
+        "17": "L",
+        "18": "Y",
+        "19": "V"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            "t_00088",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "t_00088",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "t_00088",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "t_00088",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "m_00366",
+            "t_00088",
+            "m_00366",
+            "m_00123",
+            "m_00366",
+            "m_00366",
+            "m_00366",
+            "m_00399"
+          ],
+          [
+            null,
+            "t_00088",
+            null,
+            "m_00123",
+            null,
+            null,
+            null,
+            "m_00399"
+          ],
+          [
+            null,
+            "t_00088",
+            null,
+            "m_00123",
+            null,
+            null,
+            null,
+            "m_00399"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00123",
+            null,
+            null,
+            null,
+            "m_00399"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00123",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00123",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00123",
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "w_12048",
+            "w_12048",
+            "w_12048",
+            "w_12048",
+            "w_12048",
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00366",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 2
+          },
+          {
+            "mot": "m_00123",
+            "x": 3,
+            "y": 4,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "t_00088",
+            "x": 1,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "w_12048",
+            "x": 2,
+            "y": 11,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00399",
+            "x": 7,
+            "y": 4,
+            "dir": "V",
+            "num": 4
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 12
+      },
+      "verifie": true
     }
   ]
 }

@@ -1597,6 +1597,163 @@
         "hauteur": 7
       },
       "verifie": true
+    },
+    {
+      "id": "p_4211",
+      "palier": 42,
+      "ordre": 11,
+      "jeu": "grille",
+      "phrase_id": "ph_280",
+      "phrase_en": "IT IS A SMALL WORLD",
+      "phrase_fr": "Le monde est petit",
+      "contexte_fr": "On le dit quand un hasard rapproche deux connaissances.",
+      "mots": [
+        "m_00200",
+        "m_00198",
+        "t_00667",
+        "m_00108",
+        "m_00012"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "T",
+        "3": "S",
+        "4": "A",
+        "5": "M",
+        "6": "L",
+        "7": "W",
+        "8": "O",
+        "9": "R",
+        "10": "D",
+        "11": "U",
+        "12": "P",
+        "13": "N",
+        "14": "E",
+        "15": "C",
+        "16": "G",
+        "17": "F"
+      },
+      "croises": {
+        "grille": [
+          [
+            "t_00667",
+            "t_00667",
+            "t_00667",
+            "t_00667",
+            "t_00667",
+            "t_00667",
+            "t_00667",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00200",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_00108",
+            "m_00108",
+            "m_00200",
+            "m_00108",
+            "m_00108",
+            "m_00198",
+            "m_00108",
+            "m_00108"
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00200",
+            null,
+            null,
+            "m_00198",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00200",
+            null,
+            null,
+            "m_00198",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00200",
+            null,
+            "m_00012",
+            "m_00012",
+            "m_00012",
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00200",
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00108",
+            "x": 1,
+            "y": 2,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_00200",
+            "x": 3,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "t_00667",
+            "x": 0,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          },
+          {
+            "mot": "m_00198",
+            "x": 6,
+            "y": 2,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_00012",
+            "x": 5,
+            "y": 5,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 9,
+        "hauteur": 7
+      },
+      "verifie": true
     }
   ]
 }

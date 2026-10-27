@@ -1232,6 +1232,681 @@
         "hauteur": 11
       },
       "verifie": true
+    },
+    {
+      "id": "p_5108",
+      "palier": 51,
+      "ordre": 8,
+      "jeu": "grille",
+      "phrase_id": "ph_246",
+      "phrase_en": "A SORE POINT",
+      "phrase_fr": "Un sujet sensible",
+      "contexte_fr": "Se dit d'un thème qu'il vaut mieux éviter.",
+      "mots": [
+        "m_00605",
+        "m_00641",
+        "t_00453",
+        "m_00322",
+        "m_00544"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "S",
+        "3": "O",
+        "4": "R",
+        "5": "E",
+        "6": "P",
+        "7": "I",
+        "8": "N",
+        "9": "T",
+        "10": "Y",
+        "11": "U",
+        "12": "L",
+        "13": "V",
+        "14": "C",
+        "15": "M",
+        "16": "B"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00641"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00641"
+          ],
+          [
+            "m_00544",
+            null,
+            null,
+            null,
+            "m_00322",
+            null,
+            "m_00641"
+          ],
+          [
+            "m_00544",
+            "t_00453",
+            "t_00453",
+            "t_00453",
+            "m_00322",
+            "t_00453",
+            "m_00641"
+          ],
+          [
+            "m_00544",
+            null,
+            null,
+            null,
+            "m_00322",
+            null,
+            "m_00641"
+          ],
+          [
+            "m_00544",
+            null,
+            null,
+            null,
+            "m_00322",
+            null,
+            "m_00641"
+          ],
+          [
+            "m_00544",
+            null,
+            null,
+            null,
+            "m_00322",
+            null,
+            null
+          ],
+          [
+            "m_00544",
+            null,
+            "m_00605",
+            "m_00605",
+            "m_00605",
+            "m_00605",
+            null
+          ],
+          [
+            "m_00544",
+            null,
+            null,
+            null,
+            "m_00322",
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "t_00453",
+            "x": 0,
+            "y": 3,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "m_00322",
+            "x": 4,
+            "y": 2,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_00544",
+            "x": 0,
+            "y": 2,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00641",
+            "x": 6,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00605",
+            "x": 2,
+            "y": 7,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 7,
+        "hauteur": 9
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_5109",
+      "palier": 51,
+      "ordre": 9,
+      "jeu": "croises",
+      "phrase_id": "ph_223",
+      "phrase_en": "AGAINST ALL ODDS",
+      "phrase_fr": "Contre toute attente",
+      "contexte_fr": "Malgré des chances de réussite très faibles.",
+      "mots": [
+        "m_00613",
+        "m_00608",
+        "m_00524",
+        "m_00358",
+        "m_00336"
+      ],
+      "alphabet": {
+        "1": "A",
+        "2": "G",
+        "3": "I",
+        "4": "N",
+        "5": "S",
+        "6": "T",
+        "7": "L",
+        "8": "O",
+        "9": "D",
+        "10": "E",
+        "11": "M",
+        "12": "R",
+        "13": "Y",
+        "14": "U",
+        "15": "C",
+        "16": "H",
+        "17": "P"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            "m_00336",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_00336",
+            null,
+            null,
+            null,
+            null,
+            "m_00608",
+            null
+          ],
+          [
+            null,
+            "m_00336",
+            null,
+            null,
+            null,
+            null,
+            "m_00608",
+            null
+          ],
+          [
+            null,
+            "m_00336",
+            null,
+            null,
+            null,
+            null,
+            "m_00608",
+            null
+          ],
+          [
+            "m_00524",
+            "m_00336",
+            "m_00524",
+            "m_00524",
+            "m_00358",
+            "m_00524",
+            "m_00608",
+            "m_00524"
+          ],
+          [
+            null,
+            "m_00336",
+            null,
+            null,
+            "m_00358",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            "m_00336",
+            null,
+            null,
+            "m_00358",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            "m_00358",
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            null,
+            "m_00613",
+            "m_00613",
+            "m_00613",
+            "m_00613",
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00524",
+            "x": 0,
+            "y": 4,
+            "dir": "H",
+            "num": 3
+          },
+          {
+            "mot": "m_00336",
+            "x": 1,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00358",
+            "x": 4,
+            "y": 4,
+            "dir": "V",
+            "num": 4
+          },
+          {
+            "mot": "m_00613",
+            "x": 3,
+            "y": 8,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00608",
+            "x": 6,
+            "y": 1,
+            "dir": "V",
+            "num": 2
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 9
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_5110",
+      "palier": 51,
+      "ordre": 10,
+      "jeu": "croises",
+      "phrase_id": "ph_101",
+      "phrase_en": "IT LANDED",
+      "phrase_fr": "C'est passé",
+      "contexte_fr": "Se dit d'une idée ou d'une blague bien reçue.",
+      "mots": [
+        "m_00606",
+        "m_00628",
+        "t_00013",
+        "m_00552",
+        "m_00522"
+      ],
+      "alphabet": {
+        "1": "I",
+        "2": "T",
+        "3": "L",
+        "4": "A",
+        "5": "N",
+        "6": "D",
+        "7": "E",
+        "8": "V",
+        "9": "Y",
+        "10": "R",
+        "11": "C",
+        "12": "O",
+        "13": "S",
+        "14": "U",
+        "15": "H",
+        "16": "M",
+        "17": "X",
+        "18": "P"
+      },
+      "croises": {
+        "grille": [
+          [
+            "t_00013",
+            "t_00013",
+            "m_00606",
+            "t_00013",
+            "t_00013",
+            "t_00013",
+            "m_00552",
+            null,
+            null,
+            null,
+            "m_00628",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00606",
+            null,
+            null,
+            null,
+            "m_00552",
+            null,
+            null,
+            null,
+            "m_00628",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00606",
+            null,
+            null,
+            null,
+            "m_00522",
+            "m_00522",
+            "m_00522",
+            "m_00522",
+            "m_00628",
+            "m_00522"
+          ],
+          [
+            null,
+            null,
+            "m_00606",
+            null,
+            null,
+            null,
+            "m_00552",
+            null,
+            null,
+            null,
+            "m_00628",
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00606",
+            null,
+            null,
+            null,
+            "m_00552",
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "m_00606",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "t_00013",
+            "x": 0,
+            "y": 0,
+            "dir": "H",
+            "num": 1
+          },
+          {
+            "mot": "m_00606",
+            "x": 2,
+            "y": 0,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00552",
+            "x": 6,
+            "y": 0,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_00522",
+            "x": 6,
+            "y": 2,
+            "dir": "H",
+            "num": 5
+          },
+          {
+            "mot": "m_00628",
+            "x": 10,
+            "y": 0,
+            "dir": "V",
+            "num": 4
+          }
+        ],
+        "largeur": 12,
+        "hauteur": 6
+      },
+      "verifie": true
+    },
+    {
+      "id": "p_5111",
+      "palier": 51,
+      "ordre": 11,
+      "jeu": "croises",
+      "phrase_id": "ph_099",
+      "phrase_en": "SO LITTLE TIME",
+      "phrase_fr": "Si peu de temps",
+      "contexte_fr": "Se dit quand l'échéance approche trop vite.",
+      "mots": [
+        "m_00602",
+        "m_00636",
+        "t_00762",
+        "m_00290",
+        "m_00577"
+      ],
+      "alphabet": {
+        "1": "S",
+        "2": "O",
+        "3": "L",
+        "4": "I",
+        "5": "T",
+        "6": "E",
+        "7": "M",
+        "8": "A",
+        "9": "B",
+        "10": "H",
+        "11": "C",
+        "12": "U",
+        "13": "N",
+        "14": "R",
+        "15": "D",
+        "16": "F",
+        "17": "Z"
+      },
+      "croises": {
+        "grille": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00290"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00290"
+          ],
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "m_00290"
+          ],
+          [
+            null,
+            null,
+            "t_00762",
+            null,
+            null,
+            null,
+            null,
+            "m_00290"
+          ],
+          [
+            null,
+            null,
+            "t_00762",
+            null,
+            null,
+            null,
+            null,
+            "m_00290"
+          ],
+          [
+            null,
+            null,
+            "t_00762",
+            null,
+            null,
+            "m_00636",
+            null,
+            "m_00290"
+          ],
+          [
+            "m_00577",
+            "m_00577",
+            "t_00762",
+            "m_00577",
+            "m_00577",
+            "m_00636",
+            "m_00577",
+            "m_00290"
+          ],
+          [
+            null,
+            null,
+            "t_00762",
+            null,
+            null,
+            "m_00636",
+            null,
+            null
+          ],
+          [
+            null,
+            null,
+            "t_00762",
+            null,
+            null,
+            "m_00602",
+            "m_00602",
+            "m_00602"
+          ],
+          [
+            null,
+            null,
+            "t_00762",
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        ],
+        "placements": [
+          {
+            "mot": "m_00577",
+            "x": 0,
+            "y": 6,
+            "dir": "H",
+            "num": 4
+          },
+          {
+            "mot": "t_00762",
+            "x": 2,
+            "y": 3,
+            "dir": "V",
+            "num": 2
+          },
+          {
+            "mot": "m_00290",
+            "x": 7,
+            "y": 0,
+            "dir": "V",
+            "num": 1
+          },
+          {
+            "mot": "m_00636",
+            "x": 5,
+            "y": 5,
+            "dir": "V",
+            "num": 3
+          },
+          {
+            "mot": "m_00602",
+            "x": 5,
+            "y": 8,
+            "dir": "H",
+            "num": 5
+          }
+        ],
+        "largeur": 8,
+        "hauteur": 10
+      },
+      "verifie": true
     }
   ]
 }

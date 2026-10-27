@@ -6,6 +6,8 @@
  * appelé depuis le navigateur (§17.9).
  *
  *   node tools/generateur.js --generer           (tous les paliers d'un coup)
+ *   node tools/generateur.js --completer         (jusqu'à dix parties par palier,
+ *                                                 sans toucher aux existantes)
  *   node tools/generateur.js --mots-meles        (grilles de mots mêlés)
  *   node tools/generateur.js --verify            (tous les paliers)
  *   node tools/generateur.js --verify --palier 3
@@ -640,6 +642,108 @@ function genererTout() {
   console.log(`\n${total} parties écrites · ${rejets.length} rejet(s) · ${libres} phrases encore libres`);
 }
 
+/**
+ * Complète les parties de chaque palier jusqu'à dix, cinq par jeu, SANS
+ * toucher à celles qui existent : ni modifiées, ni renumérotées. Une partie
+ * déjà jouée reste donc valable, et relancer la commande ne change rien.
+ *
+ * Le réservoir de phrases est épuisé depuis le palier 42 : une expression déjà
+ * servie revient, la moins servie d'abord, jamais deux fois dans le même
+ * palier. C'est une décision assumée — mieux vaut revoir une expression que
+ * manquer de parties.
+ */
+function completerParties() {
+  const { manifeste, paliers } = chargerCatalogue();
+  const brutPhrases = lire(path.join(CONTENU, "phrases.json"));
+  const phrases = Array.isArray(brutPhrases) ? brutPhrases : brutPhrases.phrases ?? [];
+
+  const alea = aleatoire(GRAINE + 2);
+  const jeuDe = partagerEntreJeux(paliers.flatMap(({ mots }) => mots));
+  const usages = new Map();
+  const servies = new Map();
+  const acquis = { grille: [], croises: [] };
+  const existantes = new Map();
+
+  // Les compteurs partent de TOUTES les parties existantes : une expression
+  // servie au palier 80 compte autant qu'une servie au palier 3.
+  for (const { entree } of paliers) {
+    const chemin = path.join(CONTENU, `parties/parties-${deuxChiffres(Number(entree.id))}.json`);
+    const liste = fs.existsSync(chemin) ? lire(chemin).parties ?? [] : [];
+    existantes.set(Number(entree.id), liste);
+    for (const partie of liste) {
+      servies.set(partie.phrase_id, (servies.get(partie.phrase_id) ?? 0) + 1);
+      for (const id of partie.mots) usages.set(id, (usages.get(id) ?? 0) + 1);
+    }
+  }
+
+  let ajoutees = 0;
+  let manquantes = 0;
+
+  for (const { entree, mots } of paliers) {
+    const numero = Number(entree.id);
+    const nom = deuxChiffres(numero);
+    const parties = [...existantes.get(numero)];
+    const nouveaux = {
+      grille: mots.filter((mot) => jeuDe.get(mot.id) === "grille"),
+      croises: mots.filter((mot) => jeuDe.get(mot.id) === "croises"),
+    };
+    const dejaIci = new Set(parties.map((p) => p.phrase_id));
+    const ids = new Set(parties.map((p) => p.id));
+    let ordre = Math.max(0, ...parties.map((p) => Number(p.ordre) || 0));
+    const avant = parties.length;
+
+    for (const jeu of JEUX) {
+      let manque = PARTIES_PAR_JEU - parties.filter((p) => p.jeu === jeu).length;
+      while (manque > 0) {
+        const candidates = phrases
+          .filter((p) => !dejaIci.has(p.id))
+          .map((p) => ({ p, cle: (servies.get(p.id) ?? 0) + alea() }))
+          .sort((a, b) => a.cle - b.cle)
+          .map(({ p }) => p);
+        let suivant = ordre + 1;
+        while (ids.has(`p_${nom}${deuxChiffres(suivant)}`)) suivant += 1;
+        const idPartie = `p_${nom}${deuxChiffres(suivant)}`;
+
+        let reussie = null;
+        for (let essai = 0; essai < ESSAIS_MAX && !reussie; essai += 1) {
+          const groupe = composerGroupe(nouveaux[jeu], acquis[jeu], usages, alea);
+          if (!groupe) break;
+          const resultat = composerPartie(groupe, candidates,
+            { palier: numero, ordre: suivant, idPartie, jeuSouhaite: jeu });
+          if (resultat.partie && resultat.partie.jeu === jeu) reussie = resultat;
+        }
+        if (!reussie) { manquantes += manque; break; }
+
+        parties.push(reussie.partie);
+        ids.add(idPartie);
+        ordre = suivant;
+        dejaIci.add(reussie.phrase.id);
+        servies.set(reussie.phrase.id, (servies.get(reussie.phrase.id) ?? 0) + 1);
+        for (const id of reussie.partie.mots) usages.set(id, (usages.get(id) ?? 0) + 1);
+        manque -= 1;
+      }
+    }
+
+    for (const jeu of JEUX) acquis[jeu].push(...nouveaux[jeu]);
+    if (parties.length === avant) continue;
+
+    const fichier = `parties/parties-${nom}.json`;
+    fs.writeFileSync(path.join(CONTENU, fichier),
+      JSON.stringify({ palier: numero, version: 3, parties }, null, 2) + "\n");
+    ajoutees += parties.length - avant;
+    if (!entree.parties) {
+      const rang = manifeste.paliers.indexOf(entree);
+      const { id, fichier: f, ...reste } = entree;
+      manifeste.paliers[rang] = { id, fichier: f, parties: fichier, ...reste };
+    }
+  }
+
+  fs.writeFileSync(path.join(CONTENU, "manifest.json"), JSON.stringify(manifeste, null, 2) + "\n");
+  const reprises = [...servies.values()].filter((n) => n > 1).length;
+  console.log(`${ajoutees} parties ajoutées · ${manquantes} introuvables · `
+    + `${reprises} expressions servies plus d'une fois`);
+}
+
 /* -------------------------------------------------------------------------- */
 /* Mots mêlés (§10)                                                            */
 /* -------------------------------------------------------------------------- */
@@ -713,8 +817,9 @@ function poserMotsMeles(taille, cible, candidats, alea) {
  *
  * Même logique que les parties : des mots du palier courant, complétés par
  * l'acquis. Les lettres restantes, lues dans l'ordre, forment une expression
- * du réservoir. Une expression ne sert qu'une fois parmi les mots mêlés ;
- * elle peut avoir déjà servi au codeword, c'est un autre jeu.
+ * du réservoir. Une expression neuve d'abord ; une fois le réservoir épuisé,
+ * la moins servie revient, jamais deux fois dans le même palier. Elle peut
+ * avoir déjà servi au codeword, c'est un autre jeu.
  */
 function genererMotsMeles() {
   const { manifeste, paliers } = chargerCatalogue();
@@ -724,7 +829,8 @@ function genererMotsMeles() {
     .map((p) => ({ ...p, lettres: lettresDe(p.en) }));
 
   const alea = aleatoire(GRAINE + 1);
-  const servies = new Set();
+  /** Expression → nombre de grilles qui l'ont servie. */
+  const servies = new Map();
   const usages = new Map();
   const acquis = [];
   const rejets = [];
@@ -737,14 +843,26 @@ function genererMotsMeles() {
     const nom = deuxChiffres(numero);
     const nouveaux = mots.filter(jouable);
     const grilles = [];
+    const dejaIci = new Set();
 
     for (let rang = 0; rang < MELES_PAR_PALIER; rang += 1) {
       let reussie = null;
 
       for (let essai = 0; essai < MELES_ESSAIS && !reussie; essai += 1) {
+        // Tant qu'il reste des expressions neuves, le tirage est celui d'avant :
+        // les grilles déjà livrées ne changent pas. Une fois le réservoir
+        // épuisé, la moins servie revient, jamais deux fois dans le même palier.
         const libres = phrases.filter((p) => !servies.has(p.id));
-        if (!libres.length) break;
-        const phrase = libres[Math.floor(alea() * libres.length)];
+        let phrase;
+        if (libres.length) {
+          phrase = libres[Math.floor(alea() * libres.length)];
+        } else {
+          const reprises = phrases.filter((p) => !dejaIci.has(p.id));
+          if (!reprises.length) break;
+          const moins = Math.min(...reprises.map((p) => servies.get(p.id)));
+          const vivier = reprises.filter((p) => servies.get(p.id) === moins);
+          phrase = vivier[Math.floor(alea() * vivier.length)];
+        }
         const taille = MELES_TAILLES.find((t) => t * t - phrase.lettres.length >= 3 * MELES_MOTS_MIN
                                              && t * t - phrase.lettres.length <= 8 * MELES_MOTS_MAX
                                              && alea() < 0.6) ?? MELES_TAILLES[2];
@@ -791,7 +909,8 @@ function genererMotsMeles() {
         rejets.push({ palier: numero, rang: rang + 1 });
         continue;
       }
-      servies.add(reussie.phrase_id);
+      servies.set(reussie.phrase_id, (servies.get(reussie.phrase_id) ?? 0) + 1);
+      dejaIci.add(reussie.phrase_id);
       for (const p of reussie.mots) usages.set(p.id, (usages.get(p.id) ?? 0) + 1);
       grilles.push(reussie);
     }
@@ -1008,8 +1127,14 @@ function principal(argv) {
     process.exit(problemes.length ? 1 : 0);
   }
 
+  if (argv.includes("--completer")) {
+    completerParties();
+    return;
+  }
+
   if (!argv.includes("--generer")) {
     console.error("Usage : node tools/generateur.js --generer");
+    console.error("        node tools/generateur.js --completer");
     console.error("        node tools/generateur.js --mots-meles");
     console.error("        node tools/generateur.js --verify  [--palier 3]");
     console.error("        node tools/generateur.js --croises [--palier 3]");
