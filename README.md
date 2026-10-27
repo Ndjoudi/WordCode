@@ -619,16 +619,27 @@ Le champ `source` pilote l'écran de découverte et l'éligibilité aux jeux.
 | 21 → 38 | **anglais professionnel — TOEIC** : 898 mots de la liste TOEIC absents des 1000 | 50 mots par palier |
 | 39 → 104 | **monde professionnel** : 3 271 mots des listes NGSL 1.2, BSL 1.2 et TSL 1.2, classés par fréquence | 50 mots par palier |
 | 105 → 201 | **vers le bilingue** : 4 850 mots, les suivants de la liste de fréquence NGSL-SFI 31K, plus la NAWL | 50 mots par palier |
+| 202 | **mots essentiels** : 27 mots de la NGSL (les 2 800 mots essentiels) absents du catalogue sous toute forme | un palier |
 
-**Vocabulaire total : 10 034 mots** (1000 + 898 + 3 271 + 4 850, plus les 15
-verbes irréguliers de §3.2).
+**Vocabulaire total : 10 061 mots** (1000 + 898 + 3 271 + 4 850 + 27, plus les
+15 verbes irréguliers de §3.2).
 
-Les séries TOEIC, « monde professionnel » et « vers le bilingue » sont rédigées
-à la main dans `tools/contenu/toeic-NN.txt`, `pro-NN.txt` et `bilingue-NN.txt`,
+**Les mots essentiels viennent en dernier sans être les plus difficiles.** Ce
+sont des mots très courants (*neither, ought, unlike, hence, boring,
+disappointed…*) repérés après coup en comparant le catalogue à la NGSL. Les
+placer plus tôt aurait renuméroté tous les paliers suivants, et la progression
+en dépend. Ils sont donc au palier 202, que l'écran Progression permet d'ouvrir
+à tout moment (« Travailler ce palier »). La NGSL compte 11 autres absents
+apparents, déjà présents sous une autre forme (*assets, miles, statistics,
+complicated, scared…*) : les ajouter ferait apprendre deux fois le même mot.
+
+Les séries TOEIC, « monde professionnel », « vers le bilingue » et « mots
+essentiels » sont rédigées à la main dans `tools/contenu/toeic-NN.txt`,
+`pro-NN.txt`, `bilingue-NN.txt` et `essentiels-NN.txt`,
 une ligne par mot — `en | fr | type | phonétique | définition anglaise | exemple
 | traduction de l'exemple` — puis construites par
 `node tools/contenu/construire-series.mjs`. Chaque série a son espace
-d'identifiants (`t_`, `m_`, `b_`) et une répartition figée
+d'identifiants (`t_`, `m_`, `b_`, `e_`) et une répartition figée
 (`*-repartition.json`) : un mot oublié ou rangé dans le mauvais paquet bloque
 la construction. L'exemple emploie le mot sous une forme que la carte sait
 colorer (§01) : forme de base, `-s`, `-ed`, `-ing`… jamais un pluriel ou un

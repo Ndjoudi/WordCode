@@ -3,7 +3,8 @@
  *
  *   toeic — tools/contenu/toeic-NN.txt → content/toeic/toeic-XX.json  (paliers 21-38)
  *   pro   — tools/contenu/pro-NN.txt   → content/pro/pro-XX.json      (paliers 39-104)
- *   bilingue — tools/contenu/bilingue-NN.txt → content/bilingue/…        (paliers 105+)
+ *   bilingue — tools/contenu/bilingue-NN.txt → content/bilingue/…        (paliers 105-201)
+ *   essentiels — tools/contenu/essentiels-NN.txt → content/essentiels/…  (palier 202)
  *
  * Le TOEIC prolonge les vingt paliers de fréquence. Sur les 1056 mots de sa
  * liste, 158 figuraient déjà au catalogue ; les 898 autres sont écrits ici.
@@ -11,6 +12,11 @@
  * La série « bilingue » vise 10 000 mots : les 4 850 lemmes les plus fréquents
  * qui manquaient encore, d'après la liste de fréquence étendue du projet NGSL
  * (« NGSL with SFI », 31 000 lemmes) et la NAWL (`bilingue-source.txt`).
+ *
+ * La série « essentiels » rattrape les mots de la NGSL (2 800 mots essentiels)
+ * absents du catalogue sous toute forme. Elle vient en fin d'échelle pour ne
+ * renuméroter aucun palier : l'écran Progression permet de l'ouvrir à tout
+ * moment (« Travailler ce palier »).
  *
  * La série « pro » complète le vocabulaire jusqu'à 5000 mots, avec les listes
  * du projet NGSL (Browne & Culligan, CC BY-SA 4.0) : NGSL 1.2 pour l'anglais
@@ -48,6 +54,8 @@ const SERIES = [
     titreFichier: (palier) => `Monde professionnel ${num(palier)}` },
   { nom: "bilingue", prefixe: "b_", premier: 105, titre: "Vers le bilingue",
     titreFichier: (palier) => `Vers le bilingue ${num(palier)}` },
+  { nom: "essentiels", prefixe: "e_", premier: 202, titre: "Mots essentiels",
+    titreFichier: () => "Mots essentiels" },
 ];
 
 /** Types admis, alignés sur le catalogue (§6.1). */
