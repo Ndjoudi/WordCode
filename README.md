@@ -305,6 +305,7 @@ chapitres :
 | 5 | *Garde de nuit* (`montreal`) | urgences, Montréal : des médicaments qui disparaissent |
 | 6 | *La une* (`manchester`) | presse locale, Manchester : une association caritative trop belle |
 | 7 | *En cuisine* (`london`) | restauration, Londres : fausses origines, pourboires confisqués |
+| 8 | *L'audit* (`singapore`) | audit financier, Singapour : un milliard de ventes fictives |
 
 - **Un feuilleton en cours passe avant tout le reste** : la section sert le
   premier chapitre non lu, dans l'ordre. Jamais de saut.
