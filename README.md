@@ -307,6 +307,7 @@ chapitres :
 | 7 | *En cuisine* (`london`) | restauration, Londres : fausses origines, pourboires confisqués |
 | 8 | *L'audit* (`singapore`) | audit financier, Singapour : un milliard de ventes fictives |
 | 9 | *Collection printemps* (`milan`) | haute couture, Milan : un atelier clandestin à Prato |
+| 10 | *Le parc éolien* (`hebrides`) | éolien, île de Lewis (Écosse) : des pales fissurées |
 
 - **Un feuilleton en cours passe avant tout le reste** : la section sert le
   premier chapitre non lu, dans l'ordre. Jamais de saut.
