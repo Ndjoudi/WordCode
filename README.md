@@ -309,6 +309,7 @@ chapitres :
 | 9 | *Collection printemps* (`milan`) | haute couture, Milan : un atelier clandestin à Prato |
 | 10 | *Le parc éolien* (`hebrides`) | éolien, île de Lewis (Écosse) : des pales fissurées |
 | 11 | *La compétition* (`sydney`) | publicité, Sydney : l'écoblanchiment d'une compagnie gazière |
+| 12 | *Le chasseur de têtes* (`toronto`) | recrutement, Toronto : une IA qui écarte les candidats étrangers |
 
 - **Un feuilleton en cours passe avant tout le reste** : la section sert le
   premier chapitre non lu, dans l'ordre. Jamais de saut.
