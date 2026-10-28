@@ -308,6 +308,7 @@ chapitres :
 | 8 | *L'audit* (`singapore`) | audit financier, Singapour : un milliard de ventes fictives |
 | 9 | *Collection printemps* (`milan`) | haute couture, Milan : un atelier clandestin à Prato |
 | 10 | *Le parc éolien* (`hebrides`) | éolien, île de Lewis (Écosse) : des pales fissurées |
+| 11 | *La compétition* (`sydney`) | publicité, Sydney : l'écoblanchiment d'une compagnie gazière |
 
 - **Un feuilleton en cours passe avant tout le reste** : la section sert le
   premier chapitre non lu, dans l'ordre. Jamais de saut.
